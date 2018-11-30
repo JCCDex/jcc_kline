@@ -1,0 +1,42 @@
+{
+  "name": "jcc_kline",
+  "version": "0.1.7",
+  "description": "jccdex kline",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
+    "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "JCCDex",
+  "license": "ISC",
+  "directories": {
+    "dist": "dist"
+  },
+  "dependencies": {
+    "cssnano": "^4.1.7",
+    "echarts": "^3.7.1",
+    "lodash.merge": "^4.6.1",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.5.0",
+    "url-loader": "^1.1.2",
+    "vant": "^1.5.0-beta2",
+    "vue": "^2.5.17"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.2.0",
+    "css-loader": "^1.0.1",
+    "eslint": "^5.8.0",
+    "file-loader": "^2.0.0",
+    "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.25.1",
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.10"
+  }
+}
