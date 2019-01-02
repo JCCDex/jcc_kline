@@ -22,7 +22,7 @@ var mobileOption = {
       textStyle: {
         color: "#000"
       },
-      extraCssText: "background:#252332;border:0;color:#ffffff;opacity: 0.7;font-size:18px;"
+      extraCssText: "background:#252332;border:0;color:#ffffff;opacity: 0.7;font-size:0.18rem;"
     },
     grid: [
       {
@@ -117,17 +117,23 @@ var mobileOption = {
         scale: true,
         gridIndex: 1,
         splitNumber: 2,
-        axisLabel: {
-          show: false
+        splitLine: {
+          lineStyle: {
+            color: "#37404b",
+            type: "dotted"
+          }
         },
         axisLine: {
-          show: false
+          lineStyle: {
+            color: "#37404b"
+          }
         },
-        axisTick: {
-          show: false
-        },
-        splitLine: {
-          show: false
+        axisLabel: {
+          show: true,
+          color: "#f3f7f6",
+          fontSize: 18,
+          algin: "right",
+          verticalAlign: "top"
         }
       }
     ],

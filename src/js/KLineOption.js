@@ -34,7 +34,7 @@ var option = {
         left: 10,
         right: 100,
         bottom: 10,
-        backgroundColor: "#1b2229",
+        // backgroundColor: "#1b2229",
         borderColor: "#1b2229",
         show: true
       },
@@ -211,17 +211,27 @@ var option = {
         scale: true,
         gridIndex: 1,
         splitNumber: 2,
-        axisLabel: {
-          show: false
+        splitLine: {
+          lineStyle: {
+            color: "#37404b",
+            type: "dotted"
+          }
         },
         axisLine: {
-          show: false
+          show: false,
+          lineStyle: {
+            color: "#37404b"
+          }
         },
-        axisTick: {
-          show: false
-        },
-        splitLine: {
-          show: false
+        axisLabel: {
+          show: true,
+          margin: 0,
+          color: "#9aa4ac",
+          fontSize: 12,
+          verticalAlign: "middle",
+          textStyle: {
+            align: "left"
+          }
         }
       },
       {
