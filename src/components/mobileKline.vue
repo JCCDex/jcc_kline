@@ -1,6 +1,6 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
-      <div :class="this.outspreadMA ? 'kline-outspread-data' : 'kline-option-data'">
+      <div>
         <!-- Cycle按钮 -->
         <div :class=" this.cycle === 'everyhour' ? 'kline-cycle-time' : 'kline-cycle'" @click="switchBase">
           <span>{{timeData}}</span>
@@ -9,17 +9,13 @@
           <van-actionsheet  v-model="show" :actions="actions" :overlay="false"/>
         </div>
         <!-- tooltip 数据显示 -->
-        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : this.outspreadMA ? 'mobile-tooltip-en-outspread' : 'mobile-tooltip-en'" v-if="toolTipData">
+        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
           <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.time}}</font>
-          <font class="mobile-tooltip-name" style="margin-left: 0.2rem;">{{message.volumeMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font>
-          <img v-if="!outspreadMA" :class="this.message.language === 'zh' ? 'kline-arrow-down' : 'arrow-down-en'" :src="downArrow" @click="showMAData"/>
-          <img v-else :src="upArrow" :class=" this.message.language === 'zh' ? 'kline-arrow-up' : 'arrow-up-en'" @click="showMAData"/>
-          <div v-if = "outspreadMA" style="margin-top: 6px;margin-right: 0.15rem;">
-            <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font>
-            <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font>
-            <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.max}}</font>
-            <font class="mobile-tooltip-name">{{message.minMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font>
-          </div>
+          <font class="mobile-tooltip-name" style="margin-left: 0.2rem;">{{message.volumeMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font><br>
+          <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font>
+          <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font>
+          <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.max}}</font>
+          <font class="mobile-tooltip-name">{{message.minMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font>
         </div>
         <!-- timeDivision tootip 数据显示 -->
         <div :class="this.message.language === 'en' ? 'time-sharing-data' : 'time-sharing-zh-data'" v-if="timeDivisionTipData">
@@ -201,9 +197,6 @@ export default {
       } else {
         this.timeDivisionTipData = this.kline.getMobileToolTipData()
       }
-    },
-    showMAData() {
-      this.outspreadMA = !this.outspreadMA
     },
     changeDataZoom(type) {
       this.kline.changeMobileDataZoom(type)
