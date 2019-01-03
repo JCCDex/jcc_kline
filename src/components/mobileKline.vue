@@ -266,13 +266,13 @@ export default {
 .mobile-tooltip-zh {
   text-align: right;
   font-size: 0.18rem;
-  padding: 0.2rem 0 0.23rem 0.2rem;
+  padding: 0.2rem 0.2rem 0.23rem 0.2rem;
   z-index:1;
 }
 .mobile-tooltip-en {
   text-align: right;
   font-size: 0.18rem;
-  padding: 0.2rem 0 0.23rem 0.2rem;
+  padding: 0.2rem 0.2rem 0.23rem 0.2rem;
   z-index:1;
 }
 .mobile-tooltip-en-outspread {

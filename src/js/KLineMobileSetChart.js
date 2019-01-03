@@ -185,23 +185,23 @@ class KLineMobileSetChartController {
           }
           return [
             '<div style="text-align:left;">',
-            '<div style="width:10px;height:10px;background:#fd1d57;border-radius:4px;float:left;margin-top:6px;margin-right:2px;"></div>' +
+            '<div style="width:0.1rem;height:0.1rem;background:#fd1d57;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
               "MA5: " +
               calculateMA(5, data)[index] +
               "<br/>",
-            '<div style="width:10px;height:10px;background:#4df561;border-radius:4px;float:left;margin-top:6px;margin-right:2px;"></div>' +
+            '<div style="width:0.1rem;height:0.1rem;background:#4df561;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
               "MA10: " +
               calculateMA(10, data)[index] +
               "<br/>",
-            '<div style="width:10px;height:10px;background:#2bdaff;border-radius:4px;float:left;margin-top:6px;margin-right:2px;"></div>' +
+            '<div style="width:0.1rem;height:0.1rem;background:#2bdaff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
               "MA20: " +
               calculateMA(20, data)[index] +
               "<br/>",
-            '<div style="width:10px;height:10px;background:#ffd801;border-radius:4px;float:left;margin-top:6px;margin-right:2px;"></div>' +
+            '<div style="width:0.1rem;height:0.1rem;background:#ffd801;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
               "MA30: " +
               calculateMA(30, data)[index] +
               "<br/>",
-            '<div style="width:10px;height:10px;background:#f721ff;border-radius:4px;float:left;margin-top:6px;margin-right:2px;"></div>' +
+            '<div style="width:0.1rem;height:0.1rem;background:#f721ff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
               "MA60: " +
               calculateMA(60, data)[index] +
               "<br/>",

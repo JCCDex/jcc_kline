@@ -20,9 +20,10 @@ var mobileOption = {
       borderColor: "#ccc",
       padding: 10,
       textStyle: {
-        color: "#000"
+        color: "#000",
+        fontSize: "0.15rem"
       },
-      extraCssText: "background:#252332;border:0;color:#ffffff;opacity: 0.7;font-size:0.18rem;"
+      extraCssText: "background:#252332;border:0;color:#ffffff;opacity: 0.7;"
     },
     grid: [
       {
@@ -117,23 +118,17 @@ var mobileOption = {
         scale: true,
         gridIndex: 1,
         splitNumber: 2,
-        splitLine: {
-          lineStyle: {
-            color: "#37404b",
-            type: "dotted"
-          }
+        axisLabel: {
+          show: false
         },
         axisLine: {
-          lineStyle: {
-            color: "#37404b"
-          }
+          show: false
         },
-        axisLabel: {
-          show: true,
-          color: "#f3f7f6",
-          fontSize: 18,
-          algin: "right",
-          verticalAlign: "top"
+        axisTick: {
+          show: false
+        },
+        splitLine: {
+          show: false
         }
       }
     ],
