@@ -5,7 +5,7 @@ describe('test KLineSetChart', () => {
     expect(typeof klineController).toBe('function')
   })
 
-  it('test klineController', () => {
+  it('test klineController if platform is pc', () => {
     let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
     let klineConfig = {
       backgroundColor: '#1ad2b4'
@@ -14,12 +14,20 @@ describe('test KLineSetChart', () => {
     expect(kline).toBeInstanceOf(klineController)
   })
 
-  it('test initChart', () => {
+  it('test initChart if platform is pc', () => {
     let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
     let kline = new klineController('pc', '', showIndicators)
     const element = document.createElement('div');
     kline.initChart(element)
-    expect(kline).toBe()
+    expect(kline).not.toBeNull()
+  })
+
+  it('test initChart if platform is mobile', () => {
+    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
+    let kline = new klineController('mobile', '', showIndicators)
+    const element = document.createElement('div');
+    kline.initMobileChart(element)
+    expect(kline.setMobileKLineChart).not.toBeNull()
   })
 
 })

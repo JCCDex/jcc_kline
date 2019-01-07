@@ -37,4 +37,17 @@ describe('test KLineMobileSetChart', () => {
     expect(mobileKline.kline).not.toBeNull();
   })
 
+  it('test setOption', () => {
+    let showIndicators = ['Candlestick', 'MA', 'Volume']
+    let size = {
+      height: 780,
+      width: 900
+    }
+    const element = document.createElement('div');
+    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    mobileKline.initMobileECharts(element)
+    mobileKline.setOption(size)
+    expect(mobileKline.kline).not.toBeNull();
+  })
+
 })
