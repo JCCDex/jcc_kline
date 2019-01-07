@@ -103,7 +103,7 @@ class KLineSetChartController {
       let length = data.values.length - 1
       toolTipData = {
         time: data.categoryData[length],
-        volume: this.getFormatDecimal(data.values[length][5]),
+        volume: formatDecimal(data.values[length][5], 0, 5),
         opening: data.values[length][0].toFixed(6),
         closing: data.values[length][1].toFixed(6),
         max: data.values[length][3].toFixed(6),
@@ -159,10 +159,6 @@ class KLineSetChartController {
     if (this.kline) {
       this.kline.dispose()
     }
-  }
-
-  getFormatDecimal(num) {
-    return formatDecimal(num, 0, 5);
   }
 
   getGrid(data) {
@@ -229,7 +225,7 @@ class KLineSetChartController {
           toolTipData = {
             seriesName: param.seriesName,
             time: param.name,
-            volume: self.getFormatDecimal(data.values[index][5]),
+            volume: formatDecimal(data.values[index][5], 0, 5),
             opening: data.values[index][0].toFixed(6),
             closing: data.values[index][1].toFixed(6),
             max: data.values[index][3].toFixed(6),
@@ -245,7 +241,7 @@ class KLineSetChartController {
           //   '<div style="text-align:left;display:table;">',
           //   message.time + param.name + "<br>",
           //   message.volume +
-          //   self.getFormatDecimal(data.values[index][5]) +
+          //   formatDecimal(data.values[index][5], 0, 5) +
           //   "<br/>",
           //   message.opening +
           //   data.values[index][0].toFixed(6) +
@@ -346,10 +342,19 @@ class KLineSetChartController {
     }]
     if (this.showIndicators.indexOf('Volume') !== -1) {
       y.push({
-        gridIndex: 1
+        gridIndex: 1,
+        axisLabel: {
+          formatter: function(value) {
+            if (value > 1000 && value < 1000000) {
+              return (value / 1000) + 'K'
+            } else if (value > 1000000) {
+              return (value/1000000) + 'M'
+            }
+          }
+        }
       })
     }
-    if (this.showIndicators.indexOf('Volume') === -1 &&this.showIndicators.indexOf('MarketDepth') !== -1) {
+    if (this.showIndicators.indexOf('Volume') === -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
       y.push(
         {
           gridIndex: 1,

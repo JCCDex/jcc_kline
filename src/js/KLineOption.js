@@ -31,7 +31,7 @@ var option = {
         right: 100
       },
       {
-        left: 10,
+        left: 30,
         right: 100,
         bottom: 10,
         // backgroundColor: "#1b2229",
@@ -228,10 +228,7 @@ var option = {
           margin: 0,
           color: "#9aa4ac",
           fontSize: 12,
-          verticalAlign: "middle",
-          textStyle: {
-            align: "left"
-          }
+          verticalAlign: "middle"
         }
       },
       {
