@@ -2,14 +2,21 @@
   <div class="mobile-kline" style="background-color: #161b21;">
       <div>
         <!-- Cycle按钮 -->
-        <div :class=" this.cycle === 'everyhour' ? 'kline-cycle-time' : 'kline-cycle'" @click="switchBase">
+        <!-- <div :class=" this.cycle === 'everyhour' ? 'kline-cycle-time' : 'kline-cycle'" @click="switchBase">
           <span>{{timeData}}</span>
           <img v-if="!show" :src="downnormal"/>
           <img v-else :src="downclick"/>
           <van-actionsheet  v-model="show" :actions="actions" :overlay="false"/>
+        </div> -->
+        <div style="font-size:0.28rem;">
+          <div @click = "chooseCycle('hour')" :class="this.timeData === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hour}}</div>
+          <div @click = "chooseCycle('day')" :class="this.timeData === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.day}}</div>
+          <div @click = "chooseCycle('week')" :class="this.timeData === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.week}}</div>
+          <div @click = "chooseCycle('month')" :class="this.timeData === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.month}}</div>
+          <div @click = "chooseCycle('everyhour')" :class="this.timeData === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.timeSharing}}</div>
         </div>
         <!-- tooltip 数据显示 -->
-        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
+        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">                                                                                                                                                                                                              
           <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.time}}</font>
           <font class="mobile-tooltip-name" style="margin-left: 0.2rem;">{{message.volumeMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font><br>
           <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font>
@@ -29,9 +36,9 @@
   </div>
 </template>
 <script>
-import '../icon/iconfont.css'
-import downNormal from "../icon/down_normal.png";
-import downClick from "../icon/down_click.png";
+import '../icon/iconfont.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+import downNormal from "../icon/down_normal.png";                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+import downClick from "../icon/down_click.png";                                                                                                   
 import upArrow from "../icon/up_arrow.png"
 import downArrow from "../icon/down_arrow.png"
 import { Actionsheet } from 'vant';
@@ -45,7 +52,7 @@ export default {
       show: false,
       actions: [
       ],
-      timeData: '',
+      timeData: 'hour',
       kline: null,
       status: 0,
       divisionTime: null,
@@ -130,7 +137,7 @@ export default {
   created() {
     this.message = getLanguage();
     this.timeData = this.message.hour
-    this.setAction();
+    // this.setAction();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
   },
   mounted() {
@@ -148,48 +155,60 @@ export default {
     switchBase() {
       this.show = !this.show;
     },
-    setAction () {
-      let callback = this.onClick;
-      let actions;
-      actions = [
-        {
-           name: this.message.hour,
-          ticker: "hour",
-          callback
-        },
-        {
-          name: this.message.day,
-          ticker: "day",
-          callback
-        },
-        {
-          name: this.message.week,
-          ticker: "week",
-          callback
-        },
-        {
-          name: this.message.month,
-          ticker: "month",
-          callback
-        },
-        {
-          name: this.message.timeSharing,
-          ticker: "everyhour",
-          callback
-        }
-      ];
-      this.actions = actions;
-      this.timeData = actions[0].name;
-    },
-    onClick(item) {
-      let { name, ticker } = item;
-      this.show = false;
-      if (this.timeData === name) {
+    // setAction () {
+    //   let callback = this.onClick;
+    //   let actions;
+    //   actions = [
+    //     {
+    //        name: this.message.hour,
+    //       ticker: "hour",
+    //       callback
+    //     },
+    //     {
+    //       name: this.message.day,
+    //       ticker: "day",
+    //       callback
+    //     },
+    //     {
+    //       name: this.message.week,
+    //       ticker: "week",
+    //       callback
+    //     },
+    //     {
+    //       name: this.message.month,
+    //       ticker: "month",
+    //       callback
+    //     },
+    //     {
+    //       name: this.message.timeSharing,
+    //       ticker: "everyhour",
+    //       callback
+    //     }
+    //   ];
+    //   this.actions = actions;
+    //   this.timeData = actions[0].name;
+    // },
+    // onClick(item) {
+    //   debugger
+    //   let { name, ticker } = item;
+    //   this.show = false;
+    //   if (this.timeData === name) {
+    //     return;
+    //   }
+    //   this.timeData = name;
+    //   this.$emit("listenToChildEvent", item)
+    //   this.show = false;
+    // },
+    chooseCycle(cycle) {
+      if (this.timeData === cycle) {
         return;
       }
-      this.timeData = name;
-      this.$emit("listenToChildEvent", item)
-      this.show = false;
+      this.timeData = cycle;
+      var cycleData = {
+          name: this.message.cycle,
+          ticker: cycle
+      }
+      this.$emit("listenToChildEvent", cycleData)
     },
     getToolTipData() {
       if (this.cycle !== 'everyhour') {
@@ -211,6 +230,23 @@ export default {
 }
 </script>
 <style>
+.kline-cycle-btn {
+  float: left;
+  min-width: 20px;
+  width: auto;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 10px;
+  text-align: center;
+  color: #3669a7;
+  line-height: 20px;
+  font-size: 12px;
+  border-radius: 2px;
+}
+.kline-btn-active {
+  color: #e6e6e6;
+  background: #34b9ea;
+}
 .kline-cycle {
   float: left;
   padding: 0.14rem 0 0.17rem 0.2rem;
