@@ -1,19 +1,17 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
-      <div>
         <!-- Cycle按钮 -->
-        <!-- <div :class=" this.cycle === 'everyhour' ? 'kline-cycle-time' : 'kline-cycle'" @click="switchBase">
-          <span>{{timeData}}</span>
-          <img v-if="!show" :src="downnormal"/>
-          <img v-else :src="downclick"/>
-          <van-actionsheet  v-model="show" :actions="actions" :overlay="false"/>
-        </div> -->
-        <div style="font-size:0.28rem;">
+        <div style="margin-right:10px">
           <div @click = "chooseCycle('hour')" :class="this.timeData === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hour}}</div>
           <div @click = "chooseCycle('day')" :class="this.timeData === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.day}}</div>
           <div @click = "chooseCycle('week')" :class="this.timeData === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.week}}</div>
           <div @click = "chooseCycle('month')" :class="this.timeData === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.month}}</div>
           <div @click = "chooseCycle('everyhour')" :class="this.timeData === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.timeSharing}}</div>
+          <!-- <div @click.stop="switchBase">
+            <span :class="{'active': show}">{{type}}</span>
+            <img v-if="!show && actions.length > 1" :src="downnormal" class="down-img" />
+            <img v-if="show && actions.length > 1" :src="downclick" class="down-img active" />
+          </div> -->
         </div>
         <!-- tooltip 数据显示 -->
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">                                                                                                                                                                                                              
@@ -31,7 +29,7 @@
           <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.price}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.averagePrice}}</font> &nbsp;<br> 
         </div>
-      </div>
+      
     <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
   </div>
 </template>
@@ -189,7 +187,6 @@ export default {
     //   this.timeData = actions[0].name;
     // },
     // onClick(item) {
-    //   debugger
     //   let { name, ticker } = item;
     //   this.show = false;
     //   if (this.timeData === name) {
@@ -232,20 +229,21 @@ export default {
 <style>
 .kline-cycle-btn {
   float: left;
-  min-width: 20px;
+  min-width: 30px;
   width: auto;
-  height: 20px;
+  height: 26px;
   cursor: pointer;
-  margin-left: 10px;
+  margin-left: 50px;
+  margin-top: 8px;
   text-align: center;
   color: #3669a7;
   line-height: 20px;
-  font-size: 12px;
+  font-size: 22px;
   border-radius: 2px;
 }
 .kline-btn-active {
+  border-bottom:1px solid  #e6e6e6;
   color: #e6e6e6;
-  background: #34b9ea;
 }
 .kline-cycle {
   float: left;
@@ -300,15 +298,15 @@ export default {
   border-radius: 0.04rem;
 }
 .mobile-tooltip-zh {
-  text-align: right;
+  text-align: feft;
   font-size: 0.18rem;
-  padding: 0.2rem 0.2rem 0.23rem 0.2rem;
+  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
   z-index:1;
 }
 .mobile-tooltip-en {
-  text-align: right;
+  text-align: left;
   font-size: 0.18rem;
-  padding: 0.2rem 0.2rem 0.23rem 0.2rem;
+  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
   z-index:1;
 }
 .mobile-tooltip-en-outspread {
@@ -345,15 +343,15 @@ export default {
   margin-left: 0.1rem;
 }
 .time-sharing-data {
-  text-align: right;
+  text-align: left;
   font-size: 0.18rem;
-  padding: 0.1rem 0.15rem 0 0;
+  padding: 0.5rem 0.15rem 0 0;
   z-index:1;
 }
 .time-sharing-zh-data {
-  text-align: right;
+  text-align: left;
   font-size: 0.18rem;
-  padding: 0.1rem 0.15rem 0 0;
+  padding: 0.5rem 0.15rem 0 0;
   z-index:1;
 }
 .mobile-tooltip-name {
