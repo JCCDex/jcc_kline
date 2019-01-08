@@ -42,10 +42,6 @@ class KLineMobileSetChartController {
     this.kline.hideLoading();
   }
 
-  getFormatDecimal(num) {
-    return formatDecimal(num, 0, 5);
-  }
-
   setOption(size) {
     config = JSON.parse(JSON.stringify(this.klineConfig))
     let option = {
@@ -114,14 +110,12 @@ class KLineMobileSetChartController {
   }
 
   updateOption(data) {
-    let self = this;
-    let message = getLanguage();
     this.kline.hideLoading();
     let length = data.values.length - 1
     if (!toolTipData) {
       toolTipData = {
         time: data.categoryData[length],
-        volume: this.getFormatDecimal(data.values[length][5]),
+        volume: formatDecimal(data.values[length][5], 0, 5),
         opening: data.values[length][0].toFixed(6),
         closing: data.values[length][1].toFixed(6),
         max: data.values[length][3].toFixed(6),
@@ -147,7 +141,7 @@ class KLineMobileSetChartController {
           var index = param.data[0];
           toolTipData = {
             time: param.name,
-            volume: self.getFormatDecimal(data.values[index][5]),
+            volume: formatDecimal(data.values[index][5], 0, 5),
             opening: data.values[index][0].toFixed(6),
             closing: data.values[index][1].toFixed(6),
             max: data.values[index][3].toFixed(6),
@@ -171,7 +165,7 @@ class KLineMobileSetChartController {
           var index = param.data[0];
           toolTipData = {
             time: param.name,
-            volume: self.getFormatDecimal(data.values[index][5]),
+            volume: formatDecimal(data.values[index][5], 0, 5),
             opening: data.values[index][0].toFixed(6),
             closing: data.values[index][1].toFixed(6),
             max: data.values[index][3].toFixed(6),
@@ -264,13 +258,12 @@ class KLineMobileSetChartController {
   }
 
   updateTimeDivisionOption(timeDivisionData, data) {
-    let message = getLanguage();
     let { times, averages, prices, volumes } = data;
     let length = timeDivisionData.length - 1
     if (!toolTipData) {
       toolTipData = {
         time: formatTime(timeDivisionData[length][3]),
-        volume: this.getFormatDecimal(timeDivisionData[length][1]),
+        volume: formatDecimal(timeDivisionData[length][1], 0, 5),
         price: timeDivisionData[length][2].toFixed(6),
         averagePrice: averages[length].toFixed(6),
         color: volumes[length][2]
@@ -298,7 +291,7 @@ class KLineMobileSetChartController {
           let data = timeDivisionData[dataIndex];
           toolTipData = {
             time: formatTime(data[3]),
-            volume: this.getFormatDecimal(data[1]),
+            volume: formatDecimal(data[1], 0, 5),
             price: data[2].toFixed(6),
             averagePrice: averages[dataIndex].toFixed(6),
             color: volumes[dataIndex][2]

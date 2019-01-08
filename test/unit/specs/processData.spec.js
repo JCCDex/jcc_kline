@@ -3,7 +3,7 @@ import testData from '../../../demo/src/data.json'
 
 describe('test processData', () => {
   it('test splitData', () => {
-    let splitdata = splitData(testData.klineData, testData.platform)
+    let splitdata = splitData(testData.klineData, 'pc')
     expect(splitdata.categoryData).not.toBeNull()
     expect(splitdata.values).not.toBeNull()
     expect(splitdata.volumes).not.toBeNull()
@@ -36,7 +36,7 @@ describe('test processData', () => {
   })
 
   it('test calculateMA', () => {
-    let splitdata = splitData(testData.klineData, testData.platform)
+    let splitdata = splitData(testData.klineData, 'pc')
     let depthData = getDepthData(testData.depthData, testData.coinType)
     let data = Object.assign({}, splitdata, depthData);
     let MA5 = calculateMA(5, data)

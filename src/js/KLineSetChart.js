@@ -190,7 +190,6 @@ class KLineSetChartController {
 
   getToolTip(data) {
     let message = getLanguage();
-    var self = this;
     return {
       formatter: function (param) {
         param = param[0];

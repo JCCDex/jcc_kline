@@ -6,7 +6,7 @@ module.exports = {
     'js',
     'json',
     'vue',
-    "node"
+    'node'
   ],
   silent: true,
   verbose: true,
@@ -26,13 +26,15 @@ module.exports = {
     '<rootDir>/test/e2e'
   ],
   snapshotSerializers: ['<rootDir>/node_modules/jest-serializer-vue'],
-  setupFiles: ["jest-localstorage-mock"],
+  setupFiles: ["jest-localstorage-mock", "<rootDir>/test/unit/setup.js", "jest-canvas-mock"],
   coverageDirectory: '<rootDir>/test/unit/coverage',
   transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
   moduleDirectories: ["node_modules"],
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js}',
+    '!src/js/KLineMobileOption.js',
+    '!src/js/KLineOption.js',
     '!src/main.js',
     '!**/node_modules/**'
   ]
