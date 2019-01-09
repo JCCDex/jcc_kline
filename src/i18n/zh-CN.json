@@ -22,5 +22,7 @@
   "openingMobile": "开:",
   "closingMobile": "收:",
   "maxMobile": "高:",
-  "minMobile": "低:"
+  "minMobile": "低:",
+  "candle": "行情图",
+  "depth": "深度图"
 }

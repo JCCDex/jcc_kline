@@ -16,6 +16,7 @@ var klineSize = {
 var config
 var toolTipData
 var oldKlineData
+var oldDepthData
 
 class KLineSetChartController {
   constructor(configs, showIndicators) {
@@ -76,8 +77,12 @@ class KLineSetChartController {
   }
 
   initECharts(DOM) {
-    let message = getLanguage();
     this.kline = echarts.init(DOM);
+    this.showLoading();
+  }
+
+  showLoading() {
+    let message = getLanguage();
     this.kline.showLoading(
       {
         text: message.loading,
@@ -92,6 +97,14 @@ class KLineSetChartController {
   clearEcharts() {
     this.kline.clear();
   }
+
+  disposeEChart() {
+    if (this.kline) {
+      this.kline.dispose()
+    }
+  }
+
+  /* 绘制kline开始 */
 
   setOption(data, cycle) {
     oldKlineData = {
@@ -155,12 +168,6 @@ class KLineSetChartController {
     return toolTipData
   }
 
-  disposeEChart() {
-    if (this.kline) {
-      this.kline.dispose()
-    }
-  }
-
   getGrid(data) {
     var g = [{}]
     if (this.showIndicators.indexOf('Volume') !== -1) {
@@ -194,88 +201,20 @@ class KLineSetChartController {
       formatter: function (param) {
         param = param[0];
         var index = param.data[0];
-        if (param.seriesName === "sell") {
-          return [
-            '<div style="text-align:left;">',
-            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.sellPrice +
-            param.axisValue +
-            "<br/>",
-            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.sellTotal +
-            formatDecimal(param.data, 0, 1) +
-            "<br/>",
-            "</div>"
-          ].join("");
-        } else if (param.seriesName === "buy") {
-          return [
-            '<div style="text-align:left;">',
-            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.buyPrice +
-            param.axisValue +
-            "<br/>",
-            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.buyTotal +
-            formatDecimal(param.data, 0, 1) +
-            "<br/>",
-            "</div>"
-          ].join("");
-        } else {
-          toolTipData = {
-            seriesName: param.seriesName,
-            time: param.name,
-            volume: formatDecimal(data.values[index][5], 0, 5),
-            opening: data.values[index][0].toFixed(6),
-            closing: data.values[index][1].toFixed(6),
-            max: data.values[index][3].toFixed(6),
-            min: data.values[index][2].toFixed(6),
-            MA5: calculateMA(5, data)[index],
-            MA10: calculateMA(10, data)[index],
-            MA20: calculateMA(20, data)[index],
-            MA30: calculateMA(30, data)[index],
-            MA60: calculateMA(60, data)[index],
-            color: data.volumes[index][2]
-          }
-          // return [
-          //   '<div style="text-align:left;display:table;">',
-          //   message.time + param.name + "<br>",
-          //   message.volume +
-          //   formatDecimal(data.values[index][5], 0, 5) +
-          //   "<br/>",
-          //   message.opening +
-          //   data.values[index][0].toFixed(6) +
-          //   "<br/>",
-          //   message.closing +
-          //   data.values[index][1].toFixed(6) +
-          //   "<br/>",
-          //   message.max +
-          //   data.values[index][3].toFixed(6) +
-          //   "<br/>",
-          //   message.min +
-          //   data.values[index][2].toFixed(6) +
-          //   "<br/>",
-          //   '<div style="width:6px;height:6px;background:#fd1d57;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          //   "MA5: " +
-          //   calculateMA(5, data)[index] +
-          //   "<br/>",
-          //   '<div style="width:6px;height:6px;background:#4df561;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          //   "MA10: " +
-          //   calculateMA(10, data)[index] +
-          //   "<br/>",
-          //   '<div style="width:6px;height:6px;background:#2bdaff;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          //   "MA20: " +
-          //   calculateMA(20, data)[index] +
-          //   "<br/>",
-          //   '<div style="width:6px;height:6px;background:#ffd801;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          //   "MA30: " +
-          //   calculateMA(30, data)[index] +
-          //   "<br/>",
-          //   '<div style="width:6px;height:6px;background:#f721ff;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          //   "MA60: " +
-          //   calculateMA(60, data)[index] +
-          //   "<br/>",
-          //   "</div>"
-          // ].join("");
+        toolTipData = {
+          seriesName: param.seriesName,
+          time: param.name,
+          volume: formatDecimal(data.values[index][5], 0, 5),
+          opening: data.values[index][0].toFixed(6),
+          closing: data.values[index][1].toFixed(6),
+          max: data.values[index][3].toFixed(6),
+          min: data.values[index][2].toFixed(6),
+          MA5: calculateMA(5, data)[index],
+          MA10: calculateMA(10, data)[index],
+          MA20: calculateMA(20, data)[index],
+          MA30: calculateMA(30, data)[index],
+          MA60: calculateMA(60, data)[index],
+          color: data.volumes[index][2]
         }
       }
     };
@@ -308,30 +247,30 @@ class KLineSetChartController {
         data: data.categoryData
       })
     }
-    if (this.showIndicators.indexOf('Volume') === -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
-      x.push(
-        {
-          gridIndex: 1,
-          max: data.maxAmount
-        },
-        {
-          gridIndex: 2,
-          max: data.maxAmount
-        }
-      )
-    }
-    if (this.showIndicators.indexOf('Volume') !== -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
-      x.push(
-        {
-          gridIndex: 2,
-          max: data.maxAmount
-        },
-        {
-          gridIndex: 3,
-          max: data.maxAmount
-        }
-      )
-    }
+    // if (this.showIndicators.indexOf('Volume') === -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
+    //   x.push(
+    //     {
+    //       gridIndex: 1,
+    //       max: data.maxAmount
+    //     },
+    //     {
+    //       gridIndex: 2,
+    //       max: data.maxAmount
+    //     }
+    //   )
+    // }
+    // if (this.showIndicators.indexOf('Volume') !== -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
+    //   x.push(
+    //     {
+    //       gridIndex: 2,
+    //       max: data.maxAmount
+    //     },
+    //     {
+    //       gridIndex: 3,
+    //       max: data.maxAmount
+    //     }
+    //   )
+    // }
     return x;
   }
 
@@ -343,39 +282,15 @@ class KLineSetChartController {
       y.push({
         gridIndex: 1,
         axisLabel: {
-          formatter: function(value) {
+          formatter: function (value) {
             if (value > 1000 && value < 1000000) {
               return (value / 1000) + 'K'
             } else if (value > 1000000) {
-              return (value/1000000) + 'M'
+              return (value / 1000000) + 'M'
             }
           }
         }
       })
-    }
-    if (this.showIndicators.indexOf('Volume') === -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
-      y.push(
-        {
-          gridIndex: 1,
-          data: data.sellPrices
-        },
-        {
-          gridIndex: 2,
-          data: data.buyPrices
-        }
-      )
-    }
-    if (this.showIndicators.indexOf('Volume') !== -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
-      y.push(
-        {
-          gridIndex: 2,
-          data: data.sellPrices
-        },
-        {
-          gridIndex: 3,
-          data: data.buyPrices
-        }
-      )
     }
     return y;
   }
@@ -427,18 +342,18 @@ class KLineSetChartController {
         yAxisIndex: 1
       })
     }
-    if (this.showIndicators.indexOf('MarketDepth') !== -1) {
-      s.push(
-        {
-          name: "sell",
-          data: data.sellAmounts
-        },
-        {
-          name: "buy",
-          data: data.buyAmounts
-        }
-      )
-    }
+    // if (this.showIndicators.indexOf('MarketDepth') !== -1) {
+    //   s.push(
+    //     {
+    //       name: "sell",
+    //       data: data.sellAmounts
+    //     },
+    //     {
+    //       name: "buy",
+    //       data: data.buyAmounts
+    //     }
+    //   )
+    // }
     return s;
   }
 
@@ -455,6 +370,216 @@ class KLineSetChartController {
       }
     ];
   }
+
+  /* 绘制kline结束 */
+  /* 绘制marketDepth开始 */
+  setDepthOption(data) {
+    oldDepthData = data;
+    if (data) {
+      this.kline.hideLoading();
+      let klineOption = {
+        backgroundColor: "#161b21",
+        animation: true,
+        grid: this.getDepthGrid(data),
+        xAxis: this.getDepthXAxis(data),
+        yAxis: this.getDepthYAxis(data),
+        tooltip: this.getDepthToolTip(data),
+        series: this.getDepthSeries(data)
+      }
+      console.log(klineOption)
+      this.kline.setOption(klineOption, true);
+    }
+  }
+
+  updateDepthOption(data) {
+    oldDepthData = data;
+    if (this.kline.getOption()) {
+      let klineOption = {
+        grid: this.getDepthGrid(data),
+        tooltip: this.getDepthToolTip(data),
+        xAxis: this.getDepthXAxis(data),
+        yAxis: this.getDepthYAxis(data),
+        series: this.getDepthSeries(data)
+      }
+      // merge(config, klineOption)
+      // config.dataZoom = this.kline.getOption().dataZoom
+      this.kline.setOption(klineOption);
+    }
+  }
+
+  getDepthGrid() {
+    return [{
+      top: 10,
+      left: 10,
+      right: '5%',
+      bottom: 20
+    }]
+  }
+
+  getDepthXAxis() {
+    return [
+      {
+        type: 'category',
+        gridIndex: 0,
+        scale: true,
+        boundaryGap: true,
+        axisLine: {
+          onZero: false,
+          lineStyle: {
+            color: "#37404b"
+          }
+        },
+        splitArea: {
+          show: false
+        },
+        splitLine: {
+          show: false
+        },
+        axisPointer: {
+          show: true
+        },
+        axisLabel: {
+          show: true,
+          color: "#b9cadd",
+          fontSize: 10,
+          textStyle: {
+            align: "right"
+          }
+        }
+      }
+    ]
+  }
+
+  getDepthYAxis() {
+    return [
+      {
+        type: 'value',
+        gridIndex: 0,
+        position: 'right',
+        splitNumber: 6,
+        splitLine: {
+          show: false
+        },
+        axisLabel: {
+          show: true,
+          onZero: false,
+          margin: 0,
+          color: "#9aa4ac",
+          fontSize: 12,
+        },
+        splitArea: {
+          show: false
+        },
+        axisPointer: {
+          show: false
+        }
+      }
+    ]
+  }
+
+  getDepthToolTip(data) {
+    let message = getLanguage();
+    return {
+      formatter: function (param) {
+        param = param[0];
+        var index = param.data[0];
+        if (param.seriesName === "sell") {
+          return [
+            '<div style="text-align:left;">',
+            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+            message.sellPrice +
+            param.data[0] +
+            "<br/>",
+            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+            message.sellTotal +
+            param.data[1] +
+            "<br/>",
+            "</div>"
+          ].join("");
+        } else if (param.seriesName === "buy") {
+          return [
+            '<div style="text-align:left;">',
+            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+            message.buyPrice +
+            param.data[0] +
+            "<br/>",
+            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+            message.buyTotal +
+            param.data[1] +
+            "<br/>",
+            "</div>"
+          ].join("");
+        }
+      }
+    };
+  }
+
+  getDepthSeries(data) {
+    return [
+      {
+        name: 'sell',
+        type: 'line',
+        data: data.sellData,
+        showSymbol: false,
+        lineStyle: {
+          color: '#008c00',
+        },
+        areaStyle: {
+          normal: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 1,
+              x2: 0,
+              y2: 0,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: "#14322d"
+                },
+                {
+                  offset: 1,
+                  color: "#28b869"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        name: 'buy',
+        type: 'line',
+        data: data.buyData,
+        showSymbol: false,
+        lineStyle: {
+          color: '#ee3523',
+        },
+        areaStyle: {
+          normal: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 1,
+              x2: 0,
+              y2: 0,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: "#2d1d23"
+                },
+                {
+                  offset: 1,
+                  color: "#ee4a4a"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+
+  /* 绘制marketDepth结束 */
 
   changeDataZoom(type) {
     let dataZoom = JSON.parse(JSON.stringify(this.kline.getOption().dataZoom))

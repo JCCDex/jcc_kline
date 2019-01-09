@@ -25,6 +25,10 @@
           <font class="tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font> &nbsp;
         </div>
       </div>
+      <div style="position: absolute;left:1150px;top:20px;z-index:1;font-size: 13px;font-family: 'Microsoft YaHei';">
+        <span @click = "changeChart('candle')">{{message.candle}}</span>
+        <span @click = "changeChart('depth')">{{message.depth}}</span>
+      </div>
       <!-- fullscreen 按钮 -->
       <!-- <button type="button" class="fullscreen" @click="toggle">Fullscreen</button> -->
       <!-- kline -->
@@ -45,12 +49,13 @@ export default {
     return {
       kline: null,
       message: null,
-      divisionTime: null,
+      klineData: null,
       toolTipData: null,
       cycle: 'hour',
       coinType: '',
       outspreadMA: false,
-      fullscreen: false
+      fullscreen: false,
+      showChar: 'candle'
     };
   },
   props: {
@@ -85,14 +90,24 @@ export default {
         let klineData = splitData(this.klineDataObj.klineData, this.platform)
         let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
         let data = Object.assign({}, klineData, depthData);
+        this.klineData = data
         if (data.values !== null && data.volumes !== null && data.categoryData !== null) {
           if(this.cycle !== this.klineDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
-            this.toolTipData = this.kline.setOption(data, this.cycle);
-            this.cycle = this.klineDataObj.cycle;
-            this.coinType = this.klineDataObj.coinType
+            this.kline.showLoading();
+            if (this.showChar === 'candle') {
+              this.toolTipData = this.kline.setOption(data, this.cycle);
+              this.cycle = this.klineDataObj.cycle;
+              this.coinType = this.klineDataObj.coinType
+            } else if (this.showChar === 'depth') {
+              this.kline.setDepthOption(data)
+            }
           }else {
-            this.kline.updateOption(data, this.cycle);
+            if (this.showChar === 'candle') {
+              this.kline.updateOption(data, this.cycle);
+            } else {
+              this.kline.updateDepthOption(data)
+            }
           }
         }
       }
@@ -120,6 +135,22 @@ export default {
         return;
       }
       this.$emit("listenToChildEvent", cycle)
+    },
+    changeChart(type) {
+      if (type === this.showChar) {
+        return;
+      }
+      if (type === 'candle') {
+        this.clearChart();
+        this.kline.showLoading();
+        this.kline.setOption(this.klineData, this.cycle)
+        this.showChar = type
+      } else {
+        this.clearChart();
+        this.kline.showLoading();
+        this.kline.setDepthOption(this.klineData)
+        this.showChar = type
+      }
     },
     changeDataZoom(type) {
       if(this.platform === 'pc') {

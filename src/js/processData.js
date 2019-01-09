@@ -50,6 +50,8 @@ export const getDepthData = (data, coinType) => {
   let sellAmounts = [];
   let buyPrices = [];
   let sellPrices = [];
+  let sellData = []
+  let buyData = []
   let num = coinType.baseTitle === "VCC" ? 0 : 5;
   if (Array.isArray(bids) && bids.length > 0) {
     let datas = bids.slice(0, 50);
@@ -87,6 +89,10 @@ export const getDepthData = (data, coinType) => {
     buyPriceGap / priceGap < 0.25 ? 0.25 : buyPriceGap / priceGap;
   let sellPercent = 1 - buyPercent;
   let maxAmount = Math.max(bidsTotal, asksTotal);
+  for (let index = 0; index < sellPrices.length; index++) {
+    sellData.push([parseFloat(sellPrices[index]), sellAmounts[index]])
+    buyData.push([parseFloat(buyPrices[index]), buyAmounts[index]])
+  }
   return {
     maxAmount,
     maxBuyPrice,
@@ -95,6 +101,8 @@ export const getDepthData = (data, coinType) => {
     minSellPrice,
     buyAmounts,
     buyPrices,
+    sellData,
+    buyData,
     sellPrices,
     sellAmounts,
     buyPercent,

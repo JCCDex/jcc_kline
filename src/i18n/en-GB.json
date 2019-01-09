@@ -22,5 +22,7 @@
   "openingMobile": "O: ",
   "closingMobile": "C: ",
   "maxMobile": "H: ",
-  "minMobile": "L: "
+  "minMobile": "L: ",
+  "candle": "Candle",
+  "depth": "Depth"
 }

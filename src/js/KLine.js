@@ -21,20 +21,28 @@ class KLineController {
     this.setKLineChart.initECharts(DOM)
   }
 
+  showLoading() {
+    this.setKLineChart.showLoading()
+  }
+
   resizeChart(DOM, isFullScreen) {
     this.setKLineChart.resizeECharts(DOM, isFullScreen)
   }
 
-  clearChart() {
-    this.setKLineChart.clearEcharts()
-  }
-
-  disposeChart() {
-    this.setKLineChart.disposeEChart()
-  }
-
   setOption(data, cycle) {
     return this.setKLineChart.setOption(data, cycle)
+  }
+
+  updateOption(data, cycle) {
+    this.setKLineChart.updateOption(data, cycle)
+  }
+
+  setDepthOption(data) {
+    this.setKLineChart.setDepthOption(data)
+  }
+
+  updateDepthOption(data) {
+    this.setKLineChart.updateDepthOption(data)
   }
 
   getToolTipData() {
@@ -45,8 +53,12 @@ class KLineController {
     this.setKLineChart.changeDataZoom(type)
   }
 
-  updateOption(data, cycle) {
-    this.setKLineChart.updateOption(data, cycle)
+  clearChart() {
+    this.setKLineChart.clearEcharts()
+  }
+
+  disposeChart() {
+    this.setKLineChart.disposeEChart()
   }
 
   initMobileChart(DOM) {
@@ -57,12 +69,12 @@ class KLineController {
     this.setMobileKLineChart.showLoading()
   }
 
-  getMobileToolTipData() {
-    return this.setMobileKLineChart.getToolTipData()
-  }
-
   hideMobileLoading() {
     this.setMobileKLineChart.hideLoading()
+  }
+
+  getMobileToolTipData() {
+    return this.setMobileKLineChart.getToolTipData()
   }
 
   setMobileOption(size) {
@@ -73,16 +85,16 @@ class KLineController {
     this.setMobileKLineChart.setTimeDivisionsOption(size)
   }
 
-  changeMobileDataZoom(type) {
-    this.setMobileKLineChart.changeDataZoom(type)
-  }
-
   updateMobileOption(data) {
     return this.setMobileKLineChart.updateOption(data)
   }
 
   updateTimeDivisionOption(timeDivisionData, divisionData) {
     return this.setMobileKLineChart.updateTimeDivisionOption(timeDivisionData, divisionData)
+  }
+
+  changeMobileDataZoom(type) {
+    this.setMobileKLineChart.changeDataZoom(type)
   }
 
   disposeMobileChart() {

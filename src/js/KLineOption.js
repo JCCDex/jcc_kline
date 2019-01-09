@@ -27,27 +27,16 @@ var option = {
     grid: [
       {
         top: 60,
-        left: 10,
-        right: 100
+        left: 5,
+        right: '5%',
       },
       {
-        left: 30,
-        right: 100,
+        left: 5,
+        right: '5%',
         bottom: 10,
         // backgroundColor: "#1b2229",
         borderColor: "#1b2229",
         show: true
-      },
-      {
-        top: 60,
-        width: 90,
-        right: 0,
-        bottom: 10,
-      },
-      {
-        right: 0,
-        width: "90px",
-        bottom: 10
       }
     ],
     xAxis: [
@@ -120,97 +109,16 @@ var option = {
         splitNumber: 20,
         min: "dataMin",
         max: "dataMax"
-      },
-      {
-        type: "value",
-        gridIndex: 2,
-        scale: true,
-        position: "top",
-        axisLine: {
-          onZero: false,
-          lineStyle: {
-            color: "#37404b"
-          }
-        },
-        splitArea: {
-          show: false
-        },
-        splitLine: {
-          show: false
-        },
-        axisPointer: {
-          show: true
-        },
-        axisTick: {
-          show: false
-        },
-        axisLabel: {
-          show: false
-        },
-        min: 0
-      },
-      {
-        type: "value",
-        gridIndex: 3,
-        scale: true,
-        axisLine: {
-          onZero: false,
-          lineStyle: {
-            color: "#37404b"
-          }
-        },
-        axisPointer: {
-          show: true
-        },
-        splitArea: {
-          show: false
-        },
-        splitLine: {
-          show: false
-        },
-        axisTick: {
-          show: false
-        },
-        axisLabel: {
-          show: false
-        },
-        min: 0
       }
     ],
     yAxis: [
       {
         scale: true,
         gridIndex: 0,
+        position: 'right',
         splitArea: {
           show: false
         },
-        splitLine: {
-          lineStyle: {
-            color: "#37404b",
-            type: "dotted"
-          }
-        },
-        axisLine: {
-          show: false,
-          lineStyle: {
-            color: "#37404b"
-          }
-        },
-        axisLabel: {
-          show: true,
-          margin: 0,
-          color: "#9aa4ac",
-          fontSize: 12,
-          verticalAlign: "middle",
-          textStyle: {
-            align: "left"
-          }
-        }
-      },
-      {
-        scale: true,
-        gridIndex: 1,
-        splitNumber: 2,
         splitLine: {
           lineStyle: {
             color: "#37404b",
@@ -232,12 +140,10 @@ var option = {
         }
       },
       {
-        type: "category",
-        gridIndex: 2,
-        boundaryGap: false,
-        splitArea: {
-          show: false
-        },
+        scale: true,
+        gridIndex: 1,
+        splitNumber: 2,
+        position: 'right',
         splitLine: {
           lineStyle: {
             color: "#37404b",
@@ -245,75 +151,17 @@ var option = {
           }
         },
         axisLine: {
-          onZero: false,
+          show: false,
           lineStyle: {
             color: "#37404b"
           }
         },
-        axisPointer: {
-          lineStyle: {
-            type: "dotted"
-          }
-        },
-        axisTick: {
-          show: false
-        },
         axisLabel: {
           show: true,
-          inside: true,
-          margin: 88,
-          showMinLabel: true,
-          showMaxLabel: true,
-          interval: 12,
-          color: "#b9cadd",
-          fontSize: 10,
-          verticalAlign: "middle",
-          textStyle: {
-            align: "right"
-          }
-        }
-      },
-      {
-        type: "category",
-        gridIndex: 3,
-        boundaryGap: false,
-        splitArea: {
-          show: false
-        },
-        splitLine: {
-          lineStyle: {
-            color: "#37404b",
-            type: "dotted"
-          }
-        },
-        axisLine: {
-          onZero: false,
-          lineStyle: {
-            color: "#37404b"
-          }
-        },
-        axisPointer: {
-          lineStyle: {
-            type: "dotted"
-          }
-        },
-        axisTick: {
-          show: false
-        },
-        inverse: true,
-        axisLabel: {
-          show: true,
-          margin: 88,
-          showMinLabel: true,
-          showMaxLabel: true,
-          inside: true,
-          interval: 12,
-          color: "#b9cadd",
-          fontSize: 10,
-          verticalAlign: "middle",
-          textStyle: {
-            align: "right"
-          }
+          margin: 0,
+          color: "#9aa4ac",
+          fontSize: 12,
+          verticalAlign: "middle"
         }
       }
     ],
@@ -424,90 +272,6 @@ var option = {
         },
         xAxisIndex: 1,
         yAxisIndex: 1,
-      },
-      {
-        name: "sell",
-        type: "line",
-        areaStyle: {
-          normal: {
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 1,
-              y2: 0,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: "#14322d"
-                },
-                {
-                  offset: 1,
-                  color: "#28b869"
-                }
-              ]
-            }
-          }
-        },
-        itemStyle: {
-          normal: {
-            color: "#28b869"
-          }
-        },
-        step: "end",
-        smooth: true,
-        showSymbol: false,
-        lineStyle: {
-          normal: {
-            width: 1,
-            color: "#28b869",
-            opacity: 1
-          }
-        },
-        xAxisIndex: 2,
-        yAxisIndex: 2
-      },
-      {
-        name: "buy",
-        type: "line",
-        areaStyle: {
-          normal: {
-            color: {
-              type: "linear",
-              x: 0,
-              y: 0,
-              x2: 1,
-              y2: 0,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: "#2d1d23"
-                },
-                {
-                  offset: 1,
-                  color: "#ee4a4a"
-                }
-              ]
-            }
-          }
-        },
-        itemStyle: {
-          normal: {
-            color: "#ee4a4a"
-          }
-        },
-        step: "end",
-        smooth: true,
-        showSymbol: false,
-        lineStyle: {
-          normal: {
-            width: 1,
-            color: "#ee4b4b",
-            opacity: 1
-          }
-        },
-        xAxisIndex: 3,
-        yAxisIndex: 3
       }
     ]
   };
