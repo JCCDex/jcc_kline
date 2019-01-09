@@ -1,18 +1,20 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
         <!-- Cycle按钮 -->
-        <div style="margin-right:10px">
-          <div @click = "chooseCycle('hour')" :class="this.timeData === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hour}}</div>
-          <div @click = "chooseCycle('day')" :class="this.timeData === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.day}}</div>
-          <div @click = "chooseCycle('week')" :class="this.timeData === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.week}}</div>
-          <div @click = "chooseCycle('month')" :class="this.timeData === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.month}}</div>
-          <div @click = "chooseCycle('everyhour')" :class="this.timeData === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.timeSharing}}</div>
-          <!-- <div @click.stop="switchBase">
-            <span :class="{'active': show}">{{type}}</span>
-            <img v-if="!show && actions.length > 1" :src="downnormal" class="down-img" />
-            <img v-if="show && actions.length > 1" :src="downclick" class="down-img active" />
-          </div> -->
+        <div style="margin-right:0.1rem">
+          <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hour}}</div>
+          <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.day}}</div>
+          <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.week}}</div>
+          <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.month}}</div>
+          <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.timeSharing}}</div>
         </div>
+        <!-- <div style="color: #f5f5f5;font-size: 0.22rem;float: right;" @click="switchBase">
+            <span>{{message.more}}</span>
+            <span>{{timeData}}</span>
+            <img v-if="!show" :src="downnormal"/>
+            <img v-else :src="downclick"/>
+            <van-actionsheet  v-model="show" :actions="actions" :overlay="false"/>
+          </div> -->
         <!-- tooltip 数据显示 -->
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">                                                                                                                                                                                                              
           <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.time}}</font>
@@ -50,7 +52,6 @@ export default {
       show: false,
       actions: [
       ],
-      timeData: 'hour',
       kline: null,
       status: 0,
       divisionTime: null,
@@ -134,7 +135,6 @@ export default {
   },
   created() {
     this.message = getLanguage();
-    this.timeData = this.message.hour
     // this.setAction();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
   },
@@ -186,21 +186,21 @@ export default {
     //   this.actions = actions;
     //   this.timeData = actions[0].name;
     // },
-    // onClick(item) {
-    //   let { name, ticker } = item;
-    //   this.show = false;
-    //   if (this.timeData === name) {
-    //     return;
-    //   }
-    //   this.timeData = name;
-    //   this.$emit("listenToChildEvent", item)
-    //   this.show = false;
-    // },
-    chooseCycle(cycle) {
-      if (this.timeData === cycle) {
+    onClick(item) {
+      let { name, ticker } = item;
+      this.show = false;
+      if (this.cycle === name) {
         return;
       }
-      this.timeData = cycle;
+      this.cycle = name;
+      this.$emit("listenToChildEvent", item)
+      this.show = false;
+    },
+    chooseCycle(cycle) {
+      if (this.cycle === cycle) {
+        return;
+      }
+      this.cycle = cycle;
       var cycleData = {
           name: this.message.cycle,
           ticker: cycle
@@ -229,20 +229,20 @@ export default {
 <style>
 .kline-cycle-btn {
   float: left;
-  min-width: 30px;
+  min-width: 0.3rem;
   width: auto;
-  height: 26px;
+  height: 0.26rem;
   cursor: pointer;
-  margin-left: 50px;
-  margin-top: 8px;
+  margin-left: 0.5rem;
+  margin-top: 0.08rem;
   text-align: center;
   color: #3669a7;
-  line-height: 20px;
-  font-size: 22px;
-  border-radius: 2px;
+  line-height: 0.2rem;
+  font-size: 0.22rem;
+  border-radius: 0.02rem;
 }
 .kline-btn-active {
-  border-bottom:1px solid  #e6e6e6;
+  border-bottom:0.01rem solid  #e6e6e6;
   color: #e6e6e6;
 }
 .kline-cycle {
@@ -298,7 +298,7 @@ export default {
   border-radius: 0.04rem;
 }
 .mobile-tooltip-zh {
-  text-align: feft;
+  text-align: left;
   font-size: 0.18rem;
   padding: 0.5rem 0.2rem 0.23rem 0.2rem;
   z-index:1;
@@ -345,13 +345,13 @@ export default {
 .time-sharing-data {
   text-align: left;
   font-size: 0.18rem;
-  padding: 0.5rem 0.15rem 0 0;
+  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
   z-index:1;
 }
 .time-sharing-zh-data {
   text-align: left;
   font-size: 0.18rem;
-  padding: 0.5rem 0.15rem 0 0;
+  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
   z-index:1;
 }
 .mobile-tooltip-name {
