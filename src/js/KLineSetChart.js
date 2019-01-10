@@ -419,14 +419,16 @@ class KLineSetChartController {
         axisPointer: {
           show: true
         },
-        axisLabel: {
+        axisTick: {
           show: true,
-          color: "#b9cadd",
-          fontSize: 10,
-          textStyle: {
-            align: "right"
-          }
-        }
+          alignWithLabel: true,
+          
+       },
+       axisLabel: {
+         show: true,
+         color: "#b9cadd",
+         fontSize: 10
+       }
       }
     ]
   }
