@@ -21,9 +21,11 @@ var mobileOption = {
       padding: 10,
       textStyle: {
         color: "#000",
-        fontSize: "0.15rem"
+        fontSize: "0.2rem",
+        color: "#ffffff",
+        fontFamily: "Avenir, Helvetica, Arial, sans-serif"
       },
-      extraCssText: "background:#252332;border:0;color:#ffffff;opacity: 0.7;"
+      extraCssText: "background:#252332;border:0;opacity: 0.7;"
     },
     grid: [
       {
