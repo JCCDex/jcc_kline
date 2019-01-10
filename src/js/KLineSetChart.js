@@ -24,7 +24,7 @@ class KLineSetChartController {
     this.showIndicators = showIndicators
   }
 
-  resizeECharts(DOM, isFullScreen) {
+  resizeECharts(DOM, isFullScreen, chartType) {
     if (!isFullScreen) {
       let size = getClientWidth();
       let resizeContainer = () => {
@@ -71,9 +71,16 @@ class KLineSetChartController {
       resizeContainer(this);
       this.kline.resize();
     }
-    if (oldKlineData) {
-      this.updateOption(oldKlineData.oldData, oldKlineData.oldCycle)
+    if (chartType === 'candle') {
+      if (oldKlineData) {
+        this.updateOption(oldKlineData.oldData, oldKlineData.oldCycle)
+      }
+    } else {
+      if (oldDepthData) {
+        this.updateDepthOption(oldDepthData)
+      }
     }
+    
   }
 
   initECharts(DOM) {
@@ -247,30 +254,6 @@ class KLineSetChartController {
         data: data.categoryData
       })
     }
-    // if (this.showIndicators.indexOf('Volume') === -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
-    //   x.push(
-    //     {
-    //       gridIndex: 1,
-    //       max: data.maxAmount
-    //     },
-    //     {
-    //       gridIndex: 2,
-    //       max: data.maxAmount
-    //     }
-    //   )
-    // }
-    // if (this.showIndicators.indexOf('Volume') !== -1 && this.showIndicators.indexOf('MarketDepth') !== -1) {
-    //   x.push(
-    //     {
-    //       gridIndex: 2,
-    //       max: data.maxAmount
-    //     },
-    //     {
-    //       gridIndex: 3,
-    //       max: data.maxAmount
-    //     }
-    //   )
-    // }
     return x;
   }
 
@@ -386,7 +369,6 @@ class KLineSetChartController {
         tooltip: this.getDepthToolTip(data),
         series: this.getDepthSeries(data)
       }
-      console.log(klineOption)
       this.kline.setOption(klineOption, true);
     }
   }
@@ -401,18 +383,17 @@ class KLineSetChartController {
         yAxis: this.getDepthYAxis(data),
         series: this.getDepthSeries(data)
       }
-      // merge(config, klineOption)
-      // config.dataZoom = this.kline.getOption().dataZoom
       this.kline.setOption(klineOption);
     }
   }
 
   getDepthGrid() {
     return [{
-      top: 10,
+      top: 60,
       left: 10,
-      right: '5%',
-      bottom: 20
+      right: 10,
+      bottom: 20,
+      containLabel: true
     }]
   }
 
@@ -482,33 +463,35 @@ class KLineSetChartController {
     return {
       formatter: function (param) {
         param = param[0];
-        var index = param.data[0];
-        if (param.seriesName === "sell") {
-          return [
-            '<div style="text-align:left;">',
-            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.sellPrice +
-            param.data[0] +
-            "<br/>",
-            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.sellTotal +
-            param.data[1] +
-            "<br/>",
-            "</div>"
-          ].join("");
-        } else if (param.seriesName === "buy") {
-          return [
-            '<div style="text-align:left;">',
-            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.buyPrice +
-            param.data[0] +
-            "<br/>",
-            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-            message.buyTotal +
-            param.data[1] +
-            "<br/>",
-            "</div>"
-          ].join("");
+        if(param) {
+          var index = param.data[0];
+          if (param.seriesName === "sell") {
+            return [
+              '<div style="text-align:left;">',
+              '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+              message.sellPrice +
+              param.data[0] +
+              "<br/>",
+              '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+              message.sellTotal +
+              param.data[1] +
+              "<br/>",
+              "</div>"
+            ].join("");
+          } else if (param.seriesName === "buy") {
+            return [
+              '<div style="text-align:left;">',
+              '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+              message.buyPrice +
+              param.data[0] +
+              "<br/>",
+              '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+              message.buyTotal +
+              param.data[1] +
+              "<br/>",
+              "</div>"
+            ].join("");
+          }
         }
       }
     };
@@ -516,36 +499,6 @@ class KLineSetChartController {
 
   getDepthSeries(data) {
     return [
-      {
-        name: 'sell',
-        type: 'line',
-        data: data.sellData,
-        showSymbol: false,
-        lineStyle: {
-          color: '#008c00',
-        },
-        areaStyle: {
-          normal: {
-            color: {
-              type: "linear",
-              x: 0,
-              y: 1,
-              x2: 0,
-              y2: 0,
-              colorStops: [
-                {
-                  offset: 0,
-                  color: "#14322d"
-                },
-                {
-                  offset: 1,
-                  color: "#28b869"
-                }
-              ]
-            }
-          }
-        }
-      },
       {
         name: 'buy',
         type: 'line',
@@ -570,6 +523,36 @@ class KLineSetChartController {
                 {
                   offset: 1,
                   color: "#ee4a4a"
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        name: 'sell',
+        type: 'line',
+        data: data.sellData,
+        showSymbol: false,
+        lineStyle: {
+          color: '#008c00',
+        },
+        areaStyle: {
+          normal: {
+            color: {
+              type: "linear",
+              x: 0,
+              y: 1,
+              x2: 0,
+              y2: 0,
+              colorStops: [
+                {
+                  offset: 0,
+                  color: "#14322d"
+                },
+                {
+                  offset: 1,
+                  color: "#28b869"
                 }
               ]
             }

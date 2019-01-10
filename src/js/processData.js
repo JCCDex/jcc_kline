@@ -58,7 +58,7 @@ export const getDepthData = (data, coinType) => {
     let amounts = [];
     let prices = [];
     for (let data of datas) {
-      bidsTotal = bidsTotal + data.amount;
+      bidsTotal = bidsTotal + parseFloat(data.amount);
       amounts.push(bidsTotal);
       prices.push(formatDecimal(data.price, num));
     }
@@ -74,7 +74,7 @@ export const getDepthData = (data, coinType) => {
     let amounts = [];
     let prices = [];
     for (let data of datas) {
-      asksTotal = asksTotal + data.amount;
+      asksTotal = asksTotal + parseFloat(data.amount);
       amounts.push(asksTotal);
       prices.push(formatDecimal(data.price, num));
     }
@@ -91,8 +91,11 @@ export const getDepthData = (data, coinType) => {
   let maxAmount = Math.max(bidsTotal, asksTotal);
   for (let index = 0; index < sellPrices.length; index++) {
     sellData.push([parseFloat(sellPrices[index]), sellAmounts[index]])
+  }
+  for (let index = 0; index < buyPrices.length; index++) {
     buyData.push([parseFloat(buyPrices[index]), buyAmounts[index]])
   }
+  buyData = buyData.reverse()
   return {
     maxAmount,
     maxBuyPrice,
