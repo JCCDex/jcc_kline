@@ -7,7 +7,9 @@
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test": "jest --config test/unit/jest.conf.js",
-    "coveralls": "cat ./coverage/lcov.info | coveralls"
+    "coveralls": "cat ./coverage/lcov.info | coveralls",
+    "lint": "eslint src --fix",
+    "lint:create": "eslint --init"
   },
   "author": "JCCDex",
   "license": "ISC",

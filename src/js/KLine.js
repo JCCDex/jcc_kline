@@ -1,109 +1,109 @@
 import KLineSetChartController from './KLineSetChart';
-import KLineMobileSetChartController from './KLineMobileSetChart'
-import { indicatorsOption, mobileIndicatorsOption } from './processData'
+import KLineMobileSetChartController from './KLineMobileSetChart';
+import { indicatorsOption, mobileIndicatorsOption } from './processData';
 
 class KLineController {
-  constructor(platform, klineConfig, showIndicators) {
-    var merge = require('lodash.merge');
-    var config
-    if (platform === 'pc') {
-      let klineOption = indicatorsOption(showIndicators)
-      config = merge(klineOption, klineConfig)
-      this.setKLineChart = new KLineSetChartController(config, showIndicators);
-    } else {
-      let klineMobileOption = mobileIndicatorsOption(showIndicators)
-      config = merge(klineMobileOption, klineConfig)
-      this.setMobileKLineChart = new KLineMobileSetChartController(config, showIndicators);
+    constructor(platform, klineConfig, showIndicators) {
+        var merge = require('lodash.merge');
+        var config;
+        if (platform === 'pc') {
+            let klineOption = indicatorsOption(showIndicators);
+            config = merge(klineOption, klineConfig);
+            this.setKLineChart = new KLineSetChartController(config, showIndicators);
+        } else {
+            let klineMobileOption = mobileIndicatorsOption(showIndicators);
+            config = merge(klineMobileOption, klineConfig);
+            this.setMobileKLineChart = new KLineMobileSetChartController(config, showIndicators);
+        }
     }
-  }
 
-  initChart(DOM) {
-    this.setKLineChart.initECharts(DOM)
-  }
+    initChart(DOM) {
+        this.setKLineChart.initECharts(DOM);
+    }
 
-  showLoading() {
-    this.setKLineChart.showLoading()
-  }
+    showLoading() {
+        this.setKLineChart.showLoading();
+    }
 
-  resizeChart(DOM, isFullScreen, chartType) {
-    this.setKLineChart.resizeECharts(DOM, isFullScreen, chartType)
-  }
+    resizeChart(DOM, isFullScreen, chartType) {
+        this.setKLineChart.resizeECharts(DOM, isFullScreen, chartType);
+    }
 
-  setOption(data, cycle) {
-    return this.setKLineChart.setOption(data, cycle)
-  }
+    setOption(data, cycle) {
+        return this.setKLineChart.setOption(data, cycle);
+    }
 
-  updateOption(data, cycle) {
-    this.setKLineChart.updateOption(data, cycle)
-  }
+    updateOption(data, cycle) {
+        this.setKLineChart.updateOption(data, cycle);
+    }
 
-  setDepthOption(data) {
-    this.setKLineChart.setDepthOption(data)
-  }
+    setDepthOption(data) {
+        this.setKLineChart.setDepthOption(data);
+    }
 
-  updateDepthOption(data) {
-    this.setKLineChart.updateDepthOption(data)
-  }
+    updateDepthOption(data) {
+        this.setKLineChart.updateDepthOption(data);
+    }
 
-  getToolTipData() {
-    return this.setKLineChart.getToolTipData()
-  }
+    getToolTipData() {
+        return this.setKLineChart.getToolTipData();
+    }
 
-  changeDataZoom(type) {
-    this.setKLineChart.changeDataZoom(type)
-  }
+    changeDataZoom(type) {
+        this.setKLineChart.changeDataZoom(type);
+    }
 
-  clearChart() {
-    this.setKLineChart.clearEcharts()
-  }
+    clearChart() {
+        this.setKLineChart.clearEcharts();
+    }
 
-  disposeChart() {
-    this.setKLineChart.disposeEChart()
-  }
+    disposeChart() {
+        this.setKLineChart.disposeEChart();
+    }
 
-  initMobileChart(DOM) {
-    this.setMobileKLineChart.initMobileECharts(DOM)
-  }
+    initMobileChart(DOM) {
+        this.setMobileKLineChart.initMobileECharts(DOM);
+    }
 
-  showMobileLoading() {
-    this.setMobileKLineChart.showLoading()
-  }
+    showMobileLoading() {
+        this.setMobileKLineChart.showLoading();
+    }
 
-  hideMobileLoading() {
-    this.setMobileKLineChart.hideLoading()
-  }
+    hideMobileLoading() {
+        this.setMobileKLineChart.hideLoading();
+    }
 
-  getMobileToolTipData() {
-    return this.setMobileKLineChart.getToolTipData()
-  }
+    getMobileToolTipData() {
+        return this.setMobileKLineChart.getToolTipData();
+    }
 
-  setMobileOption(size) {
-    this.setMobileKLineChart.setOption(size)
-  }
+    setMobileOption(size) {
+        this.setMobileKLineChart.setOption(size);
+    }
 
-  setTimeDivisionsOption(size) {
-    this.setMobileKLineChart.setTimeDivisionsOption(size)
-  }
+    setTimeDivisionsOption(size) {
+        this.setMobileKLineChart.setTimeDivisionsOption(size);
+    }
 
-  updateMobileOption(data) {
-    return this.setMobileKLineChart.updateOption(data)
-  }
+    updateMobileOption(data) {
+        return this.setMobileKLineChart.updateOption(data);
+    }
 
-  updateTimeDivisionOption(timeDivisionData, divisionData) {
-    return this.setMobileKLineChart.updateTimeDivisionOption(timeDivisionData, divisionData)
-  }
+    updateTimeDivisionOption(timeDivisionData, divisionData) {
+        return this.setMobileKLineChart.updateTimeDivisionOption(timeDivisionData, divisionData);
+    }
 
-  changeMobileDataZoom(type) {
-    this.setMobileKLineChart.changeDataZoom(type)
-  }
+    changeMobileDataZoom(type) {
+        this.setMobileKLineChart.changeDataZoom(type);
+    }
 
-  disposeMobileChart() {
-    this.setMobileKLineChart.disposeMobileEChart()
-  }
+    disposeMobileChart() {
+        this.setMobileKLineChart.disposeMobileEChart();
+    }
 
-  clearMobileChart() {
-    this.setMobileKLineChart.clearMobileEcharts();
-  }
+    clearMobileChart() {
+        this.setMobileKLineChart.clearMobileEcharts();
+    }
 }
 
 export default KLineController;
