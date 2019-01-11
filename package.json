@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules",
     "test": "jest --config test/unit/jest.conf.js",
-    "coveralls": "npm run test --coverage --coverageReporters=lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+    "coveralls": "cat ./test/unit/coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
     "lint": "eslint src --fix"
   },
   "author": "JCCDex",

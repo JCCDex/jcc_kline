@@ -20,10 +20,6 @@ describe('test utils', () => {
     expect(getLanguage().language).toBe('en')
   })
 
-  it('test formatTime', () => {
-    expect(formatTime(1545985107000)).toBe('2018-12-28  16:00')
-  })
-
   it('test formatDecimal if sep is true', () => {
     expect(formatDecimal(11212.234234234, 6, true)).toBe("11,212.234234")
   })
