@@ -239,3 +239,77 @@ export const mobileIndicatorsOption = (showIndicators) => {
     }
     return mobileOption;
 };
+
+export const getMobileDepthData = (data, coinType) => {
+    let bids = data.bids;
+    let bidsTotal = 0;
+    let maxBuyPrice = 0;
+    let minBuyPrice = 0;
+    let maxSellPrice = 0;
+    let minSellPrice = 0;
+    let buyAmounts = [];
+    let sellAmounts = [];
+    let buyPrices = [];
+    let sellPrices = [];
+    let sellData = [];
+    let buyData = [];
+    let num = coinType.baseTitle === 'VCC' ? 0 : 5;
+    if (Array.isArray(bids) && bids.length > 0) {
+        let datas = bids.slice(0, 50);
+        let amounts = [];
+        let prices = [];
+        for (let data of datas) {
+            bidsTotal = bidsTotal + parseFloat(data.amount);
+            amounts.push(bidsTotal);
+            prices.push(formatDecimal(data.price, num));
+        }
+        maxBuyPrice = Math.max.apply(null, prices);
+        minBuyPrice = Math.min.apply(null, prices);
+        buyAmounts = amounts;
+        buyPrices = prices;
+    }
+    let asks = data.asks;
+    let asksTotal = 0;
+    if (Array.isArray(asks) && asks.length > 0) {
+        let datas = asks.slice(0, 50);
+        let amounts = [];
+        let prices = [];
+        for (let data of datas) {
+            asksTotal = asksTotal + parseFloat(data.amount);
+            amounts.push(asksTotal);
+            prices.push(formatDecimal(data.price, num));
+        }
+        maxSellPrice = Math.max.apply(null, prices);
+        minSellPrice = Math.min.apply(null, prices);
+        sellAmounts = amounts;
+        sellPrices = prices;
+    }
+    let priceGap = maxSellPrice - minBuyPrice;
+    let buyPriceGap = maxBuyPrice - minBuyPrice;
+    let buyPercent =
+    buyPriceGap / priceGap < 0.25 ? 0.25 : buyPriceGap / priceGap;
+    let sellPercent = 1 - buyPercent;
+    let maxAmount = Math.max(bidsTotal, asksTotal);
+    for (let index = 0; index < sellPrices.length; index++) {
+        sellData.push([parseFloat(sellPrices[index]), sellAmounts[index]]);
+    }
+    for (let index = 0; index < buyPrices.length; index++) {
+        buyData.push([parseFloat(buyPrices[index]), buyAmounts[index]]);
+    }
+    buyData = buyData.reverse();
+    return {
+        maxAmount,
+        maxBuyPrice,
+        minBuyPrice,
+        maxSellPrice,
+        minSellPrice,
+        buyAmounts,
+        buyPrices,
+        sellData,
+        buyData,
+        sellPrices,
+        sellAmounts,
+        buyPercent,
+        sellPercent
+    };
+};
