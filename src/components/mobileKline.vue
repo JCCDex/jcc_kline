@@ -2,11 +2,11 @@
   <div class="mobile-kline" style="background-color: #161b21;">
         <!-- Cycle按钮 -->
         <div style="margin-right:0.1rem">
-          <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hour}}</div>
-          <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.day}}</div>
-          <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.week}}</div>
-          <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.month}}</div>
-          <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.timeSharing}}</div>
+          <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.hour}}</div>
+          <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.day}}</div>
+          <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.week}}</div>
+          <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.month}}</div>
+          <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.timeSharing}}</div>
         </div>
         <!-- <div style="color: #f5f5f5;font-size: 0.22rem;float: right;" @click="switchBase">
             <span>{{message.more}}</span>
@@ -36,7 +36,8 @@
   </div>
 </template>
 <script>
-import '../icon/iconfont.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+import '../icon/iconfont.css'
+import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 import downNormal from "../icon/down_normal.png";                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 import downClick from "../icon/down_click.png";                                                                                                   
 import upArrow from "../icon/up_arrow.png"
@@ -226,141 +227,3 @@ export default {
   }
 }
 </script>
-<style>
-.kline-cycle-btn {
-  float: left;
-  min-width: 0.3rem;
-  width: auto;
-  height: 0.26rem;
-  cursor: pointer;
-  margin-left: 0.5rem;
-  margin-top: 0.08rem;
-  text-align: center;
-  color: #3669a7;
-  line-height: 0.2rem;
-  font-size: 0.22rem;
-  border-radius: 0.02rem;
-}
-.kline-btn-active {
-  border-bottom:0.01rem solid  #e6e6e6;
-  color: #e6e6e6;
-}
-.kline-cycle {
-  float: left;
-  padding: 0.14rem 0 0.17rem 0.2rem;
-  cursor: pointer;
-}
-.kline-cycle-time {
-  padding: 0.14rem 0 0 0.2rem;
-  cursor: pointer;
-}
-.kline-cycle-time span {
-  color: #ffffff;
-  padding-top: 0.01rem;
-}
-.kline-cycle span {
-  color: #ffffff;
-  padding-top: 0.01rem;
-}
-.kline-cycle img {
-  height: 0.16rem;
-  margin-right: 0.1rem;
-}
-.van-actionsheet {
-  left: 0.1rem;
-  right: 0;
-  top: 2.4rem;
-  bottom: 80%;
-  width: 1rem;
-  color: #232732;
-  -webkit-transition: 0.2s ease-out;
-  transition: 0.1s ease-out;
-  overflow-y: visible;
-  background-color: #232732;
-}
-.van-actionsheet__item {
-  height: 0.5rem;
-  line-height: 0.5rem;
-  font-size: 0.28rem;
-  color: #e6e6e6;
-  text-align: center;
-  background-color: #232732 !important;
-  cursor: pointer;
-}
-.van-actionsheet__item:active {
-  color: #1bdafd;
-}
-.van-hairline--top::after {
-  border-top-width: 0rem;
-}
-.van-actionsheet__list {
-  border: 0.02rem solid #37495c;
-  border-radius: 0.04rem;
-}
-.mobile-tooltip-zh {
-  text-align: left;
-  font-size: 0.18rem;
-  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
-  z-index:1;
-}
-.mobile-tooltip-en {
-  text-align: left;
-  font-size: 0.18rem;
-  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
-  z-index:1;
-}
-.mobile-tooltip-en-outspread {
-  text-align: right;
-  font-size: 0.18rem;
-  padding: 0.2rem 0 0.23rem 0.2rem;
-  z-index:1;
-}
-.kline-arrow-up {
-  float: right;
-  margin: 0.1rem 0.15rem;
-  width: 0.16rem;
-  height: 0.1rem;
-}
-.kline-arrow-down {
-  float: right;
-  margin: 0.1rem 0.15rem;
-  width: 0.16rem;
-  height: 0.1rem;
-}
-.arrow-up-en {
-  float: right;
-  margin: 0.06rem 0.15rem;
-  width: 0.16rem;
-  height: 0.1rem;
-}
-.arrow-down-en {
-  float: right;
-  margin: 0.06rem 0.15rem;
-  width: 0.16rem;
-  height: 0.1rem;
-}
-.date-time {
-  margin-left: 0.1rem;
-}
-.time-sharing-data {
-  text-align: left;
-  font-size: 0.18rem;
-  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
-  z-index:1;
-}
-.time-sharing-zh-data {
-  text-align: left;
-  font-size: 0.18rem;
-  padding: 0.5rem 0.2rem 0.23rem 0.2rem;
-  z-index:1;
-}
-.mobile-tooltip-name {
-  color: #e6e6e6;
-}
-.tooltip-data-green {
-  color: #3ee99f;
-}
-.tooltip-data-red {
-  color: #ee4b4b;
-}
-</style>

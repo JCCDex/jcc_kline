@@ -1,0 +1,294 @@
+.kline-cycle-btn {
+    float: left;
+    min-width: 20px;
+    width: auto;
+    height: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+    text-align: center;
+    color: #3669a7;
+    line-height: 20px;
+    font-size: 12px;
+    border-radius: 2px;
+}
+
+.kline-btn-active {
+    color: #e6e6e6;
+    background: #34b9ea;
+}
+
+.tooltip-data-zh {
+    font-size: 12px;
+    position: absolute;
+    left: 16.7%;
+    top: 20px;
+    z-index: 1;
+    float: left;
+    height: 33px;
+    font-family: 'Microsoft YaHei';
+}
+
+.tooltip-data-en {
+    font-size: 12px;
+    position: absolute;
+    left: 16.67%;
+    top: 23px;
+    z-index: 1;
+    float: left;
+    height: 33px;
+    font-family: 'Microsoft YaHei';
+}
+
+.icon-kxian-zhankai {
+    color: #b9cadd;
+    z-index: 2;
+    font-size: 12px;
+}
+
+.icon-kxian-guanbi {
+    color: #b9cadd;
+    z-index: 2;
+    font-size: 12px;
+}
+
+.tooltip-data-name {
+    margin-left: 10px;
+    color: #b9cadd;
+}
+
+.tooltip-data-ma5 {
+    color: #ff4d71
+}
+
+.tooltip-ma5 {
+    color: #ff4d71
+}
+
+.tooltip-data-ma10 {
+    margin-left: 10px;
+    color: #67ff7c
+}
+
+.tooltip-ma10 {
+    color: #67ff7c
+}
+
+.tooltip-data-ma20 {
+    margin-left: 10px;
+    color: #16c5ff
+}
+
+.tooltip-ma20 {
+    color: #16c5ff
+}
+
+.tooltip-data-ma30 {
+    margin-left: 10px;
+    color: #f6d026
+}
+
+.tooltip-ma30 {
+    color: #f6d026
+}
+
+.tooltip-data-ma60 {
+    margin-left: 10px;
+    color: #e03bfa
+}
+
+.tooltip-ma60 {
+    color: #e03bfa
+}
+
+.tooltip-data-green {
+    color: #3ee99f;
+}
+
+.tooltip-data-red {
+    color: #ee4b4b;
+}
+
+.chart-candle {
+    color: #3669a7
+}
+
+.chart-candle-active {
+    min-width: 40px;
+    width: auto;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #e6e6e6;
+    background: #34b9ea;
+    line-height: 20px;
+    font-size: 13px;
+}
+
+.chart-depth {
+    color: #3669a7;
+}
+
+.chart-depth-active {
+    min-width: 40px;
+    width: auto;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 2px;
+    color: #e6e6e6;
+    background: #34b9ea;
+    line-height: 20px;
+    font-size: 13px;
+}
+
+.mobile-cycle-btn {
+    float: left;
+    min-width: 0.3rem;
+    width: auto;
+    height: 0.26rem;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    margin-top: 0.08rem;
+    text-align: center;
+    color: #3669a7;
+    line-height: 0.2rem;
+    font-size: 0.22rem;
+    border-radius: 0.02rem;
+}
+
+.mobile-btn-active {
+    border-bottom: 0.01rem solid #e6e6e6;
+    color: #e6e6e6;
+}
+
+.mobile-cycle {
+    float: left;
+    padding: 0.14rem 0 0.17rem 0.2rem;
+    cursor: pointer;
+}
+
+.mobile-cycle-time {
+    padding: 0.14rem 0 0 0.2rem;
+    cursor: pointer;
+}
+
+.mobile-cycle-time span {
+    color: #ffffff;
+    padding-top: 0.01rem;
+}
+
+.mobile-cycle span {
+    color: #ffffff;
+    padding-top: 0.01rem;
+}
+
+.mobile-cycle img {
+    height: 0.16rem;
+    margin-right: 0.1rem;
+}
+
+.van-actionsheet {
+    left: 0.1rem;
+    right: 0;
+    top: 2.4rem;
+    bottom: 80%;
+    width: 1rem;
+    color: #232732;
+    -webkit-transition: 0.2s ease-out;
+    transition: 0.1s ease-out;
+    overflow-y: visible;
+    background-color: #232732;
+}
+
+.van-actionsheet__item {
+    height: 0.5rem;
+    line-height: 0.5rem;
+    font-size: 0.28rem;
+    color: #e6e6e6;
+    text-align: center;
+    background-color: #232732 !important;
+    cursor: pointer;
+}
+
+.van-actionsheet__item:active {
+    color: #1bdafd;
+}
+
+.van-hairline--top::after {
+    border-top-width: 0rem;
+}
+
+.van-actionsheet__list {
+    border: 0.02rem solid #37495c;
+    border-radius: 0.04rem;
+}
+
+.mobile-tooltip-zh {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.mobile-tooltip-en {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.mobile-tooltip-en-outspread {
+    text-align: right;
+    font-size: 0.18rem;
+    padding: 0.2rem 0 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.mobile-arrow-up {
+    float: right;
+    margin: 0.1rem 0.15rem;
+    width: 0.16rem;
+    height: 0.1rem;
+}
+
+.mobile-arrow-down {
+    float: right;
+    margin: 0.1rem 0.15rem;
+    width: 0.16rem;
+    height: 0.1rem;
+}
+
+.arrow-up-en {
+    float: right;
+    margin: 0.06rem 0.15rem;
+    width: 0.16rem;
+    height: 0.1rem;
+}
+
+.arrow-down-en {
+    float: right;
+    margin: 0.06rem 0.15rem;
+    width: 0.16rem;
+    height: 0.1rem;
+}
+
+.date-time {
+    margin-left: 0.1rem;
+}
+
+.time-sharing-data {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.time-sharing-zh-data {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.mobile-tooltip-name {
+    color: #e6e6e6;
+}
