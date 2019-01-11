@@ -39,13 +39,13 @@
     font-family: 'Microsoft YaHei';
 }
 
-.icon-kxian-zhankai {
+.icon-kline-show {
     color: #b9cadd;
     z-index: 2;
     font-size: 12px;
 }
 
-.icon-kxian-guanbi {
+.icon-kline-hide {
     color: #b9cadd;
     z-index: 2;
     font-size: 12px;

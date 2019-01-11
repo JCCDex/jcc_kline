@@ -10,7 +10,7 @@
       </div>
       <!-- tooltip数据显示 -->
       <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="this.showChart === 'candle' && toolTipData">
-          <i :class="outspreadMA ? 'icon iconfont icon-kxian-guanbi' : 'icon iconfont icon-kxian-zhankai'" @click="showMAData"></i>
+          <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
           <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.time}}</font>
           <font class="tooltip-data-name">{{message.volume}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font>
           <font class="tooltip-data-name">{{message.opening}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font>
@@ -30,7 +30,10 @@
         <span @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-depth-active' : 'chart-depth'">{{message.depth}}</span>
       </div>
       <!-- fullscreen 按钮 -->
-      <!-- <button type="button" class="fullscreen" @click="toggle">Fullscreen</button> -->
+      <!-- <div style="position: absolute;right:20px;top:20px;z-index:1;">
+        <img  v-if="!fullscreen" @click="toggle" :src="fullscreenImg" style="width: 20px;height: 20px;"/>
+        <img  v-if="fullscreen" @click="toggle" :src="exitFullScreen" style="width: 20px;height: 20px;"/>
+      </div> -->
       <!-- kline -->
       <div id="kline" ref="klineRef" style="width:100%;height:572px;" @mousemove="getToolTipData"></div>
     </div>
@@ -39,6 +42,8 @@
 <script>
 import '../icon/iconfont.css'
 import '../css/common.css'
+import fullscreenImg from '../icon/fullscreen.png'
+import exitFullScreen from '../icon/exitFullscreen.png'
 import { splitData, getDepthData } from '../js/processData'
 import KLineController from '../js/KLine'
 import Fullscreen from "vue-fullscreen/src/component.vue"
@@ -57,7 +62,9 @@ export default {
       outspreadMA: false,
       fullscreen: false,
       showChart: 'candle',
-      redrawDepth: true
+      redrawDepth: true,
+      fullscreenImg: fullscreenImg,
+      exitFullScreen: exitFullScreen
     };
   },
   props: {

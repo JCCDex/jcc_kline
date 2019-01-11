@@ -36,12 +36,7 @@
   </div>
 </template>
 <script>
-import '../icon/iconfont.css'
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-import downNormal from "../icon/down_normal.png";                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
-import downClick from "../icon/down_click.png";                                                                                                   
-import upArrow from "../icon/up_arrow.png"
-import downArrow from "../icon/down_arrow.png"
 import { Actionsheet } from 'vant';
 import { splitData, handleDivisionData } from '../js/processData'
 import KLineController from '../js/KLine'
@@ -60,11 +55,7 @@ export default {
       toolTipData: null,
       timeDivisionTipData: null,
       message: null,
-      outspreadMA: false,
-      downnormal: downNormal,
-      downclick: downClick,
-      upArrow: upArrow,
-      downArrow: downArrow
+      outspreadMA: false
     };
   },
   props: {
