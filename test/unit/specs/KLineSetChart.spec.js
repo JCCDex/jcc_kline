@@ -162,6 +162,61 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
+  it('test setDepthOption', () => {
+    const element = document.createElement('div');
+    let klineChart = new klineSetChart(option, showIndicators);
+    klineChart.initECharts(element)
+    klineChart.setDepthOption(klineData)
+    expect(klineChart.kline.getOption()).not.toBeNull();
+  })
+
+  it('test setDepthOption if data is null', () => {
+    const element = document.createElement('div');
+    let klineChart = new klineSetChart(option, showIndicators);
+    klineChart.initECharts(element)
+    klineChart.setDepthOption(null)
+    expect(klineChart.kline.getOption()).not.toBeNull();
+  })
+
+  it('test updateDepthOption', () => {
+    const element = document.createElement('div');
+    let klineChart = new klineSetChart(option, showIndicators);
+    klineChart.initECharts(element)
+    klineChart.setDepthOption(klineData)
+    klineChart.updateDepthOption(klineData)
+    expect(klineChart.kline.getOption()).not.toBeNull();
+  })
+
+  it('test getDepthGrid', () => {
+    let klineChart = new klineSetChart(option, showIndicators);
+    let grid = klineChart.getDepthGrid()
+    expect(grid).not.toBeNull();
+  })
+
+  it('test getDepthXAxis', () => {
+    let klineChart = new klineSetChart(option, showIndicators);
+    let xAxis = klineChart.getDepthXAxis()
+    expect(xAxis).not.toBeNull();
+  })
+
+  it('test getDepthYAxis', () => {
+    let klineChart = new klineSetChart(option, showIndicators);
+    let yAxis = klineChart.getDepthYAxis()
+    expect(yAxis).not.toBeNull();
+  })
+
+  it('test getDepthToolTip', () => {
+    let klineChart = new klineSetChart(option, showIndicators);
+    let tip = klineChart.getDepthToolTip()
+    expect(tip).not.toBeNull();
+  })
+
+  it('test getDepthSeries', () => {
+    let klineChart = new klineSetChart(option, showIndicators);
+    let series = klineChart.getDepthSeries(klineData)
+    expect(series).not.toBeNull();
+  })
+
   it('test changeDataZoom', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option, showIndicators);
