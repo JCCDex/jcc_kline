@@ -1,6 +1,6 @@
 // import KLineSetChartController from './KLineSetChart';
 import DepthChart from './SetDepthChart';
-import TimeSharingChart from './setTimeSharingChart'
+import TimeSharingChart from './setTimeSharingChart';
 // import { indicatorsOption } from './processData';
 
 class ChartController {
@@ -15,7 +15,7 @@ class ChartController {
             } else if (klineConfig.chartType === 'depth') {
                 this.setDepthChart = new DepthChart(klineConfig);
             } else if (klineConfig.chartType === 'timeSharing') {
-                this.setTimeSharing = new TimeSharingChart(klineConfig)
+                this.setTimeSharing = new TimeSharingChart(klineConfig);
             }
         }
     }
@@ -48,19 +48,19 @@ class ChartController {
     /* 绘制分时图 */
 
     initTimeSharingChart(DOM) {
-        this.setTimeSharing.initTimeSharingECharts(DOM)
+        this.setTimeSharing.initTimeSharingECharts(DOM);
     }
 
     resizeTimeSharingChart(DOM, isFullScreen) {
-        this.setTimeSharing.resizeECharts(DOM, isFullScreen)
+        this.setTimeSharing.resizeECharts(DOM, isFullScreen);
     }
 
     setTimeSharingOption(data) {
-        this.setTimeSharing.setTimeSharingOption(data)
+        this.setTimeSharing.setTimeSharingOption(data);
     }
 
     updateTimeSharingOption(timeDivisionData, divisionData) {
-        this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData)
+        this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
     }
 
     clearTimeSharingEcharts() {

@@ -115,7 +115,7 @@ class TimeSharingChart {
             series: this.getTimeSharingSeries(),
             dataZoom: this.getTimeSharingDataZoom()
         };
-        timeDivisionconfig = option
+        timeDivisionconfig = option;
         this.timeSharing.setOption(option, true);
     }
 
@@ -123,8 +123,8 @@ class TimeSharingChart {
         oldTimeSharingData = {
             timeDivisionData: timeDivisionData,
             data: data
-        }
-        this.timeSharing.hideLoading()
+        };
+        this.timeSharing.hideLoading();
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
         if (!toolTipData) {
@@ -185,7 +185,6 @@ class TimeSharingChart {
         //     timeDivisionconfig.dataZoom[0].xAxisIndex = [0];
         // }
         timeDivisionconfig.dataZoom = this.timeSharing.getOption().dataZoom;
-        console.log(timeDivisionconfig)
         this.timeSharing.setOption(timeDivisionconfig);
         return toolTipData;
     }
@@ -331,7 +330,7 @@ class TimeSharingChart {
                 fontFamily: 'Avenir, Helvetica, Arial, sans-serif'
             },
             extraCssText: 'background:#252332;border:0;opacity: 0.7;'
-        }
+        };
     }
 
     getTimeSharingSeries() {
@@ -389,7 +388,7 @@ class TimeSharingChart {
                 end: 100,
                 minSpan: 5
             }
-        ]
+        ];
     }
 }
 
