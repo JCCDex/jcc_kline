@@ -30,16 +30,17 @@
           <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.volume}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.price}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.averagePrice}}</font> &nbsp;<br> 
-        </div>
-      
-    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
+        </div> 
+    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}"></div>
+    <div id = "depth" ref = "depthRef" :style="{height: `${klineConfig.depthSize.height}px`, width: `${klineConfig.depthSize.width}px`}"></div>
   </div>
 </template>
 <script>
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 import { Actionsheet } from 'vant';
-import { splitData, handleDivisionData } from '../js/processData'
+import { splitData, handleDivisionData, getDepthData} from '../js/processData'
 import KLineController from '../js/KLine'
+import DepthMapController from '../js/DepthMap'
 import { getLanguage } from '../js/utils'
 export default {
   name: "mKline",
@@ -49,6 +50,7 @@ export default {
       actions: [
       ],
       kline: null,
+      depth:null,
       status: 0,
       divisionTime: null,
       timeDivisionData: null,
@@ -74,6 +76,13 @@ export default {
       default: 'mobile'
     },
     klineConfig: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
+    },
+    depthMapConfig: {
       type: Object,
       default: () => {
         return {
@@ -122,6 +131,9 @@ export default {
             this.kline.hideMobileLoading()
           }
         }
+        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
+        this.depth.setDepthoption(depthData);
+        this.depth.hideDepthLoading();
       }
     }
   },
@@ -129,6 +141,7 @@ export default {
     this.message = getLanguage();
     // this.setAction();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
+    this.depth = new DepthMapController(this.depthMapConfig);
   },
   mounted() {
     this.init();
@@ -141,6 +154,7 @@ export default {
   methods: {
     init() {
       this.kline.initMobileChart(this.$refs.klineRef);
+      this.depth.initMobileChart(this.$refs.depthRef);
     },
     switchBase() {
       this.show = !this.show;
