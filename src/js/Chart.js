@@ -1,11 +1,11 @@
 // import KLineSetChartController from './KLineSetChart';
 import DepthChart from './SetDepthChart';
+import TimeSharingChart from './setTimeSharingChart'
 // import { indicatorsOption } from './processData';
 
 class ChartController {
     constructor(klineConfig) {
         // var merge = require('lodash.merge');
-        var config;
         if (klineConfig.platform === 'pc') {
             if (klineConfig.chartType === 'candle') {
                 return;
@@ -13,11 +13,14 @@ class ChartController {
                 // config = merge(klineOption, klineConfig);
                 // this.setKLineChart = new KLineSetChartController(config, klineConfig.showIndicators);
             } else if (klineConfig.chartType === 'depth') {
-                this.setDepthChart = new DepthChart(config);
+                this.setDepthChart = new DepthChart(klineConfig);
+            } else if (klineConfig.chartType === 'timeSharing') {
+                this.setTimeSharing = new TimeSharingChart(klineConfig)
             }
         }
     }
 
+    /* 绘制深度图 */
     initDepth(DOM) {
         this.setDepthChart.initDepthECharts(DOM);
     }
@@ -41,6 +44,33 @@ class ChartController {
     disposeDepthEChart() {
         this.setDepthChart.disposeDepthEChart();
     }
+
+    /* 绘制分时图 */
+
+    initTimeSharingChart(DOM) {
+        this.setTimeSharing.initTimeSharingECharts(DOM)
+    }
+
+    resizeTimeSharingChart(DOM, isFullScreen) {
+        this.setTimeSharing.resizeECharts(DOM, isFullScreen)
+    }
+
+    setTimeSharingOption(data) {
+        this.setTimeSharing.setTimeSharingOption(data)
+    }
+
+    updateTimeSharingOption(timeDivisionData, divisionData) {
+        this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData)
+    }
+
+    clearTimeSharingEcharts() {
+        this.setTimeSharing.clearTimeSharingEcharts();
+    }
+
+    disposeTimeSharingEChart() {
+        this.setTimeSharing.disposeTimeSharingEChart();
+    }
+
 }
 
 export default ChartController;

@@ -1,6 +1,7 @@
 import ChartController from 'js/Chart.js'
 import { getDepthData } from 'js/processData'
 import testData from '../../../demo/src/data.json'
+import timeSharingData from '../../../demo/src/timeSharingData.json'
 
 describe('test KLineSetChart', () => {
 
@@ -14,7 +15,7 @@ describe('test KLineSetChart', () => {
     expect(typeof ChartController).toBe('function')
   })
 
-  it('test ChartController if klineConfig.chartType is candle', () => {
+  it('test ChartController if platform is pc and chartType is candle', () => {
     klineConfig.chartType = 'candle'
     let depth = new ChartController(klineConfig)
     expect(depth).toBeInstanceOf(ChartController)
@@ -84,6 +85,75 @@ describe('test KLineSetChart', () => {
     depth.setDepthOption(depthData)
     depth.clearDepthEcharts()
     expect(depth.setDepthChart.depth.getOption().series).toEqual(new Array)
+  })
+
+
+  it('test ChartController if platform is pc and chartType is timeSharing', () => {
+    klineConfig.chartType = 'timeSharing'
+    let timeSharing = new ChartController(klineConfig)
+    expect(timeSharing).toBeInstanceOf(ChartController)
+  })
+
+  it('test initTimeSharingChart if platform is pc and chartType is timeSharing', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    expect(timeSharing).not.toBeNull()
+  })
+
+  it('test setTimeSharingOption if platform is pc and chartType is timeSharing', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption()
+    expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
+  })
+
+  it('test updateTimeSharingOption if platform is pc and chartType is timeSharing', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption()
+    timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
+  })
+
+  it('test resizeTimeSharingChart if platform is pc and chartType is timeSharing, is FullScreen', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption()
+    timeSharing.resizeTimeSharingChart(element, false)
+    timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharing.resizeTimeSharingChart(element, true)
+    expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
+  })
+
+  it('test resizeTimeSharingChart if platform is pc and chartType is timeSharing, not FullScreen', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption()
+    timeSharing.resizeTimeSharingChart(element, false)
+    expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
+  })
+
+  it('test disposeTimeSharingEChart if platform is pc and chartType is timeSharing', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption()
+    timeSharing.disposeTimeSharingEChart()
+    expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
+  })
+
+  it('test clearTimeSharingEcharts if platform is pc and chartType is timeSharing', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption()
+    timeSharing.clearTimeSharingEcharts()
+    expect(timeSharing.setTimeSharing.timeSharing.getOption().series).toEqual(new Array)
   })
 
 })
