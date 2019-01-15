@@ -7,7 +7,7 @@
           <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.price}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.averagePrice}}</font> &nbsp;<br> 
         </div>
-    <div id = "kline" ref = "klineRef" style="width:100%;height:572px;"></div>
+    <div id = "kline" ref = "klineRef" style="width:100%;height:572px;" @mousemove="getDepthTipData"></div>
   </div>
 </template>
 <script>
@@ -21,6 +21,7 @@ export default {
     return {
       kline: null,
       status: 0,
+      depthTipData: null,
       divisionTime: null,
       timeDivisionData: null,
       timeDivisionTipData: null,
@@ -58,9 +59,8 @@ export default {
               let timeDivisionData = this.klineDataObj.timeDivisionData;
               let divisionData = handleDivisionData(timeDivisionData)
               this.divisionTime = divisionData.divisionTime;
-              console.log(timeDivisionData)
-              console.log(divisionData)
-              this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+              this.depthTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+              console.log(this.depthTipData)
             }
           //   this.status = 1;
           // }
@@ -76,6 +76,7 @@ export default {
   },
   created() {
     this.message = getLanguage();
+    this.klineConfig.chartType = 'timeSharing'
     this.timeSharing = new ChartController(this.klineConfig);
   },
   mounted() {
@@ -91,6 +92,9 @@ export default {
     },
     clearChart() {
       this.timeSharing.clearTimeSharingEcharts();
+    },
+    getDepthTipData() {
+      this.depthTipData = this.timeSharing.getDepthTipData()
     },
     dispose() {
       this.timeSharing.disposeTimeSharingEChart()

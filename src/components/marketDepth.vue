@@ -1,5 +1,5 @@
 <template>
-    <div id="kline" ref="klineRef"></div>
+    <div id="kline" ref="klineRef" style="width:100%;height:572px;"></div>
 </template>
 <script>
 import { splitData, getDepthData } from '../js/processData'
@@ -47,6 +47,7 @@ export default {
     }
   },
   created() {
+    this.klineConfig.chartType = 'depth';
     this.depth = new ChartController(this.klineConfig);
   },
   mounted() {

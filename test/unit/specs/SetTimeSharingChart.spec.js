@@ -75,6 +75,16 @@ describe('test setTimeSharingChart', () => {
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
   })
 
+  it('test getDepthTipData', () => {
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(klineConfig);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption()
+    TimeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    let tipData = TimeSharing.getDepthTipData()
+    expect(tipData).not.toBeNull();
+  })
+
   it('test resizeECharts but platfotm is mobile', () => {
     const element = document.createElement('div');
     klineConfig.platform = 'mobile'

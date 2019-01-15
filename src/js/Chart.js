@@ -60,7 +60,11 @@ class ChartController {
     }
 
     updateTimeSharingOption(timeDivisionData, divisionData) {
-        this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+        return this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+    }
+
+    getDepthTipData() {
+        return this.setTimeSharing.getDepthTipData()
     }
 
     clearTimeSharingEcharts() {
