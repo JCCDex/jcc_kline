@@ -1,13 +1,14 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
         <!-- Cycle按钮 -->
-        <div style="margin-right:0.1rem">
+        <div calss="mobileCycle">
           <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.hour}}</div>
           <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.day}}</div>
           <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.week}}</div>
           <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.month}}</div>
           <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.timeSharing}}</div>
         </div>
+
         <!-- <div style="color: #f5f5f5;font-size: 0.22rem;float: right;" @click="switchBase">
             <span>{{message.more}}</span>
             <span>{{timeData}}</span>
@@ -16,22 +17,33 @@
             <van-actionsheet  v-model="show" :actions="actions" :overlay="false"/>
           </div> -->
         <!-- tooltip 数据显示 -->
-        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">                                                                                                                                                                                                              
-          <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.time}}</font>
-          <font class="mobile-tooltip-name" style="margin-left: 0.2rem;">{{message.volumeMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font><br>
-          <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font>
-          <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font>
-          <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.max}}</font>
-          <font class="mobile-tooltip-name">{{message.minMobile}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font>
+        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
+          <div style="font-size:0.14rem">
+            <font class="tooltip-data-ma5">MA5: </font><font class="tooltip-ma5">{{this.toolTipData.MA5}}</font>
+            <font class="tooltip-data-ma10">MA10: </font><font class="tooltip-ma10">{{this.toolTipData.MA10}}</font>
+            <font class="tooltip-data-ma20">MA20: </font><font class="tooltip-ma20">{{this.toolTipData.MA20}}</font>
+            <font class="tooltip-data-ma30">MA30: </font><font class="tooltip-ma30">{{this.toolTipData.MA30}}</font>
+            <font class="tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font>
+          </div>
+          <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
+          <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
+          <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
+          <font class="mobile-tooltip-name">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
+          <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
         </div>
+
         <!-- timeDivision tootip 数据显示 -->
         <div :class="this.message.language === 'en' ? 'time-sharing-data' : 'time-sharing-zh-data'" v-if="timeDivisionTipData">
           <font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.time}}</font>
           <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.volume}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.price}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.averagePrice}}</font> &nbsp;<br> 
-        </div> 
-    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}"></div>
+        </div>
+    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
+    <div style="background:#2b2f33; height:0.1rem"></div>
+    <div style="height:0.56rem; border-bottom:1px solid #2b2f33">
+      <span class="mobile-depthMapname">{{message.depthMap}}</span>
+    </div>
     <div id = "depth" ref = "depthRef" :style="{height: `${klineConfig.depthSize.height}px`, width: `${klineConfig.depthSize.width}px`}"></div>
   </div>
 </template>
@@ -110,7 +122,7 @@ export default {
         this.message = getLanguage();
         if(this.cycle !== 'everyhour') {
           if(this.status === 0) {
-            this.kline.setMobileOption(this.klineDataObj.klineSize);
+            this.kline.setMobileOption(this.klineDataObj.klineSize, this.cycle);
             this.status = 1;
           }
           let mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)

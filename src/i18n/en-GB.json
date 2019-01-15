@@ -25,5 +25,6 @@
   "minMobile": "L: ",
   "candle": "Candle",
   "depth": "Depth",
-  "more": "More"
+  "more": "More",
+  "depthMap": "Depth Map"
 }

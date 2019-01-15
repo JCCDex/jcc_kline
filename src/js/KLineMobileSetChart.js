@@ -42,10 +42,11 @@ class KLineMobileSetChartController {
         this.kline.hideLoading();
     }
 
-    setOption(size) {
+    setOption(size, cycle) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
             grid: this.getGrid(size),
+            xAxis: this.getXAxis(size, cycle),
             yAxis: this.getYAxis(size)
         };
         merge(config, option);
@@ -178,30 +179,30 @@ class KLineMobileSetChartController {
                         color: data.volumes[index][2],
                         type: 'normal'
                     };
-                    return [
-                        '<div style="text-align:left;">',
-                        '<div style="width:0.1rem;height:0.1rem;background:#fd1d57;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-              'MA5: ' +
-              calculateMA(5, data)[index] +
-              '<br/>',
-                        '<div style="width:0.1rem;height:0.1rem;background:#4df561;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-              'MA10: ' +
-              calculateMA(10, data)[index] +
-              '<br/>',
-                        '<div style="width:0.1rem;height:0.1rem;background:#2bdaff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-              'MA20: ' +
-              calculateMA(20, data)[index] +
-              '<br/>',
-                        '<div style="width:0.1rem;height:0.1rem;background:#ffd801;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-              'MA30: ' +
-              calculateMA(30, data)[index] +
-              '<br/>',
-                        '<div style="width:0.1rem;height:0.1rem;background:#f721ff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-              'MA60: ' +
-              calculateMA(60, data)[index] +
-              '<br/>',
-                        '</div>'
-                    ].join('');
+            //         return [
+            //             '<div style="text-align:left;">',
+            //             '<div style="width:0.1rem;height:0.1rem;background:#fd1d57;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+            //   'MA5: ' +
+            //   calculateMA(5, data)[index] +
+            //   '<br/>',
+            //             '<div style="width:0.1rem;height:0.1rem;background:#4df561;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+            //   'MA10: ' +
+            //   calculateMA(10, data)[index] +
+            //   '<br/>',
+            //             '<div style="width:0.1rem;height:0.1rem;background:#2bdaff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+            //   'MA20: ' +
+            //   calculateMA(20, data)[index] +
+            //   '<br/>',
+            //             '<div style="width:0.1rem;height:0.1rem;background:#ffd801;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+            //   'MA30: ' +
+            //   calculateMA(30, data)[index] +
+            //   '<br/>',
+            //             '<div style="width:0.1rem;height:0.1rem;background:#f721ff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+            //   'MA60: ' +
+            //   calculateMA(60, data)[index] +
+            //   '<br/>',
+            //             '</div>'
+            //         ].join('');
                 }
             };
             updateOption.series.push(
@@ -348,7 +349,37 @@ class KLineMobileSetChartController {
         return g;
     }
 
-    getYAxis(size) {
+    getXAxis(data, cycle) {
+        var x = [{
+            gridIndex: 0,
+            data: data.categoryData,
+            axisLabel: {
+                formatter(value) {
+                    if (cycle === 'hour') {
+                        return value.substring(5);
+                    }
+                    if (cycle === 'day') {
+                        return value.substring(0, 12);
+                    }
+                    if (cycle === 'week') {
+                        return value.substring(0, 12);
+                    }
+                    if (cycle === 'month') {
+                        return value.substring(0, 7);
+                    }
+                }
+            }
+        }];
+        if (this.showIndicators.indexOf('Volume') !== -1) {
+            x.push({
+                gridIndex: 1,
+                data: data.categoryData
+            });
+        }
+        return x;
+    }
+
+    getYAxis(size, cycle) {
         return [
             {
                 axisLabel: {

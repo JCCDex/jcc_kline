@@ -87,7 +87,7 @@ class DepthMapMobileSetChartController {
           axisLabel: {
               show: true,
               color: '#b9cadd',
-              fontSize: 10
+              fontSize: 20
           }
         }
       ];

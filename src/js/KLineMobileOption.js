@@ -61,12 +61,12 @@ var mobileOption = {
             splitNumber: 20,
             min: 'dataMin',
             max: 'dataMax',
-            axisPointer: {
-                z: 100,
-                label: {
-                    show: false
-                }
-            }
+            // axisPointer: {
+            //     z: 100,
+            //     label: {
+            //         show: false
+            //     }
+            // }
         }, 
         {
             type: 'category',
