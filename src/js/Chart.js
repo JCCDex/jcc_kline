@@ -64,7 +64,7 @@ class ChartController {
     }
 
     getDepthTipData() {
-        return this.setTimeSharing.getDepthTipData()
+        return this.setTimeSharing.getDepthTipData();
     }
 
     clearTimeSharingEcharts() {
