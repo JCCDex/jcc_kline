@@ -77,8 +77,8 @@ class KLineController {
         return this.setMobileKLineChart.getToolTipData();
     }
 
-    setMobileOption(size) {
-        this.setMobileKLineChart.setOption(size);
+    setMobileOption(size, cycle) {
+        this.setMobileKLineChart.setOption(size, cycle);
     }
 
     setTimeDivisionsOption(size) {
