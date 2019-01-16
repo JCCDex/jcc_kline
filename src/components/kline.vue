@@ -1,5 +1,4 @@
 <template>
-  <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
     <div style="position:relative">
       <!-- Cycle按钮 -->
       <div style="position: absolute;left:10px;top:20px;z-index:1;" v-if = "this.showChart === 'candle'">
@@ -29,28 +28,18 @@
         <span @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-candle-active' : 'chart-candle'">{{message.candle}}</span>
         <span @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-depth-active' : 'chart-depth'">{{message.depth}}</span>
       </div> -->
-      <!-- fullscreen 按钮 -->
-      <!-- <div style="position: absolute;right:20px;top:20px;z-index:1;">
-        <img  v-if="!fullscreen" @click="toggle" :src="fullscreenImg" style="width: 20px;height: 20px;"/>
-        <img  v-if="fullscreen" @click="toggle" :src="exitFullScreen" style="width: 20px;height: 20px;"/>
-      </div> -->
       <!-- kline -->
       <div id="kline" ref="klineRef" style="width:100%;height:572px;" @mousemove="getToolTipData"></div>
     </div>
-  </fullscreen>
 </template>
 <script>
 import '../icon/iconfont.css'
 import '../css/common.css'
-import fullscreenImg from '../icon/fullscreen.png'
-import exitFullScreen from '../icon/exitFullscreen.png'
 import { splitData, getDepthData } from '../js/processData'
 import KLineController from '../js/KLine'
-import Fullscreen from "vue-fullscreen/src/component.vue"
 import { getLanguage } from '../js/utils'
 export default {
   name: "jKline",
-  components: {Fullscreen},
   data() {
     return {
       kline: null,
@@ -60,11 +49,8 @@ export default {
       cycle: 'hour',
       coinType: '',
       outspreadMA: false,
-      fullscreen: false,
       showChart: 'candle',
-      redrawDepth: true,
-      fullscreenImg: fullscreenImg,
-      exitFullScreen: exitFullScreen
+      redrawDepth: true
     };
   },
   props: {
@@ -188,11 +174,8 @@ export default {
         this.outspreadMA = false
       }
     },
-    toggle () {
-      this.$refs['fullscreen'].toggle()
-    },
     resize() {
-      let isFullScreen = this.$refs['fullscreen'].getState();
+      let isFullScreen = this.$parent.getState()
       this.kline.resizeChart(this.$refs.klineRef, isFullScreen, this.showChart);
     },
     clearChart() {

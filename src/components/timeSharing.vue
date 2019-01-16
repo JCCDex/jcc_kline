@@ -1,13 +1,13 @@
 <template>
   <div style="background-color: #161b21;">
         <!-- timeDivision tootip 数据显示 -->
-        <div :class="this.message.language === 'en' ? 'time-sharing-data' : 'time-sharing-zh-data'" v-if="timeDivisionTipData">
-          <font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.time}}</font>
-          <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.volume}}</font> &nbsp;
-          <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.price}}</font> &nbsp;
-          <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.averagePrice}}</font> &nbsp;<br> 
+        <div :class="this.message.language === 'en' ? 'time-sharing-data' : 'time-sharing-zh-data'" v-if="timeSharingTipData">
+          <font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.time}}</font>
+          <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.volume}}</font> &nbsp;
+          <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.price}}</font> &nbsp;
+          <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
         </div>
-    <div id = "kline" ref = "klineRef" style="width:100%;height:572px;" @mousemove="getDepthTipData"></div>
+    <div id = "kline" ref = "klineRef" style="width:100%;height:572px;" @mousemove="getTimeSharingTipData"></div>
   </div>
 </template>
 <script>
@@ -21,10 +21,10 @@ export default {
     return {
       kline: null,
       status: 0,
-      depthTipData: null,
+      coinType: null,
+      timeSharingTipData: null,
       divisionTime: null,
       timeDivisionData: null,
-      timeDivisionTipData: null,
       message: null,
       isRefresh: true
     };
@@ -51,16 +51,17 @@ export default {
       // if (this.klineDataObj) {
         this.message = getLanguage();
           // if(this.status === 0) {
-            if (this.isRefresh) {
+            if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
+              this.clearChart()
               this.timeSharing.setTimeSharingOption()
               this.timeSharing.resizeTimeSharingChart(this.$refs.klineRef, false)
+              this.coinType = this.klineDataObj.coinType
               this.isRefresh = false
-            } else {
+            }else {
               let timeDivisionData = this.klineDataObj.timeDivisionData;
               let divisionData = handleDivisionData(timeDivisionData)
               this.divisionTime = divisionData.divisionTime;
-              this.depthTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
-              console.log(this.depthTipData)
+              this.timeSharingTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
             }
           //   this.status = 1;
           // }
@@ -83,7 +84,7 @@ export default {
     this.init();
   },
   beforeDestroy() {
-    this.timeDivisionTipData = null;
+    this.timeSharingTipData = null;
     this.dispose()
   },
   methods: {
@@ -93,8 +94,8 @@ export default {
     clearChart() {
       this.timeSharing.clearTimeSharingEcharts();
     },
-    getDepthTipData() {
-      this.depthTipData = this.timeSharing.getDepthTipData()
+    getTimeSharingTipData() {
+      this.timeSharingTipData = this.timeSharing.getTimeSharingTipData()
     },
     dispose() {
       this.timeSharing.disposeTimeSharingEChart()

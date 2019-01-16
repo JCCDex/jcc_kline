@@ -75,13 +75,13 @@ describe('test setTimeSharingChart', () => {
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
   })
 
-  it('test getDepthTipData', () => {
+  it('test getTimeSharingTipData', () => {
     const element = document.createElement('div');
     let TimeSharing = new TimeSharingChart(klineConfig);
     TimeSharing.initTimeSharingECharts(element)
     TimeSharing.setTimeSharingOption()
     TimeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    let tipData = TimeSharing.getDepthTipData()
+    let tipData = TimeSharing.getTimeSharingTipData()
     expect(tipData).not.toBeNull();
   })
 

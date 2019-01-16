@@ -189,7 +189,7 @@ class TimeSharingChart {
         return toolTipData;
     }
 
-    getDepthTipData() {
+    getTimeSharingTipData() {
         return toolTipData;
     }
 

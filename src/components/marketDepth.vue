@@ -64,7 +64,8 @@ export default {
       this.resize();
     },
     resize() {
-      this.depth.resizeDepthChart(this.$refs.klineRef, false, this.showChart);
+      let isFullScreen = this.$parent.getState()
+      this.depth.resizeDepthChart(this.$refs.klineRef, isFullScreen, this.showChart);
     },
     clearChart() {
       this.depth.clearDepthEcharts();
