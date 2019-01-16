@@ -108,27 +108,11 @@
     color: #ee4b4b;
 }
 
-.chart-candle {
+.chart-btn {
     color: #3669a7
 }
 
-.chart-candle-active {
-    min-width: 40px;
-    width: auto;
-    height: 20px;
-    cursor: pointer;
-    border-radius: 2px;
-    color: #e6e6e6;
-    background: #34b9ea;
-    line-height: 20px;
-    font-size: 13px;
-}
-
-.chart-depth {
-    color: #3669a7;
-}
-
-.chart-depth-active {
+.chart-btn-active {
     min-width: 40px;
     width: auto;
     height: 20px;

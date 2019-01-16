@@ -204,26 +204,22 @@ export default {
     //   this.actions = actions;
     //   this.timeData = actions[0].name;
     // },
-    onClick(item) {
-      let { name, ticker } = item;
-      this.show = false;
-      if (this.cycle === name) {
-        return;
-      }
-      this.cycle = name;
-      this.$emit("listenToChildEvent", item)
-      this.show = false;
-    },
+    // onClick(item) {
+    //   let { name, ticker } = item;
+    //   this.show = false;
+    //   if (this.cycle === name) {
+    //     return;
+    //   }
+    //   this.cycle = name;
+    //   this.$emit("listenToChildEvent", item)
+    //   this.show = false;
+    // },
     chooseCycle(cycle) {
       if (this.cycle === cycle) {
         return;
       }
-      this.cycle = cycle;
-      var cycleData = {
-          name: this.message.cycle,
-          ticker: cycle
-      }
-      this.$emit("listenToChildEvent", cycleData)
+      // this.cycle = cycle;
+      this.$emit("listenToChildEvent", cycle)
     },
     getToolTipData() {
       if (this.cycle !== 'everyhour') {

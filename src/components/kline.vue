@@ -25,10 +25,10 @@
           <font class="tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font> &nbsp;
         </div>
       </div>
-      <div style="position: absolute;right:50px;top:20px;z-index:1;font-size: 13px;">
+      <!-- <div style="position: absolute;right:50px;top:20px;z-index:1;font-size: 13px;">
         <span @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-candle-active' : 'chart-candle'">{{message.candle}}</span>
         <span @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-depth-active' : 'chart-depth'">{{message.depth}}</span>
-      </div>
+      </div> -->
       <!-- fullscreen 按钮 -->
       <!-- <div style="position: absolute;right:20px;top:20px;z-index:1;">
         <img  v-if="!fullscreen" @click="toggle" :src="fullscreenImg" style="width: 20px;height: 20px;"/>

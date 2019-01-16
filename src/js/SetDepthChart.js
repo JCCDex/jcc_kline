@@ -17,54 +17,56 @@ class DepthChart {
     }
 
     resizeECharts(DOM, isFullScreen) {
-        if (!isFullScreen) {
-            let size = getClientWidth();
-            let resizeContainer = () => {
-                let width;
-                let height;
-                if (DOM) {
-                    if (size <= 1024) {
-                        width = 1000 * 0.7;
-                        height = 1000 * 0.44 * 0.8;
-                    } else if (size <= 1280) {
-                        width = 1203 * 0.7;
-                        height = 1203 * 0.37 * 0.8;
-                    } else if (size <= 1366) {
-                        width = 1284 * 0.7;
-                        height = 1284 * 0.44 * 0.8;
-                    } else if (size <= 1440) {
-                        width = 1354 * 0.7;
-                        height = 1354 * 0.4 * 0.8;
-                    } else if (size <= 1680) {
-                        width = 1504 * 0.7;
-                        height = 1504 * 0.36 * 0.8;
-                    } else if (size <= 1920) {
-                        width = 1804 * 0.7;
-                        height = 1804 * 0.37 * 0.8;
-                    } else if (size <= 2180) {
-                        width = 2048 * 0.7;
-                        height = 2048 * 0.37 * 0.8;
+        if (this.klineConfig.platform === 'pc') {
+            if (!isFullScreen) {
+                let size = getClientWidth();
+                let resizeContainer = () => {
+                    let width;
+                    let height;
+                    if (DOM) {
+                        if (size <= 1024) {
+                            width = 1000 * 0.7;
+                            height = 1000 * 0.44 * 0.8;
+                        } else if (size <= 1280) {
+                            width = 1203 * 0.7;
+                            height = 1203 * 0.37 * 0.8;
+                        } else if (size <= 1366) {
+                            width = 1284 * 0.7;
+                            height = 1284 * 0.44 * 0.8;
+                        } else if (size <= 1440) {
+                            width = 1354 * 0.7;
+                            height = 1354 * 0.4 * 0.8;
+                        } else if (size <= 1680) {
+                            width = 1504 * 0.7;
+                            height = 1504 * 0.36 * 0.8;
+                        } else if (size <= 1920) {
+                            width = 1804 * 0.7;
+                            height = 1804 * 0.37 * 0.8;
+                        } else if (size <= 2180) {
+                            width = 2048 * 0.7;
+                            height = 2048 * 0.37 * 0.8;
+                        }
+                        DOM.style.height = height + 'px';
+                        DOM.style.width = width + 'px';
+                        klineSize.width = width;
+                        klineSize.height = height;
                     }
-                    DOM.style.height = height + 'px';
-                    DOM.style.width = width + 'px';
-                    klineSize.width = width;
-                    klineSize.height = height;
-                }
-            };
-            resizeContainer(this);
-            this.depth.resize();
-        } else {
-            let resizeContainer = () => {
-                DOM.style.height = getClientHeight() + 'px';
-                DOM.style.width = getClientWidth() + 'px';
-                klineSize.width = getClientWidth();
-                klineSize.height = getClientHeight();
-            };
-            resizeContainer(this);
-            this.depth.resize();
-        }
-        if (oldDepthData) {
-            this.updateDepthOption(oldDepthData);
+                };
+                resizeContainer(this);
+                this.depth.resize();
+            } else {
+                let resizeContainer = () => {
+                    DOM.style.height = getClientHeight() + 'px';
+                    DOM.style.width = getClientWidth() + 'px';
+                    klineSize.width = getClientWidth();
+                    klineSize.height = getClientHeight();
+                };
+                resizeContainer(this);
+                this.depth.resize();
+            }
+            if (oldDepthData) {
+                this.updateDepthOption(oldDepthData);
+            }
         }
     }
 
@@ -162,8 +164,7 @@ class DepthChart {
                 },
                 axisTick: {
                     show: true,
-                    alignWithLabel: true,
-          
+                    alignWithLabel: true
                 },
                 axisLabel: {
                     show: true,
@@ -206,31 +207,31 @@ class DepthChart {
         return {
             formatter: function (param) {
                 param = param[0];
-                if(param) {
+                if (param) {
                     if (param.seriesName === 'sell') {
                         return [
                             '<div style="text-align:left;">',
                             '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.sellPrice +
-              param.data[0] +
-              '<br/>',
+                            message.sellPrice +
+                            param.data[0] +
+                            '<br/>',
                             '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.sellTotal +
-              param.data[1] +
-              '<br/>',
+                            message.sellTotal +
+                            param.data[1] +
+                            '<br/>',
                             '</div>'
                         ].join('');
                     } else if (param.seriesName === 'buy') {
                         return [
                             '<div style="text-align:left;">',
                             '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.buyPrice +
-              param.data[0] +
-              '<br/>',
+                            message.buyPrice +
+                            param.data[0] +
+                            '<br/>',
                             '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.buyTotal +
-              param.data[1] +
-              '<br/>',
+                            message.buyTotal +
+                            param.data[1] +
+                            '<br/>',
                             '</div>'
                         ].join('');
                     }
