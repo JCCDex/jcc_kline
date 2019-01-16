@@ -48,31 +48,21 @@ export default {
   },
   watch: {
     klineDataObj() {
-      // if (this.klineDataObj) {
+      if (this.klineDataObj) {
         this.message = getLanguage();
-          // if(this.status === 0) {
-            if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
-              this.clearChart()
-              this.timeSharing.setTimeSharingOption()
-              this.timeSharing.resizeTimeSharingChart(this.$refs.klineRef, false)
-              this.coinType = this.klineDataObj.coinType
-              this.isRefresh = false
-            }else {
-              let timeDivisionData = this.klineDataObj.timeDivisionData;
-              let divisionData = handleDivisionData(timeDivisionData)
-              this.divisionTime = divisionData.divisionTime;
-              this.timeSharingTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
-            }
-          //   this.status = 1;
-          // }
-          // let timeDivisionData = this.klineDataObj.timeDivisionData;
-          // let divisionData = handleDivisionData(timeDivisionData)
-          // this.divisionTime = divisionData.divisionTime;
-          // if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-          //   this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData);
-          //   this.kline.hideMobileLoading()
-          // }
-      // }
+        if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
+          this.clearChart()
+          this.timeSharing.setTimeSharingOption()
+          this.timeSharing.resizeTimeSharingChart(this.$refs.klineRef, false)
+          this.coinType = this.klineDataObj.coinType
+          this.isRefresh = false
+        }else {
+          let timeDivisionData = this.klineDataObj.timeDivisionData;
+          let divisionData = handleDivisionData(timeDivisionData)
+          this.divisionTime = divisionData.divisionTime;
+          this.timeSharingTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+        }
+      }
     }
   },
   created() {

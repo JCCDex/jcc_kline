@@ -77,6 +77,7 @@ class TimeSharingChart {
     initTimeSharingECharts(DOM) {
         toolTipData = null;
         timeDivisionconfig = null;
+        oldTimeSharingData = null;
         this.timeSharing = echarts.init(DOM);
         this.showLoading();
     }
@@ -95,6 +96,8 @@ class TimeSharingChart {
     }
 
     clearTimeSharingEcharts() {
+        toolTipData = null;
+        oldTimeSharingData = null;
         this.timeSharing.clear();
     }
 
