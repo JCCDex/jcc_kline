@@ -42,11 +42,11 @@ class KLineMobileSetChartController {
         this.kline.hideLoading();
     }
 
-    setOption(size, cycle) {
+    setOption(size) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
             grid: this.getGrid(size),
-            xAxis: this.getXAxis(size, cycle),
+            xAxis: this.getXAxis(size),
             yAxis: this.getYAxis(size)
         };
         merge(config, option);
@@ -349,7 +349,7 @@ class KLineMobileSetChartController {
         return g;
     }
 
-    getXAxis(data, cycle) {
+    getXAxis(data) {
         var x = [{
             gridIndex: 0,
             data: data.categoryData,
