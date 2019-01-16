@@ -179,30 +179,30 @@ class KLineMobileSetChartController {
                         color: data.volumes[index][2],
                         type: 'normal'
                     };
-            //         return [
-            //             '<div style="text-align:left;">',
-            //             '<div style="width:0.1rem;height:0.1rem;background:#fd1d57;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-            //   'MA5: ' +
-            //   calculateMA(5, data)[index] +
-            //   '<br/>',
-            //             '<div style="width:0.1rem;height:0.1rem;background:#4df561;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-            //   'MA10: ' +
-            //   calculateMA(10, data)[index] +
-            //   '<br/>',
-            //             '<div style="width:0.1rem;height:0.1rem;background:#2bdaff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-            //   'MA20: ' +
-            //   calculateMA(20, data)[index] +
-            //   '<br/>',
-            //             '<div style="width:0.1rem;height:0.1rem;background:#ffd801;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-            //   'MA30: ' +
-            //   calculateMA(30, data)[index] +
-            //   '<br/>',
-            //             '<div style="width:0.1rem;height:0.1rem;background:#f721ff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-            //   'MA60: ' +
-            //   calculateMA(60, data)[index] +
-            //   '<br/>',
-            //             '</div>'
-            //         ].join('');
+                    //         return [
+                    //             '<div style="text-align:left;">',
+                    //             '<div style="width:0.1rem;height:0.1rem;background:#fd1d57;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+                    //   'MA5: ' +
+                    //   calculateMA(5, data)[index] +
+                    //   '<br/>',
+                    //             '<div style="width:0.1rem;height:0.1rem;background:#4df561;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+                    //   'MA10: ' +
+                    //   calculateMA(10, data)[index] +
+                    //   '<br/>',
+                    //             '<div style="width:0.1rem;height:0.1rem;background:#2bdaff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+                    //   'MA20: ' +
+                    //   calculateMA(20, data)[index] +
+                    //   '<br/>',
+                    //             '<div style="width:0.1rem;height:0.1rem;background:#ffd801;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+                    //   'MA30: ' +
+                    //   calculateMA(30, data)[index] +
+                    //   '<br/>',
+                    //             '<div style="width:0.1rem;height:0.1rem;background:#f721ff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
+                    //   'MA60: ' +
+                    //   calculateMA(60, data)[index] +
+                    //   '<br/>',
+                    //             '</div>'
+                    //         ].join('');
                 }
             };
             updateOption.series.push(
@@ -379,7 +379,7 @@ class KLineMobileSetChartController {
         return x;
     }
 
-    getYAxis(size, cycle) {
+    getYAxis(size) {
         return [
             {
                 axisLabel: {
