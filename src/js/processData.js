@@ -52,7 +52,7 @@ export const getDepthData = (data, coinType) => {
     let sellPrices = [];
     let sellData = [];
     let buyData = [];
-    let num = coinType.baseTitle === 'VCC' ? 0 : 5;
+    let num = coinType.baseTitle === 'VCC' ? 0 : 6;
     if (Array.isArray(bids) && bids.length > 0) {
         let datas = bids.slice(0, 50);
         let amounts = [];
