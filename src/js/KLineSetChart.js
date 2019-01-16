@@ -16,7 +16,6 @@ var klineSize = {
 var config;
 var toolTipData;
 var oldKlineData;
-var oldDepthData;
 
 class KLineSetChartController {
     constructor(configs, showIndicators) {
@@ -24,7 +23,7 @@ class KLineSetChartController {
         this.showIndicators = showIndicators;
     }
 
-    resizeECharts(DOM, isFullScreen, chartType) {
+    resizeECharts(DOM, isFullScreen) {
         if (!isFullScreen) {
             let size = getClientWidth();
             let resizeContainer = () => {
@@ -71,16 +70,9 @@ class KLineSetChartController {
             resizeContainer(this);
             this.kline.resize();
         }
-        if (chartType === 'candle') {
-            if (oldKlineData) {
-                this.updateOption(oldKlineData.oldData, oldKlineData.oldCycle);
-            }
-        } else {
-            if (oldDepthData) {
-                this.updateDepthOption(oldDepthData);
-            }
+        if (oldKlineData) {
+            this.updateOption(oldKlineData.oldData, oldKlineData.oldCycle);
         }
-    
     }
 
     initECharts(DOM) {
@@ -352,217 +344,6 @@ class KLineSetChartController {
             }
         ];
     }
-
-    /* 绘制kline结束 */
-    /* 绘制marketDepth开始 */
-    setDepthOption(data) {
-        oldDepthData = data;
-        if (data) {
-            this.kline.hideLoading();
-            let klineOption = {
-                backgroundColor: '#161b21',
-                animation: true,
-                grid: this.getDepthGrid(data),
-                xAxis: this.getDepthXAxis(data),
-                yAxis: this.getDepthYAxis(data),
-                tooltip: this.getDepthToolTip(data),
-                series: this.getDepthSeries(data)
-            };
-            this.kline.setOption(klineOption, true);
-        }
-    }
-
-    updateDepthOption(data) {
-        oldDepthData = data;
-        if (this.kline.getOption()) {
-            let klineOption = {
-                grid: this.getDepthGrid(data),
-                tooltip: this.getDepthToolTip(data),
-                xAxis: this.getDepthXAxis(data),
-                yAxis: this.getDepthYAxis(data),
-                series: this.getDepthSeries(data)
-            };
-            this.kline.setOption(klineOption);
-        }
-    }
-
-    getDepthGrid() {
-        return [{
-            top: 60,
-            left: 10,
-            right: 10,
-            bottom: 20,
-            containLabel: true
-        }];
-    }
-
-    getDepthXAxis() {
-        return [
-            {
-                type: 'category',
-                gridIndex: 0,
-                scale: true,
-                boundaryGap: true,
-                axisLine: {
-                    onZero: false,
-                    lineStyle: {
-                        color: '#37404b'
-                    }
-                },
-                splitArea: {
-                    show: false
-                },
-                splitLine: {
-                    show: false
-                },
-                axisPointer: {
-                    show: true
-                },
-                axisTick: {
-                    show: true,
-                    alignWithLabel: true,
-          
-                },
-                axisLabel: {
-                    show: true,
-                    color: '#b9cadd',
-                    fontSize: 10
-                }
-            }
-        ];
-    }
-
-    getDepthYAxis() {
-        return [
-            {
-                type: 'value',
-                gridIndex: 0,
-                position: 'right',
-                splitNumber: 6,
-                splitLine: {
-                    show: false
-                },
-                axisLabel: {
-                    show: true,
-                    onZero: false,
-                    margin: 0,
-                    color: '#9aa4ac',
-                    fontSize: 12,
-                },
-                splitArea: {
-                    show: false
-                },
-                axisPointer: {
-                    show: false
-                }
-            }
-        ];
-    }
-
-    getDepthToolTip() {
-        let message = getLanguage();
-        return {
-            formatter: function (param) {
-                param = param[0];
-                if(param) {
-                    if (param.seriesName === 'sell') {
-                        return [
-                            '<div style="text-align:left;">',
-                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.sellPrice +
-              param.data[0] +
-              '<br/>',
-                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.sellTotal +
-              param.data[1] +
-              '<br/>',
-                            '</div>'
-                        ].join('');
-                    } else if (param.seriesName === 'buy') {
-                        return [
-                            '<div style="text-align:left;">',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.buyPrice +
-              param.data[0] +
-              '<br/>',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-              message.buyTotal +
-              param.data[1] +
-              '<br/>',
-                            '</div>'
-                        ].join('');
-                    }
-                }
-            }
-        };
-    }
-
-    getDepthSeries(data) {
-        return [
-            {
-                name: 'buy',
-                type: 'line',
-                data: data.buyData,
-                showSymbol: false,
-                lineStyle: {
-                    color: '#ee3523',
-                },
-                areaStyle: {
-                    normal: {
-                        color: {
-                            type: 'linear',
-                            x: 0,
-                            y: 1,
-                            x2: 0,
-                            y2: 0,
-                            colorStops: [
-                                {
-                                    offset: 0,
-                                    color: '#2d1d23'
-                                },
-                                {
-                                    offset: 1,
-                                    color: '#ee4a4a'
-                                }
-                            ]
-                        }
-                    }
-                }
-            },
-            {
-                name: 'sell',
-                type: 'line',
-                data: data.sellData,
-                showSymbol: false,
-                lineStyle: {
-                    color: '#008c00',
-                },
-                areaStyle: {
-                    normal: {
-                        color: {
-                            type: 'linear',
-                            x: 0,
-                            y: 1,
-                            x2: 0,
-                            y2: 0,
-                            colorStops: [
-                                {
-                                    offset: 0,
-                                    color: '#14322d'
-                                },
-                                {
-                                    offset: 1,
-                                    color: '#28b869'
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        ];
-    }
-
-    /* 绘制marketDepth结束 */
 
     changeDataZoom(type) {
         let dataZoom = JSON.parse(JSON.stringify(this.kline.getOption().dataZoom));

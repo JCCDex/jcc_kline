@@ -118,7 +118,8 @@
     height: 20px;
     cursor: pointer;
     border-radius: 2px;
-    color: #1bdafd;
+    color: #e6e6e6;
+    background: #34b9ea;
     line-height: 20px;
     font-size: 13px;
 }

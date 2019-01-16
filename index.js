@@ -1,4 +1,4 @@
-import Kline from './src/components/kline.vue'
+import Kline from './src/components/klineChart.vue'
 import MobileKLine from './src/components/mobileKline.vue'
 
 const kline={

@@ -1,14 +1,14 @@
 <template>
     <div style="position:relative">
       <!-- Cycle按钮 -->
-      <div style="position: absolute;left:10px;top:20px;z-index:1;" v-if = "this.showChart === 'candle'">
+      <div style="position: absolute;left:10px;top:20px;z-index:1;">
         <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hour}}</div>
         <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.day}}</div>
         <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.week}}</div>
         <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.month}}</div>
       </div>
       <!-- tooltip数据显示 -->
-      <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="this.showChart === 'candle' && toolTipData">
+      <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="toolTipData">
           <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
           <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.time}}</font>
           <font class="tooltip-data-name">{{message.volume}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font>
@@ -24,10 +24,6 @@
           <font class="tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font> &nbsp;
         </div>
       </div>
-      <!-- <div style="position: absolute;right:50px;top:20px;z-index:1;font-size: 13px;">
-        <span @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-candle-active' : 'chart-candle'">{{message.candle}}</span>
-        <span @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-depth-active' : 'chart-depth'">{{message.depth}}</span>
-      </div> -->
       <!-- kline -->
       <div id="kline" ref="klineRef" style="width:100%;height:572px;" @mousemove="getToolTipData"></div>
     </div>
@@ -48,9 +44,7 @@ export default {
       toolTipData: null,
       cycle: 'hour',
       coinType: '',
-      outspreadMA: false,
-      showChart: 'candle',
-      redrawDepth: true
+      outspreadMA: false
     };
   },
   props: {
@@ -88,29 +82,13 @@ export default {
         this.klineData = data
         if (data.values !== null && data.volumes !== null && data.categoryData !== null) {
           if(this.cycle !== this.klineDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
-            this.redrawDepth = true
             this.clearChart();
             this.kline.showLoading();
-            if (this.showChart === 'candle') {
-              this.toolTipData = this.kline.setOption(data, this.cycle);
-              this.cycle = this.klineDataObj.cycle;
-              this.coinType = this.klineDataObj.coinType
-            } else if (this.showChart === 'depth') {
-              if (this.redrawDepth) {
-                this.kline.setDepthOption(data)
-                this.cycle = this.klineDataObj.cycle;
-                this.coinType = this.klineDataObj.coinType
-                this.redrawDepth = false
-              }else {
-                this.kline.updateDepthOption(data)
-              }
-            }
+            this.toolTipData = this.kline.setOption(data, this.cycle);
+            this.cycle = this.klineDataObj.cycle;
+            this.coinType = this.klineDataObj.coinType
           }else {
-            if (this.showChart === 'candle') {
               this.kline.updateOption(data, this.cycle);
-            } else {
-              this.kline.updateDepthOption(data)
-            }
           }
         }
       }
@@ -139,24 +117,6 @@ export default {
       }
       this.$emit("listenToChildEvent", cycle)
     },
-    changeChart(type) {
-      if (type === this.showChart) {
-        return;
-      }
-      if (type === 'candle') {
-        this.clearChart();
-        this.kline.showLoading();
-        this.kline.setOption(this.klineData, this.cycle)
-        this.redrawDepth = true
-        this.showChart = type
-      } else {
-        this.clearChart();
-        this.kline.showLoading();
-        this.kline.setDepthOption(this.klineData)
-        this.redrawDepth = false
-        this.showChart = type
-      }
-    },
     changeDataZoom(type) {
       if(this.platform === 'pc') {
         this.kline.changeDataZoom(type)
@@ -176,7 +136,7 @@ export default {
     },
     resize() {
       let isFullScreen = this.$parent.getState()
-      this.kline.resizeChart(this.$refs.klineRef, isFullScreen, this.showChart);
+      this.kline.resizeChart(this.$refs.klineRef, isFullScreen);
     },
     clearChart() {
       this.kline.clearChart();

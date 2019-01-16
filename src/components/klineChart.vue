@@ -70,40 +70,7 @@ export default {
   },
   watch: {
     klineDataObj() {
-      if (this.klineDataObj) {
         this.message = getLanguage();
-        let klineData = splitData(this.klineDataObj.klineData, this.platform)
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
-        let data = Object.assign({}, klineData, depthData);
-        this.klineData = data
-        if (data.values !== null && data.volumes !== null && data.categoryData !== null) {
-          if(this.cycle !== this.klineDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
-            this.redrawDepth = true
-            this.clearChart();
-            this.kline.showLoading();
-            if (this.showChart === 'candle') {
-              this.toolTipData = this.kline.setOption(data, this.cycle);
-              this.cycle = this.klineDataObj.cycle;
-              this.coinType = this.klineDataObj.coinType
-            } else if (this.showChart === 'depth') {
-              if (this.redrawDepth) {
-                this.kline.setDepthOption(data)
-                this.cycle = this.klineDataObj.cycle;
-                this.coinType = this.klineDataObj.coinType
-                this.redrawDepth = false
-              }else {
-                this.kline.updateDepthOption(data)
-              }
-            }
-          }else {
-            if (this.showChart === 'candle') {
-              this.kline.updateOption(data, this.cycle);
-            } else {
-              this.kline.updateDepthOption(data)
-            }
-          }
-        }
-      }
     }
   },
   methods: {
