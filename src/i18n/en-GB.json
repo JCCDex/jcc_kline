@@ -26,5 +26,7 @@
   "candle": "Candle",
   "depth": "Depth",
   "more": "More",
-  "depthMap": "Depth Map"
+  "depthMap": "Depth Map",
+  "fullScreen": "Full Screen",
+  "exitFullScreen": "Exit Full Screen"
 }

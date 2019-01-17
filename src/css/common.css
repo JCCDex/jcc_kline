@@ -51,6 +51,26 @@
     font-size: 12px;
 }
 
+.icon-full-screen {
+    font-size: 18px;
+    color: #b9cadd;
+}
+
+.icon-full-screen:hover {
+    font-size: 18px;
+    color: #1bdafd;
+}
+
+.icon-exit-full-screen {
+    font-size: 18px;
+    color: #b9cadd;
+}
+
+.icon-exit-full-screen:hover {
+    font-size: 18px;
+    color: #1bdafd;
+}
+
 .tooltip-data-name {
     margin-left: 10px;
     color: #b9cadd;
@@ -108,20 +128,100 @@
     color: #ee4b4b;
 }
 
+.full-screen-div {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+  }
+  
+  .full-screen-div .icon-fullscreen-tooltip {
+    visibility: hidden;
+    width: 100px;
+    background-color: #ffffff;
+    color: #101010;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .full-screen-div .icon-fullscreen-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .full-screen-div:hover .icon-fullscreen-tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  .full-screen-div .exit-fullscreen-tooltip {
+    visibility: hidden;
+    width: 100px;
+    background-color: #ffffff;
+    color: #101010;
+    text-align: center;
+    border-radius: 4px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .full-screen-div .exit-fullscreen-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .full-screen-div:hover .exit-fullscreen-tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+.chart-div {
+    float: left;
+    width: 56px;
+    height: 26px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: 'Microsoft YaHei'
+}
+
 .chart-btn {
-    color: #3669a7
+    text-align: center;
+	line-height: 26px;
+    background: #1b2229;
+    color: #b9cadd
 }
 
 .chart-btn-active {
-    min-width: 40px;
-    width: auto;
-    height: 20px;
-    cursor: pointer;
-    border-radius: 2px;
-    color: #e6e6e6;
-    background: #34b9ea;
-    line-height: 20px;
-    font-size: 13px;
+    text-align: center;
+	line-height: 26px;
+    color: #ffffff;
+    background: #3669a7;
 }
 
 .mobile-cycle-btn {

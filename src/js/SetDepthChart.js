@@ -248,27 +248,11 @@ class DepthChart {
                 data: data.buyData,
                 showSymbol: false,
                 lineStyle: {
-                    color: '#ee3523',
+                    color: '#ee4b4b',
                 },
                 areaStyle: {
                     normal: {
-                        color: {
-                            type: 'linear',
-                            x: 0,
-                            y: 1,
-                            x2: 0,
-                            y2: 0,
-                            colorStops: [
-                                {
-                                    offset: 0,
-                                    color: '#2d1d23'
-                                },
-                                {
-                                    offset: 1,
-                                    color: '#ee4a4a'
-                                }
-                            ]
-                        }
+                        color: "rgba(238,75,75,0.3)"
                     }
                 }
             },
@@ -278,27 +262,11 @@ class DepthChart {
                 data: data.sellData,
                 showSymbol: false,
                 lineStyle: {
-                    color: '#008c00',
+                    color: '#09e988',
                 },
                 areaStyle: {
                     normal: {
-                        color: {
-                            type: 'linear',
-                            x: 0,
-                            y: 1,
-                            x2: 0,
-                            y2: 0,
-                            colorStops: [
-                                {
-                                    offset: 0,
-                                    color: '#14322d'
-                                },
-                                {
-                                    offset: 1,
-                                    color: '#28b869'
-                                }
-                            ]
-                        }
+                        color: "rgba(9,233,136,0.3)"
                     }
                 }
             }

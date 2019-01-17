@@ -26,5 +26,7 @@
   "candle": "行情图",
   "depth": "深度图",
   "more": "更多",
-  "depthMap": "深度图"
+  "depthMap": "深度图",
+  "fullScreen": "全屏",
+  "exitFullScreen": "退出全屏"
 }
