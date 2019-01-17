@@ -277,18 +277,18 @@
 .mobile-tooltip-name {
     color: #e6e6e6;
     font: 0.16rem "Microsoft YaHei";
+    margin-left: 0.1rem;
 }
 
 .mobile-tooltip-data {
     color: #e6e6e6;
     font: 0.16rem "Microsoft YaHei";
-    margin-left:0.1rem;
 }
 
 .mobile-tooltip-volume {
     color: #e6e6e6;
     font: 0.16rem "Microsoft YaHei";
-    margin-left:0.1rem;
+    float:felt
 }
 .mobile-depthMapname {
     clear: both;
@@ -297,3 +297,47 @@
     font: 0.24rem "Microsoft YaHei";
     position: relative;
 }
+
+.mobile-tooltip-data-ma5 {
+    color: #ff4d71
+}
+
+/* .tooltip-ma5 {
+    color: #ff4d71
+} */
+
+.mobile-tooltip-data-ma10 {
+    margin-left: 0.1rem;
+    color: #67ff7c
+}
+/* 
+.tooltip-ma10 {
+    color: #67ff7c
+} */
+
+.mobile-tooltip-data-ma20 {
+    margin-left: 0.1rem;
+    color: #16c5ff
+}
+
+/* .tooltip-ma20 {
+    color: #16c5ff
+} */
+
+.mobile-tooltip-data-ma30 {
+    margin-left: 0.1rem;
+    color: #f6d026
+}
+
+/* .tooltip-ma30 {
+    color: #f6d026
+} */
+
+.mobile-tooltip-data-ma60 {
+    margin-left: 0.1rem;
+    color: #e03bfa
+}
+
+/* .tooltip-ma60 {
+    color: #e03bfa
+} */

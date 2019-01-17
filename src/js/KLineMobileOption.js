@@ -4,7 +4,8 @@ var mobileOption = {
     axisPointer: {
         link: { xAxisIndex: 'all' },
         label: {
-        // backgroundColor: "#777"
+            backgroundColor: '#232b34',
+            fontSize:16,
         }
     },
     tooltip: {
@@ -34,9 +35,9 @@ var mobileOption = {
         {
             left: '20px',
             right: '55px',
-            bottom: '5px',
-            backgroundColor: '#1b2229',
-            borderColor: '#1b2229',
+            bottom: '20px',
+            backgroundColor: '#161b21',
+            borderColor: '#161b21',
             show: true
         }
     ],
@@ -109,8 +110,8 @@ var mobileOption = {
             },
             axisLabel: {
                 show: true,
-                color: '#f3f7f6',
-                fontSize: 18,
+                color: '#b7c2ce',
+                fontSize: 22,
                 algin: 'right',
                 verticalAlign: 'top'
             }
