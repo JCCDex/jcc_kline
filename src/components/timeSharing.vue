@@ -7,7 +7,7 @@
           <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.price}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
         </div>
-    <div id = "kline" ref = "klineRef" style="width:100%;height:572px;" @mousemove="getTimeSharingTipData"></div>
+    <div id = "timeSharing" ref = "timeSharing" style="width:100%;height:572px;" @mousemove="getTimeSharingTipData"></div>
   </div>
 </template>
 <script>
@@ -53,7 +53,7 @@ export default {
         if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
           this.clearChart()
           this.timeSharing.setTimeSharingOption()
-          this.timeSharing.resizeTimeSharingChart(this.$refs.klineRef, false)
+          this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, false)
           this.coinType = this.klineDataObj.coinType
           this.isRefresh = false
         }else {
@@ -72,14 +72,20 @@ export default {
   },
   mounted() {
     this.init();
+    window.addEventListener("resize", this.resize);
   },
   beforeDestroy() {
+    window.removeEventListener("resize", this.resize);
     this.timeSharingTipData = null;
     this.dispose()
   },
   methods: {
     init() {
-      this.timeSharing.initTimeSharingChart(this.$refs.klineRef);
+      this.timeSharing.initTimeSharingChart(this.$refs.timeSharing);
+    },
+    resize() {
+      let isFullScreen = this.$parent.getState();
+      this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, isFullScreen)
     },
     clearChart() {
       this.timeSharing.clearTimeSharingEcharts();

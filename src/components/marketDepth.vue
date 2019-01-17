@@ -1,5 +1,5 @@
 <template>
-    <div id="kline" ref="klineRef" style="width:100%;height:572px;"></div>
+    <div id="depth" ref="depth" style="width:100%;height:572px;"></div>
 </template>
 <script>
 import { splitData, getDepthData } from '../js/processData'
@@ -60,12 +60,12 @@ export default {
   },
   methods: {
     init() {
-      this.depth.initDepth(this.$refs.klineRef);
+      this.depth.initDepth(this.$refs.depth);
       this.resize();
     },
     resize() {
       let isFullScreen = this.$parent.getState()
-      this.depth.resizeDepthChart(this.$refs.klineRef, isFullScreen, this.showChart);
+      this.depth.resizeDepthChart(this.$refs.depth, isFullScreen);
     },
     clearChart() {
       this.depth.clearDepthEcharts();

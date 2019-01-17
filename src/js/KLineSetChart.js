@@ -94,6 +94,8 @@ class KLineSetChartController {
     }
 
     clearEcharts() {
+        toolTipData = null;
+        oldKlineData = null;
         this.kline.clear();
     }
 

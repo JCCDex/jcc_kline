@@ -199,13 +199,14 @@ class TimeSharingChart {
     getTimeSharingGrid() {
         return [
             {
-                left: '10',
-                right: '100'
+                left: 10,
+                top: 50,
+                right: 100
             },
             {
-                left: '10',
-                right: '100',
-                bottom: '5px',
+                left: 10,
+                right: 100,
+                bottom: 10,
                 backgroundColor: '#1b2229',
                 borderColor: '#1b2229',
                 show: true
