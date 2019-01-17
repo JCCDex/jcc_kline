@@ -50,10 +50,10 @@ class DepthMapMobileSetChartController {
 
     getDepthGrid() {
         return [{
-            top: 60,
-            left: 10,
-            right: 10,
-            bottom: 20,
+            top: 48,
+            left: 0,
+            right: 0,
+            bottom: 40,
             containLabel: true
         }];
     }
@@ -78,7 +78,11 @@ class DepthMapMobileSetChartController {
                     show: false
                 },
                 axisPointer: {
-                    show: true
+                    show: true,
+                    label: {
+                        backgroundColor: '#232b34',
+                        fontSize:16,
+                    }
                 },
                 axisTick: {
                     show: true,
@@ -87,7 +91,7 @@ class DepthMapMobileSetChartController {
                 axisLabel: {
                     show: true,
                     color: '#b9cadd',
-                    fontSize: 10
+                    fontSize: 22
                 }
             }
         ];
@@ -99,16 +103,23 @@ class DepthMapMobileSetChartController {
                 type: 'value',
                 gridIndex: 0,
                 position: 'right',
-                splitNumber: 6,
+                z:10,
+                splitNumber: 5,
                 splitLine: {
                     show: false
                 },
                 axisLabel: {
+                    inside:true,
                     show: true,
                     onZero: false,
                     margin: 0,
-                    color: '#9aa4ac',
-                    fontSize: 12,
+                    color: '#b7c2ce',
+                    fontSize: 22,
+                    formatter: function (value) {
+                        if (value > 1000) {
+                            return (value / 1000) + 'K';
+                        }
+                    }
                 },
                 splitArea: {
                     show: false

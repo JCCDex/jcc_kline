@@ -18,18 +18,22 @@
           </div> -->
         <!-- tooltip 数据显示 -->
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
-          <div style="font-size:0.14rem">
-            <font class="tooltip-data-ma5">MA5: </font><font class="tooltip-ma5">{{this.toolTipData.MA5}}</font>
-            <font class="tooltip-data-ma10">MA10: </font><font class="tooltip-ma10">{{this.toolTipData.MA10}}</font>
-            <font class="tooltip-data-ma20">MA20: </font><font class="tooltip-ma20">{{this.toolTipData.MA20}}</font>
-            <font class="tooltip-data-ma30">MA30: </font><font class="tooltip-ma30">{{this.toolTipData.MA30}}</font>
-            <font class="tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font>
+          <div style="font-size:0.15rem; margin-top: 0.1rem;">
+            <font class="mobile-tooltip-data-ma5">MA5: </font><font class="tooltip-ma5">{{this.toolTipData.MA5}}</font>
+            <font class="mobile-tooltip-data-ma10">MA10: </font><font class="tooltip-ma10">{{this.toolTipData.MA10}}</font>
+            <font class="mobile-tooltip-data-ma20">MA20: </font><font class="tooltip-ma20">{{this.toolTipData.MA20}}</font>
+            <font class="mobile-tooltip-data-ma30">MA30: </font><font class="tooltip-ma30">{{this.toolTipData.MA30}}</font>
+            <font class="mobile-tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font>
           </div>
+          <div style="font-size:0.15rem; margin-left: -0.1rem; margin-top: 0.05rem;">
           <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
           <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
           <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
           <font class="mobile-tooltip-name">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
+          </div>
+          <div style="float:right;margin-top: -0.24rem">
           <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
+          </div>
         </div>
 
         <!-- timeDivision tootip 数据显示 -->
@@ -41,9 +45,10 @@
         </div>
     <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
     <div style="background:#2b2f33; height:0.1rem"></div>
-    <div style="height:0.56rem; border-bottom:1px solid #2b2f33">
+    <!-- <div style="height:0.40rem; border-bottom:1px solid #2b2f33">
       <span class="mobile-depthMapname">{{message.depthMap}}</span>
-    </div>
+    </div> -->
+    <!-- <div style="margin-left:500px; color:#e6e6e6">买，卖 </div> -->
     <div id = "depth" ref = "depthRef" :style="{height: `${klineConfig.depthSize.height}px`, width: `${klineConfig.depthSize.width}px`}"></div>
   </div>
 </template>
