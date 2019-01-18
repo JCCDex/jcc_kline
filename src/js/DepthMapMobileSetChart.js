@@ -51,8 +51,8 @@ class DepthMapMobileSetChartController {
     getDepthGrid() {
         return [{
             top: 48,
-            left: 0,
-            right: 0,
+            left: 10,
+            right: 10,
             bottom: 40,
             containLabel: true
         }];
@@ -103,10 +103,11 @@ class DepthMapMobileSetChartController {
                 type: 'value',
                 gridIndex: 0,
                 position: 'right',
-                z:10,
-                splitNumber: 5,
+                z:1,
+                splitNumber: 4,
                 splitLine: {
-                    show: false
+                    show: false,
+                    type: 'shadow'
                 },
                 axisLabel: {
                     inside:true,

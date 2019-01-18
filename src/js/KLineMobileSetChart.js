@@ -42,12 +42,12 @@ class KLineMobileSetChartController {
         this.kline.hideLoading();
     }
 
-    setOption(size) {
+    setOption(size, mobileCycle) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
-            grid: this.getGrid(size),
-            xAxis: this.getXAxis(size),
-            yAxis: this.getYAxis(size)
+            grid: this.getGrid(size.klineSize),
+            xAxis: this.getXAxis(size,mobileCycle),
+            yAxis: this.getYAxis(size.klineSize)
         };
         merge(config, option);
         cycle = 'normal';
@@ -349,22 +349,22 @@ class KLineMobileSetChartController {
         return g;
     }
 
-    getXAxis(data) {
+    getXAxis(data, mobileCycle) {
         var x = [{
             gridIndex: 0,
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if (cycle === 'hour') {
+                    if (mobileCycle === 'hour') {
                         return value.substring(5);
                     }
-                    if (cycle === 'day') {
+                    if (mobileCycle === 'day') {
                         return value.substring(0, 12);
                     }
-                    if (cycle === 'week') {
+                    if (mobileCycle === 'week') {
                         return value.substring(0, 12);
                     }
-                    if (cycle === 'month') {
+                    if (mobileCycle === 'month') {
                         return value.substring(0, 7);
                     }
                 }
