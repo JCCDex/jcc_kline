@@ -3,14 +3,16 @@
     <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
       <div style="position: absolute;right:50px;top:20px;z-index:1;font-size: 13px;">
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
-          <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
+           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-btn-active' : 'chart-btn'">timeSharing</span> -->
       </div>
       <div style="position: absolute;right:30px;top:23px;z-index:1;" class="full-screen-div">
-        <i :class="fullscreen ? 'icon iconfont icon-exit-full-screen' : 'icon iconfont icon-full-screen'" @click="fullScreenToggle">
-          <!-- <span v-show="!fullscreen" class="icon-fullscreen-tooltip">{{message.fullScreen}}</span> -->
-          <!-- <span v-show="fullscreen" class="exit-fullscreen-tooltip">{{message.exitFullScreen}}</span> -->
-        </i>
+          <i v-show = "!fullscreen" class="icon iconfont icon-full-screen" @click="fullScreenToggle">
+            <span v-show="!fullscreen" :class=" message.language === 'zh' ? 'icon-fullscreen-tooltip' : 'icon-fullscreen-entip'"><font style="font-size:14px;line-height:22px;">{{message.fullScreen}}</font></span>
+          </i>
+          <i v-show = "fullscreen" class="icon iconfont icon-exit-full-screen" @click="fullScreenToggle">
+            <span v-show="fullscreen" :class=" message.language === 'zh' ? 'exit-fullscreen-tooltip' : 'exit-fullscreen-entip'"><font style="font-size:14px;line-height:22px;">{{message.exitFullScreen}}</font></span>
+          </i>
       </div>
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-data-obj = "klineDataObj" :cycle = "cycle" :platform = "platform"></KLine>
       <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
@@ -35,7 +37,9 @@ export default {
   data() {
     return {
       showChart: 'candle',
-      fullscreen: false
+      fullscreen: false,
+      tipsContent: 'aaaaaa',
+      tipPlacement: 'top'
     };
   },
   props: {
