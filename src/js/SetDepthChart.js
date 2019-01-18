@@ -150,6 +150,7 @@ class DepthChart {
                 series: this.getDepthSeries(data)
             };
             this.depth.setOption(depthOption, true);
+            console.log(this.depth.getOption())
         }
     }
 
@@ -271,7 +272,10 @@ class DepthChart {
                     show: false
                 },
                 axisPointer: {
-                    show: false
+                    show: true,
+                    lineStyle: {
+                        type: 'dotted'
+                    }
                 }
             }
         ];
