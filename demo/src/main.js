@@ -5,7 +5,8 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import jKline from 'jcc_kline'
+// import jKline from 'jcc_kline'
+import jKline from '../../index'
 
 Vue.config.productionTip = false
 

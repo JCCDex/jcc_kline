@@ -80,7 +80,7 @@ export default {
         let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
         let data = Object.assign({}, klineData, depthData);
         this.klineData = data
-        if (data.values !== null && data.volumes !== null && data.categoryData !== null) {
+        if (data.values && data.volumes && data.categoryData) {
           if(this.cycle !== this.klineDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
             this.kline.showLoading();
