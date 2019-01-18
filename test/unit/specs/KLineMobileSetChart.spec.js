@@ -12,6 +12,8 @@ describe('test KLineMobileSetChart', () => {
     height: 1000,
     width: 780
   }
+  let mobileData = {klineSize:size}
+  let cycle = 'hour'
 
   it('test KLineMobileSetChart', () => {
     let showIndicators = ['Candlestick', 'MA', 'Volume']
@@ -50,7 +52,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     expect(mobileKline.kline).not.toBeNull();
   })
 
@@ -59,7 +61,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.showLoading()
     expect(mobileKline.kline).not.toBeNull();
   })
@@ -69,7 +71,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.showLoading()
     mobileKline.hideLoading()
     expect(mobileKline.kline).not.toBeNull();
@@ -80,7 +82,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     expect(mobileKline.kline).not.toBeNull();
   })
 
@@ -89,7 +91,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     expect(mobileKline.kline.getOption()).not.toBeNull();
   })
@@ -99,7 +101,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     expect(mobileKline.kline.getOption()).not.toBeNull();
   })
@@ -109,7 +111,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     expect(mobileKline.kline.getOption()).not.toBeNull();
   })
@@ -148,7 +150,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     mobileKline.changeDataZoom('leftShift')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(58);
@@ -163,7 +165,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     mobileKline.changeDataZoom('enlarge')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(65);
@@ -178,7 +180,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     mobileKline.changeDataZoom('enlarge')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(65);
@@ -193,7 +195,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     expect(mobileKline.kline.getOption().series).not.toBeNull();
     mobileKline.clearMobileEcharts()
@@ -205,7 +207,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     expect(mobileKline.kline.getOption().series).not.toBeNull();
     mobileKline.disposeMobileEChart()
@@ -217,7 +219,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(size)
+    mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     let tipData = mobileKline.getToolTipData();
     expect(tipData).not.toBeNull();

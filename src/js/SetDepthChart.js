@@ -252,7 +252,7 @@ class DepthChart {
                 },
                 areaStyle: {
                     normal: {
-                        color: "rgba(238,75,75,0.3)"
+                        color: 'rgba(238,75,75,0.3)'
                     }
                 }
             },
@@ -266,7 +266,7 @@ class DepthChart {
                 },
                 areaStyle: {
                     normal: {
-                        color: "rgba(9,233,136,0.3)"
+                        color: 'rgba(9,233,136,0.3)'
                     }
                 }
             }

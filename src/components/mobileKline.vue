@@ -126,11 +126,13 @@ export default {
       if (this.klineDataObj) {
         this.message = getLanguage();
         if(this.cycle !== 'everyhour') {
+          let mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
+          this.klineDataObj.categoryData = mobileKlineData.categoryData;
           if(this.status === 0) {
-            this.kline.setMobileOption(this.klineDataObj.klineSize, this.cycle);
+            this.kline.setMobileOption(this.klineDataObj, this.cycle);
             this.status = 1;
           }
-          let mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
+          // let mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
           if (mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
             this.toolTipData = this.kline.updateMobileOption(mobileKlineData);
             this.kline.hideMobileLoading()

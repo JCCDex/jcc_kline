@@ -30,11 +30,11 @@ var mobileOption = {
     grid: [
         {
             left: '20px',
-            right: '55px'
+            right: '20px'
         },
         {
             left: '20px',
-            right: '55px',
+            right: '20px',
             bottom: '20px',
             backgroundColor: '#161b21',
             borderColor: '#161b21',
@@ -57,17 +57,15 @@ var mobileOption = {
                 show: false
             },
             axisLabel: {
-                show: false
+                show: true,
+                color: '#b7c2ce',
+                fontSize: 22,
+                algin: 'right',
+                verticalAlign: 'top'
             },
             splitNumber: 20,
             min: 'dataMin',
             max: 'dataMax',
-            // axisPointer: {
-            //     z: 100,
-            //     label: {
-            //         show: false
-            //     }
-            // }
         }, 
         {
             type: 'category',
@@ -104,7 +102,9 @@ var mobileOption = {
                 }
             },
             axisLine: {
+                show: false,
                 lineStyle: {
+                    
                     color: '#37404b'
                 }
             },
