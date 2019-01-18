@@ -350,7 +350,6 @@ class KLineMobileSetChartController {
     }
 
     getXAxis(data, mobileCycle) {
-        debugger
         var x = [{
             gridIndex: 0,
             data: data.categoryData,
