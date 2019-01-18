@@ -2,7 +2,7 @@ import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
-import 'echarts/lib/component/legend'
+import 'echarts/lib/component/legend';
 import { getClientWidth, getLanguage, getClientHeight } from './utils';
 
 var klineSize = {
@@ -104,15 +104,15 @@ class DepthChart {
         oldDepthData = data;
         if (data) {
             let message = getLanguage();
-            let buy = message.buy
-            let sell = message.sell
+            let buy = message.buy;
+            let sell = message.sell;
             this.depth.hideLoading();
             let depthOption = {
                 backgroundColor: '#161b21',
                 animation: true,
                 color: [
-                    "#ee4b4b",
-                    "#09e988"
+                    '#ee4b4b',
+                    '#09e988'
                 ],
                 legend: [
                     {
@@ -121,11 +121,11 @@ class DepthChart {
                         itemGap: 20,
                         itemWidth: 14,
                         itemHeight: 14,
-                        "data": [{
+                        'data': [{
                             name: buy,
                             icon: 'rect',
                             textStyle: {
-                                color: "#ee4b4b",
+                                color: '#ee4b4b',
                                 fontSize: 14,
                                 fontFamily: 'Microsoft YaHei'
                             }
@@ -134,7 +134,7 @@ class DepthChart {
                             name: sell,
                             icon: 'rect',
                             textStyle: {
-                                color: "#09e988",
+                                color: '#09e988',
                                 fontSize: 14,
                                 fontFamily: 'Microsoft YaHei'
 
@@ -150,22 +150,21 @@ class DepthChart {
                 series: this.getDepthSeries(data)
             };
             this.depth.setOption(depthOption, true);
-            console.log(this.depth.getOption())
         }
     }
 
     updateDepthOption(data) {
         let message = getLanguage();
-        let buy = message.buy
-        let sell = message.sell
+        let buy = message.buy;
+        let sell = message.sell;
         oldDepthData = data;
         if (this.depth.getOption()) {
             let depthOption = {
                 backgroundColor: '#161b21',
                 animation: true,
                 color: [
-                    "#ee4b4b",
-                    "#09e988"
+                    '#ee4b4b',
+                    '#09e988'
                 ],
                 legend: [
                     {
@@ -174,11 +173,11 @@ class DepthChart {
                         itemGap: 20,
                         itemWidth: 14,
                         itemHeight: 14,
-                        "data": [{
+                        'data': [{
                             name: buy,
                             icon: 'rect',
                             textStyle: {
-                                color: "#ee4b4b",
+                                color: '#ee4b4b',
                                 fontSize: 14,
                                 fontFamily: 'Microsoft YaHei'
                             }
@@ -187,7 +186,7 @@ class DepthChart {
                             name: sell,
                             icon: 'rect',
                             textStyle: {
-                                color: "#09e988",
+                                color: '#09e988',
                                 fontSize: 14,
                                 fontFamily: 'Microsoft YaHei'
 
@@ -322,7 +321,7 @@ class DepthChart {
     getDepthSeries(data) {
         let message = getLanguage();
         let buy = message.buy;
-        let sell = message.sell
+        let sell = message.sell;
         return [
             {
                 name: buy,
@@ -335,7 +334,7 @@ class DepthChart {
                 },
                 areaStyle: {
                     normal: {
-                        color: "rgba(238,75,75,0.3)"
+                        color: 'rgba(238,75,75,0.3)'
                     }
                 }
             },
@@ -350,7 +349,7 @@ class DepthChart {
                 },
                 areaStyle: {
                     normal: {
-                        color: "rgba(9,233,136,0.3)"
+                        color: 'rgba(9,233,136,0.3)'
                     }
                 }
             }
