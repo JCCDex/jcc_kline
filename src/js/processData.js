@@ -2,6 +2,7 @@ import { formatDecimal, formatTime } from './utils';
 import option from './KLineOption';
 import mobileOption from './KLineMobileOption';
 export const splitData = (data, platform) => {
+    if (!data) return;
     var categoryData = [];
     var values = [];
     var volumes = [];
@@ -40,6 +41,7 @@ export const splitData = (data, platform) => {
 };
 
 export const getDepthData = (data, coinType) => {
+    if (!data || !coinType) return;
     let bids = data.bids;
     let bidsTotal = 0;
     let maxBuyPrice = 0;

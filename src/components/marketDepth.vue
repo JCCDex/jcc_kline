@@ -34,7 +34,7 @@ export default {
     klineDataObj() {
       if (this.klineDataObj) {
         let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
-        if (depthData !== null) {
+        if (depthData) {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
             this.depth.setDepthOption(depthData)

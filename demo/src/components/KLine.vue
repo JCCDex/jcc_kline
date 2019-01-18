@@ -1,20 +1,26 @@
 <template>
-  <div>
-    <jKline ref = "vkline" :kline-data-obj = "klineDataObj" :show-indicators = "showIndicators" :kline-config = "klineConfig" :cycle = "cycle" :platform = "platform"></jKline>
-  </div>
+<div>
+    <el-col :span='24'>
+        <div style='position:relative'>
+            <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :show-indicators='showIndicators' :kline-config='klineConfig' :cycle='cycle'></jKline>
+        </div>
+    </el-col>
+</div>
 </template>
 
 <script>
+import {JcInfo} from 'jcc_rpc'
 export default {
   name: 'KLine',
   data () {
     return {
+      id: null,
       cycle: 'hour',
       kline: null,
       klineDataObj: null,
-      platform: 'pc',
       klineConfig: {
-        backgroundColor: '#161b21'
+        backgroundColor: '#161b21',
+        platform: 'pc'
       },
       showIndicators: ['Candlestick', 'MA', 'Volume', 'MarketDepth']
     }
@@ -25,27 +31,68 @@ export default {
       base: 'SWTC'
     }
     localStorage.setItem('coinItem', pairs)
+    clearInterval(this.id)
+    this.getKline()
+    this.id = setInterval(this.update, 5000)
+  },
+  beforeDestroy () {
+    clearInterval(this.id)
   },
   mounted () {
     this.$refs.vkline.status = 0
-    this.klineDataObj = require('../data')
+    // this.klineDataObj = require('../data')
+  },
+  methods: {
+    changeCycle (cycle) {
+      this.cycle = cycle
+      this.getKline()
+    },
+    update () {
+      this.getKline()
+    },
+    async getKline () {
+      var hosts = process.env.infoHosts
+      // var hosts = ['iujhg293cabc.jccdex.cn']
+      var port = process.env.infoPort
+      var https = true
+      let inst = new JcInfo(hosts, port, https)
+      var base = 'SWT'
+      var counter = 'CNT'
+      let p1 = inst.getKline(base, counter, this.cycle)
+      let p2 = inst.getDepth(base, counter, 'more')
+      let coinType = {
+        baseTitle: 'swt',
+        counterTitle: 'cnt'
+      }
+      let [res1, res2] = await Promise.all([p1, p2])
+      this.klineDataObj = {
+        klineData: res1.data,
+        depthData: res2.data,
+        coinType: coinType,
+        cycle: this.cycle
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-h1, h2 {
-  font-weight: normal;
+h1,
+h2 {
+    font-weight: normal;
 }
+
 ul {
-  list-style-type: none;
-  padding: 0;
+    list-style-type: none;
+    padding: 0;
 }
+
 li {
-  display: inline-block;
-  margin: 0 10px;
+    display: inline-block;
+    margin: 0 10px;
 }
+
 a {
-  color: #42b983;
+    color: #42b983;
 }
 </style>

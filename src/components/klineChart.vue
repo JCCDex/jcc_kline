@@ -12,7 +12,7 @@
           <!-- <span v-show="fullscreen" class="exit-fullscreen-tooltip">{{message.exitFullScreen}}</span> -->
         </i>
       </div>
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-data-obj = "klineDataObj" :cycle = "cycle" :platform = "platform"></KLine>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-data-obj = "klineDataObj" :cycle = "cycle"></KLine>
       <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
       <!-- <time-sharing ref="timeSharing" v-if="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
@@ -53,10 +53,6 @@ export default {
           chartType: 'depth'
         }
       }
-    },
-    platform: {
-      type: String,
-      default: 'pc'
     },
     cycle: {
       type: String,

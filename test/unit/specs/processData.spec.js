@@ -9,6 +9,18 @@ describe('test processData', () => {
     expect(splitdata.volumes).not.toBeNull()
   })
 
+  it('test splitData, no data', () => {
+    let splitdata = splitData(null, 'pc')
+    expect(splitdata).toBeUndefined
+  })
+
+  it('test splitData, no platform', () => {
+    let splitdata = splitData(testData.klineData, null)
+    expect(splitdata.categoryData).not.toBeNull()
+    expect(splitdata.values).not.toBeNull()
+    expect(splitdata.volumes).not.toBeNull()
+  })
+
   it('test getDepthData', () => {
     let data = getDepthData(testData.depthData, testData.coinType)
     expect(data).not.toBeNull()
@@ -23,6 +35,16 @@ describe('test processData', () => {
     expect(data.sellAmounts).not.toBeNull()
     expect(data.buyPercent).not.toBeNull()
     expect(data.sellPercent).not.toBeNull()
+  })
+
+  it('test getDepthData, no data', () => {
+    let data = getDepthData(null, testData.coinType)
+    expect(data).not.toBeUndefined
+  })
+
+  it('test getDepthData, no coinType', () => {
+    let data = getDepthData(testData.depthData, null)
+    expect(data).not.toBeUndefined
   })
 
   it('test handleDivisionData', () => {
