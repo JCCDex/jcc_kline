@@ -2,6 +2,7 @@ import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
+import 'echarts/lib/component/legend'
 import { getClientWidth, getLanguage, getClientHeight } from './utils';
 
 var klineSize = {
@@ -102,10 +103,46 @@ class DepthChart {
     setDepthOption(data) {
         oldDepthData = data;
         if (data) {
+            let message = getLanguage();
+            let buy = message.buy
+            let sell = message.sell
             this.depth.hideLoading();
             let depthOption = {
                 backgroundColor: '#161b21',
                 animation: true,
+                color: [
+                    "#ee4b4b",
+                    "#09e988"
+                ],
+                legend: [
+                    {
+                        show: true,
+                        top: 60,
+                        itemGap: 20,
+                        itemWidth: 14,
+                        itemHeight: 14,
+                        "data": [{
+                            name: buy,
+                            icon: 'rect',
+                            textStyle: {
+                                color: "#ee4b4b",
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+                            }
+
+                        }, {
+                            name: sell,
+                            icon: 'rect',
+                            textStyle: {
+                                color: "#09e988",
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+
+                            }
+                        }
+                        ]
+                    }
+                ],
                 grid: this.getDepthGrid(data),
                 xAxis: this.getDepthXAxis(data),
                 yAxis: this.getDepthYAxis(data),
@@ -117,9 +154,47 @@ class DepthChart {
     }
 
     updateDepthOption(data) {
+        let message = getLanguage();
+        let buy = message.buy
+        let sell = message.sell
         oldDepthData = data;
         if (this.depth.getOption()) {
             let depthOption = {
+                backgroundColor: '#161b21',
+                animation: true,
+                color: [
+                    "#ee4b4b",
+                    "#09e988"
+                ],
+                legend: [
+                    {
+                        show: true,
+                        top: 60,
+                        itemGap: 20,
+                        itemWidth: 14,
+                        itemHeight: 14,
+                        "data": [{
+                            name: buy,
+                            icon: 'rect',
+                            textStyle: {
+                                color: "#ee4b4b",
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+                            }
+
+                        }, {
+                            name: sell,
+                            icon: 'rect',
+                            textStyle: {
+                                color: "#09e988",
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+
+                            }
+                        }
+                        ]
+                    }
+                ],
                 grid: this.getDepthGrid(data),
                 tooltip: this.getDepthToolTip(data),
                 xAxis: this.getDepthXAxis(data),
@@ -241,14 +316,18 @@ class DepthChart {
     }
 
     getDepthSeries(data) {
+        let message = getLanguage();
+        let buy = message.buy;
+        let sell = message.sell
         return [
             {
-                name: 'buy',
+                name: buy,
                 type: 'line',
                 data: data.buyData,
                 showSymbol: false,
                 lineStyle: {
                     color: '#ee4b4b',
+                    width: 2
                 },
                 areaStyle: {
                     normal: {
@@ -257,12 +336,13 @@ class DepthChart {
                 }
             },
             {
-                name: 'sell',
+                name: sell,
                 type: 'line',
                 data: data.sellData,
                 showSymbol: false,
                 lineStyle: {
                     color: '#09e988',
+                    width: 2
                 },
                 areaStyle: {
                     normal: {

@@ -28,5 +28,7 @@
   "more": "More",
   "depthMap": "Depth Map",
   "fullScreen": "Full Screen",
-  "exitFullScreen": "Exit Full Screen"
+  "exitFullScreen": "Exit Full Screen",
+  "buy": "Buy",
+  "sell": "Sell"
 }
