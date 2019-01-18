@@ -37,9 +37,7 @@ export default {
   data() {
     return {
       showChart: 'candle',
-      fullscreen: false,
-      tipsContent: 'aaaaaa',
-      tipPlacement: 'top'
+      fullscreen: false
     };
   },
   props: {
