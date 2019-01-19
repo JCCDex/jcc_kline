@@ -20,7 +20,8 @@ export default {
   data() {
     return {
       kline: null,
-      status: 0,
+      platform: 'pc',
+      chartType: 'timeSharing',
       coinType: null,
       timeSharingTipData: null,
       divisionTime: null,

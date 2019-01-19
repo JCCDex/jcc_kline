@@ -10,7 +10,9 @@ export default {
   data() {
     return {
       kline: null,
-      coinType: ''
+      coinType: '',
+      platform: 'pc',
+      chartType: 'depth'
     };
   },
   props: {

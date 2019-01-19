@@ -39,10 +39,12 @@ export default {
   data() {
     return {
       kline: null,
+      cycle: 'hour',
+      platform: 'pc',
+      showIndicators: ['Candlestick', 'MA', 'Volume', 'MarketDepth'],
       message: null,
       klineData: null,
       toolTipData: null,
-      cycle: 'hour',
       coinType: '',
       outspreadMA: false
     };
@@ -54,21 +56,11 @@ export default {
         return {}
       }
     },
-    platform: {
-      type: String,
-      default: 'pc'
-    },
     klineConfig: {
       type: Object,
       default: () => {
         return {
         }
-      }
-    },
-    showIndicators: {
-      type: Array,
-      default: () => {
-        return ['Candlestick', 'MA', 'Volume', 'MarketDepth']
       }
     }
   },
@@ -118,11 +110,7 @@ export default {
       this.$emit("listenToChildEvent", cycle)
     },
     changeDataZoom(type) {
-      if(this.platform === 'pc') {
-        this.kline.changeDataZoom(type)
-      }else {
-        this.kline.changeMobileDataZoom(type)
-      }
+      this.kline.changeDataZoom(type)
     },
     getToolTipData() {
       this.toolTipData = this.kline.getToolTipData()
