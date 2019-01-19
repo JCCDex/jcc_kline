@@ -117,7 +117,7 @@ class DepthChart {
                 legend: [
                     {
                         show: true,
-                        top: 60,
+                        top: 30,
                         itemGap: 20,
                         itemWidth: 14,
                         itemHeight: 14,
@@ -169,7 +169,7 @@ class DepthChart {
                 legend: [
                     {
                         show: true,
-                        top: 60,
+                        top: 30,
                         itemGap: 20,
                         itemWidth: 14,
                         itemHeight: 14,
