@@ -111,6 +111,13 @@ class TimeSharingChart {
         let option = {
             backgroundColor: '#161b21',
             animation: true,
+            axisPointer: {
+                link: {
+                    xAxisIndex: [0, 1]
+                },
+                label: {
+                }
+            },
             grid: this.getTimeSharingGrid(),
             xAxis: this.getTimeSharingXAxis(),
             yAxis: this.getTimeSharingYAxis(),
@@ -184,9 +191,6 @@ class TimeSharingChart {
             data: volumes
         });
         merge(timeDivisionconfig, updateTimeOption);
-        // if (this.showIndicators.indexOf('Volume') === -1) {
-        //     timeDivisionconfig.dataZoom[0].xAxisIndex = [0];
-        // }
         timeDivisionconfig.dataZoom = this.timeSharing.getOption().dataZoom;
         this.timeSharing.setOption(timeDivisionconfig);
         return toolTipData;

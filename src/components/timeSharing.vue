@@ -54,6 +54,10 @@ export default {
           this.clearChart()
           this.timeSharing.setTimeSharingOption()
           this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, false)
+          let timeDivisionData = this.klineDataObj.timeDivisionData;
+          let divisionData = handleDivisionData(timeDivisionData)
+          this.divisionTime = divisionData.divisionTime;
+          this.timeSharingTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
           this.coinType = this.klineDataObj.coinType
           this.isRefresh = false
         }else {
