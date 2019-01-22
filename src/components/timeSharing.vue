@@ -13,7 +13,7 @@
 <script>
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 import { splitData, handleDivisionData } from '../js/processData'
-import ChartController from '../js/Chart'
+import ChartController from '../js/Charts'
 import { getLanguage } from '../js/utils'
 export default {
   name: "timeSharing",

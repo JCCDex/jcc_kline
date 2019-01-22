@@ -1,4 +1,4 @@
-import ChartController from 'js/Chart.js'
+import ChartController from 'js/Charts.js'
 import { getDepthData } from 'js/processData'
 import testData from '../../../demo/src/data.json'
 import timeSharingData from '../../../demo/src/timeSharingData.json'

@@ -7,12 +7,7 @@ class ChartController {
     constructor(klineConfig) {
         // var merge = require('lodash.merge');
         if (klineConfig.platform === 'pc') {
-            if (klineConfig.chartType === 'candle') {
-                return;
-                // let klineOption = indicatorsOption(klineConfig.showIndicators);
-                // config = merge(klineOption, klineConfig);
-                // this.setKLineChart = new KLineSetChartController(config, klineConfig.showIndicators);
-            } else if (klineConfig.chartType === 'depth') {
+            if (klineConfig.chartType === 'depth') {
                 this.setDepthChart = new DepthChart(klineConfig);
             } else if (klineConfig.chartType === 'timeSharing') {
                 this.setTimeSharing = new TimeSharingChart(klineConfig);

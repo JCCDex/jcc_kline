@@ -14,7 +14,7 @@
             <span v-show="fullscreen" :class=" message.language === 'zh' ? 'exit-fullscreen-tooltip' : 'exit-fullscreen-entip'"><font style="font-size:14px;line-height:22px;">{{message.exitFullScreen}}</font></span>
           </i>
       </div>
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-data-obj = "klineDataObj" :cycle = "cycle"></KLine>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj" :cycle = "cycle"></KLine>
       <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
       <!-- <time-sharing ref="timeSharing" v-if="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
@@ -51,8 +51,6 @@ export default {
       type: Object,
       default: () => {
         return {
-          platform: 'pc',
-          chartType: 'depth'
         }
       }
     },
@@ -62,6 +60,7 @@ export default {
     }
   },
   created() {
+    this.klineConfig.platform = 'pc'
     this.message = getLanguage();
   },
   watch: {
