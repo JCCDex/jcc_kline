@@ -35,6 +35,7 @@ module.exports = {
     'src/**/*.{js}',
     '!src/js/KLineMobileOption.js',
     '!src/js/KLineOption.js',
+    '!src/js/DepthOption.js',
     '!src/main.js',
     '!**/node_modules/**'
   ]

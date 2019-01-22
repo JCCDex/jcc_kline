@@ -3,22 +3,23 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
+import merge from 'lodash.merge';
 import { getClientWidth, getLanguage, getClientHeight } from './utils';
 
 var klineSize = {
     width: 0,
     height: 0
 };
-
+var depthOption;
 var oldDepthData;
 
 class DepthChart {
     constructor(configs) {
-        this.klineConfig = configs;
+        this.depthConfig = configs;
     }
 
     resizeECharts(DOM, isFullScreen) {
-        if (this.klineConfig.platform === 'pc') {
+        if (this.depthConfig.platform === 'pc') {
             if (!isFullScreen) {
                 let size = getClientWidth();
                 let resizeContainer = () => {
@@ -103,52 +104,26 @@ class DepthChart {
     setDepthOption(data) {
         oldDepthData = data;
         if (data) {
+            depthOption = JSON.parse(JSON.stringify(this.depthConfig));
             let message = getLanguage();
             let buy = message.buy;
             let sell = message.sell;
             this.depth.hideLoading();
-            let depthOption = {
-                backgroundColor: '#161b21',
-                animation: true,
-                color: [
-                    '#ee4b4b',
-                    '#09e988'
-                ],
+            let option = {
                 legend: [
                     {
-                        show: true,
-                        top: 30,
-                        itemGap: 20,
-                        itemWidth: 14,
-                        itemHeight: 14,
-                        'data': [{
-                            name: buy,
-                            icon: 'rect',
-                            textStyle: {
-                                color: '#ee4b4b',
-                                fontSize: 14,
-                                fontFamily: 'Microsoft YaHei'
-                            }
-
+                        data: [{
+                            name: buy
                         }, {
-                            name: sell,
-                            icon: 'rect',
-                            textStyle: {
-                                color: '#09e988',
-                                fontSize: 14,
-                                fontFamily: 'Microsoft YaHei'
-
-                            }
+                            name: sell
                         }
                         ]
                     }
                 ],
-                grid: this.getDepthGrid(data),
-                xAxis: this.getDepthXAxis(data),
-                yAxis: this.getDepthYAxis(data),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
             };
+            merge(depthOption, option);
             this.depth.setOption(depthOption, true);
         }
     }
@@ -159,125 +134,23 @@ class DepthChart {
         let sell = message.sell;
         oldDepthData = data;
         if (this.depth.getOption()) {
-            let depthOption = {
-                backgroundColor: '#161b21',
-                animation: true,
-                color: [
-                    '#ee4b4b',
-                    '#09e988'
-                ],
+            let option = {
                 legend: [
                     {
-                        show: true,
-                        top: 30,
-                        itemGap: 20,
-                        itemWidth: 14,
-                        itemHeight: 14,
-                        'data': [{
-                            name: buy,
-                            icon: 'rect',
-                            textStyle: {
-                                color: '#ee4b4b',
-                                fontSize: 14,
-                                fontFamily: 'Microsoft YaHei'
-                            }
-
+                        data: [{
+                            name: buy
                         }, {
-                            name: sell,
-                            icon: 'rect',
-                            textStyle: {
-                                color: '#09e988',
-                                fontSize: 14,
-                                fontFamily: 'Microsoft YaHei'
-
-                            }
+                            name: sell
                         }
                         ]
                     }
                 ],
-                grid: this.getDepthGrid(data),
                 tooltip: this.getDepthToolTip(data),
-                xAxis: this.getDepthXAxis(data),
-                yAxis: this.getDepthYAxis(data),
                 series: this.getDepthSeries(data)
             };
+            merge(depthOption, option);
             this.depth.setOption(depthOption);
         }
-    }
-
-    getDepthGrid() {
-        return [{
-            top: 60,
-            left: 10,
-            right: 10,
-            bottom: 20,
-            containLabel: true
-        }];
-    }
-
-    getDepthXAxis() {
-        return [
-            {
-                type: 'category',
-                gridIndex: 0,
-                scale: true,
-                boundaryGap: true,
-                axisLine: {
-                    onZero: false,
-                    lineStyle: {
-                        color: '#37404b'
-                    }
-                },
-                splitArea: {
-                    show: false
-                },
-                splitLine: {
-                    show: false
-                },
-                axisPointer: {
-                    show: true,
-                    lineStyle: {
-                        type: 'dotted'
-                    }
-                },
-                axisTick: {
-                    show: true,
-                    alignWithLabel: true
-                },
-                axisLabel: {
-                    show: true,
-                    color: '#b9cadd',
-                    fontSize: 10
-                }
-            }
-        ];
-    }
-
-    getDepthYAxis() {
-        return [
-            {
-                type: 'value',
-                gridIndex: 0,
-                position: 'right',
-                splitNumber: 6,
-                splitLine: {
-                    show: false
-                },
-                axisLabel: {
-                    show: true,
-                    onZero: false,
-                    margin: 0,
-                    color: '#9aa4ac',
-                    fontSize: 12,
-                },
-                splitArea: {
-                    show: false
-                },
-                axisPointer: {
-                    show: false
-                }
-            }
-        ];
     }
 
     getDepthToolTip() {
@@ -325,33 +198,11 @@ class DepthChart {
         return [
             {
                 name: buy,
-                type: 'line',
-                data: data.buyData,
-                showSymbol: false,
-                lineStyle: {
-                    color: '#ee4b4b',
-                    width: 2
-                },
-                areaStyle: {
-                    normal: {
-                        color: 'rgba(238,75,75,0.3)'
-                    }
-                }
+                data: data.buyData
             },
             {
                 name: sell,
-                type: 'line',
-                data: data.sellData,
-                showSymbol: false,
-                lineStyle: {
-                    color: '#09e988',
-                    width: 2
-                },
-                areaStyle: {
-                    normal: {
-                        color: 'rgba(9,233,136,0.3)'
-                    }
-                }
+                data: data.sellData
             }
         ];
     }
