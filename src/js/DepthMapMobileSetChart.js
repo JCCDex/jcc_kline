@@ -35,9 +35,56 @@ class DepthMapMobileSetChartController {
 
     setDepthoption(data) {
         if (data) {
+            let message = getLanguage();
+            let buy = message.buy;
+            let sell = message.sell;
             let depthOption = {
+                title: {
+                    text: "深度图",
+                    x:'left',
+                    y:'top',
+                    textStyle: {
+                        color: '#ee4b4b',
+                        fontSize: 14,
+                        fontFamily: 'Microsoft YaHei'
+                    }
+                },
+                color: [
+                    '#ee4b4b',
+                    '#09e988'
+                ],
+                
                 backgroundColor: '#161b21',
                 animation: true,
+                legend: [
+                    {
+                        show: true,
+                        top: 60,
+                        itemGap: 20,
+                        itemWidth: 14,
+                        itemHeight: 14,
+                        'data': [{
+                            name: buy,
+                            icon: 'rect',
+                            textStyle: {
+                                color: '#ee4b4b',
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+                            }
+
+                        }, {
+                            name: sell,
+                            icon: 'rect',
+                            textStyle: {
+                                color: '#09e988',
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+
+                            }
+                        }
+                        ]
+                    }
+                ],
                 grid: this.getDepthGrid(data),
                 xAxis: this.getDepthXAxis(data),
                 yAxis: this.getDepthYAxis(data),
@@ -126,8 +173,12 @@ class DepthMapMobileSetChartController {
                     show: false
                 },
                 axisPointer: {
-                    show: false
-                }
+                    show: true,
+                    label: {
+                        backgroundColor: '#232b34',
+                        fontSize:16,
+                    }
+                },
             }
         ];
     }
@@ -171,9 +222,12 @@ class DepthMapMobileSetChartController {
     }
 
     getDepthSeries(data) {
+        let message = getLanguage();
+        let buy = message.buy;
+        let sell = message.sell;
         return [
             {
-                name: 'buy',
+                name: buy,
                 type: 'line',
                 data: data.buyData,
                 showSymbol: false,
@@ -203,7 +257,7 @@ class DepthMapMobileSetChartController {
                 }
             },
             {
-                name: 'sell',
+                name: sell,
                 type: 'line',
                 data: data.sellData,
                 showSymbol: false,
