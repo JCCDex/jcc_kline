@@ -235,7 +235,10 @@ class DepthChart {
                     show: false
                 },
                 axisPointer: {
-                    show: true
+                    show: true,
+                    lineStyle: {
+                        type: 'dotted'
+                    }
                 },
                 axisTick: {
                     show: true,
@@ -271,10 +274,7 @@ class DepthChart {
                     show: false
                 },
                 axisPointer: {
-                    show: true,
-                    lineStyle: {
-                        type: 'dotted'
-                    }
+                    show: false
                 }
             }
         ];
@@ -286,7 +286,7 @@ class DepthChart {
             formatter: function (param) {
                 param = param[0];
                 if (param) {
-                    if (param.seriesName === 'sell') {
+                    if (param.seriesName === 'sell' || param.seriesName === '卖出') {
                         return [
                             '<div style="text-align:left;">',
                             '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
@@ -299,7 +299,7 @@ class DepthChart {
                             '<br/>',
                             '</div>'
                         ].join('');
-                    } else if (param.seriesName === 'buy') {
+                    } else if (param.seriesName === 'buy' || param.seriesName === '买入') {
                         return [
                             '<div style="text-align:left;">',
                             '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
