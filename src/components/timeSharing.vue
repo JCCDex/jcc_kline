@@ -50,22 +50,18 @@ export default {
   watch: {
     klineDataObj() {
       if (this.klineDataObj) {
+        let timeDivisionData = this.klineDataObj.timeDivisionData;
+        let divisionData = handleDivisionData(timeDivisionData)
+        this.divisionTime = divisionData.divisionTime;
         this.message = getLanguage();
         if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
           this.clearChart()
-          this.timeSharing.setTimeSharingOption()
+          this.timeSharingTipData = this.timeSharing.setTimeSharingOption(timeDivisionData, divisionData)
           this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, false)
-          let timeDivisionData = this.klineDataObj.timeDivisionData;
-          let divisionData = handleDivisionData(timeDivisionData)
-          this.divisionTime = divisionData.divisionTime;
-          this.timeSharingTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
           this.coinType = this.klineDataObj.coinType
           this.isRefresh = false
         }else {
-          let timeDivisionData = this.klineDataObj.timeDivisionData;
-          let divisionData = handleDivisionData(timeDivisionData)
-          this.divisionTime = divisionData.divisionTime;
-          this.timeSharingTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+          this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
         }
       }
     }

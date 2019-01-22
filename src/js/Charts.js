@@ -1,18 +1,20 @@
 // import KLineSetChartController from './KLineSetChart';
 import DepthChart from './SetDepthChart';
 import depthOption from './DepthOption';
+import timeSharingOption from './TimeSharingOption';
 import TimeSharingChart from './setTimeSharingChart';
 // import { indicatorsOption } from './processData';
 
 class ChartController {
-    constructor(klineConfig) {
+    constructor(chartsConfig) {
         var merge = require('lodash.merge');
-        if (klineConfig.platform === 'pc') {
-            if (klineConfig.chartType === 'depth') {
-                merge(depthOption, klineConfig);
+        if (chartsConfig.platform === 'pc') {
+            if (chartsConfig.chartType === 'depth') {
+                merge(depthOption, chartsConfig);
                 this.setDepthChart = new DepthChart(depthOption);
-            } else if (klineConfig.chartType === 'timeSharing') {
-                this.setTimeSharing = new TimeSharingChart(klineConfig);
+            } else if (chartsConfig.chartType === 'timeSharing') {
+                merge(timeSharingOption, chartsConfig);
+                this.setTimeSharing = new TimeSharingChart(timeSharingOption);
             }
         }
     }
@@ -52,12 +54,12 @@ class ChartController {
         this.setTimeSharing.resizeECharts(DOM, isFullScreen);
     }
 
-    setTimeSharingOption(data) {
-        this.setTimeSharing.setTimeSharingOption(data);
+    setTimeSharingOption(timeDivisionData, divisionData) {
+        return this.setTimeSharing.setTimeSharingOption(timeDivisionData, divisionData);
     }
 
     updateTimeSharingOption(timeDivisionData, divisionData) {
-        return this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+        this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
     }
 
     getTimeSharingTipData() {

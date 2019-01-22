@@ -11,17 +11,17 @@ var klineSize = {
     width: 0,
     height: 0
 };
-var timeDivisionconfig;
+var timeSharingOption;
 var oldTimeSharingData;
 var toolTipData;
 
 class TimeSharingChart {
     constructor(configs) {
-        this.klineConfig = configs;
+        this.timeSharingConfig = configs;
     }
 
     resizeECharts(DOM, isFullScreen) {
-        if (this.klineConfig.platform === 'pc') {
+        if (this.timeSharingConfig.platform === 'pc') {
             if (!isFullScreen) {
                 let size = getClientWidth();
                 let resizeContainer = () => {
@@ -76,7 +76,7 @@ class TimeSharingChart {
 
     initTimeSharingECharts(DOM) {
         toolTipData = null;
-        timeDivisionconfig = null;
+        timeSharingOption = null;
         oldTimeSharingData = null;
         this.timeSharing = echarts.init(DOM);
         this.showLoading();
@@ -107,29 +107,8 @@ class TimeSharingChart {
         }
     }
 
-    setTimeSharingOption() {
-        let option = {
-            backgroundColor: '#161b21',
-            animation: true,
-            axisPointer: {
-                link: {
-                    xAxisIndex: [0, 1]
-                },
-                label: {
-                }
-            },
-            grid: this.getTimeSharingGrid(),
-            xAxis: this.getTimeSharingXAxis(),
-            yAxis: this.getTimeSharingYAxis(),
-            tooltip: this.getTimeSharingToolTip(),
-            series: this.getTimeSharingSeries(),
-            dataZoom: this.getTimeSharingDataZoom()
-        };
-        timeDivisionconfig = option;
-        this.timeSharing.setOption(option, true);
-    }
-
-    updateTimeSharingOption(timeDivisionData, data) {
+    setTimeSharingOption(timeDivisionData, data) {
+        timeSharingOption = JSON.parse(JSON.stringify(this.timeSharingConfig));
         oldTimeSharingData = {
             timeDivisionData: timeDivisionData,
             data: data
@@ -137,63 +116,36 @@ class TimeSharingChart {
         this.timeSharing.hideLoading();
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
-        if (!toolTipData) {
-            toolTipData = {
-                time: formatTime(timeDivisionData[length][3]),
-                volume: formatDecimal(timeDivisionData[length][1], 0, 5),
-                price: timeDivisionData[length][2].toFixed(6),
-                averagePrice: averages[length].toFixed(6),
-                color: volumes[length][2]
-            };
-        }
-        let updateTimeOption = {
-            grid: [{
-                height: klineSize.height / 600 * 360 + 'px'
-            },{
-                height: klineSize.height / 600 * 100 + 'px'
-            }],
-            xAxis: [
-                {
-                    data: times
-                }
-            ],
-            series: [
-                {
-                    name: 'White',
-                    data: prices
-                },
-                {
-                    name: 'Yellow',
-                    data: averages
-                }
-            ],
-            tooltip: {
-                formatter: param => {
-                    let dataIndex = param[0].dataIndex;
-                    let data = timeDivisionData[dataIndex];
-                    toolTipData = {
-                        time: formatTime(data[3]),
-                        volume: formatDecimal(data[1], 0, 5),
-                        price: data[2].toFixed(6),
-                        averagePrice: averages[dataIndex].toFixed(6),
-                        color: volumes[dataIndex][2]
-                    };
-
-
-                }
-            }
+        toolTipData = {
+            time: formatTime(timeDivisionData[length][3]),
+            volume: formatDecimal(timeDivisionData[length][1], 0, 5),
+            price: timeDivisionData[length][2].toFixed(6),
+            averagePrice: averages[length].toFixed(6),
+            color: volumes[length][2]
         };
-        updateTimeOption.xAxis.push({
-            data: times
-        });
-        updateTimeOption.series.push({
-            name: 'Volume',
-            data: volumes
-        });
-        merge(timeDivisionconfig, updateTimeOption);
-        timeDivisionconfig.dataZoom = this.timeSharing.getOption().dataZoom;
-        this.timeSharing.setOption(timeDivisionconfig);
+        let option = {
+            grid: this.getTimeSharingGrid(),
+            xAxis: this.getTimeSharingXAxis(times),
+            tooltip: this.getTimeSharingToolTip(timeDivisionData, averages, volumes),
+            series: this.getTimeSharingSeries(prices, averages, volumes),
+            dataZoom: this.getTimeSharingDataZoom()
+        };
+        merge(timeSharingOption, option);
+        this.timeSharing.setOption(timeSharingOption, true);
         return toolTipData;
+    }
+
+    updateTimeSharingOption(timeDivisionData, data) {
+        let { times, averages, prices, volumes } = data;
+        let option = {
+            grid: this.getTimeSharingGrid(),
+            xAxis: this.getTimeSharingXAxis(times),
+            tooltip: this.getTimeSharingToolTip(timeDivisionData, averages, volumes),
+            series: this.getTimeSharingSeries(prices, averages, volumes)
+        };
+        merge(timeSharingOption, option);
+        timeSharingOption.dataZoom = this.timeSharing.getOption().dataZoom;
+        this.timeSharing.setOption(timeSharingOption);
     }
 
     getTimeSharingTipData() {
@@ -203,188 +155,59 @@ class TimeSharingChart {
     getTimeSharingGrid() {
         return [
             {
-                left: 10,
-                top: 50,
-                right: 100
-            },
-            {
-                left: 10,
-                right: 100,
-                bottom: 10,
-                backgroundColor: '#1b2229',
-                borderColor: '#1b2229',
-                show: true
+                height: klineSize.height / 600 * 360 + 'px'
+            }, {
+                height: klineSize.height / 600 * 100 + 'px'
             }
         ];
     }
 
-    getTimeSharingXAxis() {
+    getTimeSharingXAxis(times) {
         return [{
-            type: 'category',
             gridIndex: 0,
-            scale: true,
-            boundaryGap: true,
-            axisLine: {
-                onZero: false,
-                lineStyle: {
-                    color: '#37404b'
-                }
-            },
-            splitLine: {
-                show: false
-            },
-            axisLabel: {
-                show: false
-            },
-            splitNumber: 20,
-            min: 'dataMin',
-            max: 'dataMax',
-            axisPointer: {
-                z: 100,
-                label: {
-                    show: false
-                }
-            }
+            data: times
         },
         {
-            type: 'category',
             gridIndex: 1,
-            scale: true,
-            boundaryGap: true,
-            axisLine: {
-                onZero: false
-            },
-            axisTick: {
-                show: false
-            },
-            splitLine: {
-                show: false
-            },
-            axisLabel: {
-                show: false
-            },
-            splitNumber: 20,
-            min: 'dataMin',
-            max: 'dataMax'
+            data: times
         }
         ];
     }
 
-    getTimeSharingYAxis() {
-        return [{
-            scale: true,
-            gridIndex: 0,
-            position: 'right',
-            splitArea: {
-                show: false
-            },
-            splitLine: {
-                lineStyle: {
-                    color: '#37404b',
-                    type: 'dotted'
-                }
-            },
-            axisLine: {
-                lineStyle: {
-                    color: '#37404b'
-                }
-            },
-            axisLabel: {
-                show: true,
-                color: '#f3f7f6',
-                algin: 'right',
-                verticalAlign: 'top'
-            }
-        },
-        {
-            scale: true,
-            gridIndex: 1,
-            splitNumber: 2,
-            position: 'right',
-            splitArea: {
-                show: false
-            },
-            splitLine: {
-                lineStyle: {
-                    color: '#37404b',
-                    type: 'dotted'
-                }
-            },
-            axisLine: {
-                lineStyle: {
-                    color: '#37404b'
-                }
-            },
-            axisLabel: {
-                show: true,
-                color: '#f3f7f6',
-                algin: 'right',
-                verticalAlign: 'top'
-            }
-        }
-        ];
-    }
-
-    getTimeSharingToolTip() {
+    getTimeSharingToolTip(timeDivisionData, averages, volumes) {
         return {
-            trigger: 'axis',
-            animation: false,
-            axisPointer: {
-                type: 'cross',
-                link: { xAxisIndex: 'all' }
-            },
-            backgroundColor: 'rgba(245, 245, 245, 0.5)',
-            borderWidth: 1,
-            borderColor: '#ccc',
-            padding: 10,
-            textStyle: {
-                color: '#ffffff',
-                fontFamily: 'Avenir, Helvetica, Arial, sans-serif'
-            },
-            extraCssText: 'background:#252332;border:0;opacity: 0.7;'
+            formatter: param => {
+                let dataIndex = param[0].dataIndex;
+                let data = timeDivisionData[dataIndex];
+                toolTipData = {
+                    time: formatTime(data[3]),
+                    volume: formatDecimal(data[1], 0, 5),
+                    price: data[2].toFixed(6),
+                    averagePrice: averages[dataIndex].toFixed(6),
+                    color: volumes[dataIndex][2]
+                };
+            }
         };
     }
 
-    getTimeSharingSeries() {
+    getTimeSharingSeries(prices, averages, volumes) {
         return [{
             name: 'White',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            lineStyle: {
-                normal: {
-                    color: '#fff',
-                    opacity: 1,
-                    width: 2
-                }
-            }
+            data: prices
         },
         {
             name: 'Yellow',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            lineStyle: {
-                normal: {
-                    color: 'yellow',
-                    opacity: 1,
-                    width: 2
-                }
-            }
-        },
-        {
+            data: averages
+        }, {
             name: 'Volume',
-            type: 'bar',
-            barMaxWidth: 20,
+            data: volumes,
             itemStyle: {
                 normal: {
                     color: function (param) {
                         return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
                     }
                 }
-            },
-            xAxisIndex: 1,
-            yAxisIndex: 1
+            }
         }
         ];
     }

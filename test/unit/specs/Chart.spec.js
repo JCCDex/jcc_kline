@@ -105,7 +105,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
@@ -113,7 +113,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -122,7 +122,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false)
     timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, true)
@@ -133,7 +133,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -142,7 +142,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.disposeTimeSharingEChart()
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -151,7 +151,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.clearTimeSharingEcharts()
     expect(timeSharing.setTimeSharing.timeSharing.getOption().series).toEqual(new Array)
   })
