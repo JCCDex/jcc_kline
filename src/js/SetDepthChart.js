@@ -159,7 +159,7 @@ class DepthChart {
             formatter: function (param) {
                 param = param[0];
                 if (param) {
-                    if (param.seriesName === 'sell' || param.seriesName === '卖出') {
+                    if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
                         return [
                             '<div style="text-align:left;">',
                             '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
@@ -172,7 +172,7 @@ class DepthChart {
                             '<br/>',
                             '</div>'
                         ].join('');
-                    } else if (param.seriesName === 'buy' || param.seriesName === '买入') {
+                    } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
                         return [
                             '<div style="text-align:left;">',
                             '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
