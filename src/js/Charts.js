@@ -2,7 +2,7 @@
 import DepthChart from './SetDepthChart';
 import { depthOption, mobileDepthOption } from './DepthOption';
 import timeSharingOption from './TimeSharingOption';
-import TimeSharingChart from './setTimeSharingChart';
+import TimeSharingChart from './SetTimeSharingChart';
 // import { indicatorsOption } from './processData';
 
 class ChartController {
@@ -17,11 +17,8 @@ class ChartController {
                 this.setDepthChart = new DepthChart(mobileDepthOption);
             }
         } else if (chartsConfig.chartType === 'timeSharing') {
-            if (chartsConfig.platform === 'pc') {
-                merge(timeSharingOption, chartsConfig);
-                this.setTimeSharing = new TimeSharingChart(timeSharingOption);
-            }
-
+            merge(timeSharingOption, chartsConfig);
+            this.setTimeSharing = new TimeSharingChart(timeSharingOption);
         }
     }
 

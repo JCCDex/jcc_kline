@@ -35,7 +35,6 @@ var timeSharingOption = {
             left: 10,
             right: 100,
             bottom: 10,
-            backgroundColor: '#1b2229',
             borderColor: '#1b2229',
             show: true
         }
@@ -56,16 +55,19 @@ var timeSharingOption = {
                 show: false
             },
             axisLabel: {
-                show: false
+                show: true,
+                color: '#9aa4ac',
+                showMinLabel: false
+            },
+            axisTick: {
+                show: true,
+                alignWithLabel: true
             },
             splitNumber: 20,
             min: 'dataMin',
             max: 'dataMax',
             axisPointer: {
-                z: 100,
-                label: {
-                    show: false
-                }
+                z: 100
             }
         },
         {

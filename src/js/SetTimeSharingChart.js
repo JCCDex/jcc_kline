@@ -153,13 +153,23 @@ class TimeSharingChart {
     }
 
     getTimeSharingGrid() {
-        return [
-            {
-                height: klineSize.height / 600 * 360 + 'px'
-            }, {
-                height: klineSize.height / 600 * 100 + 'px'
-            }
-        ];
+        if (this.timeSharingConfig.platform === 'pc') {
+            return [
+                {
+                    height: klineSize.height / 600 * 360 + 'px'
+                }, {
+                    height: klineSize.height / 600 * 100 + 'px'
+                }
+            ];
+        } else {
+            return [
+                {
+                    height: `${this.timeSharingConfig.size.height * 0.6}px`
+                }, {
+                    height: `${this.timeSharingConfig.size.height * 0.2}px`
+                }
+            ];
+        }
     }
 
     getTimeSharingXAxis(times) {

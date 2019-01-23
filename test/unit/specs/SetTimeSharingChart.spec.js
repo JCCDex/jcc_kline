@@ -1,10 +1,11 @@
-import TimeSharingChart from 'js/setTimeSharingChart'
+import TimeSharingChart from 'js/SetTimeSharingChart'
 import timeSharingConfig from 'js/TimeSharingOption'
 import timeSharingData from '../../../demo/src/timeSharingData.json'
 
 describe('test setTimeSharingChart', () => {
 
   it('test TimeSharingChart', () => {
+    timeSharingConfig.platform = 'pc'
     let TimeSharing = new TimeSharingChart(timeSharingConfig);
     expect(TimeSharing).toBeInstanceOf(TimeSharingChart)
   })
@@ -76,16 +77,7 @@ describe('test setTimeSharingChart', () => {
     expect(tipData).not.toBeNull();
   })
 
-  it('test resizeECharts but platfotm is mobile', () => {
-    const element = document.createElement('div');
-    timeSharingConfig.platform = 'mobile'
-    let TimeSharing = new TimeSharingChart(timeSharingConfig);
-    TimeSharing.initTimeSharingECharts(element)
-    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    TimeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    TimeSharing.resizeECharts(element, true)
-    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
-  })
+  
 
   it('test resizeECharts if is fullScreen', () => {
     const element = document.createElement('div');
@@ -143,6 +135,27 @@ describe('test setTimeSharingChart', () => {
     TimeSharing.timeSharing = null;
     TimeSharing.disposeTimeSharingEChart()
     expect(TimeSharing.timeSharing).toBeNull();
+  })
+
+  it('test resizeECharts but platfotm is mobile', () => {
+    const element = document.createElement('div');
+    timeSharingConfig.platform = 'mobile'
+    timeSharingConfig.size = {
+      height: 500,
+      weight: 780
+    }
+    let TimeSharing = new TimeSharingChart(timeSharingConfig);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(element, true)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test getTimeSharingGrid if platform is mobile', () => {
+    timeSharingConfig.platform = 'mobile'
+    let TimeSharing = new TimeSharingChart(timeSharingConfig);
+    expect(TimeSharing.getTimeSharingGrid()).not.toBeNull()
   })
 
 })
