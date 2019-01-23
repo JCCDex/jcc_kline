@@ -1,6 +1,6 @@
 // import KLineSetChartController from './KLineSetChart';
 import DepthChart from './SetDepthChart';
-import depthOption from './DepthOption';
+import { depthOption, mobileDepthOption } from './DepthOption';
 import timeSharingOption from './TimeSharingOption';
 import TimeSharingChart from './setTimeSharingChart';
 // import { indicatorsOption } from './processData';
@@ -8,14 +8,20 @@ import TimeSharingChart from './setTimeSharingChart';
 class ChartController {
     constructor(chartsConfig) {
         var merge = require('lodash.merge');
-        if (chartsConfig.platform === 'pc') {
-            if (chartsConfig.chartType === 'depth') {
+        if (chartsConfig.chartType === 'depth') {
+            if (chartsConfig.platform === 'pc') {
                 merge(depthOption, chartsConfig);
                 this.setDepthChart = new DepthChart(depthOption);
-            } else if (chartsConfig.chartType === 'timeSharing') {
+            } else {
+                merge(mobileDepthOption, chartsConfig);
+                this.setDepthChart = new DepthChart(mobileDepthOption);
+            }
+        } else if (chartsConfig.chartType === 'timeSharing') {
+            if (chartsConfig.platform === 'pc') {
                 merge(timeSharingOption, chartsConfig);
                 this.setTimeSharing = new TimeSharingChart(timeSharingOption);
             }
+
         }
     }
 

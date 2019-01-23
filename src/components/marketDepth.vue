@@ -1,5 +1,5 @@
 <template>
-    <div id="depth" ref="depth" style="width:100%;height:572px;"></div>
+    <div id="depth" ref="depth" :style="{height: `${klineConfig.depthSize.height}`, width: `${klineConfig.depthSize.width}`}"></div>
 </template>
 <script>
 import { splitData, getDepthData } from '../js/processData'
@@ -49,6 +49,15 @@ export default {
     }
   },
   created() {
+    if (this.klineConfig.platform === 'pc') {
+      this.klineConfig.depthSize = {
+        height: '100%',
+        width: '572px'
+      }
+    } else {
+      this.klineConfig.depthSize.height = this.klineConfig.depthSize.height + 'px'
+      this.klineConfig.depthSize.width = this.klineConfig.depthSize.width + 'px'
+    }
     this.klineConfig.chartType = 'depth';
     this.depth = new ChartController(this.klineConfig);
   },
@@ -66,8 +75,11 @@ export default {
       this.resize();
     },
     resize() {
-      let isFullScreen = this.$parent.getState()
-      this.depth.resizeDepthChart(this.$refs.depth, isFullScreen);
+      if (this.klineConfig.platform === 'pc') {
+        let isFullScreen = this.$parent.getState()
+        this.depth.resizeDepthChart(this.$refs.depth, isFullScreen);
+      }
+      
     },
     clearChart() {
       this.depth.clearDepthEcharts();

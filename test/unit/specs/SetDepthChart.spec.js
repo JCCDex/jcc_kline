@@ -1,11 +1,12 @@
 import SetDepthChart from 'js/SetDepthChart'
-import depthOption from 'js/DepthOption'
+import { depthOption } from 'js/DepthOption'
 import { getDepthData } from 'js/processData'
 import testData from '../../../demo/src/data.json'
 
-describe('test KLineSetChart', () => {
+describe('test SetDepthChart', () => {
 
   let depthData = getDepthData(testData.depthData, testData.coinType)
+  depthOption.platform = 'pc'
 
   it('test klineSetChart', () => {
     let depth = new SetDepthChart(depthOption);
@@ -116,6 +117,21 @@ describe('test KLineSetChart', () => {
     depthChart.depth = null;
     depthChart.disposeDepthEChart()
     expect(depthChart.depth).toBeNull();
+  })
+
+  it('test getDepthYAxis if platform is pc', () => {
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    let yAxis = depthChart.getDepthYAxis(element)
+    expect(yAxis).toBe();
+  })
+
+  it('test getDepthYAxis if platform is mobile', () => {
+    depthOption.platform = 'mobile'
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    let yAxis = depthChart.getDepthYAxis(element)
+    expect(yAxis).toBe();
   })
 
 })

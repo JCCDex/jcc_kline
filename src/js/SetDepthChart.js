@@ -120,6 +120,7 @@ class DepthChart {
                         ]
                     }
                 ],
+                yAxis: this.getDepthYAxis(),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
             };
@@ -145,11 +146,29 @@ class DepthChart {
                         ]
                     }
                 ],
+                yAxis: this.getDepthYAxis(),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
             };
             merge(depthOption, option);
             this.depth.setOption(depthOption);
+        }
+    }
+
+    getDepthYAxis() {
+        if (this.depthConfig.platform === 'mobile') {
+            return [
+                {
+                    gridIndex: 0,
+                    axisLabel: {
+                        formatter: function (value) {
+                            if (value > 1000) {
+                                return (value / 1000) + 'K';
+                            }
+                        }
+                    }
+                }
+            ]
         }
     }
 
@@ -162,11 +181,11 @@ class DepthChart {
                     if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
                         return [
                             '<div style="text-align:left;">',
-                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.sellPrice +
                             param.data[0] +
                             '<br/>',
-                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.sellTotal +
                             param.data[1] +
                             '<br/>',
@@ -175,11 +194,11 @@ class DepthChart {
                     } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
                         return [
                             '<div style="text-align:left;">',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.buyPrice +
                             param.data[0] +
                             '<br/>',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
+                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.buyTotal +
                             param.data[1] +
                             '<br/>',

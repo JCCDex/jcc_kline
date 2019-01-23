@@ -3,7 +3,7 @@ import { getDepthData } from 'js/processData'
 import testData from '../../../demo/src/data.json'
 import timeSharingData from '../../../demo/src/timeSharingData.json'
 
-describe('test KLineSetChart', () => {
+describe('test Chart', () => {
 
   let depthData = getDepthData(testData.depthData, testData.coinType)
   let klineConfig = {
