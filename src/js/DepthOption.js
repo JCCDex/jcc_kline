@@ -12,6 +12,7 @@ var depthOption = {
             itemGap: 20,
             itemWidth: 14,
             itemHeight: 14,
+            selectedMode:false,
             data: [{
                 name: 'buy',
                 icon: 'rect',
