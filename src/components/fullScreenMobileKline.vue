@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
         <!-- Cycle按钮 -->
-        <div calss="mobileCycle">
+        <div calss="mobileCycleFullScreen">
           <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.hour}}</div>
           <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.day}}</div>
           <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.week}}</div>
@@ -17,7 +17,7 @@
             <van-actionsheet  v-model="show" :actions="actions" :overlay="false"/>
           </div> -->
         <!-- tooltip 数据显示 -->
-        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
+        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-fullScreen-zh' : 'mobile-tooltip-fullScreen-en'" v-if="toolTipData">
           <div style="font-size:0.18rem; margin-top: 0.1rem;　height:0.2rem">
             <font class="mobile-tooltip-data-ma5">MA5: </font><font class="tooltip-ma5">{{this.toolTipData.MA5}}</font>
             <font class="mobile-tooltip-data-ma10">MA10: </font><font class="tooltip-ma10">{{this.toolTipData.MA10}}</font>

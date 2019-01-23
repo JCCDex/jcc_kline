@@ -508,3 +508,38 @@
 /* .tooltip-ma60 {
     color: #e03bfa
 } */
+
+.mobileCycleFullScreen {
+    margin-left:-0.5rem;
+}
+
+.mobile-tooltip-fullScreen-zh {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.4rem 0.2rem 0.16rem 0.4rem;
+    z-index: 1;
+}
+
+.mobile-tooltip-fullScreen-en {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.4rem 0.2rem 0.16rem 0.4rem;
+    z-index: 1;
+}
+
+
+.mobile-cycle-btn-fullScreen {
+    float: left;
+    min-width: 0.3rem;
+    width: auto;
+    height: 0.26rem;
+    cursor: pointer;
+    margin-left: 0.84rem;
+    margin-top: 0.08rem;
+    text-align: center;
+    color: #e6e6e6;
+    line-height: 0.2rem;
+    font-size: 0.24rem;
+    border-radius: 0.02rem;
+    margin-top: 0.2rem;
+}
