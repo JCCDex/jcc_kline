@@ -131,7 +131,7 @@ describe('test SetDepthChart', () => {
     const element = document.createElement('div');
     let depthChart = new SetDepthChart(depthOption);
     let yAxis = depthChart.getDepthYAxis(element)
-    expect(yAxis).toBe();
+    expect(yAxis).not.toBeNull();
   })
 
 })

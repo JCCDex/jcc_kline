@@ -301,6 +301,6 @@ var mobileDepthOption = {
             }
         }
     ]
-}
+};
 
 export { depthOption, mobileDepthOption };

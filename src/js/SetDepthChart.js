@@ -168,7 +168,7 @@ class DepthChart {
                         }
                     }
                 }
-            ]
+            ];
         }
     }
 
