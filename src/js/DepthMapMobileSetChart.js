@@ -48,7 +48,7 @@ class DepthMapMobileSetChartController {
                 legend: [
                     {
                         show: true,
-                        top: 60,
+                        top: 40,
                         itemGap: 20,
                         itemWidth: 14,
                         itemHeight: 14,
@@ -155,8 +155,10 @@ class DepthMapMobileSetChartController {
                     color: '#e6e6e6',
                     fontSize: 22,
                     formatter: function (value) {
-                        if (value > 1000) {
+                        if (value >= 1000) {
                             return (value / 1000) + 'K';
+                        } else {
+                            return value;
                         }
                     }
                 },
