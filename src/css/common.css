@@ -543,3 +543,34 @@
     border-radius: 0.02rem;
     margin-top: 0.2rem;
 }
+
+.tooltip-ma5-fullScreen {
+    color: #ff4d71;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma10-fullScreen {
+    color: #67ff7c;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma20-fullScreen {
+    color: #16c5ff;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma30-fullScreen {
+    color: #f6d026;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma60-fullScreen {
+    color: #e03bfa;
+    margin-right: 0.2rem
+}
+
+.mobile-tooltip-name-fullScreen {
+    color: #e6e6e6;
+    font: 0.16rem "Microsoft YaHei";
+    margin-left: 0.78rem;
+}

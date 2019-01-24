@@ -340,6 +340,7 @@ class KLineMobileSetChartController {
         }];
         if (this.showIndicators.indexOf('Volume') !== -1) {
             g = [{
+                top: 5,
                 height: `${size.height * 0.6}px`
             },
             {
