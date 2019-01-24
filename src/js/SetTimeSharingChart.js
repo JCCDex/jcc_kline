@@ -126,6 +126,7 @@ class TimeSharingChart {
         let option = {
             grid: this.getTimeSharingGrid(),
             xAxis: this.getTimeSharingXAxis(times),
+            yAxis: this.getTimeSharingYAxis(),
             tooltip: this.getTimeSharingToolTip(timeDivisionData, averages, volumes),
             series: this.getTimeSharingSeries(prices, averages, volumes),
             dataZoom: this.getTimeSharingDataZoom()
@@ -140,6 +141,7 @@ class TimeSharingChart {
         let option = {
             grid: this.getTimeSharingGrid(),
             xAxis: this.getTimeSharingXAxis(times),
+            yAxis: this.getTimeSharingYAxis(),
             tooltip: this.getTimeSharingToolTip(timeDivisionData, averages, volumes),
             series: this.getTimeSharingSeries(prices, averages, volumes)
         };
@@ -182,6 +184,27 @@ class TimeSharingChart {
             data: times
         }
         ];
+    }
+
+    getTimeSharingYAxis() {
+        var y = [{
+            gridIndex: 0
+        },
+        {
+            gridIndex: 1,
+            axisLabel: {
+                formatter: function (value) {
+                    if (value >= 1000 && value < 1000000) {
+                        return (value / 1000) + 'K';
+                    } else if (value >= 1000000) {
+                        return (value / 1000000) + 'M';
+                    } else {
+                        return value;
+                    }
+                }
+            }
+        }];
+        return y;
     }
 
     getTimeSharingToolTip(timeDivisionData, averages, volumes) {

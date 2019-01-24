@@ -156,4 +156,21 @@ describe('test Chart', () => {
     expect(timeSharing.setTimeSharing.timeSharing.getOption().series).toEqual(new Array)
   })
 
+  it('test initDepthChart if platform is mobile and chartType is timeSharing', () => {
+    klineConfig.platform = 'mobile'
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    expect(timeSharing).not.toBeNull()
+  })
+
+  it('test initDepthChart if platform is mobile and chartType is depth', () => {
+    klineConfig.chartType = 'depth'
+    klineConfig.platform = 'mobile'
+    let depth = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    depth.initDepth(element)
+    expect(depth).not.toBeNull()
+  })
+
 })
