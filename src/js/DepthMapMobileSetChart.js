@@ -39,16 +39,6 @@ class DepthMapMobileSetChartController {
             let buy = message.buy;
             let sell = message.sell;
             let depthOption = {
-                title: {
-                    text: "深度图",
-                    x:'left',
-                    y:'top',
-                    textStyle: {
-                        color: '#ee4b4b',
-                        fontSize: 14,
-                        fontFamily: 'Microsoft YaHei'
-                    }
-                },
                 color: [
                     '#ee4b4b',
                     '#09e988'
@@ -63,6 +53,7 @@ class DepthMapMobileSetChartController {
                         itemGap: 20,
                         itemWidth: 14,
                         itemHeight: 14,
+                        selectedMode: false,
                         'data': [{
                             name: buy,
                             icon: 'rect',
