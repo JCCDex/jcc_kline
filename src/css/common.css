@@ -392,18 +392,18 @@
 }
 
 .time-sharing-data {
-    position: absolute;
+    /* position: absolute; */
     text-align: left;
     font-size: 0.18rem;
-    /* padding: 0.5rem 0.2rem 0.23rem 0.2rem; */
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
 
 .time-sharing-zh-data {
-    position: absolute;
+    /* position: absolute; */
     text-align: left;
     font-size: 0.18rem;
-    /* padding: 0.5rem 0.2rem 0.23rem 0.2rem; */
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
 
