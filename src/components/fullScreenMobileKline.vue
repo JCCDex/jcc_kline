@@ -39,7 +39,6 @@
 </template>
 <script>
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-import { Actionsheet } from 'vant';
 import { splitData, handleDivisionData} from '../js/processData'
 import KLineController from '../js/KLine'
 import { getLanguage } from '../js/utils'

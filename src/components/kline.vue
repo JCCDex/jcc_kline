@@ -46,7 +46,7 @@ export default {
       klineData: null,
       toolTipData: null,
       coinType: '',
-      outspreadMA: false
+      outspreadMA: true
     };
   },
   props: {

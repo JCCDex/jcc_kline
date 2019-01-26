@@ -8,14 +8,6 @@
           <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.month}}</div>
           <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.timeSharing}}</div>
         </div>
-
-        <!-- <div style="color: #f5f5f5;font-size: 0.22rem;float: right;" @click="switchBase">
-            <span>{{message.more}}</span>
-            <span>{{timeData}}</span>
-            <img v-if="!show" :src="downnormal"/>
-            <img v-else :src="downclick"/>
-            <van-actionsheet  v-model="show" :actions="actions" :overlay="false"/>
-          </div> -->
         <!-- tooltip 数据显示 -->
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
           <div style="font-size:0.15rem; margin-top: 0.1rem;">
@@ -54,7 +46,6 @@
 </template>
 <script>
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-import { Actionsheet } from 'vant';
 import { splitData, handleDivisionData, getDepthData} from '../js/processData'
 import KLineController from '../js/KLine'
 import DepthMapController from '../js/DepthMap'
@@ -158,7 +149,6 @@ export default {
   },
   created() {
     this.message = getLanguage();
-    // this.setAction();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
     this.depth = new DepthMapController(this.depthMapConfig);
   },
@@ -178,49 +168,6 @@ export default {
     switchBase() {
       this.show = !this.show;
     },
-    // setAction () {
-    //   let callback = this.onClick;
-    //   let actions;
-    //   actions = [
-    //     {
-    //        name: this.message.hour,
-    //       ticker: "hour",
-    //       callback
-    //     },
-    //     {
-    //       name: this.message.day,
-    //       ticker: "day",
-    //       callback
-    //     },
-    //     {
-    //       name: this.message.week,
-    //       ticker: "week",
-    //       callback
-    //     },
-    //     {
-    //       name: this.message.month,
-    //       ticker: "month",
-    //       callback
-    //     },
-    //     {
-    //       name: this.message.timeSharing,
-    //       ticker: "everyhour",
-    //       callback
-    //     }
-    //   ];
-    //   this.actions = actions;
-    //   this.timeData = actions[0].name;
-    // },
-    // onClick(item) {
-    //   let { name, ticker } = item;
-    //   this.show = false;
-    //   if (this.cycle === name) {
-    //     return;
-    //   }
-    //   this.cycle = name;
-    //   this.$emit("listenToChildEvent", item)
-    //   this.show = false;
-    // },
     chooseCycle(cycle) {
       if (this.cycle === cycle) {
         return;

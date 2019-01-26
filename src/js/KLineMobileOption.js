@@ -1,6 +1,6 @@
 var mobileOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
-    animation: true, //　是否开启动画
+    animation: true, //  是否开启动画
     axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置,坐标轴指示器是指示坐标轴当前刻度的工具
         link: { xAxisIndex: 'all' },
         label: { // 坐标轴指示器的文本标签
@@ -12,7 +12,7 @@ var mobileOption = {
         trigger: 'axis', // 坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
         animation: false, 
         hideDelay: 15000, // 浮层隐藏的延迟，单位为 ms，在 alwaysShowContent 为 true 的时候无效
-        axisPointer: {　// 坐标轴指示器配置项。
+        axisPointer: {  // 坐标轴指示器配置项。
             type: 'cross', // 十字准星指示器。其实是种简写，表示启用两个正交的轴的 axisPointer
             link: { xAxisIndex: 'all' }
         },
@@ -54,7 +54,7 @@ var mobileOption = {
                 }
             },
             splitLine: { // 坐标轴在 grid 区域中的分隔线
-                show: false //　false代表不显示
+                show: false //  false代表不显示
             },
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示刻度标签
@@ -72,24 +72,24 @@ var mobileOption = {
         }, 
         {
             type: 'category',  //  类目轴，适用于离散的类目数据，为该类型时必须通过 data 设置类目数据
-            gridIndex: 1,　// x 轴所在的 grid 的索引，默认位于第一个 grid
+            gridIndex: 1,  // x 轴所在的 grid 的索引，默认位于第一个 grid
             // scale: true,
             boundaryGap: true, // 坐标轴两边留白策略，类目轴中 boundaryGap 可以配置为 true 和 false。默认为 true，这时候刻度只是作为分隔线，标签和数据点都会在两个刻度之间的带(band)中间
             axisLine: { // 坐标轴轴线相关设置
-                onZero: false　// X 轴或者 Y 轴的轴线是否在另一个轴的 0 刻度上，只有在另一个轴为数值轴且包含 0 刻度时有效
+                onZero: false  // X 轴或者 Y 轴的轴线是否在另一个轴的 0 刻度上，只有在另一个轴为数值轴且包含 0 刻度时有效
             },
-            axisTick: {　// 坐标轴刻度相关设置
+            axisTick: {  // 坐标轴刻度相关设置
                 show: false // false代表不显示
             },
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 show: false // false代表不显示
             },
             axisLabel: { // 坐标轴刻度标签的相关设置
-                show: false　// false代表不显示
+                show: false  // false代表不显示
             },
             // splitNumber: 20,
-            min: 'dataMin',　// 坐标轴刻度最小值,设置成特殊值 'dataMin'，此时取数据在该轴上的最小值作为最小刻度
-            max: 'dataMax'　// 坐标轴刻度最大值,设置成特殊值 'dataMax'，此时取数据在该轴上的最大值作为最大刻度
+            min: 'dataMin',  // 坐标轴刻度最小值,设置成特殊值 'dataMin'，此时取数据在该轴上的最小值作为最小刻度
+            max: 'dataMax'  // 坐标轴刻度最大值,设置成特殊值 'dataMax'，此时取数据在该轴上的最大值作为最大刻度
         }
     ],
     yAxis: [ // 直角坐标系 grid 中的y轴
@@ -119,7 +119,7 @@ var mobileOption = {
             }
         },
         {
-            scale: true,　// 只在数值轴中（type: 'value'）有效
+            scale: true,  // 只在数值轴中（type: 'value'）有效
             gridIndex: 1, // y 轴所在的 grid 的索引，默认位于第一个 grid。
             splitNumber: 2, // 坐标轴的分割段数，需要注意的是这个分割段数只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整
             axisLabel: { // 坐标轴刻度标签的相关设置

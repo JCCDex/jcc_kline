@@ -49,7 +49,7 @@ export default {
   },
   watch: {
     klineDataObj() {
-      if (this.klineDataObj) {
+      if (this.klineDataObj.timeDivisionData) {
         let timeDivisionData = this.klineDataObj.timeDivisionData;
         let divisionData = handleDivisionData(timeDivisionData)
         this.divisionTime = divisionData.divisionTime;

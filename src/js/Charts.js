@@ -1,8 +1,8 @@
 // import KLineSetChartController from './KLineSetChart';
 import DepthChart from './SetDepthChart';
 import { depthOption, mobileDepthOption } from './DepthOption';
-import timeSharingOption from './TimeSharingOption';
-import TimeSharingChart from './setTimeSharingChart';
+import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
+import TimeSharingChart from './SetTimeSharingChart';
 // import { indicatorsOption } from './processData';
 
 class ChartController {
@@ -17,11 +17,13 @@ class ChartController {
                 this.setDepthChart = new DepthChart(mobileDepthOption);
             }
         } else if (chartsConfig.chartType === 'timeSharing') {
-            if (chartsConfig.platform === 'pc') {
+            if (chartsConfig.chartType === 'pc') {
                 merge(timeSharingOption, chartsConfig);
                 this.setTimeSharing = new TimeSharingChart(timeSharingOption);
+            } else {
+                merge(mobileTimeSharingOption, chartsConfig);
+                this.setTimeSharing = new TimeSharingChart(mobileTimeSharingOption);
             }
-
         }
     }
 
