@@ -12,6 +12,7 @@ var depthOption = {
             itemGap: 20, // 图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
             itemWidth: 14, // 图例标记的图形宽度
             itemHeight: 14, // 图例标记的图形高度
+            selectedMode: false, // 图例选择的模式，控制是否可以通过点击图例改变系列的显示状态。默认开启图例选择，可以设成 false 关闭
             data: [{ // 图例的数据数组
                 name: 'buy', // 图例项的名称，应等于某系列的name值
                 icon: 'rect', // 标记类型,rect代表矩形
@@ -147,6 +148,7 @@ var mobileDepthOption = {
             itemGap: 20, // 图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
             itemWidth: 14, // 图例标记的图形宽度
             itemHeight: 14, // 图例标记的图形高度
+            selectedMode: false, // 图例选择的模式，控制是否可以通过点击图例改变系列的显示状态。默认开启图例选择，可以设成 false 关闭
             data: [{ // 图例的数据数组
                 name: 'buy', // 图例项的名称，应等于某系列的name值
                 icon: 'rect', // 标记类型,rect代表矩形
