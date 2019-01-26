@@ -8,3 +8,11 @@
 ```shell
 npm install jcc_kline
 ```
+## Start
+``` javascript
+import kline from 'jcc_kline'
+
+Vue.use(kline)
+
+```
+
