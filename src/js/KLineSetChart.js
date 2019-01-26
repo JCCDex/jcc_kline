@@ -259,10 +259,12 @@ class KLineSetChartController {
                 gridIndex: 1,
                 axisLabel: {
                     formatter: function (value) {
-                        if (value > 1000 && value < 1000000) {
+                        if (value >= 1000 && value < 1000000) {
                             return (value / 1000) + 'K';
-                        } else if (value > 1000000) {
+                        } else if (value >= 1000000) {
                             return (value / 1000000) + 'M';
+                        } else {
+                            return value;
                         }
                     }
                 }

@@ -1,29 +1,28 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
         <!-- Cycle按钮 -->
-        <div calss="mobileCycle">
+        <div calss="mobileCycleFullScreen">
           <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.hour}}</div>
           <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.day}}</div>
           <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.week}}</div>
           <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.month}}</div>
           <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.timeSharing}}</div>
         </div>
-        <!-- tooltip 数据显示 -->
-        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
-          <div style="font-size:0.15rem; margin-top: 0.1rem;">
-            <font class="mobile-tooltip-data-ma5">MA5: </font><font class="tooltip-ma5">{{this.toolTipData.MA5}}</font>
-            <font class="mobile-tooltip-data-ma10">MA10: </font><font class="tooltip-ma10">{{this.toolTipData.MA10}}</font>
-            <font class="mobile-tooltip-data-ma20">MA20: </font><font class="tooltip-ma20">{{this.toolTipData.MA20}}</font>
-            <font class="mobile-tooltip-data-ma30">MA30: </font><font class="tooltip-ma30">{{this.toolTipData.MA30}}</font>
-            <font class="mobile-tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font>
+        <div :class="this.message.language === 'zh' ? 'mobile-tooltip-fullScreen-zh' : 'mobile-tooltip-fullScreen-en'" v-if="toolTipData">
+          <div style="font-size:0.18rem; margin-top: 0.1rem;　height:0.2rem">
+            <font class="mobile-tooltip-data-ma5">MA5: </font><font class="tooltip-ma5-fullScreen">{{this.toolTipData.MA5}}</font>
+            <font class="mobile-tooltip-data-ma10">MA10: </font><font class="tooltip-ma10-fullScreen">{{this.toolTipData.MA10}}</font>
+            <font class="mobile-tooltip-data-ma20">MA20: </font><font class="tooltip-ma20-fullScreen">{{this.toolTipData.MA20}}</font>
+            <font class="mobile-tooltip-data-ma30">MA30: </font><font class="tooltip-ma30-fullScreen">{{this.toolTipData.MA30}}</font>
+            <font class="mobile-tooltip-data-ma60">MA60: </font><font class="tooltip-ma60-fullScreen">{{this.toolTipData.MA60}}</font>
           </div>
-          <div style="font-size:0.15rem; margin-left: -0.1rem; margin-top: 0.05rem;">
-          <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
-          <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
-          <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
-          <font class="mobile-tooltip-name">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
+          <div style="font-size:0.18rem; margin-left: -0.78rem; margin-top: 0.05rem;">
+          <font class="mobile-tooltip-name-fullScreen">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
+          <font class="mobile-tooltip-name-fullScreen">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
+          <font class="mobile-tooltip-name-fullScreen">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
+          <font class="mobile-tooltip-name-fullScreen">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
           </div>
-          <div style="float:right;margin-top: -0.24rem">
+          <div style="float:right;margin-top: -0.8rem">
           <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
           </div>
         </div>
@@ -36,19 +35,12 @@
           <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.averagePrice}}</font> &nbsp;<br> 
         </div>
     <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
-    <div style="background:#2b2f33; height:0.1rem"></div>
-    <!-- <div style="height:0.40rem; border-bottom:1px solid #2b2f33">
-      <span class="mobile-depthMapname">{{message.depthMap}}</span>
-    </div> -->
-    <!-- <div style="margin-left:500px; color:#e6e6e6">买，卖 </div> -->
-    <div id = "depth" ref = "depthRef" :style="{height: `${klineConfig.depthSize.height}px`, width: `${klineConfig.depthSize.width}px`}"></div>
   </div>
 </template>
 <script>
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-import { splitData, handleDivisionData, getDepthData} from '../js/processData'
+import { splitData, handleDivisionData} from '../js/processData'
 import KLineController from '../js/KLine'
-import DepthMapController from '../js/DepthMap'
 import { getLanguage } from '../js/utils'
 export default {
   name: "mKline",
@@ -58,7 +50,6 @@ export default {
       actions: [
       ],
       kline: null,
-      depth:null,
       status: 0,
       divisionTime: null,
       timeDivisionData: null,
@@ -84,13 +75,6 @@ export default {
       default: 'mobile'
     },
     klineConfig: {
-      type: Object,
-      default: () => {
-        return {
-        }
-      }
-    },
-    depthMapConfig: {
       type: Object,
       default: () => {
         return {
@@ -141,16 +125,12 @@ export default {
             this.kline.hideMobileLoading()
           }
         }
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
-        this.depth.setDepthoption(depthData);
-        this.depth.hideDepthLoading();
       }
     }
   },
   created() {
     this.message = getLanguage();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
-    this.depth = new DepthMapController(this.depthMapConfig);
   },
   mounted() {
     this.init();
@@ -163,11 +143,11 @@ export default {
   methods: {
     init() {
       this.kline.initMobileChart(this.$refs.klineRef);
-      this.depth.initMobileChart(this.$refs.depthRef);
     },
     switchBase() {
       this.show = !this.show;
     },
+   
     chooseCycle(cycle) {
       if (this.cycle === cycle) {
         return;

@@ -33,8 +33,11 @@ module.exports = {
   collectCoverage: true,
   collectCoverageFrom: [
     'src/**/*.{js}',
+    '!src/index.js',
     '!src/js/KLineMobileOption.js',
     '!src/js/KLineOption.js',
+    '!src/js/TimeSharingOption.js',
+    '!src/js/DepthOption.js',
     '!src/main.js',
     '!**/node_modules/**'
   ]

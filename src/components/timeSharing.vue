@@ -13,14 +13,15 @@
 <script>
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 import { splitData, handleDivisionData } from '../js/processData'
-import ChartController from '../js/Chart'
+import ChartController from '../js/Charts'
 import { getLanguage } from '../js/utils'
 export default {
   name: "timeSharing",
   data() {
     return {
       kline: null,
-      status: 0,
+      platform: 'pc',
+      chartType: 'timeSharing',
       coinType: null,
       timeSharingTipData: null,
       divisionTime: null,
@@ -48,19 +49,19 @@ export default {
   },
   watch: {
     klineDataObj() {
-      if (this.klineDataObj) {
+      if (this.klineDataObj.timeDivisionData) {
+        let timeDivisionData = this.klineDataObj.timeDivisionData;
+        let divisionData = handleDivisionData(timeDivisionData)
+        this.divisionTime = divisionData.divisionTime;
         this.message = getLanguage();
         if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
           this.clearChart()
-          this.timeSharing.setTimeSharingOption()
+          this.timeSharingTipData = this.timeSharing.setTimeSharingOption(timeDivisionData, divisionData)
           this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, false)
           this.coinType = this.klineDataObj.coinType
           this.isRefresh = false
         }else {
-          let timeDivisionData = this.klineDataObj.timeDivisionData;
-          let divisionData = handleDivisionData(timeDivisionData)
-          this.divisionTime = divisionData.divisionTime;
-          this.timeSharingTipData = this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+          this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
         }
       }
     }

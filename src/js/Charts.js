@@ -1,21 +1,28 @@
 // import KLineSetChartController from './KLineSetChart';
 import DepthChart from './SetDepthChart';
-import TimeSharingChart from './setTimeSharingChart';
+import { depthOption, mobileDepthOption } from './DepthOption';
+import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
+import TimeSharingChart from './SetTimeSharingChart';
 // import { indicatorsOption } from './processData';
 
 class ChartController {
-    constructor(klineConfig) {
-        // var merge = require('lodash.merge');
-        if (klineConfig.platform === 'pc') {
-            if (klineConfig.chartType === 'candle') {
-                return;
-                // let klineOption = indicatorsOption(klineConfig.showIndicators);
-                // config = merge(klineOption, klineConfig);
-                // this.setKLineChart = new KLineSetChartController(config, klineConfig.showIndicators);
-            } else if (klineConfig.chartType === 'depth') {
-                this.setDepthChart = new DepthChart(klineConfig);
-            } else if (klineConfig.chartType === 'timeSharing') {
-                this.setTimeSharing = new TimeSharingChart(klineConfig);
+    constructor(chartsConfig) {
+        var merge = require('lodash.merge');
+        if (chartsConfig.chartType === 'depth') {
+            if (chartsConfig.platform === 'pc') {
+                merge(depthOption, chartsConfig);
+                this.setDepthChart = new DepthChart(depthOption);
+            } else {
+                merge(mobileDepthOption, chartsConfig);
+                this.setDepthChart = new DepthChart(mobileDepthOption);
+            }
+        } else if (chartsConfig.chartType === 'timeSharing') {
+            if (chartsConfig.chartType === 'pc') {
+                merge(timeSharingOption, chartsConfig);
+                this.setTimeSharing = new TimeSharingChart(timeSharingOption);
+            } else {
+                merge(mobileTimeSharingOption, chartsConfig);
+                this.setTimeSharing = new TimeSharingChart(mobileTimeSharingOption);
             }
         }
     }
@@ -55,12 +62,12 @@ class ChartController {
         this.setTimeSharing.resizeECharts(DOM, isFullScreen);
     }
 
-    setTimeSharingOption(data) {
-        this.setTimeSharing.setTimeSharingOption(data);
+    setTimeSharingOption(timeDivisionData, divisionData) {
+        return this.setTimeSharing.setTimeSharingOption(timeDivisionData, divisionData);
     }
 
     updateTimeSharingOption(timeDivisionData, divisionData) {
-        return this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+        this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
     }
 
     getTimeSharingTipData() {

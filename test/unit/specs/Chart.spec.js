@@ -1,9 +1,9 @@
-import ChartController from 'js/Chart.js'
+import ChartController from 'js/Charts.js'
 import { getDepthData } from 'js/processData'
 import testData from '../../../demo/src/data.json'
 import timeSharingData from '../../../demo/src/timeSharingData.json'
 
-describe('test KLineSetChart', () => {
+describe('test Chart', () => {
 
   let depthData = getDepthData(testData.depthData, testData.coinType)
   let klineConfig = {
@@ -105,7 +105,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
@@ -113,7 +113,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -122,7 +122,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false)
     timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, true)
@@ -133,7 +133,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -142,7 +142,7 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.disposeTimeSharingEChart()
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -151,9 +151,26 @@ describe('test KLineSetChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption()
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.clearTimeSharingEcharts()
     expect(timeSharing.setTimeSharing.timeSharing.getOption().series).toEqual(new Array)
+  })
+
+  it('test initDepthChart if platform is mobile and chartType is timeSharing', () => {
+    klineConfig.platform = 'mobile'
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    expect(timeSharing).not.toBeNull()
+  })
+
+  it('test initDepthChart if platform is mobile and chartType is depth', () => {
+    klineConfig.chartType = 'depth'
+    klineConfig.platform = 'mobile'
+    let depth = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    depth.initDepth(element)
+    expect(depth).not.toBeNull()
   })
 
 })

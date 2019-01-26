@@ -131,9 +131,9 @@
 .full-screen-div {
     position: relative;
     display: inline-block;
-  }
-  
-  .full-screen-div .icon-fullscreen-tooltip {
+}
+
+.full-screen-div .icon-fullscreen-tooltip {
     visibility: hidden;
     width: 46px;
     height: 24px;
@@ -149,9 +149,9 @@
     margin-left: -23px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
-  
-  .full-screen-div .icon-fullscreen-tooltip::after {
+}
+
+.full-screen-div .icon-fullscreen-tooltip::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -160,14 +160,14 @@
     border-width: 4px;
     border-style: solid;
     border-color: #ffffff transparent transparent transparent;
-  }
-  
-  .full-screen-div:hover .icon-fullscreen-tooltip {
+}
+
+.full-screen-div:hover .icon-fullscreen-tooltip {
     visibility: visible;
     opacity: 1;
-  }
+}
 
-  .full-screen-div .icon-fullscreen-entip {
+.full-screen-div .icon-fullscreen-entip {
     visibility: hidden;
     width: 68px;
     height: 24px;
@@ -183,9 +183,9 @@
     margin-left: -33px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
+}
 
-  .full-screen-div .icon-fullscreen-entip::after {
+.full-screen-div .icon-fullscreen-entip::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -194,14 +194,14 @@
     border-width: 4px;
     border-style: solid;
     border-color: #ffffff transparent transparent transparent;
-  }
-  
-  .full-screen-div:hover .icon-fullscreen-entip {
+}
+
+.full-screen-div:hover .icon-fullscreen-entip {
     visibility: visible;
     opacity: 1;
-  }
+}
 
-  .full-screen-div .exit-fullscreen-tooltip {
+.full-screen-div .exit-fullscreen-tooltip {
     visibility: hidden;
     width: 66px;
     height: 24px;
@@ -216,9 +216,9 @@
     margin-left: -31px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
-  
-  .full-screen-div .exit-fullscreen-tooltip::after {
+}
+
+.full-screen-div .exit-fullscreen-tooltip::after {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -227,14 +227,14 @@
     border-width: 4px;
     border-style: solid;
     border-color: transparent transparent #ffffff transparent;
-  }
-  
-  .full-screen-div:hover .exit-fullscreen-tooltip {
+}
+
+.full-screen-div:hover .exit-fullscreen-tooltip {
     visibility: visible;
     opacity: 1;
-  }
+}
 
-  .full-screen-div .exit-fullscreen-entip {
+.full-screen-div .exit-fullscreen-entip {
     visibility: hidden;
     width: 45px;
     height: 24px;
@@ -249,9 +249,9 @@
     margin-left: -22px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
-  
-  .full-screen-div .exit-fullscreen-entip::after {
+}
+
+.full-screen-div .exit-fullscreen-entip::after {
     content: "";
     position: absolute;
     bottom: 100%;
@@ -260,12 +260,12 @@
     border-width: 4px;
     border-style: solid;
     border-color: transparent transparent #ffffff transparent;
-  }
-  
-  .full-screen-div:hover .exit-fullscreen-entip {
+}
+
+.full-screen-div:hover .exit-fullscreen-entip {
     visibility: visible;
     opacity: 1;
-  }
+}
 
 .chart-div {
     float: left;
@@ -279,14 +279,14 @@
 
 .chart-btn {
     text-align: center;
-	line-height: 26px;
+    line-height: 26px;
     background: #1b2229;
     color: #b9cadd
 }
 
 .chart-btn-active {
     text-align: center;
-	line-height: 26px;
+    line-height: 26px;
     color: #ffffff;
     background: #3669a7;
 }
@@ -336,42 +336,6 @@
 .mobile-cycle img {
     height: 0.16rem;
     margin-right: 0.1rem;
-}
-
-.van-actionsheet {
-    left: 0.1rem;
-    right: 0;
-    top: 2.4rem;
-    bottom: 80%;
-    width: 1rem;
-    color: #232732;
-    -webkit-transition: 0.2s ease-out;
-    transition: 0.1s ease-out;
-    overflow-y: visible;
-    background-color: #232732;
-}
-
-.van-actionsheet__item {
-    height: 0.5rem;
-    line-height: 0.5rem;
-    font-size: 0.28rem;
-    color: #e6e6e6;
-    text-align: center;
-    background-color: #232732 !important;
-    cursor: pointer;
-}
-
-.van-actionsheet__item:active {
-    color: #1bdafd;
-}
-
-.van-hairline--top::after {
-    border-top-width: 0rem;
-}
-
-.van-actionsheet__list {
-    border: 0.02rem solid #37495c;
-    border-radius: 0.04rem;
 }
 
 .mobile-tooltip-zh {
@@ -428,6 +392,7 @@
 }
 
 .time-sharing-data {
+    /* position: absolute; */
     text-align: left;
     font-size: 0.18rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
@@ -435,6 +400,7 @@
 }
 
 .time-sharing-zh-data {
+    /* position: absolute; */
     text-align: left;
     font-size: 0.18rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
@@ -455,8 +421,9 @@
 .mobile-tooltip-volume {
     color: #e6e6e6;
     font: 0.16rem "Microsoft YaHei";
-    float:felt
+    float: felt
 }
+
 .mobile-depthMapname {
     clear: both;
     margin-left: 20px;
@@ -469,42 +436,94 @@
     color: #ff4d71
 }
 
-/* .tooltip-ma5 {
-    color: #ff4d71
-} */
 
 .mobile-tooltip-data-ma10 {
     margin-left: 0.1rem;
     color: #67ff7c
 }
-/* 
-.tooltip-ma10 {
-    color: #67ff7c
-} */
 
 .mobile-tooltip-data-ma20 {
     margin-left: 0.1rem;
     color: #16c5ff
 }
 
-/* .tooltip-ma20 {
-    color: #16c5ff
-} */
-
 .mobile-tooltip-data-ma30 {
     margin-left: 0.1rem;
     color: #f6d026
 }
-
-/* .tooltip-ma30 {
-    color: #f6d026
-} */
 
 .mobile-tooltip-data-ma60 {
     margin-left: 0.1rem;
     color: #e03bfa
 }
 
-/* .tooltip-ma60 {
-    color: #e03bfa
-} */
+.mobileCycleFullScreen {
+    margin-left: -0.5rem;
+}
+
+.mobile-tooltip-fullScreen-zh {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.4rem 0.2rem 0.16rem 0.4rem;
+    z-index: 1;
+}
+
+.mobile-tooltip-fullScreen-en {
+    text-align: left;
+    font-size: 0.18rem;
+    padding: 0.4rem 0.2rem 0.16rem 0.4rem;
+    z-index: 1;
+}
+
+.mobile-cycle-btn-fullScreen {
+    float: left;
+    min-width: 0.3rem;
+    width: auto;
+    height: 0.26rem;
+    cursor: pointer;
+    margin-left: 0.84rem;
+    margin-top: 0.08rem;
+    text-align: center;
+    color: #e6e6e6;
+    line-height: 0.2rem;
+    font-size: 0.24rem;
+    border-radius: 0.02rem;
+    margin-top: 0.2rem;
+}
+
+.tooltip-ma5-fullScreen {
+    color: #ff4d71;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma10-fullScreen {
+    color: #67ff7c;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma20-fullScreen {
+    color: #16c5ff;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma30-fullScreen {
+    color: #f6d026;
+    margin-right: 0.2rem
+}
+
+.tooltip-ma60-fullScreen {
+    color: #e03bfa;
+    margin-right: 0.2rem
+}
+
+.mobile-tooltip-name-fullScreen {
+    color: #e6e6e6;
+    font: 0.16rem "Microsoft YaHei";
+    margin-left: 0.78rem;
+}
+
+.mobile-more-btn {
+    float: right;
+    padding-right: 0.2rem;
+    color: #fff;
+}

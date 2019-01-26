@@ -35,9 +35,46 @@ class DepthMapMobileSetChartController {
 
     setDepthoption(data) {
         if (data) {
+            let message = getLanguage();
+            let buy = message.buy;
+            let sell = message.sell;
             let depthOption = {
+                color: [
+                    '#ee4b4b',
+                    '#09e988'
+                ],
                 backgroundColor: '#161b21',
                 animation: true,
+                legend: [
+                    {
+                        show: true,
+                        top: 40,
+                        itemGap: 20,
+                        itemWidth: 14,
+                        itemHeight: 14,
+                        selectedMode: false,
+                        'data': [{
+                            name: buy,
+                            icon: 'rect',
+                            textStyle: {
+                                color: '#ee4b4b',
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+                            }
+
+                        }, {
+                            name: sell,
+                            icon: 'rect',
+                            textStyle: {
+                                color: '#09e988',
+                                fontSize: 14,
+                                fontFamily: 'Microsoft YaHei'
+
+                            }
+                        }
+                        ]
+                    }
+                ],
                 grid: this.getDepthGrid(data),
                 xAxis: this.getDepthXAxis(data),
                 yAxis: this.getDepthYAxis(data),
@@ -103,22 +140,25 @@ class DepthMapMobileSetChartController {
                 type: 'value',
                 gridIndex: 0,
                 position: 'right',
-                z:1,
+                z:2,
                 splitNumber: 4,
                 splitLine: {
                     show: false,
                     type: 'shadow'
                 },
                 axisLabel: {
+                    z:2,
                     inside:true,
                     show: true,
                     onZero: false,
                     margin: 0,
-                    color: '#b7c2ce',
+                    color: '#e6e6e6',
                     fontSize: 22,
                     formatter: function (value) {
-                        if (value > 1000) {
+                        if (value >= 1000) {
                             return (value / 1000) + 'K';
+                        } else {
+                            return value;
                         }
                     }
                 },
@@ -126,8 +166,12 @@ class DepthMapMobileSetChartController {
                     show: false
                 },
                 axisPointer: {
-                    show: false
-                }
+                    show: false,
+                    label: {
+                        backgroundColor: '#232b34',
+                        fontSize:16,
+                    }
+                },
             }
         ];
     }
@@ -137,31 +181,31 @@ class DepthMapMobileSetChartController {
         return {
             formatter: function (param) {
                 param = param[0];
-                if(param) {
-                    if (param.seriesName === 'sell') {
+                if (param) {
+                    if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
                         return [
                             '<div style="text-align:left;">',
-                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          message.sellPrice +
-          param.data[0] +
-          '<br/>',
-                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          message.sellTotal +
-          param.data[1] +
-          '<br/>',
+                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                            message.sellPrice +
+                            param.data[0] +
+                            '<br/>',
+                            '<div style="width:6px;height:6px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                            message.sellTotal +
+                            param.data[1] +
+                            '<br/>',
                             '</div>'
                         ].join('');
-                    } else if (param.seriesName === 'buy') {
+                    } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
                         return [
                             '<div style="text-align:left;">',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          message.buyPrice +
-          param.data[0] +
-          '<br/>',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:8px;margin-right:2px;"></div>' +
-          message.buyTotal +
-          param.data[1] +
-          '<br/>',
+                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                            message.buyPrice +
+                            param.data[0] +
+                            '<br/>',
+                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                            message.buyTotal +
+                            param.data[1] +
+                            '<br/>',
                             '</div>'
                         ].join('');
                     }
@@ -171,9 +215,12 @@ class DepthMapMobileSetChartController {
     }
 
     getDepthSeries(data) {
+        let message = getLanguage();
+        let buy = message.buy;
+        let sell = message.sell;
         return [
             {
-                name: 'buy',
+                name: buy,
                 type: 'line',
                 data: data.buyData,
                 showSymbol: false,
@@ -203,7 +250,7 @@ class DepthMapMobileSetChartController {
                 }
             },
             {
-                name: 'sell',
+                name: sell,
                 type: 'line',
                 data: data.sellData,
                 showSymbol: false,

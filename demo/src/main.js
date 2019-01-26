@@ -5,13 +5,12 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-// import jKline from 'jcc_kline'
-import jKline from '../../index'
+import kline from 'jcc_kline'
 
 Vue.config.productionTip = false
 
 Vue.use(ElementUI)
-Vue.use(jKline)
+Vue.use(kline)
 
 /* eslint-disable no-new */
 new Vue({
