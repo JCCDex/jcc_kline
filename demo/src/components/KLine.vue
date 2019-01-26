@@ -2,7 +2,7 @@
 <div>
     <el-col :span='24'>
         <div style='position:relative'>
-            <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :show-indicators='showIndicators' :kline-config='klineConfig' :cycle='cycle'></jKline>
+            <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig' :cycle='cycle'></jKline>
         </div>
     </el-col>
 </div>
@@ -21,8 +21,7 @@ export default {
       klineConfig: {
         backgroundColor: '#161b21',
         platform: 'pc'
-      },
-      showIndicators: ['Candlestick', 'MA', 'Volume', 'MarketDepth']
+      }
     }
   },
   created () {
