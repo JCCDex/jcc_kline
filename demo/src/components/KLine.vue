@@ -9,9 +9,13 @@
 </template>
 
 <script>
+// import { Chart } from 'jcc_kline/src/index'
 import {JcInfo} from 'jcc_rpc'
 export default {
   name: 'KLine',
+  // components: {
+  //   jKline: Chart
+  // },
   data () {
     return {
       id: null,

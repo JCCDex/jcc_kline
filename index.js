@@ -1,11 +1,9 @@
-import Kline from './src/components/klineChart.vue'
-import MobileKLine from './src/components/mobileKline.vue'
-import FSMobileKLine from './src/components/fullScreenMobileKline.vue'
+import { Chart, MobileKline, FSMobileKLine } from './src/index'
 
 const kline={
   install:function (Vue) {
-    Vue.component('jKline', Kline);
-    Vue.component('mKline', MobileKLine);
+    Vue.component('jKline', Chart);
+    Vue.component('mKline', MobileKline);
     Vue.component('fsmKline', FSMobileKLine);
   }
 };
