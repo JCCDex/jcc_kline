@@ -41,7 +41,7 @@
       <span class="mobile-depthMapname">{{message.depthMap}}</span>
     </div> -->
     <!-- <div style="margin-left:500px; color:#e6e6e6">买，卖 </div> -->
-    <div id = "depth" ref = "depthRef" :style="{height: `${klineConfig.depthSize.height}px`, width: `${klineConfig.depthSize.width}px`}"></div>
+    <!-- <div id = "depth" ref = "depthRef" :style="{height: `${klineConfig.depthSize.height}px`, width: `${klineConfig.depthSize.width}px`}"></div> -->
   </div>
 </template>
 <script>
@@ -58,7 +58,7 @@ export default {
       actions: [
       ],
       kline: null,
-      depth:null,
+      // depth:null,
       status: 0,
       divisionTime: null,
       timeDivisionData: null,
@@ -90,13 +90,13 @@ export default {
         }
       }
     },
-    depthMapConfig: {
-      type: Object,
-      default: () => {
-        return {
-        }
-      }
-    },
+    // depthMapConfig: {
+    //   type: Object,
+    //   default: () => {
+    //     return {
+    //     }
+    //   }
+    // },
     showIndicators: {
       type: Array,
       default: () => {
@@ -141,16 +141,16 @@ export default {
             this.kline.hideMobileLoading()
           }
         }
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
-        this.depth.setDepthoption(depthData);
-        this.depth.hideDepthLoading();
+        // let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
+        // this.depth.setDepthoption(depthData);
+        // this.depth.hideDepthLoading();
       }
     }
   },
   created() {
     this.message = getLanguage();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
-    this.depth = new DepthMapController(this.depthMapConfig);
+    // this.depth = new DepthMapController(this.depthMapConfig);
   },
   mounted() {
     this.init();
@@ -163,7 +163,7 @@ export default {
   methods: {
     init() {
       this.kline.initMobileChart(this.$refs.klineRef);
-      this.depth.initMobileChart(this.$refs.depthRef);
+      // this.depth.initMobileChart(this.$refs.depthRef);
     },
     switchBase() {
       this.show = !this.show;

@@ -162,8 +162,10 @@ class DepthChart {
                     gridIndex: 0,
                     axisLabel: {
                         formatter: function (value) {
-                            if (value > 1000) {
+                            if (value >= 1000) {
                                 return (value / 1000) + 'K';
+                            } else {
+                                return value;
                             }
                         }
                     }
