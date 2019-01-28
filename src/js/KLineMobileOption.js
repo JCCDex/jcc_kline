@@ -30,11 +30,11 @@ var mobileOption = {
     grid: [ // 直角坐标系内绘图网格
         {
             left: '20px', // grid 组件离容器左侧的距离。
-            right: '20px' // grid 组件离容器右侧的距离。
+            right: '10px' // grid 组件离容器右侧的距离。
         },
         {
             left: '20px', // grid 组件离容器左侧的距离。
-            right: '20px', // grid 组件离容器右侧的距离。
+            right: '10px', // grid 组件离容器右侧的距离。
             bottom: '20px', // grid 组件离容器下侧的距离
             backgroundColor: '#161b21', // 网格背景色，默认透明 注意：此配置项生效的前提是，设置了 show: true
             borderColor: '#161b21', // 网格的边框颜色，注意：此配置项生效的前提是，设置了 show: true
@@ -112,10 +112,11 @@ var mobileOption = {
             },
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示刻度标签
+                margin: 0, // 刻度标签与轴线之间的距离
                 color: '#b7c2ce', // 刻度标签文字的颜色
                 fontSize: 22, // 文字的字体大小
                 algin: 'right', // 文字水平对齐方式，默认自动
-                verticalAlign: 'top' // 文字垂直对齐方式，默认自动
+                verticalAlign: 'middle' // 文字垂直对齐方式，默认自动
             }
         },
         {
