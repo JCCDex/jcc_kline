@@ -1,9 +1,9 @@
 {
   "language": "en",
-  "hour": "hour",
-  "day": "day",
-  "week": "week",
-  "month": "month",
+  "hour": "H",
+  "day": "D",
+  "week": "W",
+  "month": "M",
   "time": "Time: ",
   "timeSharing": "time sharing",
   "price": "Price: ",
