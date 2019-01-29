@@ -1,7 +1,7 @@
 import klineMobileSetChart from 'js/KLineMobileSetChart'
 import mobileOption from 'js/KLineMobileOption'
 import { splitData, handleDivisionData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import testData from '../../testData/data.json'
 
 describe('test KLineMobileSetChart', () => {
 

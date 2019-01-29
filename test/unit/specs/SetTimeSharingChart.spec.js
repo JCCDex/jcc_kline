@@ -1,6 +1,6 @@
 import TimeSharingChart from 'js/SetTimeSharingChart'
-import { timeSharingOption, mobileTimeSharingOption } from 'js/TimeSharingOption'
-import timeSharingData from '../../../demo/src/timeSharingData.json'
+import { timeSharingOption } from 'js/TimeSharingOption'
+import timeSharingData from '../../testData/timeSharingData.json'
 
 describe('test setTimeSharingChart', () => {
 

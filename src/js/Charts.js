@@ -1,9 +1,7 @@
-// import KLineSetChartController from './KLineSetChart';
 import DepthChart from './SetDepthChart';
 import { depthOption, mobileDepthOption } from './DepthOption';
 import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
 import TimeSharingChart from './SetTimeSharingChart';
-// import { indicatorsOption } from './processData';
 
 class ChartController {
     constructor(chartsConfig) {

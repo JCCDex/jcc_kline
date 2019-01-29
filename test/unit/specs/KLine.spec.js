@@ -1,6 +1,6 @@
 import klineController from 'js/KLine.js'
 import { splitData, handleDivisionData, getDepthData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import testData from '../../testData/data.json'
 
 describe('test KLine', () => {
 

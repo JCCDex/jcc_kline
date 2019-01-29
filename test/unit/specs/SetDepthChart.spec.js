@@ -1,7 +1,7 @@
 import SetDepthChart from 'js/SetDepthChart'
 import { depthOption } from 'js/DepthOption'
 import { getDepthData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import testData from '../../testData/data.json'
 
 describe('test SetDepthChart', () => {
 

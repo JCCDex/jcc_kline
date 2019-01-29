@@ -1,6 +1,6 @@
 import depthMapController from 'js/DepthMap.js'
 import {getDepthData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import testData from '../../testData/data.json'
 
 describe('test DepthMap', () => {
 

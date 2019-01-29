@@ -24,7 +24,11 @@ export default {
       klineDataObj: null,
       klineConfig: {
         backgroundColor: '#161b21',
-        platform: 'pc'
+        platform: 'pc',
+        size: {
+          width: 1900,
+          height: 800
+        }
       }
     }
   },
