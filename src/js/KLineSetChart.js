@@ -365,8 +365,8 @@ class KLineSetChartController {
     changeDataZoom(type) {
         let dataZoom = JSON.parse(JSON.stringify(this.kline.getOption().dataZoom));
         if (type === 'leftShift' && dataZoom[0].start >= 2) {
-            dataZoom[0].start = dataZoom[0].start - 2,
-                dataZoom[0].end = dataZoom[0].end - 2;
+            dataZoom[0].start = dataZoom[0].start - 2;
+            dataZoom[0].end = dataZoom[0].end - 2;
         } else if (type === 'enlarge' && dataZoom[0].start < 95) {
             dataZoom[0].start = dataZoom[0].start + 5;
         } else if (type === 'refresh') {
@@ -375,8 +375,8 @@ class KLineSetChartController {
         } else if (type === 'narrow' && dataZoom[0].start >= 5) {
             dataZoom[0].start = dataZoom[0].start - 5;
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
-            dataZoom[0].start = dataZoom[0].start + 2,
-                dataZoom[0].end = dataZoom[0].end + 2;
+            dataZoom[0].start = dataZoom[0].start + 2;
+            dataZoom[0].end = dataZoom[0].end + 2;
         }
         config.dataZoom = dataZoom;
         this.kline.setOption(config);
