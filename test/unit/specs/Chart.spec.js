@@ -118,6 +118,15 @@ describe('test Chart', () => {
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
+  it('test getTimeSharingTipData', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    let tipsData = timeSharing.getTimeSharingTipData()
+    expect(tipsData).not.toBeNull()
+  })
+
   it('test resizeTimeSharingChart if platform is pc and chartType is timeSharing, is FullScreen', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');

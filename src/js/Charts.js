@@ -15,7 +15,7 @@ class ChartController {
                 this.setDepthChart = new DepthChart(mobileDepthOption);
             }
         } else if (chartsConfig.chartType === 'timeSharing') {
-            if (chartsConfig.chartType === 'pc') {
+            if (chartsConfig.platform === 'pc') {
                 merge(timeSharingOption, chartsConfig);
                 this.setTimeSharing = new TimeSharingChart(timeSharingOption);
             } else {
