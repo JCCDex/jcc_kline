@@ -36,14 +36,6 @@ class KLineController {
         this.setKLineChart.updateOption(data, cycle);
     }
 
-    setDepthOption(data) {
-        this.setKLineChart.setDepthOption(data);
-    }
-
-    updateDepthOption(data) {
-        this.setKLineChart.updateDepthOption(data);
-    }
-
     getToolTipData() {
         return this.setKLineChart.getToolTipData();
     }

@@ -39,6 +39,15 @@ describe('test KLine', () => {
     expect(kline).not.toBeNull()
   })
 
+  it('test showLoading', () => {
+    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
+    let kline = new klineController('pc', '', showIndicators)
+    const element = document.createElement('div');
+    kline.initChart(element)
+    kline.showLoading()
+    expect(kline).not.toBeNull()
+  })
+
   it('test setOption if platform is pc', () => {
     let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
     let kline = new klineController('pc', '', showIndicators)
