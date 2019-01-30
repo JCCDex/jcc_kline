@@ -90,6 +90,74 @@ describe('test SetDepthChart', () => {
     expect(depthChart.depth.getOption()).not.toBeNull();
   })
 
+  it('test resizeECharts if not DOM', () => {
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(null, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth less than 1280', () => {
+    window.innerWidth = 1260;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1366', () => {
+    window.innerWidth = 1366;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1440', () => {
+    window.innerWidth = 1440;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1680', () => {
+    window.innerWidth = 1680;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1920', () => {
+    window.innerWidth = 1920;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 2180', () => {
+    window.innerWidth = 2180;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(null, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
 
   it('test clearDepthEcharts', () => {
     const element = document.createElement('div');
