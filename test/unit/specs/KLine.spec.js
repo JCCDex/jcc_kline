@@ -1,6 +1,6 @@
 import klineController from 'js/KLine.js'
 import { splitData, handleDivisionData, getDepthData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import testData from '../../testData/data.json'
 
 describe('test KLine', () => {
 
@@ -36,6 +36,15 @@ describe('test KLine', () => {
     let kline = new klineController('pc', '', showIndicators)
     const element = document.createElement('div');
     kline.initChart(element)
+    expect(kline).not.toBeNull()
+  })
+
+  it('test showLoading', () => {
+    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
+    let kline = new klineController('pc', '', showIndicators)
+    const element = document.createElement('div');
+    kline.initChart(element)
+    kline.showLoading()
     expect(kline).not.toBeNull()
   })
 

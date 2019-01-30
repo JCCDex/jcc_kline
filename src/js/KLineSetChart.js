@@ -25,41 +25,54 @@ class KLineSetChartController {
 
     resizeECharts(DOM, isFullScreen) {
         if (!isFullScreen) {
-            let size = getClientWidth();
-            let resizeContainer = () => {
-                let width;
-                let height;
-                if (DOM) {
-                    if (size <= 1024) {
-                        width = 1000 * 0.7;
-                        height = 1000 * 0.44 * 0.8;
-                    } else if (size <= 1280) {
-                        width = 1203 * 0.7;
-                        height = 1203 * 0.37 * 0.8;
-                    } else if (size <= 1366) {
-                        width = 1284 * 0.7;
-                        height = 1284 * 0.44 * 0.8;
-                    } else if (size <= 1440) {
-                        width = 1354 * 0.7;
-                        height = 1354 * 0.4 * 0.8;
-                    } else if (size <= 1680) {
-                        width = 1504 * 0.7;
-                        height = 1504 * 0.36 * 0.8;
-                    } else if (size <= 1920) {
-                        width = 1804 * 0.7;
-                        height = 1804 * 0.37 * 0.8;
-                    } else if (size <= 2180) {
-                        width = 2048 * 0.7;
-                        height = 2048 * 0.37 * 0.8;
+            if (!this.klineConfig.defaultSize) {
+                let resizeContainer = () => {
+                    if (DOM) {
+                        DOM.style.height = this.klineConfig.size.height + 'px';
+                        DOM.style.width = this.klineConfig.size.width + 'px';
+                        klineSize.width = this.klineConfig.size.width;
+                        klineSize.height = this.klineConfig.size.height;
                     }
-                    DOM.style.height = height + 'px';
-                    DOM.style.width = width + 'px';
-                    klineSize.width = width;
-                    klineSize.height = height;
-                }
-            };
-            resizeContainer(this);
-            this.kline.resize();
+                };
+                resizeContainer(this);
+                this.kline.resize();
+            } else {
+                let size = getClientWidth();
+                let resizeContainer = () => {
+                    let width;
+                    let height;
+                    if (DOM) {
+                        if (size <= 1024) {
+                            width = 1000 * 0.7;
+                            height = 1000 * 0.44 * 0.8;
+                        } else if (size <= 1280) {
+                            width = 1203 * 0.7;
+                            height = 1203 * 0.37 * 0.8;
+                        } else if (size <= 1366) {
+                            width = 1284 * 0.7;
+                            height = 1284 * 0.44 * 0.8;
+                        } else if (size <= 1440) {
+                            width = 1354 * 0.7;
+                            height = 1354 * 0.4 * 0.8;
+                        } else if (size <= 1680) {
+                            width = 1504 * 0.7;
+                            height = 1504 * 0.36 * 0.8;
+                        } else if (size <= 1920) {
+                            width = 1804 * 0.7;
+                            height = 1804 * 0.37 * 0.8;
+                        } else if (size <= 2180) {
+                            width = 2048 * 0.7;
+                            height = 2048 * 0.37 * 0.8;
+                        }
+                        DOM.style.height = height + 'px';
+                        DOM.style.width = width + 'px';
+                        klineSize.width = width;
+                        klineSize.height = height;
+                    }
+                };
+                resizeContainer(this);
+                this.kline.resize();
+            }
         } else {
             let resizeContainer = () => {
                 DOM.style.height = getClientHeight() + 'px';
@@ -352,7 +365,7 @@ class KLineSetChartController {
     changeDataZoom(type) {
         let dataZoom = JSON.parse(JSON.stringify(this.kline.getOption().dataZoom));
         if (type === 'leftShift' && dataZoom[0].start >= 2) {
-            dataZoom[0].start = dataZoom[0].start - 2,
+            dataZoom[0].start = dataZoom[0].start - 2;
             dataZoom[0].end = dataZoom[0].end - 2;
         } else if (type === 'enlarge' && dataZoom[0].start < 95) {
             dataZoom[0].start = dataZoom[0].start + 5;
@@ -362,7 +375,7 @@ class KLineSetChartController {
         } else if (type === 'narrow' && dataZoom[0].start >= 5) {
             dataZoom[0].start = dataZoom[0].start - 5;
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
-            dataZoom[0].start = dataZoom[0].start + 2,
+            dataZoom[0].start = dataZoom[0].start + 2;
             dataZoom[0].end = dataZoom[0].end + 2;
         }
         config.dataZoom = dataZoom;

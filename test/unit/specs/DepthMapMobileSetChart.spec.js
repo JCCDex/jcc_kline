@@ -1,6 +1,6 @@
 import depthMapMobileSetChart from 'js/DepthMapMobileSetChart'
 import {getDepthData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import testData from '../../testData/data.json'
 
 describe('test DepthMapMobileSetChart', () => {
 

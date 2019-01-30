@@ -1,5 +1,9 @@
 {
   "language": "en",
+  "hourPC": "H",
+  "dayPC": "D",
+  "weekPC": "W",
+  "monthPC": "M",
   "hour": "hour",
   "day": "day",
   "week": "week",

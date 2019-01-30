@@ -1,6 +1,6 @@
 import TimeSharingChart from 'js/SetTimeSharingChart'
-import { timeSharingOption, mobileTimeSharingOption } from 'js/TimeSharingOption'
-import timeSharingData from '../../../demo/src/timeSharingData.json'
+import { timeSharingOption } from 'js/TimeSharingOption'
+import timeSharingData from '../../testData/timeSharingData.json'
 
 describe('test setTimeSharingChart', () => {
 
@@ -114,6 +114,74 @@ describe('test setTimeSharingChart', () => {
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
   })
 
+  it('test resizeECharts if not DOM', () => {
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(null, false)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth less than 1280', () => {
+    window.innerWidth = 1260;
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(element, false)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1366', () => {
+    window.innerWidth = 1366;
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(element, false)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1440', () => {
+    window.innerWidth = 1440;
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(element, false)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1680', () => {
+    window.innerWidth = 1680;
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(element, false)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 1920', () => {
+    window.innerWidth = 1920;
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(element, false)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 2180', () => {
+    window.innerWidth = 2180;
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    TimeSharing.resizeECharts(element, false)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
 
   it('test clearTimeSharingEcharts', () => {
     const element = document.createElement('div');

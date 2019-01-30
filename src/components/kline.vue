@@ -2,10 +2,10 @@
     <div style="position:relative">
       <!-- Cycle按钮 -->
       <div style="position: absolute;left:10px;top:20px;z-index:1;">
-        <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hour}}</div>
-        <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.day}}</div>
-        <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.week}}</div>
-        <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.month}}</div>
+        <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hourPC}}</div>
+        <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.dayPC}}</div>
+        <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.weekPC}}</div>
+        <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.monthPC}}</div>
       </div>
       <!-- tooltip数据显示 -->
       <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="toolTipData">
@@ -25,7 +25,7 @@
         </div>
       </div>
       <!-- kline -->
-      <div id="kline" ref="klineRef" style="width:100%;height:572px;" @mousemove="getToolTipData"></div>
+      <div id="kline" ref="klineRef" :style="{height: `${klineSize.height}`, width: `${klineSize.width}`}" @mousemove="getToolTipData"></div>
     </div>
 </template>
 <script>
@@ -42,6 +42,10 @@ export default {
       cycle: 'hour',
       platform: 'pc',
       showIndicators: ['Candlestick', 'MA', 'Volume', 'MarketDepth'],
+      klineSize: {
+        width: 0,
+        height: 0
+      },
       message: null,
       klineData: null,
       toolTipData: null,
@@ -87,6 +91,19 @@ export default {
     }
   },
   created() {
+    if (!this.klineConfig.size) {
+      this.klineConfig.defaultSize = true
+      this.klineSize = {
+        width: '100%',
+        height: '572px'
+      }
+    } else {
+      this.klineConfig.defaultSize = false
+      this.klineSize = {
+        width: this.klineConfig.size.width + 'px',
+        height: this.klineConfig.size.height + 'px'
+      }
+    }
     this.message = getLanguage();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
   },

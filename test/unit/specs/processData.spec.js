@@ -1,9 +1,23 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA, indicatorsOption, mobileIndicatorsOption } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import { splitData, getDepthData, handleDivisionData, calculateMA } from 'js/processData'
+import testData from '../../testData/data.json'
 
 describe('test processData', () => {
   it('test splitData', () => {
     let splitdata = splitData(testData.klineData, 'pc')
+    expect(splitdata.categoryData).not.toBeNull()
+    expect(splitdata.values).not.toBeNull()
+    expect(splitdata.volumes).not.toBeNull()
+  })
+
+  it('test splitData if platform is mobile', () => {
+    let splitdata = splitData(testData.klineData, 'mobile')
+    expect(splitdata.categoryData).not.toBeNull()
+    expect(splitdata.values).not.toBeNull()
+    expect(splitdata.volumes).not.toBeNull()
+  })
+
+  it('test splitData if platform is mobile and klineData length less than  100', () => {
+    let splitdata = splitData(testData.klineData.slice(0, 50), 'mobile')
     expect(splitdata.categoryData).not.toBeNull()
     expect(splitdata.values).not.toBeNull()
     expect(splitdata.volumes).not.toBeNull()
@@ -47,6 +61,12 @@ describe('test processData', () => {
     expect(data).not.toBeUndefined
   })
 
+  it('test getDepthData, baseTitle is VCC', () => {
+    testData.coinType.baseTitle = 'VCC'
+    let data = getDepthData(testData.depthData, testData.coinType)
+    expect(data).not.toBeUndefined
+  })
+
   it('test handleDivisionData', () => {
     let data = handleDivisionData(testData.timeDivisionData)
     expect(data).not.toBeNull()
@@ -67,27 +87,13 @@ describe('test processData', () => {
     expect(MA10).not.toBeNull()
   })
 
-  it('test indicatorsOption', () => {
-    let showIndicators1 = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let option1 = indicatorsOption(showIndicators1)
-    expect(option1).not.toBeNull()
-    let showIndicators2 = ['Candlestick', 'MA', 'Volume']
-    let option2 = indicatorsOption(showIndicators2)
-    expect(option2).not.toBeNull()
-    let showIndicators3 = ['Candlestick', 'MA']
-    let option3 = indicatorsOption(showIndicators3)
-    expect(option3).not.toBeNull()
+  it('test calculateMA if value is NaN', () => {
+    let splitdata = splitData(testData.klineData, 'pc')
+    let depthData = getDepthData(testData.depthData, testData.coinType)
+    let data = Object.assign({}, splitdata, depthData);
+    data.values.push([1, 'aaa', 123213])
+    let MA5 = calculateMA(5, data)
+    expect(MA5).not.toBeNull()
   })
 
-  it('test mobileIndicatorsOption', () => {
-    let showIndicators1 = ['Candlestick', 'MA', 'Volume']
-    let option1 = mobileIndicatorsOption(showIndicators1)
-    expect(option1).not.toBeNull()
-    let showIndicators2 = ['Candlestick', 'MA']
-    let option2 = mobileIndicatorsOption(showIndicators2)
-    expect(option2).not.toBeNull()
-    let showIndicators3 = ['Candlestick']
-    let option3 = mobileIndicatorsOption(showIndicators3)
-    expect(option3).not.toBeNull()
-  })
 })

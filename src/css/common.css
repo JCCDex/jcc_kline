@@ -42,13 +42,32 @@
 .icon-kline-show {
     color: #b9cadd;
     z-index: 2;
-    font-size: 12px;
+    font-size: 12px !important;
 }
 
 .icon-kline-hide {
     color: #b9cadd;
     z-index: 2;
-    font-size: 12px;
+    font-size: 12px !important;
+}
+
+.kline-levitation-div {
+    width: 300px;
+    height: 60px;
+    position: absolute;
+    color: #ffffff;
+    left: 40%;
+    bottom: 2%;
+    z-index: 10;
+}
+
+.kline-levitation-icon {
+    line-height: 60px;
+}
+
+.kline-levitation-btn {
+    float:left; 
+    margin-left: 20px;
 }
 
 .icon-full-screen {

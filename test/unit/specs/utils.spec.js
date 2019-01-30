@@ -1,4 +1,4 @@
-import { isNumber, getLanguage, formatTime, formatDecimal, getClientWidth, getClientHeight } from 'js/utils'
+import { isNumber, getLanguage, formatDecimal, getClientWidth, getClientHeight } from 'js/utils'
 
 describe('test utils', () => {
   it('test is number', () => {
@@ -24,6 +24,10 @@ describe('test utils', () => {
     expect(formatDecimal(11212.234234234, 6, true)).toBe("11,212.234234")
   })
 
+  it('test formatDecimal if not num', () => {
+    expect(formatDecimal('not num', 6, true)).toBe("not num")
+  })
+
   it('test formatDecimal if sep is false', () => {
     expect(formatDecimal(11232.234234234, 6, false)).toBe("11232.234234")
   })
@@ -32,7 +36,17 @@ describe('test utils', () => {
     expect(getClientWidth()).not.toBeNull()
   })
 
+  it('test getClientWidth if window innerWidth is null', () => {
+    window.innerWidth = null
+    expect(getClientWidth()).not.toBeNull()
+  })
+
   it('test getClientHeight', () => {
+    expect(getClientHeight()).not.toBeNull()
+  })
+
+  it('test getClientHeight if window innerHeight is null ', () => {
+    window.innerHeight = null
     expect(getClientHeight()).not.toBeNull()
   })
 })
