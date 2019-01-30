@@ -221,7 +221,7 @@ var mobileDepthOption = {
             type: 'value', // 数值轴，适用于连续数据
             gridIndex: 0, // y 轴所在的 grid 的索引，默认位于第一个 grid
             position: 'right', // y 轴的位置
-            z:1, // Y 轴组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖
+            z:2, // Y 轴组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖
             splitNumber: 4, // 坐标轴的分割段数，需要注意的是这个分割段数只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 show: false,

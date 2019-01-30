@@ -1,6 +1,8 @@
 <template>
+            
     <div>
-        <time-sharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing>
+        <!-- <span @click = "changeChart" >分时</span> -->
+        <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
         <KLine ref="candle" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj" :cycle = "cycle"></KLine>
         <Depth ref="depth" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
     </div>
@@ -50,6 +52,9 @@ export default {
       }
       this.$emit("listenToChildEvent", cycle)
     }
+    // changeChart() {
+    //   this.$emit("listenToChildEvent", "everyhour");
+    // }
   }
 };
 </script>

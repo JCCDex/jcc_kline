@@ -17,17 +17,16 @@
             <font class="mobile-tooltip-data-ma30">MA30: </font><font class="tooltip-ma30">{{this.toolTipData.MA30}}</font>
             <font class="mobile-tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font>
           </div>
-          <div style="font-size:0.15rem; margin-left: -0.1rem; margin-top: 0.05rem;">
-          <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
-          <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
-          <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
-          <font class="mobile-tooltip-name">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
+            <div style="font-size:0.15rem; margin-left: -0.1rem; margin-top: 0.05rem;">
+            <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
+            <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
+            <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
+            <font class="mobile-tooltip-name">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
           </div>
           <div style="float:right;margin-top: -0.24rem">
-          <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
+            <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
           </div>
         </div>
-
         <!-- timeDivision tootip 数据显示 -->
         <div :class="this.message.language === 'en' ? 'time-sharing-data' : 'time-sharing-zh-data'" v-if="timeDivisionTipData">
           <font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.time}}</font>
@@ -37,11 +36,6 @@
         </div>
     <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
     <div style="background:#2b2f33; height:0.1rem"></div>
-    <!-- <div style="height:0.40rem; border-bottom:1px solid #2b2f33">
-      <span class="mobile-depthMapname">{{message.depthMap}}</span>
-    </div> -->
-    <!-- <div style="margin-left:500px; color:#e6e6e6">买，卖 </div> -->
-    <div id = "depth" ref = "depthRef" :style="{height: `${klineConfig.depthSize.height}px`, width: `${klineConfig.depthSize.width}px`}"></div>
   </div>
 </template>
 <script>
@@ -58,7 +52,6 @@ export default {
       actions: [
       ],
       kline: null,
-      depth:null,
       status: 0,
       divisionTime: null,
       timeDivisionData: null,
@@ -84,13 +77,6 @@ export default {
       default: 'mobile'
     },
     klineConfig: {
-      type: Object,
-      default: () => {
-        return {
-        }
-      }
-    },
-    depthMapConfig: {
       type: Object,
       default: () => {
         return {
@@ -123,7 +109,6 @@ export default {
             this.kline.setMobileOption(this.klineDataObj, this.cycle);
             this.status = 1;
           }
-          // let mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
           if (mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
             this.toolTipData = this.kline.updateMobileOption(mobileKlineData);
             this.kline.hideMobileLoading()
@@ -141,16 +126,12 @@ export default {
             this.kline.hideMobileLoading()
           }
         }
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
-        this.depth.setDepthoption(depthData);
-        this.depth.hideDepthLoading();
       }
     }
   },
   created() {
     this.message = getLanguage();
     this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
-    this.depth = new DepthMapController(this.depthMapConfig);
   },
   mounted() {
     this.init();
@@ -163,7 +144,6 @@ export default {
   methods: {
     init() {
       this.kline.initMobileChart(this.$refs.klineRef);
-      this.depth.initMobileChart(this.$refs.depthRef);
     },
     switchBase() {
       this.show = !this.show;
@@ -172,7 +152,7 @@ export default {
       if (this.cycle === cycle) {
         return;
       }
-      // this.cycle = cycle;
+      this.status = 0;
       this.$emit("listenToChildEvent", cycle)
     },
     getToolTipData() {
