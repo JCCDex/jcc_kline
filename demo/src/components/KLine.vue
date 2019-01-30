@@ -28,6 +28,10 @@ export default {
         size: {
           width: 1900,
           height: 800
+        },
+        depthSize: {
+          width: 1900,
+          height: 800
         }
       }
     }

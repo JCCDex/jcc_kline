@@ -5,6 +5,8 @@ import testData from '../../testData/data.json'
 
 describe('test SetDepthChart', () => {
 
+  depthOption.defaultDepthSize = true
+
   let depthData = getDepthData(testData.depthData, testData.coinType)
   depthOption.platform = 'pc'
 
@@ -90,7 +92,22 @@ describe('test SetDepthChart', () => {
     expect(depthChart.depth.getOption()).not.toBeNull();
   })
 
+  it('test resizeECharts if defaultDepthSize is true', () => {
+    depthOption.defaultDepthSize = false
+    depthOption.depthSize = {
+      width: 600,
+      height: 560
+    }
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
   it('test resizeECharts if not DOM', () => {
+    depthOption.defaultDepthSize = true
     const element = document.createElement('div');
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)

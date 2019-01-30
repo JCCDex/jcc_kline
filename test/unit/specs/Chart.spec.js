@@ -8,7 +8,8 @@ describe('test Chart', () => {
   let depthData = getDepthData(testData.depthData, testData.coinType)
   let klineConfig = {
     platform: 'pc',
-    chartType: 'candle'
+    chartType: 'candle',
+    defaultDepthSize: true
   }
 
   it('has a created hook', () => {

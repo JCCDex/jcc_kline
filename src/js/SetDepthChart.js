@@ -6,7 +6,7 @@ import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
 import { getClientWidth, getLanguage, getClientHeight } from './utils';
 
-var klineSize = {
+var depthSize = {
     width: 0,
     height: 0
 };
@@ -21,47 +21,60 @@ class DepthChart {
     resizeECharts(DOM, isFullScreen) {
         if (this.depthConfig.platform === 'pc') {
             if (!isFullScreen) {
-                let size = getClientWidth();
-                let resizeContainer = () => {
-                    let width;
-                    let height;
-                    if (DOM) {
-                        if (size <= 1024) {
-                            width = 1000 * 0.7;
-                            height = 1000 * 0.44 * 0.8;
-                        } else if (size <= 1280) {
-                            width = 1203 * 0.7;
-                            height = 1203 * 0.37 * 0.8;
-                        } else if (size <= 1366) {
-                            width = 1284 * 0.7;
-                            height = 1284 * 0.44 * 0.8;
-                        } else if (size <= 1440) {
-                            width = 1354 * 0.7;
-                            height = 1354 * 0.4 * 0.8;
-                        } else if (size <= 1680) {
-                            width = 1504 * 0.7;
-                            height = 1504 * 0.36 * 0.8;
-                        } else if (size <= 1920) {
-                            width = 1804 * 0.7;
-                            height = 1804 * 0.37 * 0.8;
-                        } else if (size <= 2180) {
-                            width = 2048 * 0.7;
-                            height = 2048 * 0.37 * 0.8;
+                if (!this.depthConfig.defaultDepthSize) {
+                    let resizeContainer = () => {
+                        if (DOM) {
+                            DOM.style.height = this.depthConfig.depthSize.height + 'px';
+                            DOM.style.width = this.depthConfig.depthSize.width + 'px';
+                            depthSize.width = this.depthConfig.depthSize.width;
+                            depthSize.height = this.depthConfig.depthSize.height;
                         }
-                        DOM.style.height = height + 'px';
-                        DOM.style.width = width + 'px';
-                        klineSize.width = width;
-                        klineSize.height = height;
-                    }
-                };
-                resizeContainer(this);
-                this.depth.resize();
+                    };
+                    resizeContainer(this);
+                    this.depth.resize();
+                } else {
+                    let size = getClientWidth();
+                    let resizeContainer = () => {
+                        let width;
+                        let height;
+                        if (DOM) {
+                            if (size <= 1024) {
+                                width = 1000 * 0.7;
+                                height = 1000 * 0.44 * 0.8;
+                            } else if (size <= 1280) {
+                                width = 1203 * 0.7;
+                                height = 1203 * 0.37 * 0.8;
+                            } else if (size <= 1366) {
+                                width = 1284 * 0.7;
+                                height = 1284 * 0.44 * 0.8;
+                            } else if (size <= 1440) {
+                                width = 1354 * 0.7;
+                                height = 1354 * 0.4 * 0.8;
+                            } else if (size <= 1680) {
+                                width = 1504 * 0.7;
+                                height = 1504 * 0.36 * 0.8;
+                            } else if (size <= 1920) {
+                                width = 1804 * 0.7;
+                                height = 1804 * 0.37 * 0.8;
+                            } else if (size <= 2180) {
+                                width = 2048 * 0.7;
+                                height = 2048 * 0.37 * 0.8;
+                            }
+                            DOM.style.height = height + 'px';
+                            DOM.style.width = width + 'px';
+                            depthSize.width = width;
+                            depthSize.height = height;
+                        }
+                    };
+                    resizeContainer(this);
+                    this.depth.resize();
+                }
             } else {
                 let resizeContainer = () => {
                     DOM.style.height = getClientHeight() + 'px';
                     DOM.style.width = getClientWidth() + 'px';
-                    klineSize.width = getClientWidth();
-                    klineSize.height = getClientHeight();
+                    depthSize.width = getClientWidth();
+                    depthSize.height = getClientHeight();
                 };
                 resizeContainer(this);
                 this.depth.resize();
