@@ -82,12 +82,6 @@ export default {
         return {
         }
       }
-    },
-    showIndicators: {
-      type: Array,
-      default: () => {
-        return ['Candlestick', 'MA', 'Volume']
-      }
     }
   },
   watch: {
@@ -131,7 +125,7 @@ export default {
   },
   created() {
     this.message = getLanguage();
-    this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
+    this.kline = new KLineController(this.platform, this.klineConfig);
   },
   mounted() {
     this.init();

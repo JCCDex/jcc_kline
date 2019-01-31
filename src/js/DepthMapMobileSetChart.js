@@ -9,11 +9,9 @@ import {getLanguage} from './utils';
 class DepthMapMobileSetChartController {
     constructor(depthMapConfig) {
         this.depthMapConfig = depthMapConfig;
-    // this.showIndicators = showIndicators
     }
   
     initMobileECharts(DOM) {
-    // timeDivisionconfig = null;
         this.depth = echarts.init(DOM);
         this.showLoading();
     }
