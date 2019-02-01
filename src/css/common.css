@@ -359,14 +359,12 @@
 
 .mobile-tooltip-zh {
     text-align: left;
-    font-size: 0.18rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
 
 .mobile-tooltip-en {
     text-align: left;
-    font-size: 0.18rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
@@ -410,10 +408,10 @@
     margin-left: 0.1rem;
 }
 
-.time-sharing-data {
+.time-sharing-en-data {
     /* position: absolute; */
     text-align: left;
-    font-size: 0.18rem;
+    font-size: 0.16rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
@@ -421,7 +419,7 @@
 .time-sharing-zh-data {
     /* position: absolute; */
     text-align: left;
-    font-size: 0.18rem;
+    font-size: 0.16rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
