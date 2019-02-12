@@ -113,7 +113,7 @@ var mobileOption = {
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示刻度标签
                 margin: 0, // 刻度标签与轴线之间的距离
-                padding:[0, -12, 0 , 0], // 文字块的内边距
+                padding:[7, -12, 0 , 0], // 文字块的内边距
                 color: '#b7c2ce', // 刻度标签文字的颜色
                 fontSize: 22, // 文字的字体大小
                 algin: 'right', // 文字水平对齐方式，默认自动

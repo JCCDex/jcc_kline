@@ -174,8 +174,8 @@ var mobileDepthOption = {
     grid: [ // 直角坐标系内绘图网格
         {
             top: 48, // grid 组件离容器顶部的距离,48代表48px
-            left: 10, // grid 组件离容器左侧的距离,10代表10px
-            right: 10, // grid 组件离容器右侧的距离,10代表10px
+            left: 0, // grid 组件离容器左侧的距离,10代表10px
+            right: 0, // grid 组件离容器右侧的距离,10代表10px
             bottom: 40, // grid 组件离容器底部的距离,40代表40px
             containLabel: true // grid 区域是否包含坐标轴的刻度标签
         }
@@ -249,27 +249,12 @@ var mobileDepthOption = {
             type: 'line', // 折线/面积图
             showSymbol: false, // 是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示
             lineStyle: { // 线条样式
-                color: '#ee3523', // 线的颜色
+                color: '#ee4b4b', // 线的颜色
+                width: 2 // 线宽
             },
             areaStyle: { // 区域填充样式
                 normal: {
-                    color: { // 线性渐变，前四个参数分别是 x0, y0, x2, y2, 范围从 0 - 1，相当于在图形包围盒中的百分比，如果 globalCoord 为 `true`，则该四个值是绝对的像素位置
-                        type: 'linear',
-                        x: 0,
-                        y: 1,
-                        x2: 0,
-                        y2: 0,
-                        colorStops: [
-                            {
-                                offset: 0,
-                                color: '#2d1d23'
-                            },
-                            {
-                                offset: 1,
-                                color: '#ee4a4a'
-                            }
-                        ]
-                    }
+                    color: '#ee4b4b60'
                 }
             }
         },
@@ -278,27 +263,12 @@ var mobileDepthOption = {
             type: 'line', // 折线/面积图
             showSymbol: false, // 是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示
             lineStyle: { // 线条样式
-                color: '#008c00',
+                color: '#09e988',
+                width: 2 // 线宽
             },
             areaStyle: {
                 normal: {
-                    color: { // 线性渐变，前四个参数分别是 x0, y0, x2, y2, 范围从 0 - 1，相当于在图形包围盒中的百分比，如果 globalCoord 为 `true`，则该四个值是绝对的像素位置
-                        type: 'linear',
-                        x: 0,
-                        y: 1,
-                        x2: 0,
-                        y2: 0,
-                        colorStops: [
-                            {
-                                offset: 0,
-                                color: '#14322d'
-                            },
-                            {
-                                offset: 1,
-                                color: '#28b869'
-                            }
-                        ]
-                    }
+                    color: '#09e98860'
                 }
             }
         }
