@@ -79,11 +79,11 @@ export default {
           if(this.cycle !== this.klineDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
             this.kline.showLoading();
-            this.toolTipData = this.kline.setOption(data, this.cycle);
+            this.toolTipData = this.kline.setOption(data, this.klineDataObj.cycle);
             this.cycle = this.klineDataObj.cycle;
             this.coinType = this.klineDataObj.coinType
           }else {
-              this.kline.updateOption(data, this.cycle);
+              this.kline.updateOption(data, this.klineDataObj.cycle);
           }
         }
       }
