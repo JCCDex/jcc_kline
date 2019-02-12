@@ -4,15 +4,15 @@ import option from './KLineOption';
 import mobileOption from './KLineMobileOption';
 
 class KLineController {
-    constructor(platform, klineConfig, showIndicators) {
+    constructor(platform, klineConfig) {
         var merge = require('lodash.merge');
         var config;
         if (platform === 'pc') {
             config = merge(option, klineConfig);
-            this.setKLineChart = new KLineSetChartController(config, showIndicators);
+            this.setKLineChart = new KLineSetChartController(config);
         } else {
             config = merge(mobileOption, klineConfig);
-            this.setMobileKLineChart = new KLineMobileSetChartController(config, showIndicators);
+            this.setMobileKLineChart = new KLineMobileSetChartController(config);
         }
     }
 

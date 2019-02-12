@@ -41,7 +41,6 @@ export default {
       kline: null,
       cycle: 'hour',
       platform: 'pc',
-      showIndicators: ['Candlestick', 'MA', 'Volume', 'MarketDepth'],
       klineSize: {
         width: 0,
         height: 0
@@ -105,7 +104,7 @@ export default {
       }
     }
     this.message = getLanguage();
-    this.kline = new KLineController(this.platform, this.klineConfig, this.showIndicators);
+    this.kline = new KLineController(this.platform, this.klineConfig);
   },
   mounted() {
     this.init();

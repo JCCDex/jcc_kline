@@ -18,9 +18,8 @@ var toolTipData;
 var oldKlineData;
 
 class KLineSetChartController {
-    constructor(configs, showIndicators) {
+    constructor(configs) {
         this.klineConfig = configs;
-        this.showIndicators = showIndicators;
     }
 
     resizeECharts(DOM, isFullScreen) {
@@ -151,9 +150,6 @@ class KLineSetChartController {
                 series: this.getSeries(data)
             };
             merge(config, klineOption);
-            if (this.showIndicators.indexOf('Volume') === -1) {
-                config.dataZoom[0].xAxisIndex = [0];
-            }
             this.kline.setOption(config, true);
             return toolTipData;
         }
@@ -182,30 +178,13 @@ class KLineSetChartController {
         return toolTipData;
     }
 
-    getGrid(data) {
-        var g = [{}];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            g = [{
-                height: klineSize.height / 600 * 360 + 'px'
-            }];
-        }
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            g.push({
-                height: klineSize.height / 600 * 100 + 'px'
-            });
-        }
-        if (this.showIndicators.indexOf('MarketDepth') !== -1) {
-            g.push(
-                {
-                    left: klineSize.width - 90 + 'px',
-                    height: klineSize.height * data.sellPercent - 40 + 'px'
-                },
-                {
-                    left: klineSize.width - 90 + 'px',
-                    height: klineSize.height * data.buyPercent - 40 + 'px'
-                }
-            );
-        }
+    getGrid() {
+        var g = [{
+            height: klineSize.height / 600 * 360 + 'px'
+        },
+        {
+            height: klineSize.height / 600 * 100 + 'px'
+        }];
         return g;
     }
 
@@ -253,36 +232,32 @@ class KLineSetChartController {
                     }
                 }
             }
+        },
+        {
+            gridIndex: 1,
+            data: data.categoryData
         }];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            x.push({
-                gridIndex: 1,
-                data: data.categoryData
-            });
-        }
         return x;
     }
 
     getYAxis() {
         var y = [{
             gridIndex: 0
-        }];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            y.push({
-                gridIndex: 1,
-                axisLabel: {
-                    formatter: function (value) {
-                        if (value >= 1000 && value < 1000000) {
-                            return (value / 1000) + 'K';
-                        } else if (value >= 1000000) {
-                            return (value / 1000000) + 'M';
-                        } else {
-                            return value;
-                        }
+        },
+        {
+            gridIndex: 1,
+            axisLabel: {
+                formatter: function (value) {
+                    if (value >= 1000 && value < 1000000) {
+                        return (value / 1000) + 'K';
+                    } else if (value >= 1000000) {
+                        return (value / 1000000) + 'M';
+                    } else {
+                        return value;
                     }
                 }
-            });
-        }
+            }
+        }];
         return y;
     }
 
@@ -291,34 +266,28 @@ class KLineSetChartController {
             {
                 type: 'candlestick',
                 data: data.values,
-            }
-        ];
-        if (this.showIndicators.indexOf('MA') !== -1) {
-            s.push(
-                {
-                    name: 'MA5',
-                    data: calculateMA(5, data)
-                },
-                {
-                    name: 'MA10',
-                    data: calculateMA(10, data)
-                },
-                {
-                    name: 'MA20',
-                    data: calculateMA(20, data),
-                },
-                {
-                    name: 'MA30',
-                    data: calculateMA(30, data)
-                },
-                {
-                    name: 'MA60',
-                    data: calculateMA(60, data)
-                }
-            );
-        }
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            s.push({
+            },
+            {
+                name: 'MA5',
+                data: calculateMA(5, data)
+            },
+            {
+                name: 'MA10',
+                data: calculateMA(10, data)
+            },
+            {
+                name: 'MA20',
+                data: calculateMA(20, data),
+            },
+            {
+                name: 'MA30',
+                data: calculateMA(30, data)
+            },
+            {
+                name: 'MA60',
+                data: calculateMA(60, data)
+            },
+            {
                 name: 'Volume',
                 data: data.volumes,
                 barMaxWidth: 10,
@@ -331,20 +300,8 @@ class KLineSetChartController {
                 },
                 xAxisIndex: 1,
                 yAxisIndex: 1
-            });
-        }
-        // if (this.showIndicators.indexOf('MarketDepth') !== -1) {
-        //   s.push(
-        //     {
-        //       name: "sell",
-        //       data: data.sellAmounts
-        //     },
-        //     {
-        //       name: "buy",
-        //       data: data.buyAmounts
-        //     }
-        //   )
-        // }
+            }
+        ];
         return s;
     }
 

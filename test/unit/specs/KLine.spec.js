@@ -10,7 +10,6 @@ describe('test KLine', () => {
   let klineData = Object.assign({}, pcData, depthData);
   let timeDivisionData = testData.timeDivisionData
   let divisionData = handleDivisionData(testData.timeDivisionData)
-  let mobileShowIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
   let size = {
     height: 780,
     width: 900
@@ -23,25 +22,22 @@ describe('test KLine', () => {
   })
 
   it('test klineController if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
     let klineConfig = {
       backgroundColor: '#1ad2b4'
     }
-    let kline = new klineController('pc', klineConfig, showIndicators)
+    let kline = new klineController('pc', klineConfig)
     expect(kline).toBeInstanceOf(klineController)
   })
 
   it('test initChart if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     expect(kline).not.toBeNull()
   })
 
   it('test showLoading', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.showLoading()
@@ -49,8 +45,7 @@ describe('test KLine', () => {
   })
 
   it('test setOption if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -58,8 +53,7 @@ describe('test KLine', () => {
   })
 
   it('test updateOption if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -68,8 +62,7 @@ describe('test KLine', () => {
   })
 
   it('test resizeChart if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -78,8 +71,7 @@ describe('test KLine', () => {
   })
 
   it('test getToolTipData if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -88,8 +80,7 @@ describe('test KLine', () => {
   })
 
   it('test changeDataZoom if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -111,8 +102,7 @@ describe('test KLine', () => {
   })
 
   it('test disposeChart if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -121,8 +111,7 @@ describe('test KLine', () => {
   })
 
   it('test clearChart if platform is pc', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume', 'MarketDepth']
-    let kline = new klineController('pc', '', showIndicators)
+    let kline = new klineController('pc', '')
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -131,14 +120,14 @@ describe('test KLine', () => {
   })
 
   it('test initChart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     expect(mobileKline.setMobileKLineChart).not.toBeNull()
   })
 
   it('test setMobileOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -146,7 +135,7 @@ describe('test KLine', () => {
   })
 
   it('test updateMobileOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -155,7 +144,7 @@ describe('test KLine', () => {
   })
 
   it('test setTimeDivisionsOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
@@ -163,7 +152,7 @@ describe('test KLine', () => {
   })
 
   it('test updateTimeDivisionOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
@@ -172,7 +161,7 @@ describe('test KLine', () => {
   })
 
   it('test showMobileLoading if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -181,7 +170,7 @@ describe('test KLine', () => {
   })
 
   it('test hideMobileLoading if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -191,7 +180,7 @@ describe('test KLine', () => {
   })
 
   it('test getMobileToolTipData if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -201,7 +190,7 @@ describe('test KLine', () => {
   })
 
   it('test changeMobileDataZoom if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -224,7 +213,7 @@ describe('test KLine', () => {
   })
 
   it('test disposeMobileChart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -234,7 +223,7 @@ describe('test KLine', () => {
   })
 
   it('test clearMobileChart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '', mobileShowIndicators)
+    let mobileKline = new klineController('mobile', '')
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
