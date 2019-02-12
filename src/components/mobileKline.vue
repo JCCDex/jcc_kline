@@ -42,7 +42,7 @@
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 import { splitData, handleDivisionData, getDepthData} from '../js/processData'
 import KLineController from '../js/KLine'
-import DepthMapController from '../js/DepthMap'
+// import DepthMapController from '../js/DepthMap'
 import { getLanguage } from '../js/utils'
 export default {
   name: "mKline",
