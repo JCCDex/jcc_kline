@@ -1,6 +1,6 @@
 var timeSharingOption = {
     backgroundColor: '#161b21', // 背景色
-    animation: true, // 是否开启动画
+    animation: false, // 是否开启动画
     axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置,坐标轴指示器是指示坐标轴当前刻度的工具
         link: {
             xAxisIndex: [0, 1] // 表示所有 xAxisIndex 为 0、1 的坐标轴联动。
@@ -28,12 +28,12 @@ var timeSharingOption = {
     grid: [ // 直角坐标系内绘图网格
         { // 第一个grid网格
             left: 10, // grid 组件离容器左侧的距离
-            top: 50, // grid 组件离容器上侧的距离
-            right: 100 // grid 组件离容器右侧的距离
+            top: 60, // grid 组件离容器上侧的距离
+            right: '5%' // grid 组件离容器右侧的距离
         },
         { // 第二个grid网格
             left: 10, // grid 组件离容器左侧的距离
-            right: 100, // grid 组件离容器右侧的距离
+            right: '5%', // grid 组件离容器右侧的距离
             bottom: 10,  // grid 组件离容器下侧的距离
             backgroundColor: '#1b2229', // 网格背景色，默认透明
             borderColor: '#1b2229', // 网格的边框颜色
@@ -185,6 +185,7 @@ var timeSharingOption = {
     dataZoom: [ // 用于区域缩放，从而能自由关注细节的数据信息，或者概览数据整体，或者去除离群点的影响
         {
             id: 'dataZoomX', // 默认不指定。指定则可用于在 option 或者 API 中引用组件
+            throttle: 0,
             type: 'inside', // 内置型数据区域缩放组件
             filterMode: 'filter', // 当前数据窗口外的数据，被 过滤掉。即 会 影响其他轴的数据范围。每个数据项，只要有一个维度在数据窗口外，整个数据项就会被过滤掉。
             xAxisIndex: [0, 1], //  表示这个 dataZoom 组件控制 第一个 和 第二个 xAxis
@@ -197,7 +198,7 @@ var timeSharingOption = {
 
 var mobileTimeSharingOption = {
     backgroundColor: '#161b21', // 背景色
-    animation: true,  // 是否开启动画
+    animation: false,  // 是否开启动画
     axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置,坐标轴指示器是指示坐标轴当前刻度的工具
         link: {
             xAxisIndex: [0, 1] // 表示所有 xAxisIndex 为 0、1 的坐标轴联动。
@@ -376,6 +377,7 @@ var mobileTimeSharingOption = {
     dataZoom: [ // ataZoom 组件 用于区域缩放，从而能自由关注细节的数据信息，或者概览数据整体，或者去除离群点的影响。
         {
             id: 'dataZoomX', // 组件 ID。默认不指定。指定则可用于在 option 或者 API 中引用组件
+            throttle: 0,
             type: 'inside', // 内置型数据区域缩放组件
             filterMode: 'filter', // 当前数据窗口外的数据，被 过滤掉。即 会 影响其他轴的数据范围。每个数据项，只要有一个维度在数据窗口外，整个数据项就会被过滤掉。
             xAxisIndex: [0, 1], //  表示这个 dataZoom 组件控制 第一个 和 第二个 xAxis
