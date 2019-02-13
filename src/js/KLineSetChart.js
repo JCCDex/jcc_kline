@@ -192,22 +192,24 @@ class KLineSetChartController {
         return {
             formatter: function (param) {
                 param = param[0];
-                var index = param.data[0];
-                toolTipData = {
-                    seriesName: param.seriesName,
-                    time: param.name,
-                    volume: formatDecimal(data.values[index][5], 0, 5),
-                    opening: data.values[index][0].toFixed(6),
-                    closing: data.values[index][1].toFixed(6),
-                    max: data.values[index][3].toFixed(6),
-                    min: data.values[index][2].toFixed(6),
-                    MA5: calculateMA(5, data)[index],
-                    MA10: calculateMA(10, data)[index],
-                    MA20: calculateMA(20, data)[index],
-                    MA30: calculateMA(30, data)[index],
-                    MA60: calculateMA(60, data)[index],
-                    color: data.volumes[index][2]
-                };
+                if (param) {
+                    var index = param.data[0];
+                    toolTipData = {
+                        seriesName: param.seriesName,
+                        time: param.name,
+                        volume: formatDecimal(data.values[index][5], 0, 5),
+                        opening: data.values[index][0].toFixed(6),
+                        closing: data.values[index][1].toFixed(6),
+                        max: data.values[index][3].toFixed(6),
+                        min: data.values[index][2].toFixed(6),
+                        MA5: calculateMA(5, data)[index],
+                        MA10: calculateMA(10, data)[index],
+                        MA20: calculateMA(20, data)[index],
+                        MA30: calculateMA(30, data)[index],
+                        MA60: calculateMA(60, data)[index],
+                        color: data.volumes[index][2]
+                    };
+                }
             }
         };
     }
