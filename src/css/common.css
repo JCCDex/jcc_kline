@@ -544,3 +544,22 @@
     padding-right: 0.2rem;
     color: #fff;
 }
+
+.exit-full-screen {
+    position: absolute;
+    z-index: 999999;
+    width: 1900px;
+    margin: 0px auto;
+}
+
+.exit-full-screen-btn {
+    color: #e6e6e6;
+    font-size: 1rem;
+    width: 160px;
+    text-align: center;
+    border: 1px solid #ececec;
+    background-color:#9c969c59;
+    margin: 0 auto;
+    border-radius: 4px;
+    cursor: pointer;
+}

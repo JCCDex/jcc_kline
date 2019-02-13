@@ -1,6 +1,9 @@
 <template>
   <div>
     <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
+      <div v-show = "showExitFullScreen" class = "exit-full-screen">
+        <div class="exit-full-screen-btn" @click = "fullScreenToggle" >Exit Full Screen(Esc)</div>
+      </div>
       <div style="position: absolute;right:50px;top:20px;z-index:1;font-size: 13px;">
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
@@ -47,7 +50,8 @@ export default {
     return {
       showChart: 'candle',
       fullscreen: false,
-      isShow: false
+      isShow: false,
+      showExitFullScreen: false
     };
   },
   props: {
@@ -72,10 +76,18 @@ export default {
   created() {
     this.klineConfig.platform = 'pc'
     this.message = getLanguage();
+
   },
   watch: {
     klineDataObj() {
         this.message = getLanguage();
+    },
+    fullscreen() {
+      if (this.fullscreen && (getLanguage().language === "en")) {
+          this.showExitFullScreen = true;
+        } else {
+          this.showExitFullScreen = false;
+        }
     }
   },
   methods: {
