@@ -59,6 +59,15 @@ class DepthChart {
                             } else if (size <= 2180) {
                                 width = 2048 * 0.7;
                                 height = 2048 * 0.37 * 0.8;
+                            } else if (size <= 2560) {
+                                width = 2560 * 0.7;
+                                height = 1385 * 0.37 * 0.8;
+                            } else if (size <= 3440) {
+                                width = 3440 * 0.7;
+                                height = 1426 * 0.37 * 0.8;
+                            } else if (size <= 3840) {
+                                width = 3840 * 0.7;
+                                height = 1426 * 0.37 * 0.8;
                             }
                             DOM.style.height = height + 'px';
                             DOM.style.width = width + 'px';
