@@ -22,15 +22,15 @@ class KLineSetChartController {
         this.klineConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen) {
+    resizeECharts(DOM, isFullScreen, resizeSize) {
         if (!isFullScreen) {
             if (!this.klineConfig.defaultSize) {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = this.klineConfig.size.height + 'px';
-                        DOM.style.width = this.klineConfig.size.width + 'px';
-                        klineSize.width = this.klineConfig.size.width;
-                        klineSize.height = this.klineConfig.size.height;
+                        DOM.style.height = resizeSize.height + 'px';
+                        DOM.style.width = resizeSize.width + 'px';
+                        klineSize.width = resizeSize.width;
+                        klineSize.height = resizeSize.height;
                     }
                 };
                 resizeContainer(this);

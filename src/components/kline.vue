@@ -87,17 +87,28 @@ export default {
           }
         }
       }
+    },
+    klineConfig() {
+      let size = {
+        width: this.klineConfig.size.width + 'px',
+        height: this.klineConfig.size.height + 'px'
+      }
+      if (JSON.stringify(size) !== JSON.stringify(this.klineSize) && this.klineConfig.defaultSize === false) {
+        this.klineSize = {
+          width: this.klineConfig.size.width + 'px',
+          height: this.klineConfig.size.height + 'px'
+        }
+        this.resize();
+      }
     }
   },
   created() {
-    if (!this.klineConfig.size) {
-      this.klineConfig.defaultSize = true
+    if (this.klineConfig.defaultSize) {
       this.klineSize = {
         width: '100%',
         height: '572px'
       }
     } else {
-      this.klineConfig.defaultSize = false
       this.klineSize = {
         width: this.klineConfig.size.width + 'px',
         height: this.klineConfig.size.height + 'px'
@@ -108,10 +119,14 @@ export default {
   },
   mounted() {
     this.init();
-    window.addEventListener("resize", this.resize);
+    if (this.klineConfig.defaultSize === true) {
+      window.addEventListener("resize", this.resize);
+    }
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.resize);
+    if (this.klineConfig.defaultSize === true) {
+      window.removeEventListener("resize", this.resize);
+    }
     this.dispose()
   },
   methods: {
@@ -140,7 +155,7 @@ export default {
     },
     resize() {
       let isFullScreen = this.$parent.getState()
-      this.kline.resizeChart(this.$refs.klineRef, isFullScreen);
+      this.kline.resizeChart(this.$refs.klineRef, isFullScreen, this.klineConfig.size);
     },
     clearChart() {
       this.kline.clearChart();

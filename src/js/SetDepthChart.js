@@ -18,16 +18,16 @@ class DepthChart {
         this.depthConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen) {
+    resizeECharts(DOM, isFullScreen, resizeSize) {
         if (this.depthConfig.platform === 'pc') {
             if (!isFullScreen) {
-                if (!this.depthConfig.defaultDepthSize) {
+                if (!this.depthConfig.defaultSize) {
                     let resizeContainer = () => {
                         if (DOM) {
-                            DOM.style.height = this.depthConfig.depthSize.height + 'px';
-                            DOM.style.width = this.depthConfig.depthSize.width + 'px';
-                            depthSize.width = this.depthConfig.depthSize.width;
-                            depthSize.height = this.depthConfig.depthSize.height;
+                            DOM.style.height = resizeSize.height + 'px';
+                            DOM.style.width = resizeSize.width + 'px';
+                            depthSize.width = resizeSize.width;
+                            depthSize.height = resizeSize.height;
                         }
                     };
                     resizeContainer(this);

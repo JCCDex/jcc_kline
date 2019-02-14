@@ -5,7 +5,7 @@ import testData from '../../testData/data.json'
 
 describe('test SetDepthChart', () => {
 
-  depthOption.defaultDepthSize = true
+  depthOption.defaultSize = true
 
   let depthData = getDepthData(testData.depthData, testData.coinType)
   depthOption.platform = 'pc'
@@ -94,7 +94,7 @@ describe('test SetDepthChart', () => {
 
   it('test resizeECharts if defaultDepthSize is true', () => {
     depthOption.defaultDepthSize = false
-    depthOption.depthSize = {
+    depthOption.size = {
       width: 600,
       height: 560
     }

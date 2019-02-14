@@ -26,9 +26,9 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj" :cycle = "cycle"></KLine>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
       <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
-      <!-- <time-sharing ref="timeSharing" v-if="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
+      <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
 </template>
@@ -67,10 +67,6 @@ export default {
         return {
         }
       }
-    },
-    cycle: {
-      type: String,
-      default: 'hour'
     }
   },
   created() {
@@ -79,6 +75,9 @@ export default {
 
   },
   watch: {
+    klineConfig() {
+      this.klineConfig.platform = 'pc'
+    },
     klineDataObj() {
         this.message = getLanguage();
     },
@@ -92,9 +91,6 @@ export default {
   },
   methods: {
     changeCycle(cycle) {
-      if (this.cycle === cycle) {
-        return;
-      }
       this.$emit("listenToChildEvent", cycle)
     },
     changeChart(type) {

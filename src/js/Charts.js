@@ -30,8 +30,8 @@ class ChartController {
         this.setDepthChart.initDepthECharts(DOM);
     }
 
-    resizeDepthChart(DOM, isFullScreen) {
-        this.setDepthChart.resizeECharts(DOM, isFullScreen);
+    resizeDepthChart(DOM, isFullScreen, size) {
+        this.setDepthChart.resizeECharts(DOM, isFullScreen, size);
     }
 
     setDepthOption(data) {
@@ -56,8 +56,8 @@ class ChartController {
         this.setTimeSharing.initTimeSharingECharts(DOM);
     }
 
-    resizeTimeSharingChart(DOM, isFullScreen) {
-        this.setTimeSharing.resizeECharts(DOM, isFullScreen);
+    resizeTimeSharingChart(DOM, isFullScreen, size) {
+        this.setTimeSharing.resizeECharts(DOM, isFullScreen, size);
     }
 
     setTimeSharingOption(timeDivisionData, divisionData) {

@@ -24,8 +24,8 @@ class KLineController {
         this.setKLineChart.showLoading();
     }
 
-    resizeChart(DOM, isFullScreen) {
-        this.setKLineChart.resizeECharts(DOM, isFullScreen);
+    resizeChart(DOM, isFullScreen, size) {
+        this.setKLineChart.resizeECharts(DOM, isFullScreen, size);
     }
 
     setOption(data, cycle) {

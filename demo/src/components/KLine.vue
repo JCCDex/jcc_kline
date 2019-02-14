@@ -2,7 +2,7 @@
 <div>
     <el-col :span='24'>
         <div style='position:relative'>
-            <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig' :cycle='cycle'></jKline>
+            <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig'></jKline>
         </div>
     </el-col>
 </div>
@@ -11,6 +11,8 @@
 <script>
 // import { Chart } from 'jcc_kline/src/index'
 import {JcInfo} from 'jcc_rpc'
+let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
 export default {
   name: 'KLine',
   // components: {
@@ -24,14 +26,10 @@ export default {
       klineDataObj: null,
       klineConfig: {
         backgroundColor: '#161b21',
-        platform: 'pc',
+        defaultSize: false,
         size: {
-          width: 1900,
-          height: 800
-        },
-        depthSize: {
-          width: 1900,
-          height: 800
+          width: width * 0.8,
+          height: height * 0.7
         }
       }
     }
@@ -47,11 +45,11 @@ export default {
     this.id = setInterval(this.update, 5000)
   },
   beforeDestroy () {
+    window.removeEventListener('resize', this.resize)
     clearInterval(this.id)
   },
   mounted () {
-    this.$refs.vkline.status = 0
-    // this.klineDataObj = require('../data')
+    window.addEventListener('resize', this.resize)
   },
   methods: {
     changeCycle (cycle) {
@@ -60,6 +58,18 @@ export default {
     },
     update () {
       this.getKline()
+    },
+    resize () {
+      let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
+      let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+      this.klineConfig = {
+        backgroundColor: '#161b21',
+        defaultSize: false,
+        size: {
+          width: width * 0.8,
+          height: height * 0.7
+        }
+      }
     },
     async getKline () {
       var hosts = process.env.infoHosts
@@ -71,6 +81,7 @@ export default {
       var counter = 'CNT'
       let p1 = inst.getKline(base, counter, this.cycle)
       let p2 = inst.getDepth(base, counter, 'more')
+      let res3 = await inst.getHistory(base, counter, 'all')
       let coinType = {
         baseTitle: 'swt',
         counterTitle: 'cnt'
@@ -80,6 +91,7 @@ export default {
         klineData: res1.data,
         depthData: res2.data,
         coinType: coinType,
+        timeDivisionData: res3.data.reverse(),
         cycle: this.cycle
       }
     }
