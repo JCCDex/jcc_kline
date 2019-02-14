@@ -1,6 +1,6 @@
 var option = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
-    animation: true, // 是否开启动画。
+    animation: false, // 是否开启动画。
     axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置，坐标轴指示器是指示坐标轴当前刻度的工具。
         link: { // 不同轴的 axisPointer 可以进行联动，在这里设置。联动表示轴能同步一起活动。轴依据他们的 axisPointer 当前对应的值来联动。
             xAxisIndex: [0, 1] //// 表示所有 xAxisIndex 为 0、1 的坐标轴联动。
@@ -154,6 +154,7 @@ var option = {
     dataZoom: [ // 用于区域缩放，从而能自由关注细节的数据信息，或者概览数据整体，或者去除离群点的影响
         {
             id: 'dataZoomX',
+            throttle: 0,
             type: 'inside',
             filterMode: 'filter', // 当前数据窗口外的数据，被 过滤掉。即会影响其他轴的数据范围。每个数据项，只要有一个维度在数据窗口外，整个数据项就会被过滤掉
             xAxisIndex: [0, 1], // 表示这个 dataZoom 组件控制 第一个 和 第二个 xAxis

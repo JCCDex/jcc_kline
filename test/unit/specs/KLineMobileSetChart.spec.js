@@ -1,7 +1,7 @@
 import klineMobileSetChart from 'js/KLineMobileSetChart'
 import mobileOption from 'js/KLineMobileOption'
 import { splitData, handleDivisionData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
+import testData from '../../testData/data.json'
 
 describe('test KLineMobileSetChart', () => {
 
@@ -16,50 +16,38 @@ describe('test KLineMobileSetChart', () => {
   let cycle = 'hour'
 
   it('test KLineMobileSetChart', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     expect(mobileKline).toBeInstanceOf(klineMobileSetChart)
   })
 
   it('test mobile getGrid', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
-    expect(mobileKline.getGrid(size)).not.toBeNull()
-  })
-
-  it('test mobile getGrid if showIndicators not Volume', () => {
-    let showIndicators = ['Candlestick', 'MA']
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     expect(mobileKline.getGrid(size)).not.toBeNull()
   })
 
   it('test mobile getYAxis', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     expect(mobileKline.getYAxis(size)).not.toBeNull()
   })
 
   it('test mobile initMobileECharts', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     expect(mobileKline.kline).not.toBeNull();
   })
 
   it('test mobile setOption', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     expect(mobileKline.kline).not.toBeNull();
   })
 
   it('test mobile showLoading', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.showLoading()
@@ -67,9 +55,8 @@ describe('test KLineMobileSetChart', () => {
   })
 
   it('test mobile hideLoading', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.showLoading()
@@ -77,39 +64,9 @@ describe('test KLineMobileSetChart', () => {
     expect(mobileKline.kline).not.toBeNull();
   })
 
-  it('test mobile setOption if showIndicators not Volume', () => {
-    let showIndicators = ['Candlestick', 'MA']
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData, cycle)
-    expect(mobileKline.kline).not.toBeNull();
-  })
-
   it('test mobile updateOption', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData, cycle)
-    mobileKline.updateOption(data)
-    expect(mobileKline.kline.getOption()).not.toBeNull();
-  })
-
-  it('test mobile updateOption if showIndicators not Volume', () => {
-    let showIndicators = ['Candlestick', 'MA']
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData, cycle)
-    mobileKline.updateOption(data)
-    expect(mobileKline.kline.getOption()).not.toBeNull();
-  })
-
-  it('test mobile updateOption if showIndicators not Volume, MA', () => {
-    let showIndicators = ['Candlestick']
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
@@ -117,38 +74,26 @@ describe('test KLineMobileSetChart', () => {
   })
 
   it('test setTimeDivisionsOption', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setTimeDivisionsOption(size)
     expect(mobileKline.kline.getOption()).not.toBeNull();
   })
 
   it('test updateTimeDivisionOption', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setTimeDivisionsOption(size)
     mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData)
     expect(mobileKline.kline.getOption()).not.toBeNull();
   })
 
-  it('test updateTimeDivisionOption if showIndicators not Volume', () => {
-    let showIndicators = ['Candlestick', 'MA']
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData)
-    expect(mobileKline.kline.getOption()).not.toBeNull();
-  })
 
   it('test mobile changeDataZoom if type is leftShift or rightShift', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
@@ -161,9 +106,8 @@ describe('test KLineMobileSetChart', () => {
   })
 
   it('test mobile changeDataZoom if type is enlarge or narrow', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
@@ -176,9 +120,8 @@ describe('test KLineMobileSetChart', () => {
   })
 
   it('test mobile changeDataZoom if type is refresh', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
@@ -191,9 +134,8 @@ describe('test KLineMobileSetChart', () => {
   })
 
   it('test clearMobileEcharts', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
@@ -203,9 +145,8 @@ describe('test KLineMobileSetChart', () => {
   })
 
   it('test disposeMobileEChart', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
@@ -215,9 +156,8 @@ describe('test KLineMobileSetChart', () => {
   })
 
   it('test mobile getToolTipData', () => {
-    let showIndicators = ['Candlestick', 'MA', 'Volume']
     const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption, showIndicators);
+    let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)

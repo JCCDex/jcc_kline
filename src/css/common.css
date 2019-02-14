@@ -42,13 +42,32 @@
 .icon-kline-show {
     color: #b9cadd;
     z-index: 2;
-    font-size: 12px;
+    font-size: 12px !important;
 }
 
 .icon-kline-hide {
     color: #b9cadd;
     z-index: 2;
-    font-size: 12px;
+    font-size: 12px !important;
+}
+
+.kline-levitation-div {
+    width: 300px;
+    height: 60px;
+    position: absolute;
+    color: #ffffff;
+    left: 40%;
+    bottom: 2%;
+    z-index: 10;
+}
+
+.kline-levitation-icon {
+    line-height: 60px;
+}
+
+.kline-levitation-btn {
+    float:left; 
+    margin-left: 20px;
 }
 
 .icon-full-screen {
@@ -308,7 +327,7 @@
 }
 
 .mobile-btn-active {
-    border-bottom: 0.01rem solid #1bdafd;
+    border-bottom: 0.02rem solid #1bdafd;
     color: #1bdafd;
 }
 
@@ -340,14 +359,12 @@
 
 .mobile-tooltip-zh {
     text-align: left;
-    font-size: 0.18rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
 
 .mobile-tooltip-en {
     text-align: left;
-    font-size: 0.18rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
@@ -391,18 +408,50 @@
     margin-left: 0.1rem;
 }
 
-.time-sharing-data {
-    /* position: absolute; */
+.time-sharing-en-data {
     text-align: left;
-    font-size: 0.18rem;
+    font-size: 0.16rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
 
 .time-sharing-zh-data {
-    /* position: absolute; */
     text-align: left;
-    font-size: 0.18rem;
+    font-size: 0.16rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.time-sharing-en-pc {
+    position: absolute;
+    text-align: left;
+    line-height: 20px;
+    font-size: 12px;
+    left: 10px;
+    top: 22px;
+    z-index: 1;
+}
+
+.time-sharing-zh-pc {
+    position: absolute;
+    text-align: left;
+    line-height: 20px;
+    font-size: 12px;
+    left: 10px;
+    top: 22px;
+    z-index: 1;
+}
+
+.time-sharing-en-mobile {
+    text-align: left;
+    font-size: 0.16rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.time-sharing-zh-mobile {
+    text-align: left;
+    font-size: 0.16rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
@@ -526,4 +575,23 @@
     float: right;
     padding-right: 0.2rem;
     color: #fff;
+}
+
+.exit-full-screen {
+    position: absolute;
+    z-index: 999999;
+    width: 1900px;
+    margin: 0px auto;
+}
+
+.exit-full-screen-btn {
+    color: #e6e6e6;
+    font-size: 1rem;
+    width: 160px;
+    text-align: center;
+    border: 1px solid #ececec;
+    background-color:#9c969c59;
+    margin: 0 auto;
+    border-radius: 4px;
+    cursor: pointer;
 }

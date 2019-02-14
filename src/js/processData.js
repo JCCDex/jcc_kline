@@ -1,6 +1,5 @@
 import { formatDecimal, formatTime } from './utils';
-import option from './KLineOption';
-import mobileOption from './KLineMobileOption';
+
 export const splitData = (data, platform) => {
     if (!data) return;
     var categoryData = [];
@@ -166,78 +165,4 @@ export const calculateMA = (dayCount, data) => {
         result.push(+(sum / dayCount).toFixed(6));
     }
     return result;
-};
-
-export const indicatorsOption = (showIndicators) => {
-    if (showIndicators.indexOf('Volume') !== -1 && showIndicators.indexOf('MarketDepth') !== -1 && showIndicators.indexOf('MA') === -1) {
-        option.series.splice(1, 5);
-        return option;
-    }
-    if (showIndicators.indexOf('Volume') === -1 && showIndicators.indexOf('MarketDepth') !== -1) {
-        option.xAxis.splice(1, 1);
-        option.yAxis.splice(1, 1);
-        option.series.splice(6, 1);
-        option.grid.splice(1, 1);
-        option.series[6].xAxisIndex = 1;
-        option.series[6].yAxisIndex = 1;
-        option.series[7].xAxisIndex = 2;
-        option.series[7].yAxisIndex = 2;
-        if (showIndicators.indexOf('MA') === -1) {
-            option.series.splice(1, 5);
-        }
-        option.grid[0].bottom = 20;
-        option.grid[1].bottom = 20;
-        option.grid[2].bottom = 20;
-        return option;
-    }
-    if (showIndicators.indexOf('Volume') !== -1 && showIndicators.indexOf('MarketDepth') === -1) {
-        option.xAxis.splice(2, 2);
-        option.yAxis.splice(2, 2);
-        option.series.splice(7, 2);
-        if (showIndicators.indexOf('MA') === -1) {
-            option.series.splice(1, 5);
-        }
-        option.grid[0].right = 20;
-        option.grid[1].right = 20;
-        option.grid.splice(2, 2);
-        return option;
-    }
-    if (showIndicators.indexOf('Volume') === -1 && showIndicators.indexOf('MarketDepth') === -1) {
-        option.xAxis.splice(1, 3);
-        option.yAxis.splice(1, 3);
-        option.series.splice(6, 3);
-        option.grid[0].right = 20;
-        option.grid[1].right = 20;
-        option.grid.splice(0, 4);
-        option.grid = [{
-            top: 60,
-            left: 10,
-            right: 18,
-            bottom: 30
-        }];
-        return option;
-    }
-    return option;
-};
-
-export const mobileIndicatorsOption = (showIndicators) => {
-    if (showIndicators.indexOf('Volume') !== -1 && showIndicators.indexOf('MA') === -1) {
-        mobileOption.series.splice(1, 5);
-        return mobileOption;
-    }
-    if (showIndicators.indexOf('Volume') === -1) {
-        mobileOption.xAxis.splice(1, 1);
-        mobileOption.yAxis.splice(1, 1);
-        mobileOption.series.splice(6, 1);
-        if (showIndicators.indexOf('MA') === -1) {
-            mobileOption.series.splice(1, 5);
-        }
-        mobileOption.grid = [{
-            left: 20,
-            right: 55,
-            bottom: 30
-        }];
-        return mobileOption;
-    }
-    return mobileOption;
 };

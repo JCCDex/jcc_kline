@@ -1,19 +1,18 @@
 import KLineSetChartController from './KLineSetChart';
 import KLineMobileSetChartController from './KLineMobileSetChart';
-import { indicatorsOption, mobileIndicatorsOption } from './processData';
+import option from './KLineOption';
+import mobileOption from './KLineMobileOption';
 
 class KLineController {
-    constructor(platform, klineConfig, showIndicators) {
+    constructor(platform, klineConfig) {
         var merge = require('lodash.merge');
         var config;
         if (platform === 'pc') {
-            let klineOption = indicatorsOption(showIndicators);
-            config = merge(klineOption, klineConfig);
-            this.setKLineChart = new KLineSetChartController(config, showIndicators);
+            config = merge(option, klineConfig);
+            this.setKLineChart = new KLineSetChartController(config);
         } else {
-            let klineMobileOption = mobileIndicatorsOption(showIndicators);
-            config = merge(klineMobileOption, klineConfig);
-            this.setMobileKLineChart = new KLineMobileSetChartController(config, showIndicators);
+            config = merge(mobileOption, klineConfig);
+            this.setMobileKLineChart = new KLineMobileSetChartController(config);
         }
     }
 
@@ -35,14 +34,6 @@ class KLineController {
 
     updateOption(data, cycle) {
         this.setKLineChart.updateOption(data, cycle);
-    }
-
-    setDepthOption(data) {
-        this.setKLineChart.setDepthOption(data);
-    }
-
-    updateDepthOption(data) {
-        this.setKLineChart.updateDepthOption(data);
     }
 
     getToolTipData() {

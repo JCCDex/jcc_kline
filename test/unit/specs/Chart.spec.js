@@ -1,14 +1,15 @@
 import ChartController from 'js/Charts.js'
 import { getDepthData } from 'js/processData'
-import testData from '../../../demo/src/data.json'
-import timeSharingData from '../../../demo/src/timeSharingData.json'
+import testData from '../../testData/data.json'
+import timeSharingData from '../../testData/timeSharingData.json'
 
 describe('test Chart', () => {
 
   let depthData = getDepthData(testData.depthData, testData.coinType)
   let klineConfig = {
     platform: 'pc',
-    chartType: 'candle'
+    chartType: 'candle',
+    defaultDepthSize: true
   }
 
   it('has a created hook', () => {
@@ -116,6 +117,15 @@ describe('test Chart', () => {
     timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
+  })
+
+  it('test getTimeSharingTipData', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    let tipsData = timeSharing.getTimeSharingTipData()
+    expect(tipsData).not.toBeNull()
   })
 
   it('test resizeTimeSharingChart if platform is pc and chartType is timeSharing, is FullScreen', () => {

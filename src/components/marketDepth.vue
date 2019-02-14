@@ -1,5 +1,5 @@
 <template>
-    <div id="depth" ref="depth" :style="{height: `${klineConfig.depthSize.height}`, width: `${klineConfig.depthSize.width}`}"></div>
+    <div id="depth" ref="depth" :style="{height: `${depthSize.height}`, width: `${depthSize.width}`}"></div>
 </template>
 <script>
 import { splitData, getDepthData } from '../js/processData'
@@ -12,7 +12,11 @@ export default {
       kline: null,
       coinType: '',
       platform: 'pc',
-      chartType: 'depth'
+      chartType: 'depth',
+      depthSize: {
+        height: '',
+        width: ''
+      }
     };
   },
   props: {
@@ -50,13 +54,20 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === 'pc') {
-      this.klineConfig.depthSize = {
-        height: '100%',
-        width: '572px'
+      if (this.klineConfig.depthSize) {
+        this.klineConfig.defaultDepthSize = false
+        this.depthSize.height = this.klineConfig.depthSize.height + 'px'
+        this.depthSize.width = this.klineConfig.depthSize.width + 'px'
+      } else {
+        this.klineConfig.defaultDepthSize = true
+        this.depthSize = {
+          height: '100%',
+          width: '572px'
+        }
       }
     } else {
-      this.klineConfig.depthSize.height = this.klineConfig.depthSize.height + 'px'
-      this.klineConfig.depthSize.width = this.klineConfig.depthSize.width + 'px'
+      this.depthSize.height = this.klineConfig.depthSize.height + 'px'
+      this.depthSize.width = this.klineConfig.depthSize.width + 'px'
     }
     this.klineConfig.chartType = 'depth';
     this.depth = new ChartController(this.klineConfig);

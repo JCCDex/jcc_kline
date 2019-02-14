@@ -18,48 +18,60 @@ var toolTipData;
 var oldKlineData;
 
 class KLineSetChartController {
-    constructor(configs, showIndicators) {
+    constructor(configs) {
         this.klineConfig = configs;
-        this.showIndicators = showIndicators;
     }
 
     resizeECharts(DOM, isFullScreen) {
         if (!isFullScreen) {
-            let size = getClientWidth();
-            let resizeContainer = () => {
-                let width;
-                let height;
-                if (DOM) {
-                    if (size <= 1024) {
-                        width = 1000 * 0.7;
-                        height = 1000 * 0.44 * 0.8;
-                    } else if (size <= 1280) {
-                        width = 1203 * 0.7;
-                        height = 1203 * 0.37 * 0.8;
-                    } else if (size <= 1366) {
-                        width = 1284 * 0.7;
-                        height = 1284 * 0.44 * 0.8;
-                    } else if (size <= 1440) {
-                        width = 1354 * 0.7;
-                        height = 1354 * 0.4 * 0.8;
-                    } else if (size <= 1680) {
-                        width = 1504 * 0.7;
-                        height = 1504 * 0.36 * 0.8;
-                    } else if (size <= 1920) {
-                        width = 1804 * 0.7;
-                        height = 1804 * 0.37 * 0.8;
-                    } else if (size <= 2180) {
-                        width = 2048 * 0.7;
-                        height = 2048 * 0.37 * 0.8;
+            if (!this.klineConfig.defaultSize) {
+                let resizeContainer = () => {
+                    if (DOM) {
+                        DOM.style.height = this.klineConfig.size.height + 'px';
+                        DOM.style.width = this.klineConfig.size.width + 'px';
+                        klineSize.width = this.klineConfig.size.width;
+                        klineSize.height = this.klineConfig.size.height;
                     }
-                    DOM.style.height = height + 'px';
-                    DOM.style.width = width + 'px';
-                    klineSize.width = width;
-                    klineSize.height = height;
-                }
-            };
-            resizeContainer(this);
-            this.kline.resize();
+                };
+                resizeContainer(this);
+                this.kline.resize();
+            } else {
+                let size = getClientWidth();
+                let resizeContainer = () => {
+                    let width;
+                    let height;
+                    if (DOM) {
+                        if (size <= 1024) {
+                            width = 1000 * 0.7;
+                            height = 1000 * 0.44 * 0.8;
+                        } else if (size <= 1280) {
+                            width = 1203 * 0.7;
+                            height = 1203 * 0.37 * 0.8;
+                        } else if (size <= 1366) {
+                            width = 1284 * 0.7;
+                            height = 1284 * 0.44 * 0.8;
+                        } else if (size <= 1440) {
+                            width = 1354 * 0.7;
+                            height = 1354 * 0.4 * 0.8;
+                        } else if (size <= 1680) {
+                            width = 1504 * 0.7;
+                            height = 1504 * 0.36 * 0.8;
+                        } else if (size <= 1920) {
+                            width = 1804 * 0.7;
+                            height = 1804 * 0.37 * 0.8;
+                        } else if (size <= 2180) {
+                            width = 2048 * 0.7;
+                            height = 2048 * 0.37 * 0.8;
+                        }
+                        DOM.style.height = height + 'px';
+                        DOM.style.width = width + 'px';
+                        klineSize.width = width;
+                        klineSize.height = height;
+                    }
+                };
+                resizeContainer(this);
+                this.kline.resize();
+            }
         } else {
             let resizeContainer = () => {
                 DOM.style.height = getClientHeight() + 'px';
@@ -138,9 +150,6 @@ class KLineSetChartController {
                 series: this.getSeries(data)
             };
             merge(config, klineOption);
-            if (this.showIndicators.indexOf('Volume') === -1) {
-                config.dataZoom[0].xAxisIndex = [0];
-            }
             this.kline.setOption(config, true);
             return toolTipData;
         }
@@ -169,30 +178,13 @@ class KLineSetChartController {
         return toolTipData;
     }
 
-    getGrid(data) {
-        var g = [{}];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            g = [{
-                height: klineSize.height / 600 * 360 + 'px'
-            }];
-        }
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            g.push({
-                height: klineSize.height / 600 * 100 + 'px'
-            });
-        }
-        if (this.showIndicators.indexOf('MarketDepth') !== -1) {
-            g.push(
-                {
-                    left: klineSize.width - 90 + 'px',
-                    height: klineSize.height * data.sellPercent - 40 + 'px'
-                },
-                {
-                    left: klineSize.width - 90 + 'px',
-                    height: klineSize.height * data.buyPercent - 40 + 'px'
-                }
-            );
-        }
+    getGrid() {
+        var g = [{
+            height: klineSize.height / 600 * 360 + 'px'
+        },
+        {
+            height: klineSize.height / 600 * 100 + 'px'
+        }];
         return g;
     }
 
@@ -200,22 +192,24 @@ class KLineSetChartController {
         return {
             formatter: function (param) {
                 param = param[0];
-                var index = param.data[0];
-                toolTipData = {
-                    seriesName: param.seriesName,
-                    time: param.name,
-                    volume: formatDecimal(data.values[index][5], 0, 5),
-                    opening: data.values[index][0].toFixed(6),
-                    closing: data.values[index][1].toFixed(6),
-                    max: data.values[index][3].toFixed(6),
-                    min: data.values[index][2].toFixed(6),
-                    MA5: calculateMA(5, data)[index],
-                    MA10: calculateMA(10, data)[index],
-                    MA20: calculateMA(20, data)[index],
-                    MA30: calculateMA(30, data)[index],
-                    MA60: calculateMA(60, data)[index],
-                    color: data.volumes[index][2]
-                };
+                if (param) {
+                    var index = param.data[0];
+                    toolTipData = {
+                        seriesName: param.seriesName,
+                        time: param.name,
+                        volume: formatDecimal(data.values[index][5], 0, 5),
+                        opening: data.values[index][0].toFixed(6),
+                        closing: data.values[index][1].toFixed(6),
+                        max: data.values[index][3].toFixed(6),
+                        min: data.values[index][2].toFixed(6),
+                        MA5: calculateMA(5, data)[index],
+                        MA10: calculateMA(10, data)[index],
+                        MA20: calculateMA(20, data)[index],
+                        MA30: calculateMA(30, data)[index],
+                        MA60: calculateMA(60, data)[index],
+                        color: data.volumes[index][2]
+                    };
+                }
             }
         };
     }
@@ -240,36 +234,32 @@ class KLineSetChartController {
                     }
                 }
             }
+        },
+        {
+            gridIndex: 1,
+            data: data.categoryData
         }];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            x.push({
-                gridIndex: 1,
-                data: data.categoryData
-            });
-        }
         return x;
     }
 
     getYAxis() {
         var y = [{
             gridIndex: 0
-        }];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            y.push({
-                gridIndex: 1,
-                axisLabel: {
-                    formatter: function (value) {
-                        if (value >= 1000 && value < 1000000) {
-                            return (value / 1000) + 'K';
-                        } else if (value >= 1000000) {
-                            return (value / 1000000) + 'M';
-                        } else {
-                            return value;
-                        }
+        },
+        {
+            gridIndex: 1,
+            axisLabel: {
+                formatter: function (value) {
+                    if (value >= 1000 && value < 1000000) {
+                        return (value / 1000) + 'K';
+                    } else if (value >= 1000000) {
+                        return (value / 1000000) + 'M';
+                    } else {
+                        return value;
                     }
                 }
-            });
-        }
+            }
+        }];
         return y;
     }
 
@@ -278,34 +268,28 @@ class KLineSetChartController {
             {
                 type: 'candlestick',
                 data: data.values,
-            }
-        ];
-        if (this.showIndicators.indexOf('MA') !== -1) {
-            s.push(
-                {
-                    name: 'MA5',
-                    data: calculateMA(5, data)
-                },
-                {
-                    name: 'MA10',
-                    data: calculateMA(10, data)
-                },
-                {
-                    name: 'MA20',
-                    data: calculateMA(20, data),
-                },
-                {
-                    name: 'MA30',
-                    data: calculateMA(30, data)
-                },
-                {
-                    name: 'MA60',
-                    data: calculateMA(60, data)
-                }
-            );
-        }
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            s.push({
+            },
+            {
+                name: 'MA5',
+                data: calculateMA(5, data)
+            },
+            {
+                name: 'MA10',
+                data: calculateMA(10, data)
+            },
+            {
+                name: 'MA20',
+                data: calculateMA(20, data),
+            },
+            {
+                name: 'MA30',
+                data: calculateMA(30, data)
+            },
+            {
+                name: 'MA60',
+                data: calculateMA(60, data)
+            },
+            {
                 name: 'Volume',
                 data: data.volumes,
                 barMaxWidth: 10,
@@ -318,20 +302,8 @@ class KLineSetChartController {
                 },
                 xAxisIndex: 1,
                 yAxisIndex: 1
-            });
-        }
-        // if (this.showIndicators.indexOf('MarketDepth') !== -1) {
-        //   s.push(
-        //     {
-        //       name: "sell",
-        //       data: data.sellAmounts
-        //     },
-        //     {
-        //       name: "buy",
-        //       data: data.buyAmounts
-        //     }
-        //   )
-        // }
+            }
+        ];
         return s;
     }
 
@@ -352,7 +324,7 @@ class KLineSetChartController {
     changeDataZoom(type) {
         let dataZoom = JSON.parse(JSON.stringify(this.kline.getOption().dataZoom));
         if (type === 'leftShift' && dataZoom[0].start >= 2) {
-            dataZoom[0].start = dataZoom[0].start - 2,
+            dataZoom[0].start = dataZoom[0].start - 2;
             dataZoom[0].end = dataZoom[0].end - 2;
         } else if (type === 'enlarge' && dataZoom[0].start < 95) {
             dataZoom[0].start = dataZoom[0].start + 5;
@@ -362,7 +334,7 @@ class KLineSetChartController {
         } else if (type === 'narrow' && dataZoom[0].start >= 5) {
             dataZoom[0].start = dataZoom[0].start - 5;
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
-            dataZoom[0].start = dataZoom[0].start + 2,
+            dataZoom[0].start = dataZoom[0].start + 2;
             dataZoom[0].end = dataZoom[0].end + 2;
         }
         config.dataZoom = dataZoom;

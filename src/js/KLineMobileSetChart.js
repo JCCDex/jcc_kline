@@ -4,7 +4,7 @@ import 'echarts/lib/chart/candlestick';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
-import merge from 'lodash.merge'; 
+import merge from 'lodash.merge';
 import { formatDecimal, getLanguage, formatTime } from './utils';
 import { calculateMA } from './processData';
 
@@ -15,11 +15,10 @@ var toolTipData;
 
 
 class KLineMobileSetChartController {
-    constructor(configs, showIndicators) {
-        this.klineConfig = configs,
-        this.showIndicators = showIndicators;
+    constructor(configs) {
+        this.klineConfig = configs;
     }
-  
+
     initMobileECharts(DOM) {
         toolTipData = null;
         timeDivisionconfig = null;
@@ -27,7 +26,7 @@ class KLineMobileSetChartController {
         this.showLoading();
     }
 
-    showLoading(){
+    showLoading() {
         let message = getLanguage();
         this.kline.showLoading({
             text: message.loading,
@@ -46,14 +45,11 @@ class KLineMobileSetChartController {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
             grid: this.getGrid(size.klineSize),
-            xAxis: this.getXAxis(size,mobileCycle),
+            xAxis: this.getXAxis(size, mobileCycle),
             yAxis: this.getYAxis(size.klineSize)
         };
         merge(config, option);
         cycle = 'normal';
-        if (this.showIndicators.indexOf('Volume') === -1) {
-            config.dataZoom[0].xAxisIndex = [0];
-        }
         this.kline.setOption(config, true);
     }
 
@@ -95,7 +91,7 @@ class KLineMobileSetChartController {
                     barMaxWidth: 20,
                     itemStyle: {
                         normal: {
-                            color: function(param) {
+                            color: function (param) {
                                 return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
                             }
                         }
@@ -134,34 +130,13 @@ class KLineMobileSetChartController {
             xAxis: [
                 {
                     data: data.categoryData
+                },
+                {
+                    data: data.categoryData
                 }
             ],
             tooltip: {
-                formatter: function(param) {
-                    param = param[0];
-                    var index = param.data[0];
-                    toolTipData = {
-                        time: param.name,
-                        volume: formatDecimal(data.values[index][5], 0, 5),
-                        opening: data.values[index][0].toFixed(6),
-                        closing: data.values[index][1].toFixed(6),
-                        max: data.values[index][3].toFixed(6),
-                        min: data.values[index][2].toFixed(6),
-                        color: data.volumes[index][2],
-                        type: 'normal'
-                    };
-                }
-            },
-            series: [
-                {
-                    type: 'candlestick',
-                    data: data.values
-                }
-            ]
-        };
-        if (this.showIndicators.indexOf('MA') !== -1) {
-            updateOption.tooltip = {
-                formatter: function(param) {
+                formatter: function (param) {
                     param = param[0];
                     var index = param.data[0];
                     toolTipData = {
@@ -179,33 +154,13 @@ class KLineMobileSetChartController {
                         color: data.volumes[index][2],
                         type: 'normal'
                     };
-                    //         return [
-                    //             '<div style="text-align:left;">',
-                    //             '<div style="width:0.1rem;height:0.1rem;background:#fd1d57;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-                    //   'MA5: ' +
-                    //   calculateMA(5, data)[index] +
-                    //   '<br/>',
-                    //             '<div style="width:0.1rem;height:0.1rem;background:#4df561;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-                    //   'MA10: ' +
-                    //   calculateMA(10, data)[index] +
-                    //   '<br/>',
-                    //             '<div style="width:0.1rem;height:0.1rem;background:#2bdaff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-                    //   'MA20: ' +
-                    //   calculateMA(20, data)[index] +
-                    //   '<br/>',
-                    //             '<div style="width:0.1rem;height:0.1rem;background:#ffd801;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-                    //   'MA30: ' +
-                    //   calculateMA(30, data)[index] +
-                    //   '<br/>',
-                    //             '<div style="width:0.1rem;height:0.1rem;background:#f721ff;border-radius:4px;float:left;margin-top:0.1rem;margin-right:2px;"></div>' +
-                    //   'MA60: ' +
-                    //   calculateMA(60, data)[index] +
-                    //   '<br/>',
-                    //             '</div>'
-                    //         ].join('');
                 }
-            };
-            updateOption.series.push(
+            },
+            series: [
+                {
+                    type: 'candlestick',
+                    data: data.values
+                },
                 {
                     name: 'MA5',
                     data: calculateMA(5, data)
@@ -225,16 +180,7 @@ class KLineMobileSetChartController {
                 {
                     name: 'MA60',
                     data: calculateMA(60, data)
-                }
-            );
-        }
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            updateOption.xAxis.push(
-                {
-                    data: data.categoryData
-                }
-            );
-            updateOption.series.push(
+                },
                 {
                     name: 'Volume',
                     data: data.volumes,
@@ -242,7 +188,7 @@ class KLineMobileSetChartController {
                     barMaxWidth: 20,
                     itemStyle: {
                         normal: {
-                            color: function(param) {
+                            color: function (param) {
                                 return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
                             }
                         }
@@ -250,8 +196,8 @@ class KLineMobileSetChartController {
                     xAxisIndex: 1,
                     yAxisIndex: 1
                 }
-            );
-        }
+            ]
+        };
         merge(config, updateOption);
         config.dataZoom = this.kline.getOption().dataZoom;
         this.kline.setOption(config);
@@ -274,6 +220,9 @@ class KLineMobileSetChartController {
             xAxis: [
                 {
                     data: times
+                },
+                {
+                    data: times
                 }
             ],
             series: [
@@ -284,6 +233,10 @@ class KLineMobileSetChartController {
                 {
                     name: 'Yellow',
                     data: averages
+                },
+                {
+                    name: 'Volume',
+                    data: volumes
                 }
             ],
             tooltip: {
@@ -297,24 +250,12 @@ class KLineMobileSetChartController {
                         averagePrice: averages[dataIndex].toFixed(6),
                         color: volumes[dataIndex][2]
                     };
-         
-          
+
+
                 }
             }
         };
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            updateTimeOption.xAxis.push({
-                data: times
-            });
-            updateTimeOption.series.push({
-                name: 'Volume',
-                data: volumes
-            });
-        }
         merge(timeDivisionconfig, updateTimeOption);
-        if (this.showIndicators.indexOf('Volume') === -1) {
-            timeDivisionconfig.dataZoom[0].xAxisIndex = [0];
-        }
         timeDivisionconfig.dataZoom = this.kline.getOption().dataZoom;
         this.kline.setOption(timeDivisionconfig);
         return toolTipData;
@@ -336,17 +277,12 @@ class KLineMobileSetChartController {
 
     getGrid(size) {
         let g = [{
-            height: `${size.height * 0.9}px`
+            top: 5,
+            height: `${size.height * 0.6}px`
+        },
+        {
+            height: `${size.height * 0.2}px`
         }];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            g = [{
-                top: 5,
-                height: `${size.height * 0.6}px`
-            },
-            {
-                height: `${size.height * 0.2}px`
-            }];
-        }
         return g;
     }
 
@@ -370,13 +306,11 @@ class KLineMobileSetChartController {
                     }
                 }
             }
+        },
+        {
+            gridIndex: 1,
+            data: data.categoryData
         }];
-        if (this.showIndicators.indexOf('Volume') !== -1) {
-            x.push({
-                gridIndex: 1,
-                data: data.categoryData
-            });
-        }
         return x;
     }
 
@@ -400,7 +334,7 @@ class KLineMobileSetChartController {
         } else if (type === 'refresh') {
             dataZoom[0].start = this.klineConfig.dataZoom[0].start;
             dataZoom[0].end = this.klineConfig.dataZoom[0].end;
-        } else if(type === 'narrow' && dataZoom[0].start >= 5) {
+        } else if (type === 'narrow' && dataZoom[0].start >= 5) {
             dataZoom[0].start = dataZoom[0].start - 5;
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
             dataZoom[0].start = dataZoom[0].start + 2,
@@ -414,7 +348,7 @@ class KLineMobileSetChartController {
             this.kline.setOption(timeDivisionconfig);
         }
     }
-  
+
 }
 
 export default KLineMobileSetChartController;

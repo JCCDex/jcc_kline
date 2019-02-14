@@ -1,6 +1,10 @@
 {
   "language": "zh",
   "time": "时间: ",
+  "hourPC": "时",
+  "dayPC": "日",
+  "weekPC": "周",
+  "monthPC": "月",
   "hour": "时",
   "day": "日",
   "week": "周",

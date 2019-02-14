@@ -1,6 +1,6 @@
 var mobileOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
-    animation: true, //  是否开启动画
+    animation: false, //  是否开启动画
     axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置,坐标轴指示器是指示坐标轴当前刻度的工具
         link: { xAxisIndex: 'all' },
         label: { // 坐标轴指示器的文本标签
@@ -30,11 +30,11 @@ var mobileOption = {
     grid: [ // 直角坐标系内绘图网格
         {
             left: '20px', // grid 组件离容器左侧的距离。
-            right: '20px' // grid 组件离容器右侧的距离。
+            right: '10px' // grid 组件离容器右侧的距离。
         },
         {
             left: '20px', // grid 组件离容器左侧的距离。
-            right: '20px', // grid 组件离容器右侧的距离。
+            right: '10px', // grid 组件离容器右侧的距离。
             bottom: '20px', // grid 组件离容器下侧的距离
             backgroundColor: '#161b21', // 网格背景色，默认透明 注意：此配置项生效的前提是，设置了 show: true
             borderColor: '#161b21', // 网格的边框颜色，注意：此配置项生效的前提是，设置了 show: true
@@ -112,10 +112,12 @@ var mobileOption = {
             },
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示刻度标签
+                margin: 0, // 刻度标签与轴线之间的距离
+                padding:[7, -12, 0 , 0], // 文字块的内边距
                 color: '#b7c2ce', // 刻度标签文字的颜色
                 fontSize: 22, // 文字的字体大小
                 algin: 'right', // 文字水平对齐方式，默认自动
-                verticalAlign: 'top' // 文字垂直对齐方式，默认自动
+                verticalAlign: 'middle' // 文字垂直对齐方式，默认自动
             }
         },
         {
@@ -232,6 +234,7 @@ var mobileOption = {
     dataZoom: [ // 用于区域缩放，从而能自由关注细节的数据信息，或者概览数据整体，或者去除离群点的影响
         {
             id: 'dataZoomX',
+            throttle: 0,
             type: 'inside', // 内置型数据区域缩放组件
             filterMode: 'filter', // 当前数据窗口外的数据，被 过滤掉。即 会 影响其他轴的数据范围。每个数据项，只要有一个维度在数据窗口外，整个数据项就会被过滤掉。
             xAxisIndex: [0, 1], //  表示这个 dataZoom 组件控制 第一个 和 第二个 xAxis

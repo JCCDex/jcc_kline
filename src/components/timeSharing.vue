@@ -1,12 +1,12 @@
 <template>
   <div style="background-color: #161b21;">
         <!-- timeDivision tootip 数据显示 -->
-        <div :class="this.message.language === 'en' ? 'time-sharing-data' : 'time-sharing-zh-data'" v-if="timeSharingTipData">
-          <font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.time}}</font>
-          <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.volume}}</font> &nbsp;
-          <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.price}}</font> &nbsp;
-          <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
-        </div>
+          <div :class="this.platform === 'pc' ? this.message.language === 'en' ? 'time-sharing-en-pc' : 'time-sharing-zh-pc' : this.message.language === 'en' ? 'time-sharing-en-mobile' : 'time-sharing-zh-mobile'" v-if="timeSharingTipData">
+            <font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.time}}</font>
+            <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.volume}}</font> &nbsp;
+            <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.price}}</font> &nbsp;
+            <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
+          </div>
     <div id = "timeSharing" ref = "timeSharing" style="width:100%;height:572px;" @mousemove="getTimeSharingTipData"></div>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       kline: null,
-      platform: 'pc',
+      platform: '',
       chartType: 'timeSharing',
       coinType: null,
       timeSharingTipData: null,
@@ -41,7 +41,6 @@ export default {
       type: Object,
       default: () => {
         return {
-          platform: 'pc',
           chartType: 'timeSharing'
         }
       }
@@ -68,6 +67,7 @@ export default {
   },
   created() {
     this.message = getLanguage();
+    this.platform = this.klineConfig.platform
     this.klineConfig.chartType = 'timeSharing'
     this.timeSharing = new ChartController(this.klineConfig);
   },
