@@ -1,5 +1,4 @@
-<template>
-            
+<template>     
     <div>
         <!-- <span @click = "changeChart" >分时</span> -->
         <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
@@ -20,8 +19,7 @@ export default {
   },
   data() {
     return {
-      showChart: "candle",
-      fullscreen: false
+      showChart: "candle"
     };
   },
   props: {
@@ -45,9 +43,6 @@ export default {
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)
     }
-    // changeChart() {
-    //   this.$emit("listenToChildEvent", "everyhour");
-    // }
   }
 };
 </script>
