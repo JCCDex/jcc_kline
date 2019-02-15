@@ -1,11 +1,7 @@
 <template>
-<div>
-    <el-col :span='24'>
-        <div style='position:relative'>
-            <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig'></jKline>
-        </div>
-    </el-col>
-</div>
+  <div :style="{ position: 'relative', width: klineConfig.size.width + 'px' }">
+    <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig'></jKline>
+  </div>
 </template>
 
 <script>
@@ -35,14 +31,9 @@ export default {
     }
   },
   created () {
-    localStorage.setItem('languageType', 'zh')
-    var pairs = {
-      base: 'SWTC'
-    }
-    localStorage.setItem('coinItem', pairs)
     clearInterval(this.id)
     this.getKline()
-    this.id = setInterval(this.update, 5000)
+    this.id = setInterval(this.update, 10000)
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.resize)
@@ -81,7 +72,6 @@ export default {
       var counter = 'CNT'
       let p1 = inst.getKline(base, counter, this.cycle)
       let p2 = inst.getDepth(base, counter, 'more')
-      let res3 = await inst.getHistory(base, counter, 'all')
       let coinType = {
         baseTitle: 'swt',
         counterTitle: 'cnt'
@@ -91,7 +81,6 @@ export default {
         klineData: res1.data,
         depthData: res2.data,
         coinType: coinType,
-        timeDivisionData: res3.data.reverse(),
         cycle: this.cycle
       }
     }
