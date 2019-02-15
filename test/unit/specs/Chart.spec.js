@@ -63,10 +63,14 @@ describe('test Chart', () => {
 
   it('test resizeDepthChart if platform is pc and chartType is depth, not FullScreen', () => {
     let depth = new ChartController(klineConfig)
+    let resizeSize = {
+      width: 700,
+      height: 500
+    }
     const element = document.createElement('div');
     depth.initDepth(element)
     depth.setDepthOption(depthData)
-    depth.resizeDepthChart(element, false)
+    depth.resizeDepthChart(element, false, resizeSize)
     expect(depth.setDepthChart.depth.getOption()).not.toBeNull()
   })
 
@@ -130,21 +134,29 @@ describe('test Chart', () => {
 
   it('test resizeTimeSharingChart if platform is pc and chartType is timeSharing, is FullScreen', () => {
     let timeSharing = new ChartController(klineConfig)
+    let resizeSize = {
+      width: 700,
+      height: 500
+    }
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
     timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    timeSharing.resizeTimeSharingChart(element, false)
+    timeSharing.resizeTimeSharingChart(element, false, resizeSize)
     timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    timeSharing.resizeTimeSharingChart(element, true)
+    timeSharing.resizeTimeSharingChart(element, true, resizeSize)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
   it('test resizeTimeSharingChart if platform is pc and chartType is timeSharing, not FullScreen', () => {
     let timeSharing = new ChartController(klineConfig)
+    let resizeSize = {
+      width: 700,
+      height: 500
+    }
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
     timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    timeSharing.resizeTimeSharingChart(element, false)
+    timeSharing.resizeTimeSharingChart(element, false, resizeSize)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 

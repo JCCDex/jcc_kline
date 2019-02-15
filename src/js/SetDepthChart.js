@@ -18,16 +18,16 @@ class DepthChart {
         this.depthConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen) {
+    resizeECharts(DOM, isFullScreen, resizeSize) {
         if (this.depthConfig.platform === 'pc') {
             if (!isFullScreen) {
-                if (!this.depthConfig.defaultDepthSize) {
+                if (!this.depthConfig.defaultSize) {
                     let resizeContainer = () => {
                         if (DOM) {
-                            DOM.style.height = this.depthConfig.depthSize.height + 'px';
-                            DOM.style.width = this.depthConfig.depthSize.width + 'px';
-                            depthSize.width = this.depthConfig.depthSize.width;
-                            depthSize.height = this.depthConfig.depthSize.height;
+                            DOM.style.height = resizeSize.height + 'px';
+                            DOM.style.width = resizeSize.width + 'px';
+                            depthSize.width = resizeSize.width;
+                            depthSize.height = resizeSize.height;
                         }
                     };
                     resizeContainer(this);
@@ -59,6 +59,15 @@ class DepthChart {
                             } else if (size <= 2180) {
                                 width = 2048 * 0.7;
                                 height = 2048 * 0.37 * 0.8;
+                            } else if (size <= 2560) {
+                                width = 2560 * 0.7;
+                                height = 1385 * 0.37 * 0.8;
+                            } else if (size <= 3440) {
+                                width = 3440 * 0.7;
+                                height = 1426 * 0.37 * 0.8;
+                            } else if (size <= 3840) {
+                                width = 3840 * 0.7;
+                                height = 1426 * 0.37 * 0.8;
                             }
                             DOM.style.height = height + 'px';
                             DOM.style.width = width + 'px';

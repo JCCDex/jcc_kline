@@ -7,7 +7,7 @@ import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
 import { getClientWidth, getLanguage, getClientHeight, formatTime, formatDecimal } from './utils';
 
-var klineSize = {
+var timeSharingSize = {
     width: 0,
     height: 0
 };
@@ -20,50 +20,72 @@ class TimeSharingChart {
         this.timeSharingConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen) {
+    resizeECharts(DOM, isFullScreen, resizeSize) {
         if (this.timeSharingConfig.platform === 'pc') {
             if (!isFullScreen) {
-                let size = getClientWidth();
-                let resizeContainer = () => {
-                    let width;
-                    let height;
-                    if (DOM) {
-                        if (size <= 1024) {
-                            width = 1000 * 0.7;
-                            height = 1000 * 0.44 * 0.8;
-                        } else if (size <= 1280) {
-                            width = 1203 * 0.7;
-                            height = 1203 * 0.37 * 0.8;
-                        } else if (size <= 1366) {
-                            width = 1284 * 0.7;
-                            height = 1284 * 0.44 * 0.8;
-                        } else if (size <= 1440) {
-                            width = 1354 * 0.7;
-                            height = 1354 * 0.4 * 0.8;
-                        } else if (size <= 1680) {
-                            width = 1504 * 0.7;
-                            height = 1504 * 0.36 * 0.8;
-                        } else if (size <= 1920) {
-                            width = 1804 * 0.7;
-                            height = 1804 * 0.37 * 0.8;
-                        } else if (size <= 2180) {
-                            width = 2048 * 0.7;
-                            height = 2048 * 0.37 * 0.8;
+                if (!this.timeSharingConfig.defaultSize) {
+                    let resizeContainer = () => {
+                        if (DOM) {
+                            DOM.style.height = resizeSize.height + 'px';
+                            DOM.style.width = resizeSize.width + 'px';
+                            timeSharingSize.width = resizeSize.width;
+                            timeSharingSize.height = resizeSize.height;
                         }
-                        DOM.style.height = height + 'px';
-                        DOM.style.width = width + 'px';
-                        klineSize.width = width;
-                        klineSize.height = height;
-                    }
-                };
-                resizeContainer(this);
-                this.timeSharing.resize();
+                    };
+                    resizeContainer(this);
+                    this.timeSharing.resize();
+                } else {
+                    let size = getClientWidth();
+                    let resizeContainer = () => {
+                        let width;
+                        let height;
+                        if (DOM) {
+                            if (size <= 1024) {
+                                width = 1000 * 0.7;
+                                height = 1000 * 0.44 * 0.8;
+                            } else if (size <= 1280) {
+                                width = 1203 * 0.7;
+                                height = 1203 * 0.37 * 0.8;
+                            } else if (size <= 1366) {
+                                width = 1284 * 0.7;
+                                height = 1284 * 0.44 * 0.8;
+                            } else if (size <= 1440) {
+                                width = 1354 * 0.7;
+                                height = 1354 * 0.4 * 0.8;
+                            } else if (size <= 1680) {
+                                width = 1504 * 0.7;
+                                height = 1504 * 0.36 * 0.8;
+                            } else if (size <= 1920) {
+                                width = 1804 * 0.7;
+                                height = 1804 * 0.37 * 0.8;
+                            } else if (size <= 2180) {
+                                width = 2048 * 0.7;
+                                height = 2048 * 0.37 * 0.8;
+                            } else if (size <= 2560) {
+                                width = 2560 * 0.7;
+                                height = 1385 * 0.37 * 0.8;
+                            } else if (size <= 3440) {
+                                width = 3440 * 0.7;
+                                height = 1426 * 0.37 * 0.8;
+                            } else if (size <= 3840) {
+                                width = 3840 * 0.7;
+                                height = 1426 * 0.37 * 0.8;
+                            }
+                            DOM.style.height = height + 'px';
+                            DOM.style.width = width + 'px';
+                            timeSharingSize.width = width;
+                            timeSharingSize.height = height;
+                        }
+                    };
+                    resizeContainer(this);
+                    this.timeSharing.resize();
+                }
             } else {
                 let resizeContainer = () => {
                     DOM.style.height = getClientHeight() + 'px';
                     DOM.style.width = getClientWidth() + 'px';
-                    klineSize.width = getClientWidth();
-                    klineSize.height = getClientHeight();
+                    timeSharingSize.width = getClientWidth();
+                    timeSharingSize.height = getClientHeight();
                 };
                 resizeContainer(this);
                 this.timeSharing.resize();
@@ -113,7 +135,6 @@ class TimeSharingChart {
             timeDivisionData: timeDivisionData,
             data: data
         };
-        this.timeSharing.hideLoading();
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
         toolTipData = {
@@ -132,6 +153,7 @@ class TimeSharingChart {
             dataZoom: this.getTimeSharingDataZoom()
         };
         merge(timeSharingOption, option);
+        this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption, true);
         return toolTipData;
     }
@@ -158,9 +180,9 @@ class TimeSharingChart {
         if (this.timeSharingConfig.platform === 'pc') {
             return [
                 {
-                    height: klineSize.height / 600 * 360 + 'px'
+                    height: timeSharingSize.height / 600 * 360 + 'px'
                 }, {
-                    height: klineSize.height / 600 * 100 + 'px'
+                    height: timeSharingSize.height / 600 * 100 + 'px'
                 }
             ];
         } else {

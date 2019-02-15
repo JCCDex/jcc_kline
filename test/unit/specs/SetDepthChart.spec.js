@@ -5,7 +5,7 @@ import testData from '../../testData/data.json'
 
 describe('test SetDepthChart', () => {
 
-  depthOption.defaultDepthSize = true
+  depthOption.defaultSize = true
 
   let depthData = getDepthData(testData.depthData, testData.coinType)
   depthOption.platform = 'pc'
@@ -94,7 +94,7 @@ describe('test SetDepthChart', () => {
 
   it('test resizeECharts if defaultDepthSize is true', () => {
     depthOption.defaultDepthSize = false
-    depthOption.depthSize = {
+    depthOption.size = {
       width: 600,
       height: 560
     }
@@ -172,7 +172,37 @@ describe('test SetDepthChart', () => {
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)
     depthChart.setDepthOption(depthData)
-    depthChart.resizeECharts(null, false)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 2560', () => {
+    window.innerWidth = 2560;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 3440', () => {
+    window.innerWidth = 3440;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test resizeECharts if ClientWidth is 3840', () => {
+    window.innerWidth = 3840;
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.resizeECharts(element, false)
     expect(depthChart.depth.getOption()).not.toBeNull();
   })
 

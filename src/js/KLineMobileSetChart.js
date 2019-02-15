@@ -50,6 +50,7 @@ class KLineMobileSetChartController {
         };
         merge(config, option);
         cycle = 'normal';
+        this.kline.hideLoading();
         this.kline.setOption(config, true);
     }
 
@@ -107,7 +108,6 @@ class KLineMobileSetChartController {
     }
 
     updateOption(data) {
-        this.kline.hideLoading();
         let length = data.values.length - 1;
         if (!toolTipData) {
             toolTipData = {
@@ -257,6 +257,7 @@ class KLineMobileSetChartController {
         };
         merge(timeDivisionconfig, updateTimeOption);
         timeDivisionconfig.dataZoom = this.kline.getOption().dataZoom;
+        this.kline.hideLoading();
         this.kline.setOption(timeDivisionconfig);
         return toolTipData;
     }

@@ -34,5 +34,5 @@ Vue.use(kline)
 ### K线图
 
 ```vue
-<jKline v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig' :cycle='cycle'></jKline>
+<jKline v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig'></jKline>
 ```
