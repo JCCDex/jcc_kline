@@ -65,6 +65,8 @@ export default {
       type: Object,
       default: () => {
         return {
+          platform: 'pc',
+          defaultSize: true
         }
       }
     }
