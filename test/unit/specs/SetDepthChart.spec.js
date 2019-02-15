@@ -202,7 +202,7 @@ describe('test SetDepthChart', () => {
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)
     depthChart.setDepthOption(depthData)
-    depthChart.resizeECharts(null, false)
+    depthChart.resizeECharts(element, false)
     expect(depthChart.depth.getOption()).not.toBeNull();
   })
 
