@@ -409,7 +409,6 @@
 }
 
 .time-sharing-en-data {
-    /* position: absolute; */
     text-align: left;
     font-size: 0.16rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
@@ -417,7 +416,40 @@
 }
 
 .time-sharing-zh-data {
-    /* position: absolute; */
+    text-align: left;
+    font-size: 0.16rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.time-sharing-en-pc {
+    position: absolute;
+    text-align: left;
+    line-height: 20px;
+    font-size: 12px;
+    left: 10px;
+    top: 22px;
+    z-index: 1;
+}
+
+.time-sharing-zh-pc {
+    position: absolute;
+    text-align: left;
+    line-height: 20px;
+    font-size: 12px;
+    left: 10px;
+    top: 22px;
+    z-index: 1;
+}
+
+.time-sharing-en-mobile {
+    text-align: left;
+    font-size: 0.16rem;
+    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    z-index: 1;
+}
+
+.time-sharing-zh-mobile {
     text-align: left;
     font-size: 0.16rem;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;

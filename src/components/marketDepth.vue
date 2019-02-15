@@ -30,8 +30,6 @@ export default {
       type: Object,
       default: () => {
         return {
-          platform: 'pc',
-          chartType: 'depth'
         }
       }
     }
@@ -50,16 +48,29 @@ export default {
           }
         }
       }
+    },
+    klineConfig() {
+      if (this.klineConfig.platform === 'pc') {
+        let size = {
+          width: this.klineConfig.size.width + 'px',
+          height: this.klineConfig.size.height + 'px'
+        }
+        if (JSON.stringify(size) !== JSON.stringify(this.depthSize) && this.klineConfig.defaultSize === false) {
+          this.depthSize = {
+            width: this.klineConfig.size.width + 'px',
+            height: this.klineConfig.size.height + 'px'
+          }
+          this.resize();
+        }
+      }
     }
   },
   created() {
     if (this.klineConfig.platform === 'pc') {
-      if (this.klineConfig.depthSize) {
-        this.klineConfig.defaultDepthSize = false
-        this.depthSize.height = this.klineConfig.depthSize.height + 'px'
-        this.depthSize.width = this.klineConfig.depthSize.width + 'px'
+      if (!this.klineConfig.defaultSize) {
+        this.depthSize.height = this.klineConfig.size.height + 'px'
+        this.depthSize.width = this.klineConfig.size.width + 'px'
       } else {
-        this.klineConfig.defaultDepthSize = true
         this.depthSize = {
           height: '100%',
           width: '572px'
@@ -74,10 +85,14 @@ export default {
   },
   mounted() {
     this.init();
-    window.addEventListener("resize", this.resize);
+    if (this.klineConfig.defaultSize === true) {
+      window.addEventListener("resize", this.resize);
+    }
   },
   beforeDestroy() {
-    window.removeEventListener("resize", this.resize);
+    if (this.klineConfig.defaultSize === true) {
+      window.removeEventListener("resize", this.resize);
+    }
     this.dispose()
   },
   methods: {
@@ -88,7 +103,7 @@ export default {
     resize() {
       if (this.klineConfig.platform === 'pc') {
         let isFullScreen = this.$parent.getState()
-        this.depth.resizeDepthChart(this.$refs.depth, isFullScreen);
+        this.depth.resizeDepthChart(this.$refs.depth, isFullScreen, this.klineConfig.size);
       }
       
     },

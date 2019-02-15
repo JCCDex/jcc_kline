@@ -5,6 +5,7 @@ import timeSharingData from '../../testData/timeSharingData.json'
 describe('test setTimeSharingChart', () => {
 
   timeSharingOption.platform = 'pc'
+  timeSharingOption.defaultSize = true
 
   it('test TimeSharingChart', () => {
     let TimeSharing = new TimeSharingChart(timeSharingOption);
