@@ -54,7 +54,6 @@ export default {
       kline: null,
       cycle: '',
       platform: 'mobile',
-      status: 0,
       divisionTime: null,
       timeDivisionData: null,
       toolTipData: null,
@@ -136,7 +135,6 @@ export default {
       if (this.cycle === cycle) {
         return;
       }
-      this.status = 0;
       this.$emit("listenToChildEvent", cycle)
     },
     getToolTipData() {

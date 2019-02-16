@@ -50,7 +50,8 @@ export default {
       actions: [
       ],
       kline: null,
-      status: 0,
+      cycle: '',
+      platform: 'mobile',
       divisionTime: null,
       timeDivisionData: null,
       toolTipData: null,
@@ -66,14 +67,6 @@ export default {
         return {}
       }
     },
-    cycle: {
-      type: String,
-      default: 'hour'
-    },
-    platform: {
-      type: String,
-      default: 'mobile'
-    },
     klineConfig: {
       type: Object,
       default: () => {
@@ -83,40 +76,35 @@ export default {
     }
   },
   watch: {
-    cycle() {
-      if(this.platform !== 'pc') {
-        this.toolTipData = null;
-        this.timeDivisionTipData = null;
-        this.clearChart()
-        this.kline.showMobileLoading();
-      }
-    },
     klineDataObj() {
       if (this.klineDataObj) {
         this.message = getLanguage();
-        if(this.cycle !== 'everyhour') {
-          let mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
-          this.klineDataObj.categoryData = mobileKlineData.categoryData;
-          if(this.status === 0) {
-            this.kline.setMobileOption(this.klineDataObj, this.cycle);
-            this.status = 1;
-          }
-          // let mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
-          if (mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
-            this.toolTipData = this.kline.updateMobileOption(mobileKlineData);
-            this.kline.hideMobileLoading()
-          }
-        } else {
-          if(this.status === 0) {
+        if (this.klineDataObj.cycle !== "everyhour") {
+          var mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
+          this.klineDataObj.categoryData = mobileKlineData.categoryData
+        }
+        if (this.klineDataObj.cycle !== this.cycle) {
+          this.clearChart()
+          this.toolTipData = null;
+          this.timeDivisionTipData = null;
+          this.kline.showMobileLoading()
+          if (this.klineDataObj.cycle !== "everyhour") {
+            this.cycle = this.klineDataObj.cycle
+            this.kline.setMobileOption(this.klineDataObj, this.cycle)
+          } else {
+            this.cycle = this.klineDataObj.cycle
             this.kline.setTimeDivisionsOption(this.klineDataObj.klineSize)
-            this.status = 1;
           }
-          let timeDivisionData = this.klineDataObj.timeDivisionData;
+        }
+       if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
+          this.toolTipData = this.kline.updateMobileOption(mobileKlineData);
+        }
+        if (this.klineDataObj.cycle === "everyhour") {
+          let timeDivisionData = this.klineDataObj.timeDivisionData
           let divisionData = handleDivisionData(timeDivisionData)
-          this.divisionTime = divisionData.divisionTime;
+          this.divisionTime = divisionData.divisionTime
           if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
             this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData);
-            this.kline.hideMobileLoading()
           }
         }
       }
@@ -146,7 +134,6 @@ export default {
       if (this.cycle === cycle) {
         return;
       }
-      // this.cycle = cycle;
       this.$emit("listenToChildEvent", cycle)
     },
     getToolTipData() {
