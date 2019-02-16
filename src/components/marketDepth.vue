@@ -9,9 +9,8 @@ export default {
   name: "depth",
   data() {
     return {
-      kline: null,
+      depth: null,
       coinType: '',
-      platform: 'pc',
       chartType: 'depth',
       depthSize: {
         height: '',
