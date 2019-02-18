@@ -50,7 +50,8 @@ var mobileOption = {
             axisLine: { // 坐标轴轴线相关设置
                 onZero: false, // X 轴或者 Y 轴的轴线是否在另一个轴的 0 刻度上，只有在另一个轴为数值轴且包含 0 刻度时有效
                 lineStyle: { // 坐标轴线线的样式
-                    color: '#37404b'
+                    color: '#37404b', // 坐标轴线线的颜色
+                    width: 1.5 // 坐标轴线线宽
                 }
             },
             splitLine: { // 坐标轴在 grid 区域中的分隔线
@@ -165,54 +166,54 @@ var mobileOption = {
             }
         },
         {
-            name: 'MA10',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            lineStyle: {
+            name: 'MA10', // 系列名称，用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+            type: 'line', // 折线图
+            smooth: true, // 是否平滑曲线显示
+            showSymbol: false, // 是否显示 symbol, false只有在 tooltip hover 的时候显示
+            lineStyle: { // 线条样式
                 normal: {
-                    color: '#4df561',
-                    opacity: 1,
-                    width: 1
+                    color: '#4df561', // 线的颜色
+                    opacity: 1, // 图形透明度。支持从 0 到 1 的数字
+                    width: 1 // 线宽
                 }
             }
         },
         {
-            name: 'MA20',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            lineStyle: {
+            name: 'MA20', // 系列名称，用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+            type: 'line', // 折线图
+            smooth: true, // 是否平滑曲线显示
+            showSymbol: false, // 是否显示 symbol, false只有在 tooltip hover 的时候显示
+            lineStyle: { // 线条样式
                 normal: {
-                    color: '#2bdaff',
-                    opacity: 1,
-                    width: 1
+                    color: '#2bdaff', // 线的颜色
+                    opacity: 1, // 图形透明度。支持从 0 到 1 的数字
+                    width: 1 // 线宽
                 }
             }
         },
         {
-            name: 'MA30',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            lineStyle: {
+            name: 'MA30', // 系列名称，用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+            type: 'line', // 折线图
+            smooth: true, // 是否平滑曲线显示
+            showSymbol: false, // 是否显示 symbol, false只有在 tooltip hover 的时候显示
+            lineStyle: { // 线条样式
                 normal: {
-                    color: '#ffd801',
-                    opacity: 1,
-                    width: 1
+                    color: '#ffd801', // 线的颜色
+                    opacity: 1, // 图形透明度。支持从 0 到 1 的数字
+                    width: 1 // 线宽
                 }
             }
         },
         {
-            name: 'MA60',
-            type: 'line',
-            smooth: true,
-            showSymbol: false,
-            lineStyle: {
+            name: 'MA60', // 系列名称，用于tooltip的显示，legend 的图例筛选，在 setOption 更新数据和配置项时用于指定对应的系列。
+            type: 'line', // 折线图
+            smooth: true, // 是否平滑曲线显示
+            showSymbol: false, // 是否显示 symbol, false只有在 tooltip hover 的时候显示
+            lineStyle: { // 线条样式
                 normal: {
-                    color: '#f721ff',
-                    opacity: 1,
-                    width: 1
+                    color: '#f721ff', // 线的颜色
+                    opacity: 1, // 图形透明度。支持从 0 到 1 的数字
+                    width: 1 // 线宽
                 }
             }
         },
