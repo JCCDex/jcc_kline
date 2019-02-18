@@ -54,7 +54,6 @@ export default {
       kline: null,
       cycle: '',
       platform: 'mobile',
-      status: 0,
       divisionTime: null,
       timeDivisionData: null,
       toolTipData: null,
@@ -99,7 +98,7 @@ export default {
             this.kline.setTimeDivisionsOption(this.klineDataObj.klineSize)
           }
         }
-       if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
+        if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
           this.toolTipData = this.kline.updateMobileOption(mobileKlineData);
         }
         if (this.klineDataObj.cycle === "everyhour") {
@@ -136,7 +135,6 @@ export default {
       if (this.cycle === cycle) {
         return;
       }
-      this.status = 0;
       this.$emit("listenToChildEvent", cycle)
     },
     getToolTipData() {

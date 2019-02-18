@@ -1,10 +1,9 @@
 <template>
-            
     <div>
-        <!-- <span @click = "changeChart" >分时</span> -->
-        <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
-        <KLine ref="candle" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
-        <Depth ref="depth" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
+      <!-- <span @click = "changeChart" >分时</span> -->
+      <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
+      <KLine ref="candle" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
+      <Depth ref="depth" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
 <script>
@@ -20,8 +19,7 @@ export default {
   },
   data() {
     return {
-      showChart: "candle",
-      fullscreen: false
+      showChart: "candle"
     };
   },
   props: {
@@ -45,9 +43,6 @@ export default {
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)
     }
-    // changeChart() {
-    //   this.$emit("listenToChildEvent", "everyhour");
-    // }
   }
 };
 </script>
