@@ -26,7 +26,29 @@ export default {
         size: {
           width: width * 0.8,
           height: height * 0.7
-        }
+        },
+        MA: [
+          {
+            name: 'MA5',
+            color: '#67ff7c'
+          },
+          {
+            name: 'MA10',
+            color: '#ff4d71'
+          },
+          {
+            name: 'MA20',
+            color: '#f6d026'
+          },
+          {
+            name: 'MA30',
+            color: '#ff4d71'
+          },
+          { 
+            name: 'MA60',
+            color: '#000000'
+          }
+        ]
       }
     }
   },
@@ -59,7 +81,29 @@ export default {
         size: {
           width: width * 0.8,
           height: height * 0.7
-        }
+        },
+        MA: [
+          {
+            name: 'MA5',
+            color: '#67ff7c'
+          },
+          {
+            name: 'MA10',
+            color: '#ff4d71'
+          },
+          {
+            name: 'MA20',
+            color: '#f6d026'
+          },
+          {
+            name: 'MA30',
+            color: '#ff4d71'
+          },
+          { 
+            name: 'MA60',
+            color: '#000000'
+          }
+        ]
       }
     },
     async getKline () {
