@@ -17,11 +17,7 @@
           <font class="tooltip-data-name">{{message.min}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font>
           <font class="tooltip-data-name">{{message.closing}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font><br>
         <div v-if = "outspreadMA">
-          <font class="tooltip-data-ma5">MA5: </font><font class="tooltip-ma5">{{this.toolTipData.MA5}}</font> &nbsp;
-          <font class="tooltip-data-ma10">MA10: </font><font class="tooltip-ma10">{{this.toolTipData.MA10}}</font> &nbsp;
-          <font class="tooltip-data-ma20">MA20: </font><font class="tooltip-ma20">{{this.toolTipData.MA20}}</font> &nbsp;
-          <font class="tooltip-data-ma30">MA30: </font><font class="tooltip-ma30">{{this.toolTipData.MA30}}</font> &nbsp;
-          <font class="tooltip-data-ma60">MA60: </font><font class="tooltip-ma60">{{this.toolTipData.MA60}}</font> &nbsp;
+          <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{toolTipData.MA5}}</font></font>
         </div>
       </div>
       <!-- kline -->

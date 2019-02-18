@@ -73,6 +73,30 @@ export default {
   },
   created() {
     this.klineConfig.platform = 'pc'
+    if (!this.klineConfig.MA) {
+        this.klineConfig.MA = [
+          {
+            name: "MA5",
+            color: "#ff4d71"
+          },
+          {
+            name: "MA10",
+            color: "#67ff7c"
+          },
+          {
+            name: "MA20",
+            color: "#16c5ff"
+          },
+          {
+            name: "MA30",
+            color: "#f6d026"
+          },
+          { 
+            name: "MA60", 
+            color: "#e03bfa"
+          }
+        ];
+      }
     this.message = getLanguage();
 
   },
