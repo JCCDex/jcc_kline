@@ -22,6 +22,10 @@ class ChartController {
                 merge(mobileTimeSharingOption, chartsConfig);
                 this.setTimeSharing = new TimeSharingChart(mobileTimeSharingOption);
             }
+        } else if (chartsConfig.chartType === 'macd') {
+            if (chartsConfig.platform === 'pc') {
+                merge();
+            }
         }
     }
 
