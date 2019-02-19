@@ -1,14 +1,14 @@
 var macdMobileOption = {
+    legend: {
+        data: ['KLine', 'MA5']
+    },
     tooltip: {
         trigger: 'axis',
         axisPointer: {
             type: 'line'
         }
     },
-    legend: {
-        data: ['KLine', 'MA5']
-    },
-    grid: [           {
+    grid: [{
         left: '3%',
         right: '1%',
         height: '60%'
@@ -83,74 +83,8 @@ var macdMobileOption = {
         start: 20,
         end: 100
     }],
-    series: [{
-            name: 'K线周期图表(matols.com)',
-            type: 'candlestick',
-            data: data.datas,
-            itemStyle: {
-                normal: {
-                    color: '#ef232a',
-                    color0: '#14b143',
-                    borderColor: '#ef232a',
-                    borderColor0: '#14b143'
-                }
-            },
-            markArea: {
-                silent: true,
-                itemStyle: {
-                    normal: {
-                        color: 'Honeydew'                  
-                    }
-                },
-                data: fenduans()
-            },
-            markPoint: {
-                data: [
-                    {type: 'max', name: '最大值'},
-                    {type: 'min', name: '最小值'}
-                ]
-            },
-            markLine: {
-                label: {
-                    normal: {
-                        position: 'middle',
-                        textStyle:{color:'Blue',fontSize: 15}
-                    }
-                },
-                data: fenduans(),
-                symbol: ['circle', 'none']
-                
-            }
-        }, {
-            name: 'MA5',
-            type: 'line',
-            data: calculateMA(5),
-            smooth: true,
-            lineStyle: {
-                normal: {
-                    opacity: 0.5
-                }
-            }
-        },{
-            name: 'Volumn',
-            type: 'bar',
-            xAxisIndex: 1,
-            yAxisIndex: 1,
-            data: data.vols,
-            itemStyle: {
-                normal: {
-                    color: function(params) {
-                        var colorList;
-                        if (data.datas[params.dataIndex][1]>data.datas[params.dataIndex][0]) {
-                            colorList = '#ef232a';
-                        } else {
-                            colorList = '#14b143';
-                        }
-                        return colorList;
-                    },
-                }
-            }
-        },{
+    series: [
+        {
             name: 'MACD',
             type: 'bar',
             xAxisIndex: 2,

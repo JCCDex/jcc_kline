@@ -35,20 +35,20 @@ export default {
     }
   },
   watch: {
-    klineDataObj() {
-      if (this.klineDataObj) {
-        let macdData = getDepthData(this.klineDataObj.macdData, this.klineDataObj.coinType);
-        if (macdData) {
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
-            this.clearChart();
-            this.macd.setDepthOption(macdData)
-            this.coinType = this.klineDataObj.coinType
-          }else {
-            this.macd.updateDepthOption(macdData)
-          }
-        }
-      }
-    },
+    // klineDataObj() {
+    //   if (this.klineDataObj) {
+    //     let macdData = getDepthData(this.klineDataObj.macdData, this.klineDataObj.coinType);
+    //     if (macdData) {
+    //       if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
+    //         this.clearChart();
+    //         this.macd.setDepthOption(macdData)
+    //         this.coinType = this.klineDataObj.coinType
+    //       }else {
+    //         this.macd.updateDepthOption(macdData)
+    //       }
+    //     }
+    //   }
+    // },
     klineConfig() {
       if (this.klineConfig.platform === 'pc') {
         let size = {
