@@ -14,6 +14,7 @@ class KLineController {
             this.setKLineChart = new KLineSetChartController(config);
         } else {
             config = merge(mobileOption, klineConfig);
+            getCandleOptionByMA(config);
             this.setMobileKLineChart = new KLineMobileSetChartController(config);
         }
     }
@@ -78,8 +79,8 @@ class KLineController {
         this.setMobileKLineChart.setTimeDivisionsOption(size);
     }
 
-    updateMobileOption(data) {
-        return this.setMobileKLineChart.updateOption(data);
+    updateMobileOption(data, cycle) {
+        return this.setMobileKLineChart.updateOption(data, cycle);
     }
 
     updateTimeDivisionOption(timeDivisionData, divisionData) {

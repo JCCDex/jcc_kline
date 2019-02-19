@@ -41,11 +41,10 @@ class KLineMobileSetChartController {
         this.kline.hideLoading();
     }
 
-    setOption(size, mobileCycle) {
+    setOption(size) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
             grid: this.getGrid(size.klineSize),
-            xAxis: this.getXAxis(size, mobileCycle),
             yAxis: this.getYAxis(size.klineSize)
         };
         merge(config, option);
@@ -107,7 +106,7 @@ class KLineMobileSetChartController {
         this.kline.setOption(timeDivisionconfig, true);
     }
 
-    updateOption(data) {
+    updateOption(data, cycle) {
         let length = data.values.length - 1;
         if (!toolTipData) {
             toolTipData = {
@@ -127,76 +126,9 @@ class KLineMobileSetChartController {
             };
         }
         let updateOption = {
-            xAxis: [
-                {
-                    data: data.categoryData
-                },
-                {
-                    data: data.categoryData
-                }
-            ],
-            tooltip: {
-                formatter: function (param) {
-                    param = param[0];
-                    var index = param.data[0];
-                    toolTipData = {
-                        time: param.name,
-                        volume: formatDecimal(data.values[index][5], 0, 5),
-                        opening: data.values[index][0].toFixed(6),
-                        closing: data.values[index][1].toFixed(6),
-                        max: data.values[index][3].toFixed(6),
-                        min: data.values[index][2].toFixed(6),
-                        MA5: calculateMA(5, data)[index],
-                        MA10: calculateMA(10, data)[index],
-                        MA20: calculateMA(20, data)[index],
-                        MA30: calculateMA(30, data)[index],
-                        MA60: calculateMA(60, data)[index],
-                        color: data.volumes[index][2],
-                        type: 'normal'
-                    };
-                }
-            },
-            series: [
-                {
-                    type: 'candlestick',
-                    data: data.values
-                },
-                {
-                    name: 'MA5',
-                    data: calculateMA(5, data)
-                },
-                {
-                    name: 'MA10',
-                    data: calculateMA(10, data)
-                },
-                {
-                    name: 'MA20',
-                    data: calculateMA(20, data)
-                },
-                {
-                    name: 'MA30',
-                    data: calculateMA(30, data)
-                },
-                {
-                    name: 'MA60',
-                    data: calculateMA(60, data)
-                },
-                {
-                    name: 'Volume',
-                    data: data.volumes,
-                    type: 'bar',
-                    barMaxWidth: 20,
-                    itemStyle: {
-                        normal: {
-                            color: function (param) {
-                                return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                            }
-                        }
-                    },
-                    xAxisIndex: 1,
-                    yAxisIndex: 1
-                }
-            ]
+            xAxis: this.getXAxis(data, cycle),
+            tooltip: this.getToolTip(data),
+            series: this.getSeries(data)
         };
         merge(config, updateOption);
         config.dataZoom = this.kline.getOption().dataZoom;
@@ -262,6 +194,101 @@ class KLineMobileSetChartController {
         return toolTipData;
     }
 
+    getXAxis(data, cycle) {
+        return [
+            {
+                data: data.categoryData,
+                axisLabel: {
+                    formatter(value) {
+                        if (cycle === 'hour') {
+                            return value.substring(5);
+                        }
+                        if (cycle === 'day') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'week') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'month') {
+                            return value.substring(0, 7);
+                        }
+                    }
+                }
+            },
+            {
+                data: data.categoryData
+            }
+        ];
+    }
+
+    getSeries(data) {
+        return [
+            {
+                type: 'candlestick',
+                data: data.values
+            },
+            {
+                name: 'MA5',
+                data: calculateMA(5, data)
+            },
+            {
+                name: 'MA10',
+                data: calculateMA(10, data)
+            },
+            {
+                name: 'MA20',
+                data: calculateMA(20, data)
+            },
+            {
+                name: 'MA30',
+                data: calculateMA(30, data)
+            },
+            {
+                name: 'MA60',
+                data: calculateMA(60, data)
+            },
+            {
+                name: 'Volume',
+                data: data.volumes,
+                type: 'bar',
+                barMaxWidth: 20,
+                itemStyle: {
+                    normal: {
+                        color: function (param) {
+                            return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
+                        }
+                    }
+                },
+                xAxisIndex: 1,
+                yAxisIndex: 1
+            }
+        ];
+    }
+
+    getToolTip(data) {
+        return {
+            formatter: function (param) {
+                param = param[0];
+                var index = param.data[0];
+                toolTipData = {
+                    time: param.name,
+                    volume: formatDecimal(data.values[index][5], 0, 5),
+                    opening: data.values[index][0].toFixed(6),
+                    closing: data.values[index][1].toFixed(6),
+                    max: data.values[index][3].toFixed(6),
+                    min: data.values[index][2].toFixed(6),
+                    MA5: calculateMA(5, data)[index],
+                    MA10: calculateMA(10, data)[index],
+                    MA20: calculateMA(20, data)[index],
+                    MA30: calculateMA(30, data)[index],
+                    MA60: calculateMA(60, data)[index],
+                    color: data.volumes[index][2],
+                    type: 'normal'
+                };
+            }
+        };
+    }
+
     getToolTipData() {
         return toolTipData;
     }
@@ -287,34 +314,6 @@ class KLineMobileSetChartController {
         return g;
     }
 
-    getXAxis(data, mobileCycle) {
-        var x = [{
-            gridIndex: 0,
-            data: data.categoryData,
-            axisLabel: {
-                formatter(value) {
-                    if (mobileCycle === 'hour') {
-                        return value.substring(5);
-                    }
-                    if (mobileCycle === 'day') {
-                        return value.substring(0, 12);
-                    }
-                    if (mobileCycle === 'week') {
-                        return value.substring(0, 12);
-                    }
-                    if (mobileCycle === 'month') {
-                        return value.substring(0, 7);
-                    }
-                }
-            }
-        },
-        {
-            gridIndex: 1,
-            data: data.categoryData
-        }];
-        return x;
-    }
-
     getYAxis(size) {
         return [
             {
@@ -328,7 +327,7 @@ class KLineMobileSetChartController {
     changeDataZoom(type) {
         let dataZoom = JSON.parse(JSON.stringify(this.kline.getOption().dataZoom));
         if (type === 'leftShift' && dataZoom[0].start >= 2) {
-            dataZoom[0].start = dataZoom[0].start - 2,
+            dataZoom[0].start = dataZoom[0].start - 2;
             dataZoom[0].end = dataZoom[0].end - 2;
         } else if (type === 'enlarge' && dataZoom[0].start < 95) {
             dataZoom[0].start = dataZoom[0].start + 5;
@@ -338,7 +337,7 @@ class KLineMobileSetChartController {
         } else if (type === 'narrow' && dataZoom[0].start >= 5) {
             dataZoom[0].start = dataZoom[0].start - 5;
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
-            dataZoom[0].start = dataZoom[0].start + 2,
+            dataZoom[0].start = dataZoom[0].start + 2;
             dataZoom[0].end = dataZoom[0].end + 2;
         }
         if (cycle === 'normal') {

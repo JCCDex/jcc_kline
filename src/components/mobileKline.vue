@@ -95,7 +95,7 @@ export default {
           }
         }
         if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
-          this.toolTipData = this.kline.updateMobileOption(mobileKlineData);
+          this.toolTipData = this.kline.updateMobileOption(mobileKlineData, this.cycle);
         }
         if (this.klineDataObj.cycle === "everyhour") {
           let timeDivisionData = this.klineDataObj.timeDivisionData
