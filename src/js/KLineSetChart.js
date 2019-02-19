@@ -146,12 +146,12 @@ class KLineSetChartController {
                 MAData: [],
                 color: data.volumes[length][2]
             };
-            let MAConfig = this.klineConfig.MA
+            let MAConfig = this.klineConfig.MA;
             for (var i = 0; i < MAConfig.length; i++) {
                 toolTipData.MAData[i] = {
                     name: MAConfig[i].name,
                     data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[length]
-                }
+                };
             }
             this.kline.hideLoading();
             let klineOption = {
@@ -172,7 +172,7 @@ class KLineSetChartController {
             oldData: data,
             oldCycle: cycle
         };
-        let MAConfig = this.klineConfig.MA
+        let MAConfig = this.klineConfig.MA;
         if (this.kline.getOption()) {
             let klineOption = {
                 grid: this.getGrid(data),
@@ -222,7 +222,7 @@ class KLineSetChartController {
                         toolTipData.MAData[i] = {
                             name: MAConfig[i].name,
                             data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[index]
-                        }
+                        };
                     }
                 }
             }
@@ -319,17 +319,17 @@ class KLineSetChartController {
                 yAxisIndex: 1
             }
         ];
-        if (this.klineConfig.defaultMA) {
-            return s
+        if (this.klineConfig.defaultMA !== false) {
+            return s;
         } else {
-            let MASeries = s[1]
-            let MAIndex = this.klineConfig.MAIndex
-            s.splice(1, 5)
+            let MASeries = s[1];
+            let MAIndex = this.klineConfig.MAIndex;
+            s.splice(1, 5);
             for (let MA of this.klineConfig.MA) {
-                s.splice(MAIndex, 0, JSON.parse(JSON.stringify(MASeries)))
-                s[MAIndex].name = MA.name
-                s[MAIndex].data = calculateMA(MA.name.substring(2) * 1, data)
-                MAIndex++
+                s.splice(MAIndex, 0, JSON.parse(JSON.stringify(MASeries)));
+                s[MAIndex].name = MA.name;
+                s[MAIndex].data = calculateMA(MA.name.substring(2) * 1, data);
+                MAIndex++;
             }
             return s;
         }

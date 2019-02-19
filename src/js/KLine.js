@@ -2,7 +2,7 @@ import KLineSetChartController from './KLineSetChart';
 import KLineMobileSetChartController from './KLineMobileSetChart';
 import option from './KLineOption';
 import mobileOption from './KLineMobileOption';
-import { getCandleOptionByMA } from './ChartOptionUtils'
+import { getCandleOptionByMA } from './ChartOptionUtils';
 
 class KLineController {
     constructor(platform, klineConfig) {
@@ -10,7 +10,7 @@ class KLineController {
         var config;
         if (platform === 'pc') {
             config = merge(option, klineConfig);
-            getCandleOptionByMA(config)
+            getCandleOptionByMA(config);
             this.setKLineChart = new KLineSetChartController(config);
         } else {
             config = merge(mobileOption, klineConfig);

@@ -14,6 +14,32 @@ describe('test KLine', () => {
     height: 780,
     width: 900
   }
+  let klineConfig = {
+    backgroundColor: '#1ad2b4',
+    defaultMA: false,
+    MA: [
+      {
+        name: 'MA3',
+        color: '#67ff7c'
+      },
+      {
+        name: 'MA10',
+        color: '#ff4d71'
+      },
+      {
+        name: 'MA15',
+        color: '#f6d026'
+      },
+      {
+        name: 'MA20',
+        color: '#ff4d71'
+      },
+      {
+        name: 'MA30',
+        color: '#000000'
+      }
+    ]
+  }
   let moboleSize = {klineSize:size}
   let cycle = 'hour'
 
@@ -22,22 +48,27 @@ describe('test KLine', () => {
   })
 
   it('test klineController if platform is pc', () => {
-    let klineConfig = {
-      backgroundColor: '#1ad2b4'
-    }
     let kline = new klineController('pc', klineConfig)
     expect(kline).toBeInstanceOf(klineController)
   })
 
   it('test initChart if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
+    const element = document.createElement('div');
+    kline.initChart(element)
+    expect(kline).not.toBeNull()
+  })
+
+  it('test initChart if platform is pc, defaultMA is true', () => {
+    klineConfig.defaultMA = true
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     expect(kline).not.toBeNull()
   })
 
   it('test showLoading', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.showLoading()
@@ -45,7 +76,7 @@ describe('test KLine', () => {
   })
 
   it('test setOption if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -53,7 +84,7 @@ describe('test KLine', () => {
   })
 
   it('test updateOption if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -62,7 +93,7 @@ describe('test KLine', () => {
   })
 
   it('test resizeChart if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -71,7 +102,7 @@ describe('test KLine', () => {
   })
 
   it('test getToolTipData if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -80,7 +111,7 @@ describe('test KLine', () => {
   })
 
   it('test changeDataZoom if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -102,7 +133,7 @@ describe('test KLine', () => {
   })
 
   it('test disposeChart if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -111,7 +142,7 @@ describe('test KLine', () => {
   })
 
   it('test clearChart if platform is pc', () => {
-    let kline = new klineController('pc', '')
+    let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
@@ -120,14 +151,14 @@ describe('test KLine', () => {
   })
 
   it('test initChart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     expect(mobileKline.setMobileKLineChart).not.toBeNull()
   })
 
   it('test setMobileOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -135,7 +166,7 @@ describe('test KLine', () => {
   })
 
   it('test updateMobileOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -144,7 +175,7 @@ describe('test KLine', () => {
   })
 
   it('test setTimeDivisionsOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
@@ -152,7 +183,7 @@ describe('test KLine', () => {
   })
 
   it('test updateTimeDivisionOption if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
@@ -161,7 +192,7 @@ describe('test KLine', () => {
   })
 
   it('test showMobileLoading if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -170,7 +201,7 @@ describe('test KLine', () => {
   })
 
   it('test hideMobileLoading if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -180,7 +211,7 @@ describe('test KLine', () => {
   })
 
   it('test getMobileToolTipData if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -190,7 +221,7 @@ describe('test KLine', () => {
   })
 
   it('test changeMobileDataZoom if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -213,7 +244,7 @@ describe('test KLine', () => {
   })
 
   it('test disposeMobileChart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
@@ -223,7 +254,7 @@ describe('test KLine', () => {
   })
 
   it('test clearMobileChart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', '')
+    let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
