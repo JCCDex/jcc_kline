@@ -30,7 +30,7 @@ export default {
         defaultMA: false,
         MA: [
           {
-            name: 'MA5',
+            name: 'MA3',
             color: '#67ff7c'
           },
           {
@@ -38,15 +38,15 @@ export default {
             color: '#ff4d71'
           },
           {
-            name: 'MA20',
+            name: 'MA15',
             color: '#f6d026'
           },
           {
-            name: 'MA30',
-            color: '#ffffff'
+            name: 'MA20',
+            color: '#ff4d71'
           },
           {
-            name: 'MA60',
+            name: 'MA30',
             color: '#000000'
           }
         ]
@@ -85,7 +85,7 @@ export default {
         },
         MA: [
           {
-            name: 'MA5',
+            name: 'MA3',
             color: '#67ff7c'
           },
           {
@@ -93,15 +93,15 @@ export default {
             color: '#ff4d71'
           },
           {
-            name: 'MA20',
+            name: 'MA15',
             color: '#f6d026'
           },
           {
-            name: 'MA30',
+            name: 'MA20',
             color: '#ff4d71'
           },
           {
-            name: 'MA60',
+            name: 'MA30',
             color: '#000000'
           }
         ]
