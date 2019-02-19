@@ -27,6 +27,7 @@ export default {
           width: width * 0.8,
           height: height * 0.7
         },
+        defaultMA: false,
         MA: [
           {
             name: 'MA5',
@@ -42,9 +43,9 @@ export default {
           },
           {
             name: 'MA30',
-            color: '#ff4d71'
+            color: '#ffffff'
           },
-          { 
+          {
             name: 'MA60',
             color: '#000000'
           }
@@ -99,7 +100,7 @@ export default {
             name: 'MA30',
             color: '#ff4d71'
           },
-          { 
+          {
             name: 'MA60',
             color: '#000000'
           }

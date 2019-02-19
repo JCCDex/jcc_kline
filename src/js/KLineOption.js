@@ -165,6 +165,7 @@ var option = {
     ],
     series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
         {
+            name: 'candle',
             type: 'candlestick', // K线图
             barMaxWidth: 10, //  指定柱最小宽度。可以使用绝对数值（如 10）或百分比（如 '20%'，表示 band width 的百分之多少）。默认自适应
             itemStyle: { // K 线图的图形样式
