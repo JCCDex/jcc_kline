@@ -139,7 +139,7 @@ class TimeSharingChart {
         let length = timeDivisionData.length - 1;
         toolTipData = {
             time: formatTime(timeDivisionData[length][3]),
-            volume: formatDecimal(timeDivisionData[length][1], 0, 5),
+            volume: formatDecimal(timeDivisionData[length][1], 2, 5),
             price: timeDivisionData[length][2].toFixed(6),
             averagePrice: averages[length].toFixed(6),
             color: volumes[length][2]
@@ -236,7 +236,7 @@ class TimeSharingChart {
                 let data = timeDivisionData[dataIndex];
                 toolTipData = {
                     time: formatTime(data[3]),
-                    volume: formatDecimal(data[1], 0, 5),
+                    volume: formatDecimal(data[1], 2, 5),
                     price: data[2].toFixed(6),
                     averagePrice: averages[dataIndex].toFixed(6),
                     color: volumes[dataIndex][2]
