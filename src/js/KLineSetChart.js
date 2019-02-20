@@ -143,17 +143,20 @@ class KLineSetChartController {
                 closing: data.values[length][1].toFixed(6),
                 max: data.values[length][3].toFixed(6),
                 min: data.values[length][2].toFixed(6),
-                MA5: calculateMA(5, data)[length],
-                MA10: calculateMA(10, data)[length],
-                MA20: calculateMA(20, data)[length],
-                MA30: calculateMA(30, data)[length],
-                MA60: calculateMA(60, data)[length],
+                MAData: [],
                 color: data.volumes[length][2]
             };
+            let MAConfig = this.klineConfig.MA;
+            for (var i = 0; i < MAConfig.length; i++) {
+                toolTipData.MAData[i] = {
+                    name: MAConfig[i].name,
+                    data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[length]
+                };
+            }
             this.kline.hideLoading();
             let klineOption = {
                 grid: this.getGrid(data),
-                tooltip: this.getToolTip(data),
+                tooltip: this.getToolTip(data, MAConfig),
                 xAxis: this.getXAxis(data, cycle),
                 yAxis: this.getYAxis(data),
                 series: this.getSeries(data)
@@ -169,10 +172,11 @@ class KLineSetChartController {
             oldData: data,
             oldCycle: cycle
         };
+        let MAConfig = this.klineConfig.MA;
         if (this.kline.getOption()) {
             let klineOption = {
                 grid: this.getGrid(data),
-                tooltip: this.getToolTip(data),
+                tooltip: this.getToolTip(data, MAConfig),
                 xAxis: this.getXAxis(data, cycle),
                 yAxis: this.getYAxis(data),
                 series: this.getSeries(data)
@@ -197,7 +201,7 @@ class KLineSetChartController {
         return g;
     }
 
-    getToolTip(data) {
+    getToolTip(data, MAConfig) {
         return {
             formatter: function (param) {
                 param = param[0];
@@ -211,13 +215,15 @@ class KLineSetChartController {
                         closing: data.values[index][1].toFixed(6),
                         max: data.values[index][3].toFixed(6),
                         min: data.values[index][2].toFixed(6),
-                        MA5: calculateMA(5, data)[index],
-                        MA10: calculateMA(10, data)[index],
-                        MA20: calculateMA(20, data)[index],
-                        MA30: calculateMA(30, data)[index],
-                        MA60: calculateMA(60, data)[index],
+                        MAData: [],
                         color: data.volumes[index][2]
                     };
+                    for (var i = 0; i < MAConfig.length; i++) {
+                        toolTipData.MAData[i] = {
+                            name: MAConfig[i].name,
+                            data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[index]
+                        };
+                    }
                 }
             }
         };
@@ -313,7 +319,20 @@ class KLineSetChartController {
                 yAxisIndex: 1
             }
         ];
-        return s;
+        if (this.klineConfig.defaultMA !== false) {
+            return s;
+        } else {
+            let MASeries = s[1];
+            let MAIndex = this.klineConfig.MAIndex;
+            s.splice(1, 5);
+            for (let MA of this.klineConfig.MA) {
+                s.splice(MAIndex, 0, JSON.parse(JSON.stringify(MASeries)));
+                s[MAIndex].name = MA.name;
+                s[MAIndex].data = calculateMA(MA.name.substring(2) * 1, data);
+                MAIndex++;
+            }
+            return s;
+        }
     }
 
     getDataZoom() {

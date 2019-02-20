@@ -8,6 +8,30 @@ describe('test KLineSetChart', () => {
   let depthData = getDepthData(testData.depthData, testData.coinType)
   let pcData = splitData(testData.klineData, 'pc')
   let klineData = Object.assign({}, pcData, depthData);
+  option.defaultMA = false
+  option.MAIndex = 1
+  option.MA = [
+    {
+      name: "MA5",
+      color: "#ff4d71"
+    },
+    {
+      name: "MA10",
+      color: "#67ff7c"
+    },
+    {
+      name: "MA20",
+      color: "#16c5ff"
+    },
+    {
+      name: "MA30",
+      color: "#f6d026"
+    },
+    { 
+      name: "MA60", 
+      color: "#e03bfa"
+    }
+  ];
   
   it('test klineSetChart', () => {
     let kline = new klineSetChart(option);

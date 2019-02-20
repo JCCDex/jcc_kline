@@ -2,6 +2,7 @@ import KLineSetChartController from './KLineSetChart';
 import KLineMobileSetChartController from './KLineMobileSetChart';
 import option from './KLineOption';
 import mobileOption from './KLineMobileOption';
+import { getCandleOptionByMA } from './ChartOptionUtils';
 
 class KLineController {
     constructor(platform, klineConfig) {
@@ -9,9 +10,11 @@ class KLineController {
         var config;
         if (platform === 'pc') {
             config = merge(option, klineConfig);
+            getCandleOptionByMA(config);
             this.setKLineChart = new KLineSetChartController(config);
         } else {
             config = merge(mobileOption, klineConfig);
+            getCandleOptionByMA(config);
             this.setMobileKLineChart = new KLineMobileSetChartController(config);
         }
     }
@@ -76,8 +79,8 @@ class KLineController {
         this.setMobileKLineChart.setTimeDivisionsOption(size);
     }
 
-    updateMobileOption(data) {
-        return this.setMobileKLineChart.updateOption(data);
+    updateMobileOption(data, cycle) {
+        return this.setMobileKLineChart.updateOption(data, cycle);
     }
 
     updateTimeDivisionOption(timeDivisionData, divisionData) {
