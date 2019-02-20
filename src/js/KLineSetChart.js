@@ -138,7 +138,7 @@ class KLineSetChartController {
             let length = data.values.length - 1;
             toolTipData = {
                 time: data.categoryData[length],
-                volume: formatDecimal(data.values[length][5], 0, 5),
+                volume: formatDecimal(data.values[length][5], 2, 5),
                 opening: data.values[length][0].toFixed(6),
                 closing: data.values[length][1].toFixed(6),
                 max: data.values[length][3].toFixed(6),
@@ -210,7 +210,7 @@ class KLineSetChartController {
                     toolTipData = {
                         seriesName: param.seriesName,
                         time: param.name,
-                        volume: formatDecimal(data.values[index][5], 0, 5),
+                        volume: formatDecimal(data.values[index][5], 2, 5),
                         opening: data.values[index][0].toFixed(6),
                         closing: data.values[index][1].toFixed(6),
                         max: data.values[index][3].toFixed(6),
