@@ -10,11 +10,7 @@
         </div>
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-fullScreen-zh' : 'mobile-tooltip-fullScreen-en'" v-if="toolTipData">
           <div style="font-size:0.18rem; margin-top: 0.1rem;　height:0.2rem">
-            <font class="mobile-tooltip-data-ma5">MA5: </font><font class="tooltip-ma5-fullScreen">{{this.toolTipData.MA5}}</font>
-            <font class="mobile-tooltip-data-ma10">MA10: </font><font class="tooltip-ma10-fullScreen">{{this.toolTipData.MA10}}</font>
-            <font class="mobile-tooltip-data-ma20">MA20: </font><font class="tooltip-ma20-fullScreen">{{this.toolTipData.MA20}}</font>
-            <font class="mobile-tooltip-data-ma30">MA30: </font><font class="tooltip-ma30-fullScreen">{{this.toolTipData.MA30}}</font>
-            <font class="mobile-tooltip-data-ma60">MA60: </font><font class="tooltip-ma60-fullScreen">{{this.toolTipData.MA60}}</font>
+            <font v-for="(MAitem, index) in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '0.36rem'}">{{MAitem.name}}<font>:&nbsp;{{ getMATipData(MAitem.name) }}</font></font><br>
           </div>
           <div style="font-size:0.18rem; margin-left: -0.78rem; margin-top: 0.05rem;">
             <font class="mobile-tooltip-name-fullScreen">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
@@ -112,6 +108,31 @@ export default {
   },
   created() {
     this.message = getLanguage();
+    if (this.klineConfig.defaultMA !== false) {
+      this.klineConfig.defaultMA = true;
+      this.klineConfig.MA = [
+        {
+          name: "MA5",
+          color: "#ff4d71"
+        },
+        {
+          name: "MA10",
+          color: "#67ff7c"
+        },
+        {
+          name: "MA20",
+          color: "#16c5ff"
+        },
+        {
+          name: "MA30",
+          color: "#f6d026"
+        },
+        { 
+          name: "MA60", 
+          color: "#e03bfa"
+        }
+      ];
+    }
     this.kline = new KLineController(this.platform, this.klineConfig);
   },
   mounted() {
@@ -129,7 +150,13 @@ export default {
     switchBase() {
       this.show = !this.show;
     },
-   
+    getMATipData(name) {
+      for( let tipData of this.toolTipData.MAData) {
+        if (tipData.name === name) {
+          return tipData.data
+        }
+      }
+    },
     chooseCycle(cycle) {
       if (this.cycle === cycle) {
         return;
