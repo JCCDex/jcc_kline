@@ -108,6 +108,7 @@ class KLineMobileSetChartController {
 
     updateOption(data, cycle) {
         let length = data.values.length - 1;
+        let MAConfig = this.klineConfig.MA;
         if (!toolTipData) {
             toolTipData = {
                 time: data.categoryData[length],
@@ -116,18 +117,20 @@ class KLineMobileSetChartController {
                 closing: data.values[length][1].toFixed(6),
                 max: data.values[length][3].toFixed(6),
                 min: data.values[length][2].toFixed(6),
-                MA5: calculateMA(5, data)[length],
-                MA10: calculateMA(10, data)[length],
-                MA20: calculateMA(20, data)[length],
-                MA30: calculateMA(30, data)[length],
-                MA60: calculateMA(60, data)[length],
+                MAData: [],
                 color: data.volumes[length][2],
                 type: 'normal'
             };
+            for (var i = 0; i < MAConfig.length; i++) {
+                toolTipData.MAData[i] = {
+                    name: MAConfig[i].name,
+                    data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[length]
+                };
+            }
         }
         let updateOption = {
             xAxis: this.getXAxis(data, cycle),
-            tooltip: this.getToolTip(data),
+            tooltip: this.getToolTip(data, MAConfig),
             series: this.getSeries(data)
         };
         merge(config, updateOption);
@@ -222,7 +225,7 @@ class KLineMobileSetChartController {
     }
 
     getSeries(data) {
-        return [
+        var s = [
             {
                 type: 'candlestick',
                 data: data.values
@@ -263,9 +266,23 @@ class KLineMobileSetChartController {
                 yAxisIndex: 1
             }
         ];
+        if (this.klineConfig.defaultMA !== false) {
+            return s;
+        } else {
+            let MASeries = s[1];
+            let MAIndex = this.klineConfig.MAIndex;
+            s.splice(1, 5);
+            for (let MA of this.klineConfig.MA) {
+                s.splice(MAIndex, 0, JSON.parse(JSON.stringify(MASeries)));
+                s[MAIndex].name = MA.name;
+                s[MAIndex].data = calculateMA(MA.name.substring(2) * 1, data);
+                MAIndex++;
+            }
+            return s;
+        }
     }
 
-    getToolTip(data) {
+    getToolTip(data, MAConfig) {
         return {
             formatter: function (param) {
                 param = param[0];
@@ -277,14 +294,16 @@ class KLineMobileSetChartController {
                     closing: data.values[index][1].toFixed(6),
                     max: data.values[index][3].toFixed(6),
                     min: data.values[index][2].toFixed(6),
-                    MA5: calculateMA(5, data)[index],
-                    MA10: calculateMA(10, data)[index],
-                    MA20: calculateMA(20, data)[index],
-                    MA30: calculateMA(30, data)[index],
-                    MA60: calculateMA(60, data)[index],
+                    MAData: [],
                     color: data.volumes[index][2],
                     type: 'normal'
                 };
+                for (var i = 0; i < MAConfig.length; i++) {
+                    toolTipData.MAData[i] = {
+                        name: MAConfig[i].name,
+                        data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[index]
+                    };
+                }
             }
         };
     }

@@ -14,6 +14,30 @@ describe('test KLineMobileSetChart', () => {
   }
   let mobileData = {klineSize:size}
   let cycle = 'hour'
+  mobileOption.defaultMA = true
+  mobileOption.MAIndex = 1
+  mobileOption.MA = [
+    {
+      name: "MA5",
+      color: "#ff4d71"
+    },
+    {
+      name: "MA10",
+      color: "#67ff7c"
+    },
+    {
+      name: "MA20",
+      color: "#16c5ff"
+    },
+    {
+      name: "MA30",
+      color: "#f6d026"
+    },
+    { 
+      name: "MA60", 
+      color: "#e03bfa"
+    }
+  ];
 
   it('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
@@ -54,7 +78,8 @@ describe('test KLineMobileSetChart', () => {
     expect(mobileKline.kline).not.toBeNull();
   })
 
-  it('test mobile updateOption', () => {
+  it('test mobile updateOption if defaultMA is false', () => {
+    mobileOption.defaultMA = false
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
