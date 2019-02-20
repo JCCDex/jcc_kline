@@ -11,7 +11,7 @@
         <!-- tooltip 数据显示 -->
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
           <div style="font-size:0.16rem; margin-top: 0.1rem;">
-            <font v-for="(MAitem, index) in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '0.14rem'}">{{MAitem.name}}<font>:&nbsp;{{toolTipData.MA5}}</font></font><br>
+            <font v-for="(MAitem, index) in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '0.14rem'}">{{MAitem.name}}<font>:&nbsp;{{ getMATipData(MAitem.name) }}</font></font><br>
           </div>
           <div style="font-size:0.16rem; margin-left: -0.1rem; margin-top: 0.05rem;">
             <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
@@ -132,6 +132,13 @@ export default {
         return;
       }
       this.$emit("listenToChildEvent", cycle)
+    },
+    getMATipData(name) {
+      for( let tipData of this.toolTipData.MAData) {
+        if (tipData.name === name) {
+          return tipData.data
+        }
+      }
     },
     getToolTipData() {
       if (this.cycle !== 'everyhour') {
