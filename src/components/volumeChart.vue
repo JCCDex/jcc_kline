@@ -1,18 +1,18 @@
 <template>
-    <div id="depth" ref="depth" :style="{height: `${depthSize.height}`, width: `${depthSize.width}`}"></div>
+  <div ref="volume" :style="{height: `${volumeSize.height}`, width: `${volumeSize.width}`}"></div>
 </template>
 <script>
-import { getDepthData } from '../js/processData'
+import { splitData, getDepthData } from '../js/processData'
 import ChartController from '../js/Charts'
 import { getLanguage } from '../js/utils'
 export default {
-  name: "depth",
+  name: "volume",
   data() {
     return {
-      depth: null,
+      volume: null,
       coinType: '',
-      chartType: 'depth',
-      depthSize: {
+      chartType: 'volume',
+      volumeSize: {
         height: '',
         width: ''
       }
@@ -36,14 +36,15 @@ export default {
   watch: {
     klineDataObj() {
       if (this.klineDataObj) {
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
-        if (depthData) {
+        let klineData = splitData(this.klineDataObj.klineData, this.platform)
+        let depthData = getDepthData(this.klineDataObj.volumeData, this.klineDataObj.coinType);
+        if (klineData && depthData) {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
-            this.depth.setDepthOption(depthData)
+            this.volume.setVolumeOption(klineData, depthData)
             this.coinType = this.klineDataObj.coinType
           }else {
-            this.depth.updateDepthOption(depthData)
+            this.volume.updateVolumeOption(klineData, depthData)
           }
         }
       }
@@ -54,8 +55,8 @@ export default {
           width: this.klineConfig.size.width + 'px',
           height: this.klineConfig.size.height + 'px'
         }
-        if (JSON.stringify(size) !== JSON.stringify(this.depthSize) && this.klineConfig.defaultSize === false) {
-          this.depthSize = {
+        if (JSON.stringify(size) !== JSON.stringify(this.volumeSize) && this.klineConfig.defaultSize === false) {
+          this.volumeSize = {
             width: this.klineConfig.size.width + 'px',
             height: this.klineConfig.size.height + 'px'
           }
@@ -67,20 +68,20 @@ export default {
   created() {
     if (this.klineConfig.platform === 'pc') {
       if (!this.klineConfig.defaultSize) {
-        this.depthSize.height = this.klineConfig.size.height + 'px'
-        this.depthSize.width = this.klineConfig.size.width + 'px'
+        this.volumeSize.height = this.klineConfig.size.height + 'px'
+        this.volumeSize.width = this.klineConfig.size.width + 'px'
       } else {
-        this.depthSize = {
+        this.volumeSize = {
           height: '100%',
           width: '572px'
         }
       }
     } else {
-      this.depthSize.height = this.klineConfig.depthSize.height + 'px'
-      this.depthSize.width = this.klineConfig.depthSize.width + 'px'
+      this.volumeSize.height = this.klineConfig.volumeSize.height + 'px'
+      this.volumeSize.width = this.klineConfig.volumeSize.width + 'px'
     }
-    this.klineConfig.chartType = 'depth';
-    this.depth = new ChartController(this.klineConfig);
+    this.klineConfig.chartType = 'volume';
+    this.volume = new ChartController(this.klineConfig);
   },
   mounted() {
     this.init();
@@ -96,21 +97,21 @@ export default {
   },
   methods: {
     init() {
-      this.depth.initDepth(this.$refs.depth);
+      this.volume.initVolume(this.$refs.volume);
       this.resize();
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
         let isFullScreen = this.$parent.getState()
-        this.depth.resizeDepthChart(this.$refs.depth, isFullScreen, this.klineConfig.size);
+        this.volume.resizeVolumeChart(this.$refs.volume, isFullScreen, this.klineConfig.size);
       }
       
     },
     clearChart() {
-      this.depth.clearDepthEcharts();
+      this.volume.clearVolumeEcharts();
     },
     dispose() {
-      this.depth.disposeDepthEChart()
+      this.volume.disposeVolumeEChart()
     }
   }
 }

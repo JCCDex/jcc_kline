@@ -88,7 +88,7 @@ export default {
           this.kline.showMobileLoading()
           if (this.klineDataObj.cycle !== "everyhour") {
             this.cycle = this.klineDataObj.cycle
-            this.kline.setMobileOption(this.klineDataObj, this.cycle)
+            this.kline.setMobileOption(this.klineDataObj)
           } else {
             this.cycle = this.klineDataObj.cycle
             this.kline.setTimeDivisionsOption(this.klineDataObj.klineSize)
