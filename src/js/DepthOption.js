@@ -74,8 +74,8 @@ var depthOption = {
             },
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示
-                color: '#b9cadd', // 刻度标签文字的颜色
-                fontSize: 10 // 刻度标签文字的字体大小
+                color: '#9aa4ac', // 刻度标签文字的颜色
+                fontSize: 12 // 刻度标签文字的字体大小
             }
         }
     ],
@@ -90,8 +90,6 @@ var depthOption = {
             },
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示刻度标签
-                onZero: false,
-                margin: 0, // 刻度标签与轴线之间的距离
                 color: '#9aa4ac', // 刻度标签文字的颜色
                 fontSize: 12, // 文字的字体大小
             },
