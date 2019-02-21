@@ -21,9 +21,9 @@
             <font class="mobile-tooltip-name-fullScreen">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
             <font class="mobile-tooltip-name-fullScreen">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
             <font class="mobile-tooltip-name-fullScreen">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
-          </div>
-          <div style="float:right;margin-top: -0.8rem">
-            <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
+            <div style="float:right">
+              <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
+            </div>
           </div>
         </div>
 

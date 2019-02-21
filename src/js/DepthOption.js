@@ -144,15 +144,15 @@ var mobileDepthOption = {
             show: true, // 是否显示
             top: 30, // 图例组件离容器上侧的距离,30代表30像素
             itemGap: 20, // 图例每项之间的间隔。横向布局时为水平间隔，纵向布局时为纵向间隔。
-            itemWidth: 14, // 图例标记的图形宽度
-            itemHeight: 14, // 图例标记的图形高度
+            itemWidth: 22, // 图例标记的图形宽度
+            itemHeight: 22, // 图例标记的图形高度
             selectedMode: false, // 图例选择的模式，控制是否可以通过点击图例改变系列的显示状态。默认开启图例选择，可以设成 false 关闭
             data: [{ // 图例的数据数组
                 name: 'buy', // 图例项的名称，应等于某系列的name值
                 icon: 'rect', // 标记类型,rect代表矩形
                 textStyle: { // 图例项的文本样式
                     color: '#ee4b4b',
-                    fontSize: 14,
+                    fontSize: 22,
                     fontFamily: 'Microsoft YaHei'
                 }
 
@@ -161,7 +161,7 @@ var mobileDepthOption = {
                 icon: 'rect', // 标记类型,rect代表矩形
                 textStyle: { // 图例项的文本样式
                     color: '#09e988',
-                    fontSize: 14,
+                    fontSize: 22,
                     fontFamily: 'Microsoft YaHei'
 
                 }
@@ -200,7 +200,7 @@ var mobileDepthOption = {
                 show: true,
                 label: { // 指示器样式
                     backgroundColor: '#232b34', // 背景色
-                    fontSize:16, // 字体大小
+                    fontSize:22, // 字体大小
                 }
             },
             axisTick: { // 坐标轴刻度相关设置
