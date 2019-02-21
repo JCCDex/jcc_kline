@@ -1,11 +1,13 @@
 import ChartController from 'js/Charts.js'
-import { getDepthData } from 'js/processData'
+import { splitData, getDepthData } from 'js/processData'
 import testData from '../../testData/data.json'
 import timeSharingData from '../../testData/timeSharingData.json'
 
 describe('test Chart', () => {
 
   let depthData = getDepthData(testData.depthData, testData.coinType)
+  let pcData = splitData(testData.klineData, 'pc')
+  let data = Object.assign({}, pcData, depthData);
   let klineConfig = {
     platform: 'pc',
     chartType: 'candle',
@@ -213,7 +215,14 @@ describe('test Chart', () => {
     expect(volume.setVolumeChart.volume).not.toBeNull()
   })
 
+  it('test initVolumeChart if platform not pc', () => {
+    volumeConfig.platform = 'mobile'
+    let volume = new ChartController(volumeConfig)
+    expect(volume).toBeInstanceOf(ChartController)
+  })
+
   it('test resizeVolumeChart', () => {
+    volumeConfig.platform = 'pc'
     let volume = new ChartController(volumeConfig)
     const element = document.createElement('div');
     volume.initVolumeChart(element)
@@ -225,10 +234,35 @@ describe('test Chart', () => {
     let volume = new ChartController(volumeConfig)
     const element = document.createElement('div');
     volume.initVolumeChart(element)
-    volume.setVolumeOption()
-    expect(volume.setVolumeChart.volume).not.toBeNull()
+    volume.setVolumeOption(data)
+    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
   })
 
+  it('test updateVolumeOption', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.updateVolumeOption(data)
+    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
+  })
 
+  it('test clearVolumeEcharts', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.clearVolumeEcharts()
+    expect(volume.setVolumeChart.volume.getOption().series).not.toBeNull()
+  })
+
+  it('test disposeVolumeEcharts', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.disposeVolumeEcharts()
+    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
+  })
 
 })

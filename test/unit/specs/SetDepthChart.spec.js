@@ -10,7 +10,7 @@ describe('test SetDepthChart', () => {
   let depthData = getDepthData(testData.depthData, testData.coinType)
   depthOption.platform = 'pc'
 
-  it('test klineSetChart', () => {
+  it('test depthSetChart', () => {
     let depth = new SetDepthChart(depthOption);
     expect(depth).toBeInstanceOf(SetDepthChart)
   })
