@@ -195,4 +195,40 @@ describe('test Chart', () => {
     expect(depth).not.toBeNull()
   })
 
+  // 测试深度图绘制方法
+  let volumeConfig = {
+    platform: 'pc',
+    chartType: 'volume'
+  }
+
+  it('test ChartController if platform is pc and chartType is volume', () => {
+    let volume = new ChartController(volumeConfig)
+    expect(volume).toBeInstanceOf(ChartController)
+  })
+
+  it('test initVolumeChart', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    expect(volume.setVolumeChart.volume).not.toBeNull()
+  })
+
+  it('test resizeVolumeChart', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.resizeVolumeChart(element)
+    expect(volume.setVolumeChart.volume).not.toBeNull()
+  })
+
+  it('test setVolumeOption', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption()
+    expect(volume.setVolumeChart.volume).not.toBeNull()
+  })
+
+
+
 })

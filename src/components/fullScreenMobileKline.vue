@@ -10,7 +10,7 @@
         </div>
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-fullScreen-zh' : 'mobile-tooltip-fullScreen-en'" v-if="toolTipData">
           <div style="font-size:0.18rem; margin-top: 0.1rem;　height:0.2rem">
-            <font v-for="(MAitem, index) in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '0.36rem'}">{{MAitem.name}}<font>:&nbsp;{{ getMATipData(MAitem.name) }}</font></font><br>
+            <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '0.36rem'}">{{MAitem.name}}<font>:&nbsp;{{ getMATipData(MAitem.name) }}</font></font><br>
           </div>
           <div style="font-size:0.18rem; margin-left: -0.78rem; margin-top: 0.05rem;">
             <font class="mobile-tooltip-name-fullScreen">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>

@@ -17,7 +17,7 @@
           <font class="tooltip-data-name">{{message.min}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font>
           <font class="tooltip-data-name">{{message.closing}}</font><font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font><br>
         <div v-if = "outspreadMA">
-          <font v-for="(MAitem, index) in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{ getMAData(MAitem.name) }}</font></font>
+          <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{ getMAData(MAitem.name) }}</font></font>
         </div>
       </div>
       <!-- kline -->
