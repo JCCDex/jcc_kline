@@ -38,15 +38,14 @@ export default {
       if (this.klineDataObj) {
         let klineData = splitData(this.klineDataObj.klineData, this.platform)
         let depthData = getDepthData(this.klineDataObj.volumeData, this.klineDataObj.coinType);
-        if (klineData && depthData) {
+          let data = Object.assign({}, klineData, depthData);
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
-            this.volume.setVolumeOption(klineData, depthData)
+            this.volume.setVolumeOption(data)
             this.coinType = this.klineDataObj.coinType
           }else {
-            this.volume.updateVolumeOption(klineData, depthData)
+            this.volume.updateVolumeOption(data)
           }
-        }
       }
     },
     klineConfig() {
@@ -97,21 +96,20 @@ export default {
   },
   methods: {
     init() {
-      this.volume.initVolume(this.$refs.volume);
+      this.volume.initVolumeChart(this.$refs.volume);
       this.resize();
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        let isFullScreen = this.$parent.getState()
-        this.volume.resizeVolumeChart(this.$refs.volume, isFullScreen, this.klineConfig.size);
+        // let isFullScreen = this.$parent.getState()
+        this.volume.resizeVolumeChart(this.$refs.volume);
       }
-      
     },
     clearChart() {
       this.volume.clearVolumeEcharts();
     },
     dispose() {
-      this.volume.disposeVolumeEChart()
+      this.volume.disposeVolumeEcharts()
     }
   }
 }

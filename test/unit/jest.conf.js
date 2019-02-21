@@ -38,6 +38,7 @@ module.exports = {
     '!src/js/KLineOption.js',
     '!src/js/TimeSharingOption.js',
     '!src/js/DepthOption.js',
+    '!src/js/VolumeChartOption.js',
     '!src/main.js',
     '!**/node_modules/**'
   ]

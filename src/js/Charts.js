@@ -1,7 +1,9 @@
 import DepthChart from './SetDepthChart';
 import { depthOption, mobileDepthOption } from './DepthOption';
 import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
+import volumeOption from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
+import VolumeChart from './SetVolumeChart.js';
 
 class ChartController {
     constructor(chartsConfig) {
@@ -21,6 +23,11 @@ class ChartController {
             } else {
                 merge(mobileTimeSharingOption, chartsConfig);
                 this.setTimeSharing = new TimeSharingChart(mobileTimeSharingOption);
+            }
+        } else if (chartsConfig.chartType === 'volume') {
+            if (chartsConfig.platform === 'pc') {
+                merge(volumeOption, chartsConfig);
+                this.setVolumeChart = new VolumeChart(volumeOption);
             }
         }
     }
@@ -78,6 +85,30 @@ class ChartController {
 
     disposeTimeSharingEChart() {
         this.setTimeSharing.disposeTimeSharingEChart();
+    }
+
+    initVolumeChart(DOM) {
+        this.setVolumeChart.initVolumeECharts(DOM);
+    }
+
+    resizeVolumeChart(DOM) {
+        this.setVolumeChart.resizeECharts(DOM);
+    }
+
+    setVolumeOption(data) {
+        this.setVolumeChart.setVolumeOption(data);
+    }
+
+    updateVolumeOption(data) {
+        this.setVolumeChart.updateVolumeOption(data);
+    }
+
+    clearVolumeEcharts() {
+        this.setVolumeChart.clearVolumeEcharts();
+    }
+
+    disposeVolumeEcharts() {
+        this.setVolumeChart.disposeVolumeEChart();
     }
 
 }
