@@ -252,7 +252,7 @@ var mobileDepthOption = {
             },
             areaStyle: { // 区域填充样式
                 normal: {
-                    color: '#ee4b4b60'
+                    color: 'rgba(238,75,75,0.3)' // 填充区颜色
                 }
             }
         },
@@ -264,9 +264,9 @@ var mobileDepthOption = {
                 color: '#09e988',
                 width: 2 // 线宽
             },
-            areaStyle: {
+            areaStyle: { // 区域填充样式
                 normal: {
-                    color: '#09e98860'
+                    color: 'rgba(9,233,136,0.3)' // 填充区颜色
                 }
             }
         }

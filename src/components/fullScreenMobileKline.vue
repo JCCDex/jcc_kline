@@ -21,12 +21,9 @@
             <font class="mobile-tooltip-name-fullScreen">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
             <font class="mobile-tooltip-name-fullScreen">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
             <font class="mobile-tooltip-name-fullScreen">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
-            <div style="float:right">
-              <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
-            </div>
+            <font class="mobile-tooltip-name-fullScreen">{{message.volumeMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
           </div>
         </div>
-
         <!-- timeDivision tootip 数据显示 -->
         <div :class="this.message.language === 'en' ? 'time-sharing-en-data' : 'time-sharing-zh-data'" v-if="timeDivisionTipData">
           <font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.time}}</font>
