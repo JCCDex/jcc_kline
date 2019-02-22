@@ -5,6 +5,7 @@ import testData from '../../testData/data.json'
 
 volumeOption.platform = 'pc'
 volumeOption.chartType = 'volume'
+volumeOption.defaultSize = true
 let depthData = getDepthData(testData.depthData, testData.coinType)
 let pcData = splitData(testData.klineData, 'pc')
 let data = Object.assign({}, pcData, depthData);
@@ -58,13 +59,13 @@ describe('test SetVolumeChart', () => {
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data)
-        volumeChart.resizeECharts(element)
+        volumeChart.resizeECharts(element, true)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 
-    it('test resizeECharts if defaultVolumeSize is true', () => {
-        volumeOption.defaultVolumeSize = false
-        volumeOption.size = {
+    it('test resizeECharts if defaultSize is true', () => {
+        volumeOption.defaultSize = false
+        let size = {
             width: 600,
             height: 560
         }
@@ -72,12 +73,12 @@ describe('test SetVolumeChart', () => {
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data)
-        volumeChart.resizeECharts(element, false)
+        volumeChart.resizeECharts(element, false, size)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 
     it('test resizeECharts if not DOM', () => {
-        volumeOption.defaultVolumeSize = true
+        volumeOption.defaultSize = true
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)

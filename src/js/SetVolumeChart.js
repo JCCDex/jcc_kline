@@ -4,7 +4,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
-import { getClientWidth, getLanguage } from './utils';
+import { getClientWidth, getLanguage, getClientHeight } from './utils';
 
 var volumeOption;
 var oldVolumeData;
@@ -21,12 +21,10 @@ class VolumeChart {
                     if (DOM) {
                         DOM.style.height = resizeSize.height + 'px';
                         DOM.style.width = resizeSize.width + 'px';
-                        klineSize.width = resizeSize.width;
-                        klineSize.height = resizeSize.height;
                     }
                 };
                 resizeContainer(this);
-                this.kline.resize();
+                this.volume.resize();
             } else {
                 let size = getClientWidth();
                 let resizeContainer = () => {
@@ -77,7 +75,7 @@ class VolumeChart {
                 DOM.style.width = getClientWidth() + 'px';
             };
             resizeContainer(this);
-            this.kline.resize();
+            this.volume.resize();
         }
         if (oldVolumeData) {
             this.updateVolumeOption(oldVolumeData);
@@ -104,7 +102,7 @@ class VolumeChart {
 
     /* 绘制VolumeChart开始 */
     setVolumeOption(data) {
-        oldVolumeData = data
+        oldVolumeData = data;
         if (data) {
             volumeOption = JSON.parse(JSON.stringify(this.volumeConfig));
             this.volume.hideLoading();
@@ -120,7 +118,7 @@ class VolumeChart {
     }
 
     updateVolumeOption(data) {
-        oldVolumeData = data
+        oldVolumeData = data;
         if (this.volume.getOption()) {
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data),
@@ -180,7 +178,7 @@ class VolumeChart {
     }
 
     clearVolumeEcharts() {
-        oldKlineData = null;
+        oldVolumeData = null;
         this.volume.clear();
     }
 

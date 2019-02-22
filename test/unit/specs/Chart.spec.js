@@ -200,7 +200,8 @@ describe('test Chart', () => {
   // 测试深度图绘制方法
   let volumeConfig = {
     platform: 'pc',
-    chartType: 'volume'
+    chartType: 'volume',
+    defaultSize: true
   }
 
   it('test ChartController if platform is pc and chartType is volume', () => {
@@ -221,12 +222,12 @@ describe('test Chart', () => {
     expect(volume).toBeInstanceOf(ChartController)
   })
 
-  it('test resizeVolumeChart', () => {
+  it('test resizeVolumeChart if not fullScreen', () => {
     volumeConfig.platform = 'pc'
     let volume = new ChartController(volumeConfig)
     const element = document.createElement('div');
     volume.initVolumeChart(element)
-    volume.resizeVolumeChart(element)
+    volume.resizeVolumeChart(element, false)
     expect(volume.setVolumeChart.volume).not.toBeNull()
   })
 
