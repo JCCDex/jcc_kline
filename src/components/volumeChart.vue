@@ -101,8 +101,8 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        // let isFullScreen = this.$parent.getState()
-        this.volume.resizeVolumeChart(this.$refs.volume);
+        let isFullScreen = this.$parent.getState()
+        this.volume.resizeVolumeChart(this.$refs.volume, isFullScreen, this.klineConfig.size);
       }
     },
     clearChart() {
