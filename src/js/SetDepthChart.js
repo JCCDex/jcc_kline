@@ -4,7 +4,7 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
-import { getClientWidth, getLanguage, getClientHeight } from './utils';
+import { getClientWidth, getLanguage, getClientHeight, formatDecimal } from './utils';
 
 var depthSize = {
     width: 0,
@@ -12,6 +12,8 @@ var depthSize = {
 };
 var depthOption;
 var oldDepthData;
+var amountsPrecision = 2;
+var pricePrecision = 6;
 
 class DepthChart {
     constructor(configs) {
@@ -124,6 +126,8 @@ class DepthChart {
 
     /* 绘制marketDepth开始 */
     setDepthOption(data) {
+        pricePrecision = data.precision.price ? data.precision.price : pricePrecision
+        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision
         oldDepthData = data;
         if (data) {
             depthOption = JSON.parse(JSON.stringify(this.depthConfig));
@@ -152,6 +156,8 @@ class DepthChart {
     }
 
     updateDepthOption(data) {
+        pricePrecision = data.precision.price ? data.precision.price : pricePrecision
+        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision
         let message = getLanguage();
         let buy = message.buy;
         let sell = message.sell;
@@ -208,27 +214,27 @@ class DepthChart {
                 if (param) {
                     if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
                         return [
-                            '<div style="text-align:left; '+fontSize+'">',
+                            '<div style="text-align:left; ' + fontSize + '">',
                             '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.sellPrice +
-                            param.data[0] +
+                            formatDecimal(param.data[0], pricePrecision, true) +
                             '<br/>',
                             '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.sellTotal +
-                            param.data[1] +
+                            formatDecimal(param.data[1], amountsPrecision, true) +
                             '<br/>',
                             '</div>'
                         ].join('');
                     } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
                         return [
-                            '<div style="text-align:left; '+fontSize+'">',
+                            '<div style="text-align:left; ' + fontSize + '">',
                             '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.buyPrice +
-                            param.data[0] +
+                            formatDecimal(param.data[0], pricePrecision, true) +
                             '<br/>',
                             '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.buyTotal +
-                            param.data[1] +
+                            formatDecimal(param.data[1], amountsPrecision, true) +
                             '<br/>',
                             '</div>'
                         ].join('');

@@ -71,9 +71,14 @@ export default {
     klineDataObj() {
       if (this.klineDataObj) {
         this.message = getLanguage();
+        let precision = {
+          price: this.klineDataObj.pricePrecision,
+          amount: this.klineDataObj.amountPrecision
+        }
         let klineData = splitData(this.klineDataObj.klineData, this.platform)
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
+        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType, precision);
         let data = Object.assign({}, klineData, depthData);
+        data.precision = precision;
         this.klineData = data
         if (data.values && data.volumes && data.categoryData) {
           if(this.cycle !== this.klineDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {

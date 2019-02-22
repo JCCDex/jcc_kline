@@ -81,9 +81,14 @@ export default {
     klineDataObj() {
       if (this.klineDataObj) {
         this.message = getLanguage();
+        let precision = {
+          price: this.klineDataObj.pricePrecision,
+          amount: this.klineDataObj.amountPrecision
+        }
         if (this.klineDataObj.cycle !== "everyhour") {
           var mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
           this.klineDataObj.categoryData = mobileKlineData.categoryData
+          mobileKlineData.precision = precision
         }
         if (this.klineDataObj.cycle !== this.cycle) {
           this.clearChart()
@@ -103,6 +108,7 @@ export default {
         }
         if (this.klineDataObj.cycle === "everyhour") {
           let timeDivisionData = this.klineDataObj.timeDivisionData
+          timeDivisionData.precision = precision
           let divisionData = handleDivisionData(timeDivisionData)
           this.divisionTime = divisionData.divisionTime
           if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {

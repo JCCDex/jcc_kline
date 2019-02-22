@@ -12,6 +12,8 @@ var cycle;
 var config;
 var timeDivisionconfig;
 var toolTipData;
+var amountsPrecision = 2;
+var pricePrecision = 6;
 
 
 class KLineMobileSetChartController {
@@ -108,20 +110,22 @@ class KLineMobileSetChartController {
     }
 
     updateOption(data) {
+        pricePrecision = data.precision.price ? data.precision.price : pricePrecision
+        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision
         let length = data.values.length - 1;
         if (!toolTipData) {
             toolTipData = {
                 time: data.categoryData[length],
-                volume: formatDecimal(data.values[length][5], 2, 5),
-                opening: data.values[length][0].toFixed(6),
-                closing: data.values[length][1].toFixed(6),
-                max: data.values[length][3].toFixed(6),
-                min: data.values[length][2].toFixed(6),
-                MA5: calculateMA(5, data)[length],
-                MA10: calculateMA(10, data)[length],
-                MA20: calculateMA(20, data)[length],
-                MA30: calculateMA(30, data)[length],
-                MA60: calculateMA(60, data)[length],
+                volume: formatDecimal(data.values[length][5], amountsPrecision, true),
+                opening: formatDecimal(data.values[length][0], pricePrecision, true),
+                closing: formatDecimal(data.values[length][1], pricePrecision, true),
+                max: formatDecimal(data.values[length][3], pricePrecision, true),
+                min: formatDecimal(data.values[length][2], pricePrecision, true),
+                MA5: formatDecimal(calculateMA(5, data)[length], pricePrecision, true),
+                MA10: formatDecimal(calculateMA(10, data)[length], pricePrecision, true),
+                MA20: formatDecimal(calculateMA(20, data)[length], pricePrecision, true),
+                MA30: formatDecimal(calculateMA(30, data)[length], pricePrecision, true),
+                MA60: formatDecimal(calculateMA(60, data)[length], pricePrecision, true),
                 color: data.volumes[length][2],
                 type: 'normal'
             };
@@ -141,16 +145,16 @@ class KLineMobileSetChartController {
                     var index = param.data[0];
                     toolTipData = {
                         time: param.name,
-                        volume: formatDecimal(data.values[index][5], 2, 5),
-                        opening: data.values[index][0].toFixed(6),
-                        closing: data.values[index][1].toFixed(6),
-                        max: data.values[index][3].toFixed(6),
-                        min: data.values[index][2].toFixed(6),
-                        MA5: calculateMA(5, data)[index],
-                        MA10: calculateMA(10, data)[index],
-                        MA20: calculateMA(20, data)[index],
-                        MA30: calculateMA(30, data)[index],
-                        MA60: calculateMA(60, data)[index],
+                        volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+                        opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                        closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                        max: formatDecimal(data.values[index][3], pricePrecision, true),
+                        min: formatDecimal(data.values[index][2], pricePrecision, true),
+                        MA5: formatDecimal(calculateMA(5, data)[index], pricePrecision, true),
+                        MA10: formatDecimal(calculateMA(10, data)[index], pricePrecision, true),
+                        MA20: formatDecimal(calculateMA(20, data)[index], pricePrecision, true),
+                        MA30: formatDecimal(calculateMA(30, data)[index], pricePrecision, true),
+                        MA60: formatDecimal(calculateMA(60, data)[index], pricePrecision, true),
                         color: data.volumes[index][2],
                         type: 'normal'
                     };
@@ -205,14 +209,16 @@ class KLineMobileSetChartController {
     }
 
     updateTimeDivisionOption(timeDivisionData, data) {
+        pricePrecision = timeDivisionData.precision.price ? timeDivisionData.precision.price : pricePrecision
+        amountsPrecision = timeDivisionData.precision.amount ? timeDivisionData.precision.amount : amountsPrecision
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
         if (!toolTipData) {
             toolTipData = {
                 time: formatTime(timeDivisionData[length][3]),
-                volume: formatDecimal(timeDivisionData[length][1], 2, 5),
-                price: timeDivisionData[length][2].toFixed(6),
-                averagePrice: averages[length].toFixed(6),
+                volume: formatDecimal(timeDivisionData[length][1], amountsPrecision, true),
+                price: formatDecimal(timeDivisionData[length][2], pricePrecision, true),
+                averagePrice: formatDecimal(averages[length], pricePrecision, true),
                 color: volumes[length][2]
             };
         }
@@ -245,9 +251,9 @@ class KLineMobileSetChartController {
                     let data = timeDivisionData[dataIndex];
                     toolTipData = {
                         time: formatTime(data[3]),
-                        volume: formatDecimal(data[1], 2, 5),
-                        price: data[2].toFixed(6),
-                        averagePrice: averages[dataIndex].toFixed(6),
+                        volume: formatDecimal(data[1], amountsPrecision, true),
+                        price: formatDecimal(data[2], pricePrecision, true),
+                        averagePrice: formatDecimal(averages[dataIndex], pricePrecision, true),
                         color: volumes[dataIndex][2]
                     };
 

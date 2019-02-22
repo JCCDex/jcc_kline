@@ -36,7 +36,12 @@ export default {
   watch: {
     klineDataObj() {
       if (this.klineDataObj) {
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType);
+        let precision = {
+          price: this.klineDataObj.pricePrecision,
+          amount: this.klineDataObj.amountPrecision
+        }
+        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType, precision);
+        depthData.precision = precision;
         if (depthData) {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
