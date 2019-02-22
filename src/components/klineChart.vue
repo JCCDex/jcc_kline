@@ -27,6 +27,7 @@
         </div>
       </div> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
+      <!-- <Volume ref = 'volume' v-show = "showChart === 'candle'" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></Volume> -->
       <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
@@ -36,6 +37,7 @@
 import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
+// import Volume from './volumeChart.vue'
 import { getLanguage } from '../js/utils'
 // import TimeSharing from './timeSharing.vue'
 export default {
@@ -43,6 +45,7 @@ export default {
   components: {
     KLine,
     Depth,
+    // Volume,
     Fullscreen
     // TimeSharing
   },

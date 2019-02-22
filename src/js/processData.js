@@ -12,13 +12,14 @@ export const splitData = (data, platform) => {
         : data;
     }
     for (var i = 0; i < data.length; i++) {
-        categoryData.push(formatTime(data[i].splice(0, 1)[0]));
-        values.push(data[i]);
+        categoryData.push(formatTime(data[i][0]));
+        values.push( JSON.parse(JSON.stringify(data[i])));
+        values[i].splice(0, 1);
         let status;
-        if (data[i][0] > data[i][1]) {
+        if (data[i][1] > data[i][2]) {
             status = 1;
-        } else if (data[i][0] === data[i][1] && i !== 0) {
-            if (data[i][0] >= data[i - 1][1]) {
+        } else if (data[i][1] === data[i][2] && i !== 0) {
+            if (data[i][1] >= data[i - 1][2]) {
                 status = -1;
             } else {
                 status = 1;
@@ -28,7 +29,7 @@ export const splitData = (data, platform) => {
         }
         volumes.push([
             i,
-            data[i][5],
+            data[i][6],
             status
         ]);
     }

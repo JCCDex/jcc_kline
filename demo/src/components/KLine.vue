@@ -1,6 +1,6 @@
 <template>
   <div :style="{ position: 'relative', width: klineConfig.size.width + 'px' }">
-    <vKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig'></vKline>
+    <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig'></jKline>
   </div>
 </template>
 
