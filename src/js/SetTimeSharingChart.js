@@ -132,8 +132,8 @@ class TimeSharingChart {
     }
 
     setTimeSharingOption(timeDivisionData, data) {
-        pricePrecision = timeDivisionData.precision.price ? timeDivisionData.precision.price : pricePrecision;
-        amountsPrecision = timeDivisionData.precision.amount ? timeDivisionData.precision.amount : amountsPrecision;
+        pricePrecision = !isNaN(timeDivisionData.precision.price) ? timeDivisionData.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(timeDivisionData.precision.amount) ? timeDivisionData.precision.amount : amountsPrecision;
         timeSharingOption = JSON.parse(JSON.stringify(this.timeSharingConfig));
         oldTimeSharingData = {
             timeDivisionData: timeDivisionData,
@@ -163,8 +163,8 @@ class TimeSharingChart {
     }
 
     updateTimeSharingOption(timeDivisionData, data) {
-        pricePrecision = timeDivisionData.precision.price ? timeDivisionData.precision.price : pricePrecision;
-        amountsPrecision = timeDivisionData.precision.amount ? timeDivisionData.precision.amount : amountsPrecision;
+        pricePrecision = !isNaN(timeDivisionData.precision.price) ? timeDivisionData.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(timeDivisionData.precision.amount) ? timeDivisionData.precision.amount : amountsPrecision;
         let { times, averages, prices, volumes } = data;
         let option = {
             grid: this.getTimeSharingGrid(),

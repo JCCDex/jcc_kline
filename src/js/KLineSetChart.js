@@ -137,8 +137,8 @@ class KLineSetChartController {
         };
         config = JSON.parse(JSON.stringify(this.klineConfig));
         if (data) {
-            pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
-            amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
+            pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+            amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
             let length = data.values.length - 1;
             toolTipData = {
                 time: data.categoryData[length],
@@ -169,8 +169,8 @@ class KLineSetChartController {
     }
 
     updateOption(data, cycle) {
-        pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
-        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
+        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         oldKlineData = {
             oldData: data,
             oldCycle: cycle

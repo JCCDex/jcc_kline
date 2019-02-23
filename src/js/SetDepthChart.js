@@ -128,8 +128,8 @@ class DepthChart {
     setDepthOption(data) {
         oldDepthData = data;
         if (data) {
-            pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
-            amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
+            pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+            amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
             depthOption = JSON.parse(JSON.stringify(this.depthConfig));
             let message = getLanguage();
             let buy = message.buy;
@@ -156,8 +156,8 @@ class DepthChart {
     }
 
     updateDepthOption(data) {
-        pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
-        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
+        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         let message = getLanguage();
         let buy = message.buy;
         let sell = message.sell;
