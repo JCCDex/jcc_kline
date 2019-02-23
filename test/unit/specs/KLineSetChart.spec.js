@@ -5,9 +5,14 @@ import testData from '../../testData/data.json'
 
 describe('test KLineSetChart', () => {
 
-  let depthData = getDepthData(testData.depthData, testData.coinType)
+  let precision = {
+    price: 6,
+    amount: 2
+  }
+  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
   let pcData = splitData(testData.klineData, 'pc')
   let klineData = Object.assign({}, pcData, depthData);
+  klineData.precision = precision
   
   it('test klineSetChart', () => {
     let kline = new klineSetChart(option);

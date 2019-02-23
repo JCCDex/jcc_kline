@@ -126,10 +126,10 @@ class DepthChart {
 
     /* 绘制marketDepth开始 */
     setDepthOption(data) {
-        pricePrecision = data.precision.price ? data.precision.price : pricePrecision
-        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision
         oldDepthData = data;
         if (data) {
+            pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
+            amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
             depthOption = JSON.parse(JSON.stringify(this.depthConfig));
             let message = getLanguage();
             let buy = message.buy;
@@ -156,8 +156,8 @@ class DepthChart {
     }
 
     updateDepthOption(data) {
-        pricePrecision = data.precision.price ? data.precision.price : pricePrecision
-        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision
+        pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
+        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
         let message = getLanguage();
         let buy = message.buy;
         let sell = message.sell;
@@ -206,7 +206,7 @@ class DepthChart {
         let message = getLanguage();
         var fontSize = '';
         if (this.depthConfig.platform === 'mobile') {
-            fontSize = 'font-size:20px'
+            fontSize = 'font-size:20px';
         }
         var toolTip = {
             formatter: function (param) {

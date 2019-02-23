@@ -110,8 +110,8 @@ class KLineMobileSetChartController {
     }
 
     updateOption(data) {
-        pricePrecision = data.precision.price ? data.precision.price : pricePrecision
-        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision
+        pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
+        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
         let length = data.values.length - 1;
         if (!toolTipData) {
             toolTipData = {
@@ -209,8 +209,8 @@ class KLineMobileSetChartController {
     }
 
     updateTimeDivisionOption(timeDivisionData, data) {
-        pricePrecision = timeDivisionData.precision.price ? timeDivisionData.precision.price : pricePrecision
-        amountsPrecision = timeDivisionData.precision.amount ? timeDivisionData.precision.amount : amountsPrecision
+        pricePrecision = timeDivisionData.precision.price ? timeDivisionData.precision.price : pricePrecision;
+        amountsPrecision = timeDivisionData.precision.amount ? timeDivisionData.precision.amount : amountsPrecision;
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
         if (!toolTipData) {

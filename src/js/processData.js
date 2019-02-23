@@ -53,8 +53,8 @@ export const getDepthData = (data, coinType, precision) => {
     let sellPrices = [];
     let sellData = [];
     let buyData = [];
-    let amountsPrecision = precision.amount ? precision.amount : 2
-    let pricePrecision = precision.price ? precision.price : 6
+    let amountsPrecision = precision.amount ? precision.amount : 2;
+    let pricePrecision = precision.price ? precision.price : 6;
     if (Array.isArray(bids) && bids.length > 0) {
         let datas = bids.slice(0, 50);
         let amounts = [];
