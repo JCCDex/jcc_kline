@@ -21,7 +21,6 @@
     font-size: 11px !important;
     position: absolute;
     left: 16.7%;
-    right: 190px;
     top: 20px;
     z-index: 1;
     float: left;
@@ -34,7 +33,6 @@
     font-size: 11px !important;
     position: absolute;
     left: 16.67%;
-    right: 190px;
     top: 23px;
     z-index: 1;
     float: left;
@@ -99,7 +97,7 @@
 }
 
 .tooltip-data-name {
-    margin-left: 10px;
+    margin-right: 10px;
     color: #b9cadd;
 }
 
