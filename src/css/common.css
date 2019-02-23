@@ -98,6 +98,7 @@
 
 .tooltip-data-name {
     margin-right: 10px;
+    display: inline-block;
     color: #b9cadd;
 }
 
