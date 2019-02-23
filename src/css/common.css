@@ -135,7 +135,8 @@
 }
 
 .tooltip-ma30 {
-    color: #f6d026
+    color: #f6d026;
+    margin-right: 0.1rem;
 }
 
 .tooltip-data-ma60 {
@@ -368,12 +369,14 @@
     text-align: left;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
+    font-size: 0.16rem;
 }
 
 .mobile-tooltip-en {
     text-align: left;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
+    font-size: 0.16rem;
 }
 
 .mobile-tooltip-en-outspread {
@@ -481,7 +484,7 @@
 .mobile-tooltip-volume {
     color: #e6e6e6;
     font: 0.16rem "Microsoft YaHei";
-    float: felt
+    float: right
 }
 
 .mobile-depthMapname {
@@ -513,8 +516,8 @@
 }
 
 .mobile-tooltip-data-ma60 {
-    margin-left: 0.1rem;
-    color: #e03bfa
+    color: #e03bfa;
+    display: inline-block;
 }
 
 .mobileCycleFullScreen {
