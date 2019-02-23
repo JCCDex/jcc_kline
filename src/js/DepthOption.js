@@ -264,7 +264,7 @@ var mobileDepthOption = {
                 color: '#09e988',
                 width: 2 // 线宽
             },
-            areaStyle: {
+            areaStyle: { // 区域填充样式
                 normal: {
                     color: 'rgba(9,233,136,0.3)' // 填充区颜色
                 }
