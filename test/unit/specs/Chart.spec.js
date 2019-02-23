@@ -5,7 +5,12 @@ import timeSharingData from '../../testData/timeSharingData.json'
 
 describe('test Chart', () => {
 
-  let depthData = getDepthData(testData.depthData, testData.coinType)
+  let precision = {
+    price: 6,
+    amount: 2
+  }
+  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
+  depthData.precision = precision
   let klineConfig = {
     platform: 'pc',
     chartType: 'candle',
@@ -110,6 +115,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
+    timeSharingData.timeDivisionData.precision = precision
     timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })

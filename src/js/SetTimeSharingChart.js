@@ -14,6 +14,8 @@ var timeSharingSize = {
 var timeSharingOption;
 var oldTimeSharingData;
 var toolTipData;
+var amountsPrecision = 2;
+var pricePrecision = 6;
 
 class TimeSharingChart {
     constructor(configs) {
@@ -130,6 +132,8 @@ class TimeSharingChart {
     }
 
     setTimeSharingOption(timeDivisionData, data) {
+        pricePrecision = timeDivisionData.precision.price ? timeDivisionData.precision.price : pricePrecision;
+        amountsPrecision = timeDivisionData.precision.amount ? timeDivisionData.precision.amount : amountsPrecision;
         timeSharingOption = JSON.parse(JSON.stringify(this.timeSharingConfig));
         oldTimeSharingData = {
             timeDivisionData: timeDivisionData,
@@ -139,9 +143,9 @@ class TimeSharingChart {
         let length = timeDivisionData.length - 1;
         toolTipData = {
             time: formatTime(timeDivisionData[length][3]),
-            volume: formatDecimal(timeDivisionData[length][1], 2, 5),
-            price: timeDivisionData[length][2].toFixed(6),
-            averagePrice: averages[length].toFixed(6),
+            volume: formatDecimal(timeDivisionData[length][1], amountsPrecision, true),
+            price: formatDecimal(timeDivisionData[length][2], pricePrecision, true),
+            averagePrice: formatDecimal(averages[length], pricePrecision, true),
             color: volumes[length][2]
         };
         let option = {
@@ -159,6 +163,8 @@ class TimeSharingChart {
     }
 
     updateTimeSharingOption(timeDivisionData, data) {
+        pricePrecision = timeDivisionData.precision.price ? timeDivisionData.precision.price : pricePrecision;
+        amountsPrecision = timeDivisionData.precision.amount ? timeDivisionData.precision.amount : amountsPrecision;
         let { times, averages, prices, volumes } = data;
         let option = {
             grid: this.getTimeSharingGrid(),
@@ -236,9 +242,9 @@ class TimeSharingChart {
                 let data = timeDivisionData[dataIndex];
                 toolTipData = {
                     time: formatTime(data[3]),
-                    volume: formatDecimal(data[1], 2, 5),
-                    price: data[2].toFixed(6),
-                    averagePrice: averages[dataIndex].toFixed(6),
+                    volume: formatDecimal(data[1], amountsPrecision, true),
+                    price: formatDecimal(data[2], amountsPrecision, true),
+                    averagePrice: formatDecimal(averages[dataIndex], pricePrecision, true),
                     color: volumes[dataIndex][2]
                 };
             }

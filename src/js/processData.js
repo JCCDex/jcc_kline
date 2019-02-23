@@ -39,7 +39,7 @@ export const splitData = (data, platform) => {
     };
 };
 
-export const getDepthData = (data, coinType) => {
+export const getDepthData = (data, coinType, precision) => {
     if (!data || !coinType) return;
     let bids = data.bids;
     let bidsTotal = 0;
@@ -53,7 +53,8 @@ export const getDepthData = (data, coinType) => {
     let sellPrices = [];
     let sellData = [];
     let buyData = [];
-    let num = coinType.baseTitle === 'VCC' ? 0 : 6;
+    let amountsPrecision = precision.amount ? precision.amount : 2;
+    let pricePrecision = precision.price ? precision.price : 6;
     if (Array.isArray(bids) && bids.length > 0) {
         let datas = bids.slice(0, 50);
         let amounts = [];
@@ -61,7 +62,7 @@ export const getDepthData = (data, coinType) => {
         for (let data of datas) {
             bidsTotal = bidsTotal + parseFloat(data.amount);
             amounts.push(bidsTotal);
-            prices.push(formatDecimal(data.price, num));
+            prices.push(formatDecimal(data.price, pricePrecision));
         }
         maxBuyPrice = Math.max.apply(null, prices);
         minBuyPrice = Math.min.apply(null, prices);
@@ -77,7 +78,7 @@ export const getDepthData = (data, coinType) => {
         for (let data of datas) {
             asksTotal = asksTotal + parseFloat(data.amount);
             amounts.push(asksTotal);
-            prices.push(formatDecimal(data.price, num));
+            prices.push(formatDecimal(data.price, pricePrecision));
         }
         maxSellPrice = Math.max.apply(null, prices);
         minSellPrice = Math.min.apply(null, prices);
@@ -91,10 +92,10 @@ export const getDepthData = (data, coinType) => {
     let sellPercent = 1 - buyPercent;
     let maxAmount = Math.max(bidsTotal, asksTotal);
     for (let index = 0; index < sellPrices.length; index++) {
-        sellData.push([parseFloat(sellPrices[index]), sellAmounts[index]]);
+        sellData.push([formatDecimal(sellPrices[index], pricePrecision), formatDecimal(sellAmounts[index], amountsPrecision)]);
     }
     for (let index = 0; index < buyPrices.length; index++) {
-        buyData.push([parseFloat(buyPrices[index]), buyAmounts[index]]);
+        buyData.push([formatDecimal(buyPrices[index], pricePrecision), formatDecimal(buyAmounts[index], amountsPrecision)]);
     }
     buyData = buyData.reverse();
     return {
@@ -162,7 +163,7 @@ export const calculateMA = (dayCount, data) => {
                 sum += item;
             }
         }
-        result.push(+(sum / dayCount).toFixed(6));
+        result.push(+(sum / dayCount));
     }
     return result;
 };

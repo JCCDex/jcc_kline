@@ -6,6 +6,10 @@ describe('test setTimeSharingChart', () => {
 
   timeSharingOption.platform = 'pc'
   timeSharingOption.defaultSize = true
+  let precision = {
+    price: 6,
+    amount: 2
+  }
 
   it('test TimeSharingChart', () => {
     let TimeSharing = new TimeSharingChart(timeSharingOption);
@@ -61,7 +65,8 @@ describe('test setTimeSharingChart', () => {
     const element = document.createElement('div');
     let TimeSharing = new TimeSharingChart(timeSharingOption);
     TimeSharing.initTimeSharingECharts(element)
-    TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharingData.timeDivisionData.precision = precision
+     TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
   })
 

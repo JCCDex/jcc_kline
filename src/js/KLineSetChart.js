@@ -16,6 +16,8 @@ var klineSize = {
 var config;
 var toolTipData;
 var oldKlineData;
+var amountsPrecision = 2;
+var pricePrecision = 6;
 
 class KLineSetChartController {
     constructor(configs) {
@@ -135,19 +137,21 @@ class KLineSetChartController {
         };
         config = JSON.parse(JSON.stringify(this.klineConfig));
         if (data) {
+            pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
+            amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
             let length = data.values.length - 1;
             toolTipData = {
                 time: data.categoryData[length],
-                volume: formatDecimal(data.values[length][5], 2, 5),
-                opening: data.values[length][0].toFixed(6),
-                closing: data.values[length][1].toFixed(6),
-                max: data.values[length][3].toFixed(6),
-                min: data.values[length][2].toFixed(6),
-                MA5: calculateMA(5, data)[length],
-                MA10: calculateMA(10, data)[length],
-                MA20: calculateMA(20, data)[length],
-                MA30: calculateMA(30, data)[length],
-                MA60: calculateMA(60, data)[length],
+                volume: formatDecimal(data.values[length][5], amountsPrecision, true),
+                opening: formatDecimal(data.values[length][0], pricePrecision, true),
+                closing: formatDecimal(data.values[length][1], pricePrecision, true),
+                max: formatDecimal(data.values[length][3], pricePrecision, true),
+                min: formatDecimal(data.values[length][2], pricePrecision, true),
+                MA5: formatDecimal(calculateMA(5, data)[length], pricePrecision, true),
+                MA10: formatDecimal(calculateMA(10, data)[length], pricePrecision, true),
+                MA20: formatDecimal(calculateMA(20, data)[length], pricePrecision, true),
+                MA30: formatDecimal(calculateMA(30, data)[length], pricePrecision, true),
+                MA60: formatDecimal(calculateMA(60, data)[length], pricePrecision, true),
                 color: data.volumes[length][2]
             };
             this.kline.hideLoading();
@@ -165,6 +169,8 @@ class KLineSetChartController {
     }
 
     updateOption(data, cycle) {
+        pricePrecision = data.precision.price ? data.precision.price : pricePrecision;
+        amountsPrecision = data.precision.amount ? data.precision.amount : amountsPrecision;
         oldKlineData = {
             oldData: data,
             oldCycle: cycle
@@ -206,16 +212,16 @@ class KLineSetChartController {
                     toolTipData = {
                         seriesName: param.seriesName,
                         time: param.name,
-                        volume: formatDecimal(data.values[index][5], 2, 5),
-                        opening: data.values[index][0].toFixed(6),
-                        closing: data.values[index][1].toFixed(6),
-                        max: data.values[index][3].toFixed(6),
-                        min: data.values[index][2].toFixed(6),
-                        MA5: calculateMA(5, data)[index],
-                        MA10: calculateMA(10, data)[index],
-                        MA20: calculateMA(20, data)[index],
-                        MA30: calculateMA(30, data)[index],
-                        MA60: calculateMA(60, data)[index],
+                        volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+                        opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                        closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                        max: formatDecimal(data.values[index][3], pricePrecision, true),
+                        min: formatDecimal(data.values[index][2], pricePrecision, true),
+                        MA5: formatDecimal(calculateMA(5, data)[index], pricePrecision, true),
+                        MA10: formatDecimal(calculateMA(10, data)[index], pricePrecision, true),
+                        MA20: formatDecimal(calculateMA(20, data)[index], pricePrecision, true),
+                        MA30: formatDecimal(calculateMA(30, data)[index], pricePrecision, true),
+                        MA60: formatDecimal(calculateMA(60, data)[index], pricePrecision, true),
                         color: data.volumes[index][2]
                     };
                 }
