@@ -55,8 +55,8 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
-    data.precision.price = null
-    data.precision.amount = null
+    data.precision.price = undefined
+    data.precision.amount = undefined
     mobileKline.setOption(mobileData, cycle)
     mobileKline.updateOption(data)
     expect(mobileKline.kline).not.toBeNull();
