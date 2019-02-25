@@ -208,9 +208,9 @@ class KLineMobileSetChartController {
         return toolTipData;
     }
 
-    updateTimeDivisionOption(timeDivisionData, data) {
-        pricePrecision = !isNaN(timeDivisionData.precision.price) ? timeDivisionData.precision.price : pricePrecision;
-        amountsPrecision = !isNaN(timeDivisionData.precision.amount) ? timeDivisionData.precision.amount : amountsPrecision;
+    updateTimeDivisionOption(timeDivisionData, data, precision) {
+        pricePrecision = !isNaN(precision.price) ? precision.price : pricePrecision;
+        amountsPrecision = !isNaN(precision.amount) ? precision.amount : amountsPrecision;
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
         if (!toolTipData) {

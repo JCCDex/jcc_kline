@@ -131,7 +131,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData)
+    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
     expect(mobileKline.kline.getOption()).not.toBeNull();
   })
 
@@ -169,7 +169,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData)
+    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
     mobileKline.changeDataZoom('enlarge')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(65);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
