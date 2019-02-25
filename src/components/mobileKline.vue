@@ -104,13 +104,12 @@ export default {
         if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
           this.toolTipData = this.kline.updateMobileOption(mobileKlineData);
         }
-        if (this.klineDataObj.cycle === "everyhour") {
+        if (this.klineDataObj.cycle === "everyhour" && this.klineDataObj.timeDivisionData) {
           let timeDivisionData = this.klineDataObj.timeDivisionData
-          timeDivisionData.precision = precision
           let divisionData = handleDivisionData(timeDivisionData)
           this.divisionTime = divisionData.divisionTime
           if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-            this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData);
+            this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData, precision);
           }
         }
       }

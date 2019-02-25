@@ -40,17 +40,20 @@ export default {
           price: this.klineDataObj.pricePrecision,
           amount: this.klineDataObj.amountPrecision
         }
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType, precision);
-        depthData.precision = precision;
-        if (depthData) {
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
-            this.clearChart();
-            this.depth.setDepthOption(depthData)
-            this.coinType = this.klineDataObj.coinType
-          }else {
-            this.depth.updateDepthOption(depthData)
+        if (this.klineDataObj.depthData) {
+          let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType, precision);
+          depthData.precision = precision;
+          if (depthData) {
+            if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
+              this.clearChart();
+              this.depth.setDepthOption(depthData)
+              this.coinType = this.klineDataObj.coinType
+            }else {
+              this.depth.updateDepthOption(depthData)
+            }
           }
         }
+        
       }
     },
     klineConfig() {
