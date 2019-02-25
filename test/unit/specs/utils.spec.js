@@ -32,6 +32,10 @@ describe('test utils', () => {
     expect(formatDecimal(11232.234234234, 6, false)).toBe("11232.234234")
   })
 
+  it('test formatDecimal if num is integer', () => {
+    expect(formatDecimal('12345', 0, true)).toBe("12,345")
+  })
+
   it('test getClientWidth', () => {
     expect(getClientWidth()).not.toBeNull()
   })

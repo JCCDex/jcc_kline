@@ -1,4 +1,4 @@
-import { formatDecimal, formatTime } from './utils';
+import { formatTime } from './utils';
 
 export const splitData = (data, platform) => {
     if (!data) return;
@@ -39,79 +39,24 @@ export const splitData = (data, platform) => {
     };
 };
 
-export const getDepthData = (data, coinType, precision) => {
+export const getDepthData = (data, coinType) => {
     if (!data || !coinType) return;
+    let buyData = []; //买入数据
+    let sellData = []; //卖出数据
     let bids = data.bids;
-    let bidsTotal = 0;
-    let maxBuyPrice = 0;
-    let minBuyPrice = 0;
-    let maxSellPrice = 0;
-    let minSellPrice = 0;
-    let buyAmounts = [];
-    let sellAmounts = [];
-    let buyPrices = [];
-    let sellPrices = [];
-    let sellData = [];
-    let buyData = [];
-    let amountsPrecision = !isNaN(precision.amount) ? precision.amount : 2;
-    let pricePrecision = !isNaN(precision.price) ? precision.price : 6;
-    if (Array.isArray(bids) && bids.length > 0) {
-        let datas = bids.slice(0, 50);
-        let amounts = [];
-        let prices = [];
-        for (let data of datas) {
-            bidsTotal = bidsTotal + parseFloat(data.amount);
-            amounts.push(bidsTotal);
-            prices.push(formatDecimal(data.price, pricePrecision));
-        }
-        maxBuyPrice = Math.max.apply(null, prices);
-        minBuyPrice = Math.min.apply(null, prices);
-        buyAmounts = amounts;
-        buyPrices = prices;
-    }
     let asks = data.asks;
-    let asksTotal = 0;
-    if (Array.isArray(asks) && asks.length > 0) {
-        let datas = asks.slice(0, 50);
-        let amounts = [];
-        let prices = [];
-        for (let data of datas) {
-            asksTotal = asksTotal + parseFloat(data.amount);
-            amounts.push(asksTotal);
-            prices.push(formatDecimal(data.price, pricePrecision));
+    if (Array.isArray(bids) && bids.length > 0) {
+        for (let bid of bids) {
+            buyData.push([bid.price, bid.total]);
         }
-        maxSellPrice = Math.max.apply(null, prices);
-        minSellPrice = Math.min.apply(null, prices);
-        sellAmounts = amounts;
-        sellPrices = prices;
-    }
-    let priceGap = maxSellPrice - minBuyPrice;
-    let buyPriceGap = maxBuyPrice - minBuyPrice;
-    let buyPercent =
-    buyPriceGap / priceGap < 0.25 ? 0.25 : buyPriceGap / priceGap;
-    let sellPercent = 1 - buyPercent;
-    let maxAmount = Math.max(bidsTotal, asksTotal);
-    for (let index = 0; index < sellPrices.length; index++) {
-        sellData.push([formatDecimal(sellPrices[index], pricePrecision), formatDecimal(sellAmounts[index], amountsPrecision)]);
-    }
-    for (let index = 0; index < buyPrices.length; index++) {
-        buyData.push([formatDecimal(buyPrices[index], pricePrecision), formatDecimal(buyAmounts[index], amountsPrecision)]);
+        for (let ask of asks) {
+            sellData.push([ask.price, ask.total]);
+        }
     }
     buyData = buyData.reverse();
     return {
-        maxAmount,
-        maxBuyPrice,
-        minBuyPrice,
-        maxSellPrice,
-        minSellPrice,
-        buyAmounts,
-        buyPrices,
         sellData,
-        buyData,
-        sellPrices,
-        sellAmounts,
-        buyPercent,
-        sellPercent
+        buyData
     };
 };
 
