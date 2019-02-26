@@ -1,7 +1,7 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
         <!-- Cycle按钮 -->
-        <div calss="mobileCycleFullScreen">
+        <!-- <div calss="mobileCycleFullScreen">
           <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.hour}}</div>
           <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.day}}</div>
           <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.week}}</div>
@@ -23,19 +23,19 @@
             <font class="mobile-tooltip-name-fullScreen">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
             <font class="mobile-tooltip-name-fullScreen">{{message.volumeMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
           </div>
-        </div>
+        </div> -->
         <!-- timeDivision tootip 数据显示 -->
-        <div :class="this.message.language === 'en' ? 'time-sharing-fullScreen-en-data' : 'time-sharing-fullScreen-zh-data'" v-if="timeDivisionTipData">
+        <!-- <div :class="this.message.language === 'en' ? 'time-sharing-fullScreen-en-data' : 'time-sharing-fullScreen-zh-data'" v-if="timeDivisionTipData">
           <font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.time}}</font>
           <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.volume}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.price}}</font> &nbsp;
           <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.averagePrice}}</font> &nbsp;<br> 
-        </div>
-    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
+        </div> -->
+        <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipData"></div>
   </div>
 </template>
 <script>
-import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            
 import { splitData, handleDivisionData} from '../js/processData'
 import KLineController from '../js/KLine'
 import { getLanguage } from '../js/utils'
@@ -48,7 +48,7 @@ export default {
       ],
       kline: null,
       cycle: '',
-      platform: 'mobile',
+      platform: 'fsmobile',
       divisionTime: null,
       timeDivisionData: null,
       toolTipData: null,

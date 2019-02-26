@@ -2,6 +2,7 @@ import KLineSetChartController from './KLineSetChart';
 import KLineMobileSetChartController from './KLineMobileSetChart';
 import option from './KLineOption';
 import mobileOption from './KLineMobileOption';
+import fsmobileOption from './FSKLineMobileOption';
 
 class KLineController {
     constructor(platform, klineConfig) {
@@ -10,6 +11,9 @@ class KLineController {
         if (platform === 'pc') {
             config = merge(option, klineConfig);
             this.setKLineChart = new KLineSetChartController(config);
+        } else if (platform === 'fsmobile') {
+            config = merge(fsmobileOption, klineConfig);
+            this.setMobileKLineChart = new KLineMobileSetChartController(config);
         } else {
             config = merge(mobileOption, klineConfig);
             this.setMobileKLineChart = new KLineMobileSetChartController(config);
