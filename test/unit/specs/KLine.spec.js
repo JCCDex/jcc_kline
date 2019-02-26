@@ -163,7 +163,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData)
+    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
     expect(mobileKline.setMobileKLineChart.kline.getOption()).not.toBeNull()
   })
 

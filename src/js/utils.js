@@ -12,7 +12,7 @@ export const getClientHeight = () => {
 
 export const formatDecimal = function (f, n, sep) {
     // var num = parseFloat(f);
-    n = parseInt(n)
+    n = parseInt(n);
     if (isNaN(f)) {
         return f;
     }
