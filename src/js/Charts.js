@@ -4,6 +4,7 @@ import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
 import volumeOption from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
 import VolumeChart from './SetVolumeChart.js';
+import MACDChart from './MACDOption';
 
 class ChartController {
     constructor(chartsConfig) {
@@ -29,12 +30,13 @@ class ChartController {
                 merge(volumeOption, chartsConfig);
                 this.setVolumeChart = new VolumeChart(volumeOption);
             }
-        } else if (chartsConfig.chartType === 'macd') {
+        } else if (chartsConfig.chartType === 'MACD') {
             if (chartsConfig.platform === 'pc') {
-                merge();
+                merge(MACDChart, chartsConfig);
+                this.setMACD = new MACDChart(MACDChart);
+            }
         }
     }
-
     /* 绘制深度图 */
     initDepth(DOM) {
         this.setDepthChart.initDepthECharts(DOM);

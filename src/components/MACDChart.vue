@@ -68,7 +68,7 @@ export default {
       this.macdSize.width = this.klineConfig.macdSize.width + 'px'
     }
     this.klineConfig.chartType = 'MACD';
-    this.Macd = new ChartController(this.klineConfig);
+    this.macd = new ChartController(this.klineConfig);
   },
   mounted() {
     this.init();
