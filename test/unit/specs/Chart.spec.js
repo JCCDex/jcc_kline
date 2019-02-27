@@ -1,11 +1,18 @@
 import ChartController from 'js/Charts.js'
-import { getDepthData } from 'js/processData'
+import { splitData, getDepthData } from 'js/processData'
 import testData from '../../testData/data.json'
 import timeSharingData from '../../testData/timeSharingData.json'
 
 describe('test Chart', () => {
 
-  let depthData = getDepthData(testData.depthData, testData.coinType)
+  let precision = {
+    price: 6,
+    amount: 2
+  }
+  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
+  let pcData = splitData(testData.klineData, 'pc')
+  let data = Object.assign({}, pcData, depthData);
+  depthData.precision = precision
   let klineConfig = {
     platform: 'pc',
     chartType: 'candle',
@@ -110,6 +117,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
+    timeSharingData.timeDivisionData.precision = precision
     timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -193,6 +201,75 @@ describe('test Chart', () => {
     const element = document.createElement('div');
     depth.initDepth(element)
     expect(depth).not.toBeNull()
+  })
+
+  // 测试深度图绘制方法
+  let volumeConfig = {
+    platform: 'pc',
+    chartType: 'volume',
+    defaultSize: true
+  }
+
+  it('test ChartController if platform is pc and chartType is volume', () => {
+    let volume = new ChartController(volumeConfig)
+    expect(volume).toBeInstanceOf(ChartController)
+  })
+
+  it('test initVolumeChart', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    expect(volume.setVolumeChart.volume).not.toBeNull()
+  })
+
+  it('test initVolumeChart if platform not pc', () => {
+    volumeConfig.platform = 'mobile'
+    let volume = new ChartController(volumeConfig)
+    expect(volume).toBeInstanceOf(ChartController)
+  })
+
+  it('test resizeVolumeChart if not fullScreen', () => {
+    volumeConfig.platform = 'pc'
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.resizeVolumeChart(element, false)
+    expect(volume.setVolumeChart.volume).not.toBeNull()
+  })
+
+  it('test setVolumeOption', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
+  })
+
+  it('test updateVolumeOption', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.updateVolumeOption(data)
+    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
+  })
+
+  it('test clearVolumeEcharts', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.clearVolumeEcharts()
+    expect(volume.setVolumeChart.volume.getOption().series).not.toBeNull()
+  })
+
+  it('test disposeVolumeEcharts', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.disposeVolumeEcharts()
+    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
   })
 
 })

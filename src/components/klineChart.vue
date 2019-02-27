@@ -4,12 +4,12 @@
       <div v-show = "showExitFullScreen" class = "exit-full-screen">
         <div class="exit-full-screen-btn" @click = "fullScreenToggle" >Exit Full Screen(Esc)</div>
       </div>
-      <div style="position: absolute;right:50px;top:20px;z-index:1;font-size: 13px;">
+      <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
       </div>
-      <div style="position: absolute;right:30px;top:23px;z-index:1;" class="full-screen-div">
+      <div style="position: absolute;right:30px;top:23px;z-index:5;" class="full-screen-div">
           <i v-show = "!fullscreen" class="icon iconfont icon-full-screen" @click="fullScreenToggle">
             <span v-show="!fullscreen" :class=" message.language === 'zh' ? 'icon-fullscreen-tooltip' : 'icon-fullscreen-entip'"><font style="font-size:14px;line-height:22px;">{{message.fullScreen}}</font></span>
           </i>
@@ -27,7 +27,8 @@
         </div>
       </div> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
-      <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
+      <!-- <Volume ref = 'volume' v-show = "showChart === 'candle'" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></Volume> -->
+      <Volume ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Volume>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
@@ -36,6 +37,7 @@
 import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
+import Volume from './volumeChart.vue'
 import { getLanguage } from '../js/utils'
 // import TimeSharing from './timeSharing.vue'
 export default {
@@ -43,6 +45,7 @@ export default {
   components: {
     KLine,
     Depth,
+    Volume,
     Fullscreen
     // TimeSharing
   },

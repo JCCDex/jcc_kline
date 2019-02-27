@@ -4,11 +4,18 @@ import testData from '../../testData/data.json'
 
 describe('test KLine', () => {
 
+  let precision = {
+    price: 6,
+    amount: 2
+  }
   let mobileData = splitData(testData.klineData, 'mobile')
-  let depthData = getDepthData(testData.depthData, testData.coinType)
+  mobileData.precision = precision
+  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
   let pcData = splitData(testData.klineData, 'pc')
   let klineData = Object.assign({}, pcData, depthData);
+  klineData.precision = precision
   let timeDivisionData = testData.timeDivisionData
+  timeDivisionData.precision = precision
   let divisionData = handleDivisionData(testData.timeDivisionData)
   let size = {
     height: 780,
@@ -187,7 +194,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData)
+    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
     expect(mobileKline.setMobileKLineChart.kline.getOption()).not.toBeNull()
   })
 

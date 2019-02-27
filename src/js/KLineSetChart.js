@@ -16,6 +16,8 @@ var klineSize = {
 var config;
 var toolTipData;
 var oldKlineData;
+var amountsPrecision = 2;
+var pricePrecision = 6;
 
 class KLineSetChartController {
     constructor(configs) {
@@ -135,14 +137,16 @@ class KLineSetChartController {
         };
         config = JSON.parse(JSON.stringify(this.klineConfig));
         if (data) {
+            pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+            amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
             let length = data.values.length - 1;
             toolTipData = {
                 time: data.categoryData[length],
-                volume: formatDecimal(data.values[length][5], 2, 5),
-                opening: data.values[length][0].toFixed(6),
-                closing: data.values[length][1].toFixed(6),
-                max: data.values[length][3].toFixed(6),
-                min: data.values[length][2].toFixed(6),
+                volume: formatDecimal(data.values[length][5], amountsPrecision, true),
+                opening: formatDecimal(data.values[length][0], pricePrecision, true),
+                closing: formatDecimal(data.values[length][1], pricePrecision, true),
+                max: formatDecimal(data.values[length][3], pricePrecision, true),
+                min: formatDecimal(data.values[length][2], pricePrecision, true),
                 MAData: [],
                 color: data.volumes[length][2]
             };
@@ -150,7 +154,7 @@ class KLineSetChartController {
             for (var i = 0; i < MAConfig.length; i++) {
                 toolTipData.MAData[i] = {
                     name: MAConfig[i].name,
-                    data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[length]
+                    data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[length], pricePrecision, true),
                 };
             }
             this.kline.hideLoading();
@@ -168,6 +172,8 @@ class KLineSetChartController {
     }
 
     updateOption(data, cycle) {
+        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         oldKlineData = {
             oldData: data,
             oldCycle: cycle
@@ -210,18 +216,18 @@ class KLineSetChartController {
                     toolTipData = {
                         seriesName: param.seriesName,
                         time: param.name,
-                        volume: formatDecimal(data.values[index][5], 2, 5),
-                        opening: data.values[index][0].toFixed(6),
-                        closing: data.values[index][1].toFixed(6),
-                        max: data.values[index][3].toFixed(6),
-                        min: data.values[index][2].toFixed(6),
+                        volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+                        opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                        closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                        max: formatDecimal(data.values[index][3], pricePrecision, true),
+                        min: formatDecimal(data.values[index][2], pricePrecision, true),
                         MAData: [],
                         color: data.volumes[index][2]
                     };
                     for (var i = 0; i < MAConfig.length; i++) {
                         toolTipData.MAData[i] = {
                             name: MAConfig[i].name,
-                            data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[index]
+                            data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[index], pricePrecision, true)
                         };
                     }
                 }

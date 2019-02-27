@@ -21,6 +21,7 @@ export default {
       kline: null,
       klineDataObj: null,
       klineConfig: {
+        platform: 'pc',
         backgroundColor: '#161b21',
         defaultSize: false,
         size: {
@@ -77,6 +78,7 @@ export default {
       let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
       let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
       this.klineConfig = {
+        platform: 'pc',
         backgroundColor: '#161b21',
         defaultSize: false,
         size: {

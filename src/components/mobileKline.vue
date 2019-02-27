@@ -11,16 +11,14 @@
         <!-- tooltip 数据显示 -->
         <div :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'" v-if="toolTipData">
           <div style="font-size:0.16rem; margin-top: 0.1rem;">
-            <font v-for="(MAitem, index) in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '0.14rem'}">{{MAitem.name}}<font>:&nbsp;{{ getMATipData(MAitem.name) }}</font></font><br>
+            <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '0.14rem'}">{{MAitem.name}}<font>:&nbsp;{{ getMATipData(MAitem.name) }}</font></font><br>
           </div>
-          <div style="font-size:0.16rem; margin-left: -0.1rem; margin-top: 0.05rem;">
-            <font class="mobile-tooltip-name">{{message.openingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
-            <font class="mobile-tooltip-name">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
-            <font class="mobile-tooltip-name">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
-            <font class="mobile-tooltip-name">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
-          </div>
-          <div style="float:right;margin-top: -0.24rem">
-            <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
+          <div style="margin-left: -0.1rem; margin-top: 0.05rem;">
+            <font class="mobile-tooltip-name">{{message.openingMobile}} </font><font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
+            <font class="mobile-tooltip-name">{{message.closingMobile}} </font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
+            <font class="mobile-tooltip-name">{{message.maxMobile}} </font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
+            <font class="mobile-tooltip-name">{{message.minMobile}} </font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
+            <font class="mobile-tooltip-name">{{message.volumeMobile}} </font><font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
           </div>
         </div>
         <!-- timeDivision tootip 数据显示 -->
@@ -77,9 +75,14 @@ export default {
     klineDataObj() {
       if (this.klineDataObj) {
         this.message = getLanguage();
+        let precision = {
+          price: this.klineDataObj.pricePrecision,
+          amount: this.klineDataObj.amountPrecision
+        }
         if (this.klineDataObj.cycle !== "everyhour") {
           var mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
           this.klineDataObj.categoryData = mobileKlineData.categoryData
+          mobileKlineData.precision = precision
         }
         if (this.klineDataObj.cycle !== this.cycle) {
           this.clearChart()
@@ -97,12 +100,12 @@ export default {
         if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
           this.toolTipData = this.kline.updateMobileOption(mobileKlineData, this.cycle);
         }
-        if (this.klineDataObj.cycle === "everyhour") {
+        if (this.klineDataObj.cycle === "everyhour" && this.klineDataObj.timeDivisionData) {
           let timeDivisionData = this.klineDataObj.timeDivisionData
           let divisionData = handleDivisionData(timeDivisionData)
           this.divisionTime = divisionData.divisionTime
           if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-            this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData);
+            this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData, precision);
           }
         }
       }

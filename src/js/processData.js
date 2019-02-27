@@ -1,4 +1,4 @@
-import { formatDecimal, formatTime } from './utils';
+import { formatTime } from './utils';
 
 export const splitData = (data, platform) => {
     if (!data) return;
@@ -12,13 +12,14 @@ export const splitData = (data, platform) => {
         : data;
     }
     for (var i = 0; i < data.length; i++) {
-        categoryData.push(formatTime(data[i].splice(0, 1)[0]));
-        values.push(data[i]);
+        categoryData.push(formatTime(data[i][0]));
+        values.push( JSON.parse(JSON.stringify(data[i])));
+        values[i].splice(0, 1);
         let status;
-        if (data[i][0] > data[i][1]) {
+        if (data[i][1] > data[i][2]) {
             status = 1;
-        } else if (data[i][0] === data[i][1] && i !== 0) {
-            if (data[i][0] >= data[i - 1][1]) {
+        } else if (data[i][1] === data[i][2] && i !== 0) {
+            if (data[i][1] >= data[i - 1][2]) {
                 status = -1;
             } else {
                 status = 1;
@@ -28,7 +29,7 @@ export const splitData = (data, platform) => {
         }
         volumes.push([
             i,
-            data[i][5],
+            data[i][6],
             status
         ]);
     }
@@ -41,76 +42,22 @@ export const splitData = (data, platform) => {
 
 export const getDepthData = (data, coinType) => {
     if (!data || !coinType) return;
+    let buyData = []; //买入数据
+    let sellData = []; //卖出数据
     let bids = data.bids;
-    let bidsTotal = 0;
-    let maxBuyPrice = 0;
-    let minBuyPrice = 0;
-    let maxSellPrice = 0;
-    let minSellPrice = 0;
-    let buyAmounts = [];
-    let sellAmounts = [];
-    let buyPrices = [];
-    let sellPrices = [];
-    let sellData = [];
-    let buyData = [];
-    let num = coinType.baseTitle === 'VCC' ? 0 : 6;
-    if (Array.isArray(bids) && bids.length > 0) {
-        let datas = bids.slice(0, 50);
-        let amounts = [];
-        let prices = [];
-        for (let data of datas) {
-            bidsTotal = bidsTotal + parseFloat(data.amount);
-            amounts.push(bidsTotal);
-            prices.push(formatDecimal(data.price, num));
-        }
-        maxBuyPrice = Math.max.apply(null, prices);
-        minBuyPrice = Math.min.apply(null, prices);
-        buyAmounts = amounts;
-        buyPrices = prices;
-    }
     let asks = data.asks;
-    let asksTotal = 0;
-    if (Array.isArray(asks) && asks.length > 0) {
-        let datas = asks.slice(0, 50);
-        let amounts = [];
-        let prices = [];
-        for (let data of datas) {
-            asksTotal = asksTotal + parseFloat(data.amount);
-            amounts.push(asksTotal);
-            prices.push(formatDecimal(data.price, num));
+    if (Array.isArray(bids) && bids.length > 0) {
+        for (let bid of bids) {
+            buyData.push([bid.price, bid.total]);
         }
-        maxSellPrice = Math.max.apply(null, prices);
-        minSellPrice = Math.min.apply(null, prices);
-        sellAmounts = amounts;
-        sellPrices = prices;
-    }
-    let priceGap = maxSellPrice - minBuyPrice;
-    let buyPriceGap = maxBuyPrice - minBuyPrice;
-    let buyPercent =
-    buyPriceGap / priceGap < 0.25 ? 0.25 : buyPriceGap / priceGap;
-    let sellPercent = 1 - buyPercent;
-    let maxAmount = Math.max(bidsTotal, asksTotal);
-    for (let index = 0; index < sellPrices.length; index++) {
-        sellData.push([parseFloat(sellPrices[index]), sellAmounts[index]]);
-    }
-    for (let index = 0; index < buyPrices.length; index++) {
-        buyData.push([parseFloat(buyPrices[index]), buyAmounts[index]]);
+        for (let ask of asks) {
+            sellData.push([ask.price, ask.total]);
+        }
     }
     buyData = buyData.reverse();
     return {
-        maxAmount,
-        maxBuyPrice,
-        minBuyPrice,
-        maxSellPrice,
-        minSellPrice,
-        buyAmounts,
-        buyPrices,
         sellData,
-        buyData,
-        sellPrices,
-        sellAmounts,
-        buyPercent,
-        sellPercent
+        buyData
     };
 };
 
@@ -162,7 +109,7 @@ export const calculateMA = (dayCount, data) => {
                 sum += item;
             }
         }
-        result.push(+(sum / dayCount).toFixed(6));
+        result.push(+(sum / dayCount));
     }
     return result;
 };

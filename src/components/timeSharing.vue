@@ -53,10 +53,15 @@ export default {
   watch: {
     klineDataObj() {
       if (this.klineDataObj.timeDivisionData) {
+        let precision = {
+          price: this.klineDataObj.pricePrecision,
+          amount: this.klineDataObj.amountPrecision
+        }
         let timeDivisionData = this.klineDataObj.timeDivisionData;
         let divisionData = handleDivisionData(timeDivisionData)
         this.divisionTime = divisionData.divisionTime;
         this.message = getLanguage();
+        timeDivisionData.precision = precision;
         if (JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
           this.clearChart()
           this.timeSharingTipData = this.timeSharing.setTimeSharingOption(timeDivisionData, divisionData)

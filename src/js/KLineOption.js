@@ -28,11 +28,11 @@ var option = {
         {
             top: 60, // grid 组件离容器上侧的距离。
             left: 5, // grid 组件离容器左侧的距离。
-            right: '5%', // grid 组件离容器右侧的距离。
+            right: 65, // grid 组件离容器右侧的距离。
         },
         {
             left: 5,
-            right: '5%',
+            right: 65,
             bottom: 10, // grid 组件离容器下侧的距离。
             // backgroundColor: "#1b2229", // 网格背景色
             borderColor: '#1b2229', // 网格的边框颜色

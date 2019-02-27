@@ -12,6 +12,8 @@ var cycle;
 var config;
 var timeDivisionconfig;
 var toolTipData;
+var amountsPrecision = 2;
+var pricePrecision = 6;
 
 
 class KLineMobileSetChartController {
@@ -107,16 +109,18 @@ class KLineMobileSetChartController {
     }
 
     updateOption(data, cycle) {
+        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         let length = data.values.length - 1;
         let MAConfig = this.klineConfig.MA;
         if (!toolTipData) {
             toolTipData = {
                 time: data.categoryData[length],
-                volume: formatDecimal(data.values[length][5], 2, 5),
-                opening: data.values[length][0].toFixed(6),
-                closing: data.values[length][1].toFixed(6),
-                max: data.values[length][3].toFixed(6),
-                min: data.values[length][2].toFixed(6),
+                volume: formatDecimal(data.values[length][5], amountsPrecision, true),
+                opening: formatDecimal(data.values[length][0], pricePrecision, true),
+                closing: formatDecimal(data.values[length][1], pricePrecision, true),
+                max: formatDecimal(data.values[length][3], pricePrecision, true),
+                min: formatDecimal(data.values[length][2], pricePrecision, true),
                 MAData: [],
                 color: data.volumes[length][2],
                 type: 'normal'
@@ -124,7 +128,7 @@ class KLineMobileSetChartController {
             for (var i = 0; i < MAConfig.length; i++) {
                 toolTipData.MAData[i] = {
                     name: MAConfig[i].name,
-                    data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[length]
+                    data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[length], pricePrecision, true),
                 };
             }
         }
@@ -139,15 +143,17 @@ class KLineMobileSetChartController {
         return toolTipData;
     }
 
-    updateTimeDivisionOption(timeDivisionData, data) {
+    updateTimeDivisionOption(timeDivisionData, data, precision) {
+        pricePrecision = !isNaN(precision.price) ? precision.price : pricePrecision;
+        amountsPrecision = !isNaN(precision.amount) ? precision.amount : amountsPrecision;
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
         if (!toolTipData) {
             toolTipData = {
                 time: formatTime(timeDivisionData[length][3]),
-                volume: formatDecimal(timeDivisionData[length][1], 2, 5),
-                price: timeDivisionData[length][2].toFixed(6),
-                averagePrice: averages[length].toFixed(6),
+                volume: formatDecimal(timeDivisionData[length][1], amountsPrecision, true),
+                price: formatDecimal(timeDivisionData[length][2], pricePrecision, true),
+                averagePrice: formatDecimal(averages[length], pricePrecision, true),
                 color: volumes[length][2]
             };
         }
@@ -180,9 +186,9 @@ class KLineMobileSetChartController {
                     let data = timeDivisionData[dataIndex];
                     toolTipData = {
                         time: formatTime(data[3]),
-                        volume: formatDecimal(data[1], 2, 5),
-                        price: data[2].toFixed(6),
-                        averagePrice: averages[dataIndex].toFixed(6),
+                        volume: formatDecimal(data[1], amountsPrecision, true),
+                        price: formatDecimal(data[2], pricePrecision, true),
+                        averagePrice: formatDecimal(averages[dataIndex], pricePrecision, true),
                         color: volumes[dataIndex][2]
                     };
 
@@ -219,7 +225,23 @@ class KLineMobileSetChartController {
                 }
             },
             {
-                data: data.categoryData
+                data: data.categoryData,
+                axisLabel: {
+                    formatter(value) {
+                        if (cycle === 'hour') {
+                            return value.substring(5);
+                        }
+                        if (cycle === 'day') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'week') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'month') {
+                            return value.substring(0, 7);
+                        }
+                    }
+                }
             }
         ];
     }
@@ -289,11 +311,11 @@ class KLineMobileSetChartController {
                 var index = param.data[0];
                 toolTipData = {
                     time: param.name,
-                    volume: formatDecimal(data.values[index][5], 2, 5),
-                    opening: data.values[index][0].toFixed(6),
-                    closing: data.values[index][1].toFixed(6),
-                    max: data.values[index][3].toFixed(6),
-                    min: data.values[index][2].toFixed(6),
+                    volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+                opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                max: formatDecimal(data.values[index][3], pricePrecision, true),
+                min: formatDecimal(data.values[index][2], pricePrecision, true),
                     MAData: [],
                     color: data.volumes[index][2],
                     type: 'normal'
@@ -301,7 +323,7 @@ class KLineMobileSetChartController {
                 for (var i = 0; i < MAConfig.length; i++) {
                     toolTipData.MAData[i] = {
                         name: MAConfig[i].name,
-                        data: calculateMA(MAConfig[i].name.substring(2) * 1, data)[index]
+                        data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[index], pricePrecision, true)
                     };
                 }
             }
