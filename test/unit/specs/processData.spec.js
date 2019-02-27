@@ -1,6 +1,11 @@
 import { splitData, getDepthData, handleDivisionData, calculateMA } from 'js/processData'
 import testData from '../../testData/data.json'
 
+let precision = {
+  price: 6,
+  amount: 2
+}
+
 describe('test processData', () => {
   it('test splitData', () => {
     let splitdata = splitData(testData.klineData, 'pc')
@@ -36,7 +41,7 @@ describe('test processData', () => {
   })
 
   it('test getDepthData', () => {
-    let data = getDepthData(testData.depthData, testData.coinType)
+    let data = getDepthData(testData.depthData, testData.coinType, precision)
     expect(data).not.toBeNull()
     expect(data.maxAmount).not.toBeNull()
     expect(data.maxBuyPrice).not.toBeNull()
@@ -52,18 +57,18 @@ describe('test processData', () => {
   })
 
   it('test getDepthData, no data', () => {
-    let data = getDepthData(null, testData.coinType)
+    let data = getDepthData(null, testData.coinType, precision)
     expect(data).not.toBeUndefined
   })
 
   it('test getDepthData, no coinType', () => {
-    let data = getDepthData(testData.depthData, null)
+    let data = getDepthData(testData.depthData, null, precision)
     expect(data).not.toBeUndefined
   })
 
   it('test getDepthData, baseTitle is VCC', () => {
     testData.coinType.baseTitle = 'VCC'
-    let data = getDepthData(testData.depthData, testData.coinType)
+    let data = getDepthData(testData.depthData, testData.coinType, precision)
     expect(data).not.toBeUndefined
   })
 
@@ -79,7 +84,7 @@ describe('test processData', () => {
 
   it('test calculateMA', () => {
     let splitdata = splitData(testData.klineData, 'pc')
-    let depthData = getDepthData(testData.depthData, testData.coinType)
+    let depthData = getDepthData(testData.depthData, testData.coinType, precision)
     let data = Object.assign({}, splitdata, depthData);
     let MA5 = calculateMA(5, data)
     expect(MA5).not.toBeNull()
@@ -89,7 +94,7 @@ describe('test processData', () => {
 
   it('test calculateMA if value is NaN', () => {
     let splitdata = splitData(testData.klineData, 'pc')
-    let depthData = getDepthData(testData.depthData, testData.coinType)
+    let depthData = getDepthData(testData.depthData, testData.coinType, precision)
     let data = Object.assign({}, splitdata, depthData);
     data.values.push([1, 'aaa', 123213])
     let MA5 = calculateMA(5, data)

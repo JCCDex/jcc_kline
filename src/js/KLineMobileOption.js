@@ -5,7 +5,7 @@ var mobileOption = {
         link: { xAxisIndex: 'all' },
         label: { // 坐标轴指示器的文本标签
             backgroundColor: '#232b34', // 背景色
-            fontSize:16, // 字体大小
+            fontSize:22, // 字体大小
         }
     },
     tooltip: { // 提示框组件
@@ -21,11 +21,11 @@ var mobileOption = {
         borderColor: '#ccc', // 提示框浮层的背景颜色
         padding: 10, // 提示框浮层内边距，单位px
         textStyle: { // 提示框浮层的文本样式
-            fontSize: '0.2rem', // 文字的字体大小
+            fontSize: '0.4rem', // 文字的字体大小
             color: '#ffffff', // 文字的颜色
             fontFamily: 'Avenir, Helvetica, Arial, sans-serif' // 文字的字体系列
         },
-        extraCssText: 'background:#252332;border:0;opacity: 0.7;' // 文字本身的描边颜色
+        extraCssText: 'background:#252332;border:0;opacity: 0.7;', // 文字本身的描边颜色
     },
     grid: [ // 直角坐标系内绘图网格
         {
@@ -90,7 +90,13 @@ var mobileOption = {
             },
             // splitNumber: 20,
             min: 'dataMin',  // 坐标轴刻度最小值,设置成特殊值 'dataMin'，此时取数据在该轴上的最小值作为最小刻度
-            max: 'dataMax'  // 坐标轴刻度最大值,设置成特殊值 'dataMax'，此时取数据在该轴上的最大值作为最大刻度
+            max: 'dataMax',  // 坐标轴刻度最大值,设置成特殊值 'dataMax'，此时取数据在该轴上的最大值作为最大刻度
+            axisPointer: {
+                z: 100,
+                label: {
+                    show: false
+                }
+            },
         }
     ],
     yAxis: [ // 直角坐标系 grid 中的y轴

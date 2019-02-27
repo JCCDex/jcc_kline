@@ -6,9 +6,9 @@
     cursor: pointer;
     margin-left: 10px;
     text-align: center;
-    color: #3669a7;
+    color: #34b9ea;
     line-height: 20px;
-    font-size: 12px;
+    font-size: 11px !important;
     border-radius: 2px;
 }
 
@@ -18,37 +18,43 @@
 }
 
 .tooltip-data-zh {
-    font-size: 12px;
+    font-size: 11px !important;
     position: absolute;
     left: 16.7%;
     top: 20px;
     z-index: 1;
     float: left;
     height: 33px;
-    font-family: 'Microsoft YaHei';
+    -webkit-text-size-adjust:none; 
+    -webkit-transform: scale(0.92, 0.92);
 }
 
 .tooltip-data-en {
-    font-size: 12px;
+    font-size: 11px !important;
     position: absolute;
     left: 16.67%;
     top: 23px;
     z-index: 1;
     float: left;
     height: 33px;
-    font-family: 'Microsoft YaHei';
+    -webkit-text-size-adjust:none; 
+    -webkit-transform: scale(0.92, 0.92);
 }
 
 .icon-kline-show {
     color: #b9cadd;
     z-index: 2;
-    font-size: 12px !important;
+    font-size: 11px !important;
+    -webkit-text-size-adjust:none; 
+    -webkit-transform: scale(0.92, 0.92);
 }
 
 .icon-kline-hide {
     color: #b9cadd;
     z-index: 2;
-    font-size: 12px !important;
+    font-size: 11px !important;
+    -webkit-text-size-adjust:none; 
+    -webkit-transform: scale(0.92, 0.92);
 }
 
 .kline-levitation-div {
@@ -91,7 +97,8 @@
 }
 
 .tooltip-data-name {
-    margin-left: 10px;
+    margin-right: 10px;
+    display: inline-block;
     color: #b9cadd;
 }
 
@@ -249,7 +256,6 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
-    font-family: 'Microsoft YaHei'
 }
 
 .chart-btn {
@@ -317,12 +323,14 @@
     text-align: left;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
+    font-size: 0.16rem;
 }
 
 .mobile-tooltip-en {
     text-align: left;
     padding: 0.5rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
+    font-size: 0.16rem;
 }
 
 .mobile-tooltip-en-outspread {
@@ -367,14 +375,14 @@
 .time-sharing-en-data {
     text-align: left;
     font-size: 0.16rem;
-    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    padding: 0.6rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
 
 .time-sharing-zh-data {
     text-align: left;
     font-size: 0.16rem;
-    padding: 0.5rem 0.2rem 0.23rem 0.2rem;
+    padding: 0.6rem 0.2rem 0.23rem 0.2rem;
     z-index: 1;
 }
 
@@ -382,20 +390,24 @@
     position: absolute;
     text-align: left;
     line-height: 20px;
-    font-size: 12px;
+    font-size: 11px !important;
     left: 10px;
     top: 22px;
     z-index: 1;
+    -webkit-text-size-adjust:none; 
+    -webkit-transform: scale(0.92, 0.92);
 }
 
 .time-sharing-zh-pc {
     position: absolute;
     text-align: left;
     line-height: 20px;
-    font-size: 12px;
+    font-size: 11px !important;
     left: 10px;
     top: 22px;
     z-index: 1;
+    -webkit-text-size-adjust:none; 
+    -webkit-transform: scale(0.92, 0.92);
 }
 
 .time-sharing-en-mobile {
@@ -426,7 +438,7 @@
 .mobile-tooltip-volume {
     color: #e6e6e6;
     font: 0.16rem "Microsoft YaHei";
-    float: felt
+    float: right
 }
 
 .mobile-depthMapname {

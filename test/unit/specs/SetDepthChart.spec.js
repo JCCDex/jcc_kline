@@ -6,8 +6,12 @@ import testData from '../../testData/data.json'
 describe('test SetDepthChart', () => {
 
   depthOption.defaultSize = true
-
-  let depthData = getDepthData(testData.depthData, testData.coinType)
+  let precision = {
+    price: 6,
+    amount: 2
+  }
+  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
+  depthData.precision = precision
   depthOption.platform = 'pc'
 
   it('test depthSetChart', () => {
@@ -48,6 +52,27 @@ describe('test SetDepthChart', () => {
     expect(depthChart.depth.getOption()).not.toBeNull();
   })
 
+  it('test setDepthOption but not precision', () => {
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthData.precision.price = undefined
+    depthData.precision.amount = undefined
+    depthChart.setDepthOption(depthData)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+  it('test updateDepthOption but not precision', () => {
+    const element = document.createElement('div');
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthData.precision.price = undefined
+    depthData.precision.amount = undefined
+    depthChart.setDepthOption(depthData)
+    depthChart.updateDepthOption(depthData)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
   it('test setDepthOption but depthData is null', () => {
     const element = document.createElement('div');
     let depthChart = new SetDepthChart(depthOption);
@@ -60,13 +85,26 @@ describe('test SetDepthChart', () => {
     const element = document.createElement('div');
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)
+    depthData.precision = precision
     depthChart.setDepthOption(depthData)
     depthChart.updateDepthOption(depthData)
     expect(depthChart.depth.getOption()).not.toBeNull();
   })
 
+  it('test updateDepthOption if platform is mobile', () => {
+    const element = document.createElement('div');
+    depthOption.platform = 'mobile'
+    let depthChart = new SetDepthChart(depthOption);
+    depthChart.initDepthECharts(element)
+    depthChart.setDepthOption(depthData)
+    depthChart.updateDepthOption(depthData)
+    expect(depthChart.depth.getOption()).not.toBeNull();
+  })
+
+
   it('test resizeECharts if is fullScreen', () => {
     const element = document.createElement('div');
+    depthOption.platform = 'pc'
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)
     depthChart.setDepthOption(depthData)

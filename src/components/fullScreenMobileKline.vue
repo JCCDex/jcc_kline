@@ -17,12 +17,9 @@
             <font class="mobile-tooltip-name-fullScreen">{{message.closingMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.closing}}</font>
             <font class="mobile-tooltip-name-fullScreen">{{message.maxMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.max}}</font>
             <font class="mobile-tooltip-name-fullScreen">{{message.minMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
-          </div>
-          <div style="float:right;margin-top: -0.8rem">
-            <font class="mobile-tooltip-volume">{{message.volumeMobile}}</font><font class="mobile-tooltip-volume">{{this.toolTipData.volume}}</font>
+            <font class="mobile-tooltip-name-fullScreen">{{message.volumeMobile}}</font><font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
           </div>
         </div>
-
         <!-- timeDivision tootip 数据显示 -->
         <div :class="this.message.language === 'en' ? 'time-sharing-en-data' : 'time-sharing-zh-data'" v-if="timeDivisionTipData">
           <font :class="timeDivisionTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeDivisionTipData.time}}</font>
@@ -75,9 +72,14 @@ export default {
     klineDataObj() {
       if (this.klineDataObj) {
         this.message = getLanguage();
+        let precision = {
+          price: this.klineDataObj.pricePrecision,
+          amount: this.klineDataObj.amountPrecision
+        }
         if (this.klineDataObj.cycle !== "everyhour") {
           var mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
           this.klineDataObj.categoryData = mobileKlineData.categoryData
+          mobileKlineData.precision = precision
         }
         if (this.klineDataObj.cycle !== this.cycle) {
           this.clearChart()
@@ -95,12 +97,12 @@ export default {
        if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
           this.toolTipData = this.kline.updateMobileOption(mobileKlineData, this.cycle);
         }
-        if (this.klineDataObj.cycle === "everyhour") {
+        if (this.klineDataObj.cycle === "everyhour" && this.klineDataObj.timeDivisionData) {
           let timeDivisionData = this.klineDataObj.timeDivisionData
           let divisionData = handleDivisionData(timeDivisionData)
           this.divisionTime = divisionData.divisionTime
           if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-            this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData);
+            this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData, precision);
           }
         }
       }

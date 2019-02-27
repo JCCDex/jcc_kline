@@ -83,8 +83,8 @@ class KLineController {
         return this.setMobileKLineChart.updateOption(data, cycle);
     }
 
-    updateTimeDivisionOption(timeDivisionData, divisionData) {
-        return this.setMobileKLineChart.updateTimeDivisionOption(timeDivisionData, divisionData);
+    updateTimeDivisionOption(timeDivisionData, divisionData, precision) {
+        return this.setMobileKLineChart.updateTimeDivisionOption(timeDivisionData, divisionData, precision);
     }
 
     changeMobileDataZoom(type) {
