@@ -133,7 +133,7 @@ class VolumeChart {
     }
 
     getVolumeEchart() {
-        return this.volume
+        return this.volume;
     }
 
     getVolumeXAxis(data) {

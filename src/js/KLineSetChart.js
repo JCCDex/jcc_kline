@@ -198,7 +198,7 @@ class KLineSetChartController {
     }
 
     getEchart() {
-        return this.kline
+        return this.kline;
     }
 
     getGrid() {

@@ -182,6 +182,19 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
+  it('test resizeECharts if not fullScreen', () => {
+    const element = document.createElement('div');
+    let size = {
+      width: 600,
+      height: 500
+    }
+    let klineChart = new klineSetChart(option);
+    klineChart.initECharts(element)
+    klineChart.setOption(klineData, 'hour')
+    klineChart.resizeECharts(element, false, size)
+    expect(klineChart.kline.getOption()).not.toBeNull();
+  })
+
   it('test resizeECharts if is fullScreen and defaultSize is true', () => {
     const element = document.createElement('div');
     option.defaultSize = true;

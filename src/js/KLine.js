@@ -40,7 +40,7 @@ class KLineController {
     }
 
     getEchart() {
-        return this.setKLineChart.getEchart()
+        return this.setKLineChart.getEchart();
     }
 
     getToolTipData() {

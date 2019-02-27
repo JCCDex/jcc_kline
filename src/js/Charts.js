@@ -102,7 +102,7 @@ class ChartController {
     }
 
     getVolumeEchart() {
-       return this.setVolumeChart.getVolumeEchart()
+        return this.setVolumeChart.getVolumeEchart();
     }
 
     updateVolumeOption(data) {

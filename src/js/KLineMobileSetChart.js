@@ -312,10 +312,10 @@ class KLineMobileSetChartController {
                 toolTipData = {
                     time: param.name,
                     volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-                opening: formatDecimal(data.values[index][0], pricePrecision, true),
-                closing: formatDecimal(data.values[index][1], pricePrecision, true),
-                max: formatDecimal(data.values[index][3], pricePrecision, true),
-                min: formatDecimal(data.values[index][2], pricePrecision, true),
+                    opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                    closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                    max: formatDecimal(data.values[index][3], pricePrecision, true),
+                    min: formatDecimal(data.values[index][2], pricePrecision, true),
                     MAData: [],
                     color: data.volumes[index][2],
                     type: 'normal'
