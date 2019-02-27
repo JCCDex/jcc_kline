@@ -83,6 +83,7 @@ export default {
             this.clearChart();
             this.kline.showLoading();
             this.toolTipData = this.kline.setOption(data, this.klineDataObj.cycle);
+            this.$emit("listenCandleChartEvent", this.kline.getEchart())
             this.cycle = this.klineDataObj.cycle;
             this.coinType = this.klineDataObj.coinType
           }else {

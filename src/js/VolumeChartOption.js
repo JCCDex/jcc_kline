@@ -20,7 +20,7 @@ var volumeOption = {
     grid: [ // 直角坐标系内绘图网格
         {
             left: 5,
-            right: '5%',
+            right: 65,
             bottom: 10, // grid 组件离容器下侧的距离。
             // backgroundColor: "#1b2229", // 网格背景色
             borderColor: '#1b2229', // 网格的边框颜色

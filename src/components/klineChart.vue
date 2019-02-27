@@ -26,9 +26,9 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
-      <!-- <Volume ref = 'volume' v-show = "showChart === 'candle'" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></Volume> -->
-      <Volume ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Volume>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
+      <!-- <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></Volume> -->
+      <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
@@ -39,6 +39,7 @@ import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import { getLanguage } from '../js/utils'
+import { linkageVolume } from '../js/linkageCharts'
 // import TimeSharing from './timeSharing.vue'
 export default {
   name: "klineChart",
@@ -54,7 +55,9 @@ export default {
       showChart: 'candle',
       fullscreen: false,
       isShow: false,
-      showExitFullScreen: false
+      showExitFullScreen: false,
+      candle: null,
+      volume: null
     };
   },
   props: {
@@ -122,6 +125,18 @@ export default {
   methods: {
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)
+    },
+    getCandleChart(candle) {
+      this.candle = candle
+      if (this.volume) {
+        linkageVolume(this.candle, this.volume)
+      }
+    },
+    getVolumeChart(volume) {
+      this.volume = volume
+      if (this.candle) {
+        linkageVolume(this.candle, this.volume)
+      }
     },
     changeChart(type) {
       if (this.showChart === type) {

@@ -42,6 +42,7 @@ export default {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
             this.clearChart();
             this.volume.setVolumeOption(data)
+            this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
             this.coinType = this.klineDataObj.coinType
           }else {
             this.volume.updateVolumeOption(data)

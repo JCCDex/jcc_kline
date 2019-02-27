@@ -197,6 +197,10 @@ class KLineSetChartController {
         return toolTipData;
     }
 
+    getEchart() {
+        return this.kline
+    }
+
     getGrid() {
         var g = [{
             height: klineSize.height / 600 * 360 + 'px'

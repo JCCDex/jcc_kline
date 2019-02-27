@@ -132,6 +132,10 @@ class VolumeChart {
         }
     }
 
+    getVolumeEchart() {
+        return this.volume
+    }
+
     getVolumeXAxis(data) {
         return [{
             gridIndex: 0,

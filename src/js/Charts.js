@@ -87,6 +87,8 @@ class ChartController {
         this.setTimeSharing.disposeTimeSharingEChart();
     }
 
+    /* 绘制交易量柱状图 */
+
     initVolumeChart(DOM) {
         this.setVolumeChart.initVolumeECharts(DOM);
     }
@@ -97,6 +99,10 @@ class ChartController {
 
     setVolumeOption(data) {
         this.setVolumeChart.setVolumeOption(data);
+    }
+
+    getVolumeEchart() {
+       return this.setVolumeChart.getVolumeEchart()
     }
 
     updateVolumeOption(data) {
