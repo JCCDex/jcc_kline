@@ -228,11 +228,11 @@ class DepthChart {
                     } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
                         return [
                             '<div style="text-align:left; ' + fontSize + '">',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                            '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.buyPrice +
                             formatDecimal(param.data[0], pricePrecision, true) +
                             '<br/>',
-                            '<div style="width:6px;height:6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                            '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                             message.buyTotal +
                             formatDecimal(param.data[1], amountsPrecision, true) +
                             '<br/>',
