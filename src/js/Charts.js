@@ -97,16 +97,16 @@ class ChartController {
         this.setVolumeChart.resizeECharts(DOM, isFullScreen, size);
     }
 
-    setVolumeOption(data) {
-        this.setVolumeChart.setVolumeOption(data);
+    setVolumeOption(data, cycle) {
+        this.setVolumeChart.setVolumeOption(data, cycle);
     }
 
     getVolumeEchart() {
         return this.setVolumeChart.getVolumeEchart();
     }
 
-    updateVolumeOption(data) {
-        this.setVolumeChart.updateVolumeOption(data);
+    updateVolumeOption(data, cycle) {
+        this.setVolumeChart.updateVolumeOption(data, cycle);
     }
 
     clearVolumeEcharts() {

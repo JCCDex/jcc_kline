@@ -11,6 +11,7 @@ export default {
     return {
       volume: null,
       coinType: '',
+      cycle: '',
       chartType: 'volume',
       volumeSize: {
         height: '',
@@ -39,13 +40,14 @@ export default {
         let klineData = splitData(this.klineDataObj.klineData, this.platform)
         let depthData = getDepthData(this.klineDataObj.volumeData, this.klineDataObj.coinType);
           let data = Object.assign({}, klineData, depthData);
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
+          if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType) || this.klineDataObj.cycle !== this.cycle) {
             this.clearChart();
-            this.volume.setVolumeOption(data)
+            this.cycle = this.klineDataObj.cycle
+            this.volume.setVolumeOption(data, this.cycle)
             this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
             this.coinType = this.klineDataObj.coinType
           }else {
-            this.volume.updateVolumeOption(data)
+            this.volume.updateVolumeOption(data, this.cycle)
           }
       }
     },

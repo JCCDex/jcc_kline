@@ -102,7 +102,7 @@ class VolumeChart {
     }
 
     /* 绘制VolumeChart开始 */
-    setVolumeOption(data) {
+    setVolumeOption(data, cycle) {
         oldVolumeData = data;
         if (data) {
             volumeOption = JSON.parse(JSON.stringify(this.volumeConfig));
@@ -110,7 +110,7 @@ class VolumeChart {
             let option = {
                 xAxis: this.getVolumeXAxis(data),
                 yAxis: this.getVolumeYAxis(),
-                tooltip: this.getVolumeToolTip(data),
+                tooltip: this.getVolumeToolTip(data, cycle),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, option);
@@ -119,11 +119,11 @@ class VolumeChart {
         }
     }
 
-    updateVolumeOption(data) {
+    updateVolumeOption(data, cycle) {
         oldVolumeData = data;
         if (this.volume.getOption()) {
             let volumeConfig = {
-                xAxis: this.getVolumeXAxis(data),
+                xAxis: this.getVolumeXAxis(data, cycle),
                 yAxis: this.getVolumeYAxis(),
                 tooltip: this.getVolumeToolTip(data),
                 series: this.getVolumeSeries(data)
@@ -138,10 +138,26 @@ class VolumeChart {
         return this.volume;
     }
 
-    getVolumeXAxis(data) {
+    getVolumeXAxis(data, cycle) {
         return [{
             gridIndex: 0,
-            data: data.categoryData
+            data: data.categoryData,
+            axisLabel: {
+                formatter(value) {
+                    if (cycle === 'hour') {
+                        return value.substring(5);
+                    }
+                    if (cycle === 'day') {
+                        return value.substring(0, 12);
+                    }
+                    if (cycle === 'week') {
+                        return value.substring(0, 12);
+                    }
+                    if (cycle === 'month') {
+                        return value.substring(0, 7);
+                    }
+                }
+            }
         }];
     }
 
