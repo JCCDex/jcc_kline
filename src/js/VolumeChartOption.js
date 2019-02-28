@@ -7,18 +7,11 @@ var volumeOption = {
         axisPointer: { // 坐标轴指示器配置项。
             type: 'cross', // 指示器类型。当前为十字准星指示器。其实是种简写，表示启用两个正交的轴的 axisPointer。
             link: { xAxisIndex: 'all' }
-        },
-        backgroundColor: 'rgba(245, 245, 245, 0.5)', // 提示框浮层的背景颜色。
-        borderWidth: 1, // 提示框浮层的边框宽。
-        borderColor: '#ccc', // 提示框浮层的边框颜色。
-        padding: 10, // 提示框浮层内边距，单位px
-        textStyle: { // 提示框浮层的文本样式。
-            color: '#000' // 文字的颜色。
-        },
-        extraCssText: 'background:#252332;border:0;color:#ffffff;opacity: 0.7;font-size:12px;' // 额外附加到浮层的 css 样式,例如浮层阴影
+        }
     },
     grid: [ // 直角坐标系内绘图网格
         {
+            top: 8,
             left: 5,
             right: 65,
             bottom: 10, // grid 组件离容器下侧的距离。

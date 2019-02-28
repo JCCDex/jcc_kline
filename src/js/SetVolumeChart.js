@@ -8,6 +8,7 @@ import { getClientWidth, getLanguage, getClientHeight } from './utils';
 
 var volumeOption;
 var oldVolumeData;
+var toolTipData;
 
 class VolumeChart {
     constructor(configs) {
@@ -33,34 +34,34 @@ class VolumeChart {
                     if (DOM) {
                         if (size <= 1024) {
                             width = 1000 * 0.7;
-                            height = 1000 * 0.44 * 0.8;
+                            height = 1000 * 0.44 * 0.8 * 0.25;
                         } else if (size <= 1280) {
                             width = 1203 * 0.7;
-                            height = 1203 * 0.37 * 0.8;
+                            height = 1203 * 0.37 * 0.8 * 0.25;
                         } else if (size <= 1366) {
                             width = 1284 * 0.7;
-                            height = 1284 * 0.44 * 0.8;
+                            height = 1284 * 0.44 * 0.8 * 0.25;
                         } else if (size <= 1440) {
                             width = 1354 * 0.7;
-                            height = 1354 * 0.4 * 0.8;
+                            height = 1354 * 0.4 * 0.8 * 0.25;
                         } else if (size <= 1680) {
                             width = 1504 * 0.7;
-                            height = 1504 * 0.36 * 0.8;
+                            height = 1504 * 0.36 * 0.8 * 0.25;
                         } else if (size <= 1920) {
                             width = 1804 * 0.7;
-                            height = 1804 * 0.37 * 0.8;
+                            height = 1804 * 0.37 * 0.8 * 0.25;
                         } else if (size <= 2180) {
                             width = 2048 * 0.7;
-                            height = 2048 * 0.37 * 0.8;
+                            height = 2048 * 0.37 * 0.8 * 0.25;
                         } else if (size <= 2560) {
                             width = 2560 * 0.7;
-                            height = 1385 * 0.37 * 0.8;
+                            height = 1385 * 0.37 * 0.8 * 0.25;
                         } else if (size <= 3440) {
                             width = 3440 * 0.7;
-                            height = 1426 * 0.37 * 0.8;
+                            height = 1426 * 0.37 * 0.8 * 0.25;
                         } else if (size <= 3840) {
                             width = 3840 * 0.7;
-                            height = 1426 * 0.37 * 0.8;
+                            height = 1426 * 0.37 * 0.8 * 0.25;
                         }
                         DOM.style.height = height + 'px';
                         DOM.style.width = width + 'px';
@@ -109,11 +110,12 @@ class VolumeChart {
             let option = {
                 xAxis: this.getVolumeXAxis(data),
                 yAxis: this.getVolumeYAxis(),
-                // tooltip: this.getVolumeToolTip(data),
+                tooltip: this.getVolumeToolTip(data),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
+            return toolTipData;
         }
     }
 
@@ -123,7 +125,7 @@ class VolumeChart {
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data),
                 yAxis: this.getVolumeYAxis(),
-                // tooltip: this.getVolumeToolTip(data),
+                tooltip: this.getVolumeToolTip(data),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, volumeConfig);
@@ -162,6 +164,27 @@ class VolumeChart {
                 }
             ];
         }
+    }
+
+    getVolumeToolTip(data) {
+        return {
+            formatter: function (param) {
+                param = param[0];
+                if (param) {
+                    var index = param.data[0];
+                    toolTipData = {
+                        seriesName: param.seriesName,
+                        time: param.name,
+                        volume: data.values[index][5],
+                        opening: data.values[index][0],
+                        closing: data.values[index][1],
+                        max: data.values[index][3],
+                        min: data.values[index][2],
+                        color: data.volumes[index][2]
+                    };
+                }
+            }
+        };
     }
 
     getVolumeSeries(data) {

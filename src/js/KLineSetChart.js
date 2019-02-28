@@ -45,34 +45,34 @@ class KLineSetChartController {
                     if (DOM) {
                         if (size <= 1024) {
                             width = 1000 * 0.7;
-                            height = 1000 * 0.44 * 0.8;
+                            height = 1000 * 0.44 * 0.8 * 0.75;
                         } else if (size <= 1280) {
                             width = 1203 * 0.7;
-                            height = 1203 * 0.37 * 0.8;
+                            height = 1203 * 0.37 * 0.8 * 0.75;
                         } else if (size <= 1366) {
                             width = 1284 * 0.7;
-                            height = 1284 * 0.44 * 0.8;
+                            height = 1284 * 0.44 * 0.8 * 0.75;
                         } else if (size <= 1440) {
                             width = 1354 * 0.7;
-                            height = 1354 * 0.4 * 0.8;
+                            height = 1354 * 0.4 * 0.8 * 0.75;
                         } else if (size <= 1680) {
                             width = 1504 * 0.7;
-                            height = 1504 * 0.36 * 0.8;
+                            height = 1504 * 0.36 * 0.8 * 0.75;
                         } else if (size <= 1920) {
                             width = 1804 * 0.7;
-                            height = 1804 * 0.37 * 0.8;
+                            height = 1804 * 0.37 * 0.8 * 0.75;
                         } else if (size <= 2180) {
                             width = 2048 * 0.7;
-                            height = 2048 * 0.37 * 0.8;
+                            height = 2048 * 0.37 * 0.8 * 0.75;
                         } else if (size <= 2560) {
                             width = 2560 * 0.7;
-                            height = 1385 * 0.37 * 0.8;
+                            height = 1385 * 0.37 * 0.8 * 0.75;
                         } else if (size <= 3440) {
                             width = 3440 * 0.7;
-                            height = 1426 * 0.37 * 0.8;
+                            height = 1426 * 0.37 * 0.8 * 0.75;
                         } else if (size <= 3840) {
                             width = 3840 * 0.7;
-                            height = 1426 * 0.37 * 0.8;
+                            height = 1426 * 0.37 * 0.8 * 0.75;
                         }
                         DOM.style.height = height + 'px';
                         DOM.style.width = width + 'px';
@@ -203,10 +203,10 @@ class KLineSetChartController {
 
     getGrid() {
         var g = [{
-            height: klineSize.height / 600 * 360 + 'px'
-        },
-        {
-            height: klineSize.height / 600 * 100 + 'px'
+            // height: klineSize.height + 'px'
+        // },
+        // {
+        //     height: klineSize.height / 600 * 100 + 'px'
         }];
         return g;
     }
@@ -259,10 +259,10 @@ class KLineSetChartController {
                     }
                 }
             }
-        },
-        {
-            gridIndex: 1,
-            data: data.categoryData
+        // },
+        // {
+        //     gridIndex: 1,
+        //     data: data.categoryData
         }];
         return x;
     }
@@ -270,20 +270,20 @@ class KLineSetChartController {
     getYAxis() {
         var y = [{
             gridIndex: 0
-        },
-        {
-            gridIndex: 1,
-            axisLabel: {
-                formatter: function (value) {
-                    if (value >= 1000 && value < 1000000) {
-                        return (value / 1000) + 'K';
-                    } else if (value >= 1000000) {
-                        return (value / 1000000) + 'M';
-                    } else {
-                        return value;
-                    }
-                }
-            }
+        // },
+        // {
+        //     gridIndex: 1,
+        //     axisLabel: {
+        //         formatter: function (value) {
+        //             if (value >= 1000 && value < 1000000) {
+        //                 return (value / 1000) + 'K';
+        //             } else if (value >= 1000000) {
+        //                 return (value / 1000000) + 'M';
+        //             } else {
+        //                 return value;
+        //             }
+        //         }
+        //     }
         }];
         return y;
     }
@@ -313,20 +313,20 @@ class KLineSetChartController {
             {
                 name: 'MA60',
                 data: calculateMA(60, data)
-            },
-            {
-                name: 'Volume',
-                data: data.volumes,
-                barMaxWidth: 10,
-                itemStyle: {
-                    normal: {
-                        color: function (param) {
-                            return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                        }
-                    }
-                },
-                xAxisIndex: 1,
-                yAxisIndex: 1
+            // },
+            // {
+            //     name: 'Volume',
+            //     data: data.volumes,
+            //     barMaxWidth: 10,
+            //     itemStyle: {
+            //         normal: {
+            //             color: function (param) {
+            //                 return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
+            //             }
+            //         }
+            //     },
+            //     xAxisIndex: 1,
+            //     yAxisIndex: 1
             }
         ];
         if (this.klineConfig.defaultMA !== false) {
@@ -351,7 +351,6 @@ class KLineSetChartController {
                 id: 'dataZoomX',
                 type: 'inside',
                 filterMode: 'filter',
-                xAxisIndex: [0, 1],
                 start: 60,
                 end: 100,
                 minSpan: 5
