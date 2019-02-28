@@ -39,7 +39,7 @@ var depthOption = {
         {
             top: 60, // grid 组件离容器顶部的距离,60代表60px
             left: 20, // grid 组件离容器左侧的距离,20代表20px
-            right: 20, // grid 组件离容器右侧的距离,20代表20px
+            right: 5, // grid 组件离容器右侧的距离,20代表20px
             bottom: 20, // grid 组件离容器底部的距离,20代表20px
             containLabel: true // grid 区域是否包含坐标轴的刻度标签
         }
