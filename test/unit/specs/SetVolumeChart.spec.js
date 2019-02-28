@@ -41,7 +41,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 
@@ -49,8 +49,8 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
-        volumeChart.updateVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
+        volumeChart.updateVolumeOption(data, 'hour')
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 
@@ -58,7 +58,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, true)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -72,7 +72,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false, size)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -82,7 +82,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(null, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -92,7 +92,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -102,7 +102,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -112,7 +112,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -122,7 +122,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -132,7 +132,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -142,7 +142,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -152,7 +152,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -162,7 +162,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -172,7 +172,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.resizeECharts(element, false)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -181,7 +181,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.clearVolumeEcharts()
         expect(volumeChart.volume.getOption().series).toEqual(new Array);
     })
@@ -190,7 +190,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.disposeVolumeEChart()
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
@@ -199,7 +199,7 @@ describe('test SetVolumeChart', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data)
+        volumeChart.setVolumeOption(data, 'hour')
         volumeChart.volume = null;
         volumeChart.disposeVolumeEChart()
         expect(volumeChart.volume).toBeNull();

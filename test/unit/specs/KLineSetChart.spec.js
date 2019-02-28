@@ -95,11 +95,21 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test setOption if cycle is day', () => {
+  it('test setOption if cycle is day, precision is error', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
+    klineData.precision.price = 'a'
+    klineData.precision.amount = 'b'
     klineChart.setOption(klineData, 'day')
+    expect(klineChart.kline.getOption()).not.toBeNull();
+  })
+
+  it('test updateOption if cycle is day, precision is error', () => {
+    const element = document.createElement('div');
+    let klineChart = new klineSetChart(option);
+    klineChart.initECharts(element)
+    klineChart.updateOption(klineData, 'day')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
@@ -107,6 +117,8 @@ describe('test KLineSetChart', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
+    klineData.precision.price = 5
+    klineData.precision.amount = 1
     klineChart.setOption(klineData, 'week')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })

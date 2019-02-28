@@ -108,9 +108,9 @@ class VolumeChart {
             volumeOption = JSON.parse(JSON.stringify(this.volumeConfig));
             this.volume.hideLoading();
             let option = {
-                xAxis: this.getVolumeXAxis(data),
+                xAxis: this.getVolumeXAxis(data, cycle),
                 yAxis: this.getVolumeYAxis(),
-                tooltip: this.getVolumeToolTip(data, cycle),
+                tooltip: this.getVolumeToolTip(data),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, option);
@@ -139,7 +139,7 @@ class VolumeChart {
     }
 
     getVolumeXAxis(data, cycle) {
-        return [{
+        var x = [{
             gridIndex: 0,
             data: data.categoryData,
             axisLabel: {
@@ -159,6 +159,7 @@ class VolumeChart {
                 }
             }
         }];
+        return x;
     }
 
     getVolumeYAxis() {
