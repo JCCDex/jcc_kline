@@ -127,7 +127,7 @@ export default {
         amount: this.klineDataObj.amountPrecision
       }
       if (this.klineDataObj.klineData) {
-        candleData = splitData(this.klineDataObj.klineData, this.klineDataObj.platform)
+        candleData = splitData(this.klineDataObj.klineData, 'pc')
       }
       if (this.klineDataObj.depthData) {
         depthData = getDepthData(this.klineDataObj.depthData);

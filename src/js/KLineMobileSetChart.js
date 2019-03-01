@@ -46,8 +46,8 @@ class KLineMobileSetChartController {
     setOption(size) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
-            grid: this.getGrid(size.klineSize),
-            yAxis: this.getYAxis(size.klineSize)
+            grid: this.getGrid(size),
+            yAxis: this.getYAxis(size)
         };
         merge(config, option);
         cycle = 'normal';
