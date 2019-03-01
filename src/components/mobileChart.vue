@@ -4,18 +4,21 @@
       <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
       <KLine ref="candle" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
       <Depth ref="depth" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
+      <!-- <MACD ref="macd" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></MACD> -->
     </div>
 </template>
 <script>
 import KLine from './mobileKline.vue'
 import Depth from './marketDepth.vue'
 import TimeSharing from './timeSharing.vue'
+import MACD from './MACDChart.vue'
 export default {
   name: "mobileChart",
   components: {
     KLine,
     Depth,
-    TimeSharing
+    TimeSharing,
+    MACD
   },
   data() {
     return {

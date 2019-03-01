@@ -9,14 +9,14 @@ import { getClientWidth, getLanguage, getClientHeight } from './utils';
 var MACDOption;
 var oldMACDData;
 
-class VolumeChart {
+class MACDChart {
     constructor(configs) {
-        this.volumeConfig = configs;
+        this.macdConfig = configs;
     }
 
     resizeECharts(DOM, isFullScreen, resizeSize) {
         if (!isFullScreen) {
-            if (!this.volumeConfig.defaultSize) {
+            if (!this.macdConfig.defaultSize) {
                 let resizeContainer = () => {
                     if (DOM) {
                         DOM.style.height = resizeSize.height + 'px';
@@ -24,7 +24,7 @@ class VolumeChart {
                     }
                 };
                 resizeContainer(this);
-                this.volume.resize();
+                this.macd.resize();
             } else {
                 let size = getClientWidth();
                 let resizeContainer = () => {
@@ -67,7 +67,7 @@ class VolumeChart {
                     }
                 };
                 resizeContainer(this);
-                this.volume.resize();
+                this.macd.resize();
             }
         } else {
             let resizeContainer = () => {
@@ -75,21 +75,21 @@ class VolumeChart {
                 DOM.style.width = getClientWidth() + 'px';
             };
             resizeContainer(this);
-            this.volume.resize();
+            this.macd.resize();
         }
         if (oldMACDData) {
-            this.updateVolumeOption(oldMACDData);
+            this.updateMACDOption(oldMACDData);
         }
     }
 
-    initVolumeECharts(DOM) {
-        this.volume = echarts.init(DOM);
+    initMACD(DOM) {
+        this.macd = echarts.init(DOM);
         this.showLoading();
     }
 
     showLoading() {
         let message = getLanguage();
-        this.volume.showLoading(
+        this.macd.showLoading(
             {
                 text: message.loading,
                 color: '#fff',
@@ -100,47 +100,44 @@ class VolumeChart {
         );
     }
 
-    /* 绘制VolumeChart开始 */
-    setVolumeOption(data) {
+    /* 绘制MACDChart开始 */
+    setMACDOption(data) {
         oldMACDData = data;
         if (data) {
-            MACDOption = JSON.parse(JSON.stringify(this.volumeConfig));
-            this.volume.hideLoading();
+            MACDOption = JSON.parse(JSON.stringify(this.macdConfig));
+            this.macd.hideLoading();
             let option = {
-                xAxis: this.getVolumeXAxis(data),
-                yAxis: this.getVolumeYAxis(),
-                // tooltip: this.getVolumeToolTip(data),
-                series: this.getVolumeSeries(data)
+                xAxis: this.getMACDXAxis(data),
+                yAxis: this.getMACDYAxis(),
+                series: this.getMACDSeries(data)
             };
             merge(MACDOption, option);
-            this.volume.setOption(MACDOption, true);
+            this.macd.setOption(MACDOption, true);
         }
     }
 
-    updateVolumeOption(data) {
+    updateMACDOption(data) {
         oldMACDData = data;
-        if (this.volume.getOption()) {
-            let volumeConfig = {
-                xAxis: this.getVolumeXAxis(data),
-                yAxis: this.getVolumeYAxis(),
-                // tooltip: this.getVolumeToolTip(data),
-                series: this.getVolumeSeries(data)
+        if (this.macd.getOption()) {
+            let macdConfig = {
+                xAxis: this.getMACDXAxis(data),
+                yAxis: this.getMACDYAxis(),
+                series: this.getMACDSeries(data)
             };
-            merge(MACDOption, volumeConfig);
-            MACDOption.dataZoom = this.volume.getOption().dataZoom;
-            this.volume.setOption(MACDOption);
+            merge(MACDOption, macdConfig);
+            MACDOption.dataZoom = this.macd.getOption().dataZoom;
+            this.macd.setOption(MACDOption);
         }
     }
 
-    getVolumeXAxis(data) {
+    getMACDXAxis(data) {
         return [{
-            gridIndex: 0,
-            data: data.categoryData
+            data: data.times
         }];
     }
 
-    getVolumeYAxis() {
-        if (this.volumeConfig.platform === 'pc') {
+    getMACDYAxis() {
+        // if (this.macdConfig.platform === 'pc') {
             return [
                 {
                     gridIndex: 0,
@@ -157,37 +154,45 @@ class VolumeChart {
                     }
                 }
             ];
-        }
+        // }
     }
 
-    getVolumeSeries(data) {
+    getMACDSeries(data) {
         return [
             {
-                name: 'Volume',
-                data: data.volumes,
-                barMaxWidth: 10,
+                data: data.macds,
                 itemStyle: {
                     normal: {
-                        color: function (param) {
-                            return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                        }
+                        color: function(params) {
+                            var colorList;
+                            if (params.data >= 0) {
+                                colorList = '#ef232a';
+                            } else {
+                                colorList = '#14b143';
+                            }
+                            return colorList;
+                        },
                     }
                 }
+            },{
+                data: data.difs
+            },{
+                data: data.deas
             }
         ];
     }
 
-    clearVolumeEcharts() {
+    clearMACDEcharts() {
         oldMACDData = null;
-        this.volume.clear();
+        this.macd.clear();
     }
 
-    disposeVolumeEChart() {
-        if (this.volume) {
-            this.volume.dispose();
+    disposeMACDEChart() {
+        if (this.macd) {
+            this.macd.dispose();
         }
     }
 
 }
 
-export default VolumeChart;
+export default MACDChart;

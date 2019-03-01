@@ -4,7 +4,8 @@ import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
 import volumeOption from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
 import VolumeChart from './SetVolumeChart.js';
-import MACDChart from './MACDOption';
+import macdOption from './MACDOption';
+import MACDChart from './SetMACDChart.js';
 
 class ChartController {
     constructor(chartsConfig) {
@@ -31,9 +32,9 @@ class ChartController {
                 this.setVolumeChart = new VolumeChart(volumeOption);
             }
         } else if (chartsConfig.chartType === 'MACD') {
-            if (chartsConfig.platform === 'pc') {
-                merge(MACDChart, chartsConfig);
-                this.setMACD = new MACDChart(MACDChart);
+            if (chartsConfig.platform === 'mobile') {
+                merge(macdOption, chartsConfig);
+                this.setMACDChart = new MACDChart(macdOption);
             }
         }
     }
@@ -114,6 +115,30 @@ class ChartController {
 
     disposeVolumeEcharts() {
         this.setVolumeChart.disposeVolumeEChart();
+    }
+
+    initMACDECharts(DOM) {
+        this.setMACDChart.initMACD(DOM);
+    }
+
+    resizeMACDChart(DOM, isFullScreen, size) {
+        this.setMACDChart.resizeECharts(DOM, isFullScreen, size);
+    }
+
+    setMACDOption(data) {
+        this.setMACDChart.setMACDOption(data);
+    }
+
+    updateMACDOption(data) {
+        this.setMACDChart.updateMACDOption(data);
+    }
+
+    clearMACDEcharts() {
+        this.setMACDChart.clearMACDEcharts();
+    }
+
+    disposeMACDEChart() {
+        this.setMACDChart.disposeMACDEChart();
     }
 
 }
