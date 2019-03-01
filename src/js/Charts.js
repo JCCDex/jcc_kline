@@ -93,6 +93,8 @@ class ChartController {
         this.setTimeSharing.disposeTimeSharingEChart();
     }
 
+    /* 绘制交易量柱状图 */
+
     initVolumeChart(DOM) {
         this.setVolumeChart.initVolumeECharts(DOM);
     }
@@ -101,12 +103,16 @@ class ChartController {
         this.setVolumeChart.resizeECharts(DOM, isFullScreen, size);
     }
 
-    setVolumeOption(data) {
-        this.setVolumeChart.setVolumeOption(data);
+    setVolumeOption(data, cycle) {
+        this.setVolumeChart.setVolumeOption(data, cycle);
     }
 
-    updateVolumeOption(data) {
-        this.setVolumeChart.updateVolumeOption(data);
+    getVolumeEchart() {
+        return this.setVolumeChart.getVolumeEchart();
+    }
+
+    updateVolumeOption(data, cycle) {
+        this.setVolumeChart.updateVolumeOption(data, cycle);
     }
 
     clearVolumeEcharts() {

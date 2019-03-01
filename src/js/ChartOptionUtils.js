@@ -21,3 +21,4 @@ export const getCandleOptionByMA = (candleOption) => {
         return candleOption;
     }
 };
+

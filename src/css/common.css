@@ -426,18 +426,15 @@
 
 .mobile-tooltip-name {
     color: #e6e6e6;
-    font: 0.16rem "Microsoft YaHei";
     margin-left: 0.1rem;
 }
 
 .mobile-tooltip-data {
     color: #e6e6e6;
-    font: 0.16rem "Microsoft YaHei";
 }
 
 .mobile-tooltip-volume {
     color: #e6e6e6;
-    font: 0.16rem "Microsoft YaHei";
     float: right
 }
 

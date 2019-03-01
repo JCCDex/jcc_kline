@@ -38,8 +38,8 @@ var depthOption = {
     grid: [ // 直角坐标系内绘图网格
         {
             top: 60, // grid 组件离容器顶部的距离,60代表60px
-            left: 10, // grid 组件离容器左侧的距离,10代表10px
-            right: 10, // grid 组件离容器右侧的距离,10代表10px
+            left: 20, // grid 组件离容器左侧的距离,20代表20px
+            right: 5, // grid 组件离容器右侧的距离,20代表20px
             bottom: 20, // grid 组件离容器底部的距离,20代表20px
             containLabel: true // grid 区域是否包含坐标轴的刻度标签
         }
@@ -172,8 +172,8 @@ var mobileDepthOption = {
     grid: [ // 直角坐标系内绘图网格
         {
             top: 48, // grid 组件离容器顶部的距离,48代表48px
-            left: 0, // grid 组件离容器左侧的距离,10代表10px
-            right: 0, // grid 组件离容器右侧的距离,10代表10px
+            left: 0, // grid 组件离容器左侧的距离,0代表0px
+            right: 0, // grid 组件离容器右侧的距离,0代表0px
             bottom: 40, // grid 组件离容器底部的距离,40代表40px
             containLabel: true // grid 区域是否包含坐标轴的刻度标签
         }
@@ -210,7 +210,7 @@ var mobileDepthOption = {
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示
                 color: '#b9cadd', // 刻度标签文字的颜色
-                fontSize: 22 // 刻度标签文字的字体大小
+                fontSize: 22, // 刻度标签文字的字体大小
             }
         }
     ],

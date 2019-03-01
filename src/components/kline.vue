@@ -51,7 +51,7 @@ export default {
     };
   },
   props: {
-    klineDataObj: {
+    chartDataObj: {
       type: Object,
       default: () => {
         return {}
@@ -66,27 +66,22 @@ export default {
     }
   },
   watch: {
-    klineDataObj() {
-      if (this.klineDataObj) {
-        this.message = getLanguage();
-        let precision = {
-          price: this.klineDataObj.pricePrecision,
-          amount: this.klineDataObj.amountPrecision
-        }
-        let klineData = splitData(this.klineDataObj.klineData, this.platform)
-        let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType, precision);
-        let data = Object.assign({}, klineData, depthData);
-        data.precision = precision;
-        this.klineData = data
+    chartDataObj() {
+      this.message = getLanguage();
+      if (this.chartDataObj.candleData) {
+        let data = this.chartDataObj.candleData
+        data.MAData = this.chartDataObj.MA
+        data.precision = this.chartDataObj.precision
         if (data.values && data.volumes && data.categoryData) {
-          if(this.cycle !== this.klineDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
+          if (this.cycle !== this.chartDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
             this.clearChart();
             this.kline.showLoading();
-            this.toolTipData = this.kline.setOption(data, this.klineDataObj.cycle);
-            this.cycle = this.klineDataObj.cycle;
-            this.coinType = this.klineDataObj.coinType
-          }else {
-              this.kline.updateOption(data, this.klineDataObj.cycle);
+            this.toolTipData = this.kline.setOption(data, this.chartDataObj.cycle);
+            this.$emit("listenCandleChartEvent", this.kline.getEchart())
+            this.cycle = this.chartDataObj.cycle;
+            this.coinType = this.chartDataObj.coinType
+          } else {
+              this.kline.updateOption(data, this.chartDataObj.cycle);
           }
         }
       }
@@ -99,7 +94,7 @@ export default {
       if (JSON.stringify(size) !== JSON.stringify(this.klineSize) && this.klineConfig.defaultSize === false) {
         this.klineSize = {
           width: this.klineConfig.size.width + 'px',
-          height: this.klineConfig.size.height + 'px'
+          height: '100%'
         }
         this.resize();
       }

@@ -1,6 +1,7 @@
 import klineController from 'js/KLine.js'
-import { splitData, handleDivisionData, getDepthData } from 'js/processData'
+import { splitData, handleDivisionData } from 'js/processData'
 import testData from '../../testData/data.json'
+import data from '../../testData/testData.json'
 
 describe('test KLine', () => {
 
@@ -10,10 +11,7 @@ describe('test KLine', () => {
   }
   let mobileData = splitData(testData.klineData, 'mobile')
   mobileData.precision = precision
-  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
-  let pcData = splitData(testData.klineData, 'pc')
-  let klineData = Object.assign({}, pcData, depthData);
-  klineData.precision = precision
+  let klineData = data.candleData;
   let timeDivisionData = testData.timeDivisionData
   timeDivisionData.precision = precision
   let divisionData = handleDivisionData(testData.timeDivisionData)
@@ -88,6 +86,15 @@ describe('test KLine', () => {
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
     expect(kline.setKLineChart.kline.getOption()).not.toBeNull()
+  })
+
+  it('test getEchart if platform is pc', () => {
+    let kline = new klineController('pc', klineConfig)
+    const element = document.createElement('div');
+    kline.initChart(element)
+    kline.setOption(klineData, 'hour')
+    let klineChart = kline.getEchart()
+    expect(klineChart).not.toBeNull()
   })
 
   it('test updateOption if platform is pc', () => {

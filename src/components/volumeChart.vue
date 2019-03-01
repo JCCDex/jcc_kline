@@ -11,6 +11,7 @@ export default {
     return {
       volume: null,
       coinType: '',
+      cycle: '',
       chartType: 'volume',
       volumeSize: {
         height: '',
@@ -19,7 +20,7 @@ export default {
     };
   },
   props: {
-    klineDataObj: {
+    chartDataObj: {
       type: Object,
       default: () => {
         return {}
@@ -34,18 +35,21 @@ export default {
     }
   },
   watch: {
-    klineDataObj() {
-      if (this.klineDataObj) {
-        let klineData = splitData(this.klineDataObj.klineData, this.platform)
-        let depthData = getDepthData(this.klineDataObj.volumeData, this.klineDataObj.coinType);
-          let data = Object.assign({}, klineData, depthData);
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
+    chartDataObj() {
+      if (this.chartDataObj.candleData) {
+        let data = this.chartDataObj.candleData
+        data.precision = this.chartDataObj.precision
+        if (data.values && data.volumes && data.categoryData) {
+          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
             this.clearChart();
-            this.volume.setVolumeOption(data)
-            this.coinType = this.klineDataObj.coinType
+            this.cycle = this.chartDataObj.cycle
+            this.volume.setVolumeOption(data, this.cycle)
+            this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
+            this.coinType = this.chartDataObj.coinType
           }else {
-            this.volume.updateVolumeOption(data)
+            this.volume.updateVolumeOption(data, this.cycle)
           }
+        }
       }
     },
     klineConfig() {
@@ -57,7 +61,7 @@ export default {
         if (JSON.stringify(size) !== JSON.stringify(this.volumeSize) && this.klineConfig.defaultSize === false) {
           this.volumeSize = {
             width: this.klineConfig.size.width + 'px',
-            height: this.klineConfig.size.height + 'px'
+            height: this.klineConfig.size.height * 0.25 + 'px'
           }
           this.resize();
         }
@@ -67,7 +71,7 @@ export default {
   created() {
     if (this.klineConfig.platform === 'pc') {
       if (!this.klineConfig.defaultSize) {
-        this.volumeSize.height = this.klineConfig.size.height + 'px'
+        this.volumeSize.height = this.klineConfig.size.height * 0.25 + 'px'
         this.volumeSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.volumeSize = {

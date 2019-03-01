@@ -34,9 +34,7 @@
 </template>
 <script>
 import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-import { splitData, handleDivisionData, getDepthData} from '../js/processData'
 import KLineController from '../js/KLine'
-// import DepthMapController from '../js/DepthMap'
 import { getLanguage } from '../js/utils'
 export default {
   name: "mKline",
@@ -57,7 +55,7 @@ export default {
     };
   },
   props: {
-    klineDataObj: {
+    chartDataObj: {
       type: Object,
       default: () => {
         return {}
@@ -72,41 +70,32 @@ export default {
     }
   },
   watch: {
-    klineDataObj() {
-      if (this.klineDataObj) {
-        this.message = getLanguage();
-        let precision = {
-          price: this.klineDataObj.pricePrecision,
-          amount: this.klineDataObj.amountPrecision
+    chartDataObj() {
+      if (this.chartDataObj.cycle !== this.cycle) {
+        this.clearChart()
+        this.toolTipData = null;
+        this.timeDivisionTipData = null;
+        this.kline.showMobileLoading()
+        if (this.chartDataObj.cycle !== "everyhour") {
+          this.cycle = this.chartDataObj.cycle
+          this.kline.setMobileOption(this.klineConfig.size)
+        } else {
+          this.cycle = this.chartDataObj.cycle
+          this.kline.setTimeDivisionsOption(this.klineConfig.size)
         }
-        if (this.klineDataObj.cycle !== "everyhour") {
-          var mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
-          this.klineDataObj.categoryData = mobileKlineData.categoryData
-          mobileKlineData.precision = precision
+      }
+      if (this.chartDataObj.candleData) {
+        let candleData = this.chartDataObj.candleData
+        candleData.precision = this.chartDataObj.precision
+        if (this.chartDataObj.cycle !== "everyhour" && candleData.values !== null && candleData.volumes !== null && candleData.categoryData !== null) {
+          this.toolTipData = this.kline.updateMobileOption(candleData, this.cycle);
         }
-        if (this.klineDataObj.cycle !== this.cycle) {
-          this.clearChart()
-          this.toolTipData = null;
-          this.timeDivisionTipData = null;
-          this.kline.showMobileLoading()
-          if (this.klineDataObj.cycle !== "everyhour") {
-            this.cycle = this.klineDataObj.cycle
-            this.kline.setMobileOption(this.klineDataObj)
-          } else {
-            this.cycle = this.klineDataObj.cycle
-            this.kline.setTimeDivisionsOption(this.klineDataObj.klineSize)
-          }
-        }
-        if (this.klineDataObj.cycle !== "everyhour" && mobileKlineData.values !== null && mobileKlineData.volumes !== null && mobileKlineData.categoryData !== null) {
-          this.toolTipData = this.kline.updateMobileOption(mobileKlineData, this.cycle);
-        }
-        if (this.klineDataObj.cycle === "everyhour" && this.klineDataObj.timeDivisionData) {
-          let timeDivisionData = this.klineDataObj.timeDivisionData
-          let divisionData = handleDivisionData(timeDivisionData)
-          this.divisionTime = divisionData.divisionTime
-          if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-            this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData, precision);
-          }
+      }
+      if (this.chartDataObj.cycle === "everyhour" && this.chartDataObj.timeDivisionData) {
+        let timeDivisionData = this.chartDataObj.timeDivisionData
+        let divisionData = this.chartDataObj.divisionData
+        if (timeDivisionData !== null && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
+          this.timeDivisionTipData = this.kline.updateTimeDivisionOption(timeDivisionData, divisionData, this.chartDataObj.precision);
         }
       }
     }

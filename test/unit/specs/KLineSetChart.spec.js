@@ -1,17 +1,10 @@
 import klineSetChart from 'js/KLineSetChart'
 import option from 'js/KLineOption'
-import { splitData, getDepthData } from 'js/processData'
-import testData from '../../testData/data.json'
+import testData from '../../testData/testData.json'
 
 describe('test KLineSetChart', () => {
 
-  let precision = {
-    price: 6,
-    amount: 2
-  }
-  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
-  let pcData = splitData(testData.klineData, 'pc')
-  let klineData = Object.assign({}, pcData, depthData);
+  let klineData = testData.candleData
   option.defaultMA = false
   option.MAIndex = 1
   option.MA = [
@@ -36,7 +29,6 @@ describe('test KLineSetChart', () => {
       color: "#e03bfa"
     }
   ];
-  klineData.precision = precision
   
   it('test klineSetChart', () => {
     let kline = new klineSetChart(option);
@@ -51,23 +43,9 @@ describe('test KLineSetChart', () => {
     expect(kline.getXAxis(klineData, 'month')).not.toBeNull()
   })
 
-  it('test getYAxis', () => {
-    let kline = new klineSetChart(option);
-    expect(kline.getYAxis(klineData)).not.toBeNull()
-  })
-
   it('test getToolTip', () => {
     let kline = new klineSetChart(option);
     expect(kline.getToolTip(klineData)).not.toBeNull()
-  })
-
-  it('test getGrid', () => {
-    let kline = new klineSetChart(option);
-    let data = {
-      sellPercent: 0.5,
-      buyPercent: 0.5
-    }
-    expect(kline.getGrid(data)).not.toBeNull()
   })
 
   it('test getSeries', () => {
@@ -95,11 +73,21 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test setOption if cycle is day', () => {
+  it('test setOption if cycle is day, precision is error', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
+    klineData.precision.price = 'a'
+    klineData.precision.amount = 'b'
     klineChart.setOption(klineData, 'day')
+    expect(klineChart.kline.getOption()).not.toBeNull();
+  })
+
+  it('test updateOption if cycle is day, precision is error', () => {
+    const element = document.createElement('div');
+    let klineChart = new klineSetChart(option);
+    klineChart.initECharts(element)
+    klineChart.updateOption(klineData, 'day')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
@@ -107,6 +95,8 @@ describe('test KLineSetChart', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
+    klineData.precision.price = 5
+    klineData.precision.amount = 1
     klineChart.setOption(klineData, 'week')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
@@ -170,6 +160,7 @@ describe('test KLineSetChart', () => {
   })
 
   it('test resizeECharts if is fullScreen', () => {
+    window.innerWidth = 1200;
     const element = document.createElement('div');
     option.size = {
       width: 600,
@@ -182,7 +173,22 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
+  it('test resizeECharts if not fullScreen', () => {
+    window.innerWidth = 1360;
+    const element = document.createElement('div');
+    let size = {
+      width: 600,
+      height: 500
+    }
+    let klineChart = new klineSetChart(option);
+    klineChart.initECharts(element)
+    klineChart.setOption(klineData, 'hour')
+    klineChart.resizeECharts(element, false, size)
+    expect(klineChart.kline.getOption()).not.toBeNull();
+  })
+
   it('test resizeECharts if is fullScreen and defaultSize is true', () => {
+    window.innerWidth = 1430;
     const element = document.createElement('div');
     option.defaultSize = true;
     let klineChart = new klineSetChart(option);
@@ -193,54 +199,6 @@ describe('test KLineSetChart', () => {
   })
 
   it('test resizeECharts if not fullScreen', () => {
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if DOM is null', () => {
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(null, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth less than 1280', () => {
-    window.innerWidth = 1200;
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth less than 1366', () => {
-    window.innerWidth = 1360;
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth less than 1440', () => {
-    window.innerWidth = 1430;
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth less than 1680', () => {
     window.innerWidth = 1600;
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
@@ -250,53 +208,13 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test resizeECharts if ClientWidth is 1920', () => {
+  it('test resizeECharts if DOM is null', () => {
     window.innerWidth = 1920;
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
     klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth is 2180', () => {
-    window.innerWidth = 2180;
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth is 2560', () => {
-    window.innerWidth = 2560;
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth is 3440', () => {
-    window.innerWidth = 3440;
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
-    expect(klineChart.kline.getOption()).not.toBeNull();
-  })
-
-  it('test resizeECharts if ClientWidth is 3840', () => {
-    window.innerWidth = 3840;
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false)
+    klineChart.resizeECharts(null, false)
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 

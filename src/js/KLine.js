@@ -39,6 +39,10 @@ class KLineController {
         this.setKLineChart.updateOption(data, cycle);
     }
 
+    getEchart() {
+        return this.setKLineChart.getEchart();
+    }
+
     getToolTipData() {
         return this.setKLineChart.getToolTipData();
     }
