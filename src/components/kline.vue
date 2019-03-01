@@ -93,7 +93,7 @@ export default {
       if (JSON.stringify(size) !== JSON.stringify(this.klineSize) && this.klineConfig.defaultSize === false) {
         this.klineSize = {
           width: this.klineConfig.size.width + 'px',
-          height: this.klineConfig.size.height + 'px'
+          height: '100%'
         }
         this.resize();
       }

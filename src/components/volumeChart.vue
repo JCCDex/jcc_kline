@@ -61,7 +61,7 @@ export default {
         if (JSON.stringify(size) !== JSON.stringify(this.volumeSize) && this.klineConfig.defaultSize === false) {
           this.volumeSize = {
             width: this.klineConfig.size.width + 'px',
-            height: this.klineConfig.size.height + 'px'
+            height: this.klineConfig.size.height * 0.25 + 'px'
           }
           this.resize();
         }
@@ -71,7 +71,7 @@ export default {
   created() {
     if (this.klineConfig.platform === 'pc') {
       if (!this.klineConfig.defaultSize) {
-        this.volumeSize.height = this.klineConfig.size.height + 'px'
+        this.volumeSize.height = this.klineConfig.size.height * 0.25 + 'px'
         this.volumeSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.volumeSize = {

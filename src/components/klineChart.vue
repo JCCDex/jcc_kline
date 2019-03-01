@@ -38,10 +38,9 @@ import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
-import { getLanguage } from '../js/utils'
+import { getLanguage, getDefaultChartSize } from '../js/utils'
 import { splitData, getDepthData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
-import { getDefaultChartSize } from '../js/ChartOptionUtils';
 // import TimeSharing from './timeSharing.vue'
 export default {
   name: "klineChart",

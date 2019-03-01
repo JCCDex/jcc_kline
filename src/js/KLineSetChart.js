@@ -6,12 +6,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
 import { calculateMA } from './processData';
-import { getClientWidth, formatDecimal, getLanguage, getClientHeight } from './utils';
-
-var klineSize = {
-    width: 0,
-    height: 0
-};
+import { formatDecimal, getLanguage, getDefaultChartSize } from './utils';
 
 var config;
 var toolTipData;
@@ -25,59 +20,22 @@ class KLineSetChartController {
     }
 
     resizeECharts(DOM, isFullScreen, resizeSize) {
+        let size = getDefaultChartSize();
         if (!isFullScreen) {
             if (!this.klineConfig.defaultSize) {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = resizeSize.height + 'px';
+                        DOM.style.height = resizeSize.height * 0.75 + 'px';
                         DOM.style.width = resizeSize.width + 'px';
-                        klineSize.width = resizeSize.width;
-                        klineSize.height = resizeSize.height;
                     }
                 };
                 resizeContainer(this);
                 this.kline.resize();
             } else {
-                let size = getClientWidth();
                 let resizeContainer = () => {
-                    let width;
-                    let height;
                     if (DOM) {
-                        if (size <= 1024) {
-                            width = 1000 * 0.7;
-                            height = 1000 * 0.44 * 0.8 * 0.75;
-                        } else if (size <= 1280) {
-                            width = 1203 * 0.7;
-                            height = 1203 * 0.37 * 0.8 * 0.75;
-                        } else if (size <= 1366) {
-                            width = 1284 * 0.7;
-                            height = 1284 * 0.44 * 0.8 * 0.75;
-                        } else if (size <= 1440) {
-                            width = 1354 * 0.7;
-                            height = 1354 * 0.4 * 0.8 * 0.75;
-                        } else if (size <= 1680) {
-                            width = 1504 * 0.7;
-                            height = 1504 * 0.36 * 0.8 * 0.75;
-                        } else if (size <= 1920) {
-                            width = 1804 * 0.7;
-                            height = 1804 * 0.37 * 0.8 * 0.75;
-                        } else if (size <= 2180) {
-                            width = 2048 * 0.7;
-                            height = 2048 * 0.37 * 0.8 * 0.75;
-                        } else if (size <= 2560) {
-                            width = 2560 * 0.7;
-                            height = 1385 * 0.37 * 0.8 * 0.75;
-                        } else if (size <= 3440) {
-                            width = 3440 * 0.7;
-                            height = 1426 * 0.37 * 0.8 * 0.75;
-                        } else if (size <= 3840) {
-                            width = 3840 * 0.7;
-                            height = 1426 * 0.37 * 0.8 * 0.75;
-                        }
-                        DOM.style.height = height + 'px';
-                        DOM.style.width = width + 'px';
-                        klineSize.width = width;
-                        klineSize.height = height;
+                        DOM.style.height = size.height * 0.75 + 'px';
+                        DOM.style.width = size.width + 'px';
                     }
                 };
                 resizeContainer(this);
@@ -85,10 +43,8 @@ class KLineSetChartController {
             }
         } else {
             let resizeContainer = () => {
-                DOM.style.height = getClientHeight() + 'px';
-                DOM.style.width = getClientWidth() + 'px';
-                klineSize.width = getClientWidth();
-                klineSize.height = getClientHeight();
+                DOM.style.height = size.clientHeight * 0.75 + 'px';
+                DOM.style.width = size.clientWidth + 'px';
             };
             resizeContainer(this);
             this.kline.resize();
