@@ -40,8 +40,8 @@ export const splitData = (data, platform) => {
     };
 };
 
-export const getDepthData = (data, coinType) => {
-    if (!data || !coinType) return;
+export const getDepthData = (data) => {
+    if (!data) return;
     let buyData = []; //买入数据
     let sellData = []; //卖出数据
     let bids = data.bids;

@@ -19,7 +19,7 @@ export default {
     };
   },
   props: {
-    klineDataObj: {
+    chartDataObj: {
       type: Object,
       default: () => {
         return {}
@@ -34,26 +34,19 @@ export default {
     }
   },
   watch: {
-    klineDataObj() {
-      if (this.klineDataObj) {
-        let precision = {
-          price: this.klineDataObj.pricePrecision,
-          amount: this.klineDataObj.amountPrecision
-        }
-        if (this.klineDataObj.depthData) {
-          let depthData = getDepthData(this.klineDataObj.depthData, this.klineDataObj.coinType, precision);
-          depthData.precision = precision;
-          if (depthData) {
-            if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
-              this.clearChart();
-              this.depth.setDepthOption(depthData)
-              this.coinType = this.klineDataObj.coinType
-            }else {
-              this.depth.updateDepthOption(depthData)
-            }
+    chartDataObj() {
+      if (this.chartDataObj.depthData) {
+        let data = this.chartDataObj.depthData
+        data.precision = this.chartDataObj.precision
+        if (data) {
+          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
+            this.clearChart();
+            this.depth.setDepthOption(data)
+            this.coinType = this.chartDataObj.coinType
+          }else {
+            this.depth.updateDepthOption(data)
           }
         }
-        
       }
     },
     klineConfig() {

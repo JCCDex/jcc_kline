@@ -51,23 +51,9 @@ describe('test KLineSetChart', () => {
     expect(kline.getXAxis(klineData, 'month')).not.toBeNull()
   })
 
-  it('test getYAxis', () => {
-    let kline = new klineSetChart(option);
-    expect(kline.getYAxis(klineData)).not.toBeNull()
-  })
-
   it('test getToolTip', () => {
     let kline = new klineSetChart(option);
     expect(kline.getToolTip(klineData)).not.toBeNull()
-  })
-
-  it('test getGrid', () => {
-    let kline = new klineSetChart(option);
-    let data = {
-      sellPercent: 0.5,
-      buyPercent: 0.5
-    }
-    expect(kline.getGrid(data)).not.toBeNull()
   })
 
   it('test getSeries', () => {

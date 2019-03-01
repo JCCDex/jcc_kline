@@ -26,9 +26,9 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></Volume>
-      <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
+      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
+      <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
@@ -39,7 +39,9 @@ import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import { getLanguage } from '../js/utils'
+import { splitData, getDepthData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
+import { getDefaultChartSize } from '../js/ChartOptionUtils';
 // import TimeSharing from './timeSharing.vue'
 export default {
   name: "klineChart",
@@ -57,7 +59,8 @@ export default {
       isShow: false,
       showExitFullScreen: false,
       candle: null,
-      volume: null
+      volume: null,
+      chartDataObj: {}
     };
   },
   props: {
@@ -104,15 +107,40 @@ export default {
         }
       ];
     }
+    if (this.klineConfig.defaultSize !== false) {
+      this.klineConfig.size = getDefaultChartSize()
+    }
     this.message = getLanguage();
-
   },
   watch: {
     klineConfig() {
       this.klineConfig.platform = 'pc'
+      if (this.klineConfig.defaultSize !== false) {
+        this.klineConfig.size = getDefaultChartSize()
+      }
     },
     klineDataObj() {
-        this.message = getLanguage();
+      let candleData
+      let depthData
+      this.message = getLanguage()
+      let precision = {
+        price: this.klineDataObj.pricePrecision,
+        amount: this.klineDataObj.amountPrecision
+      }
+      if (this.klineDataObj.klineData) {
+        candleData = splitData(this.klineDataObj.klineData, this.klineDataObj.platform)
+      }
+      if (this.klineDataObj.depthData) {
+        depthData = getDepthData(this.klineDataObj.depthData);
+      }
+      this.chartDataObj = {
+        platform: 'pc',
+        precision: precision,
+        cycle: this.klineDataObj.cycle,
+        coinType: this.klineDataObj.coinType,
+        candleData: candleData,
+        depthData: depthData
+      }
     },
     fullscreen() {
       if (this.fullscreen && (getLanguage().language === "en")) {

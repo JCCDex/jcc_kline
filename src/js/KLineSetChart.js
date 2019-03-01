@@ -159,10 +159,8 @@ class KLineSetChartController {
             }
             this.kline.hideLoading();
             let klineOption = {
-                grid: this.getGrid(data),
                 tooltip: this.getToolTip(data, MAConfig),
                 xAxis: this.getXAxis(data, cycle),
-                yAxis: this.getYAxis(data),
                 series: this.getSeries(data)
             };
             merge(config, klineOption);
@@ -181,10 +179,8 @@ class KLineSetChartController {
         let MAConfig = this.klineConfig.MA;
         if (this.kline.getOption()) {
             let klineOption = {
-                grid: this.getGrid(data),
                 tooltip: this.getToolTip(data, MAConfig),
                 xAxis: this.getXAxis(data, cycle),
-                yAxis: this.getYAxis(data),
                 series: this.getSeries(data)
             };
             merge(config, klineOption);
@@ -199,16 +195,6 @@ class KLineSetChartController {
 
     getEchart() {
         return this.kline;
-    }
-
-    getGrid() {
-        var g = [{
-            // height: klineSize.height + 'px'
-        // },
-        // {
-        //     height: klineSize.height / 600 * 100 + 'px'
-        }];
-        return g;
     }
 
     getToolTip(data, MAConfig) {
@@ -259,33 +245,8 @@ class KLineSetChartController {
                     }
                 }
             }
-        // },
-        // {
-        //     gridIndex: 1,
-        //     data: data.categoryData
         }];
         return x;
-    }
-
-    getYAxis() {
-        var y = [{
-            gridIndex: 0
-        // },
-        // {
-        //     gridIndex: 1,
-        //     axisLabel: {
-        //         formatter: function (value) {
-        //             if (value >= 1000 && value < 1000000) {
-        //                 return (value / 1000) + 'K';
-        //             } else if (value >= 1000000) {
-        //                 return (value / 1000000) + 'M';
-        //             } else {
-        //                 return value;
-        //             }
-        //         }
-        //     }
-        }];
-        return y;
     }
 
     getSeries(data) {
@@ -313,20 +274,6 @@ class KLineSetChartController {
             {
                 name: 'MA60',
                 data: calculateMA(60, data)
-            // },
-            // {
-            //     name: 'Volume',
-            //     data: data.volumes,
-            //     barMaxWidth: 10,
-            //     itemStyle: {
-            //         normal: {
-            //             color: function (param) {
-            //                 return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-            //             }
-            //         }
-            //     },
-            //     xAxisIndex: 1,
-            //     yAxisIndex: 1
             }
         ];
         if (this.klineConfig.defaultMA !== false) {

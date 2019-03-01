@@ -20,7 +20,7 @@ export default {
     };
   },
   props: {
-    klineDataObj: {
+    chartDataObj: {
       type: Object,
       default: () => {
         return {}
@@ -35,20 +35,21 @@ export default {
     }
   },
   watch: {
-    klineDataObj() {
-      if (this.klineDataObj) {
-        let klineData = splitData(this.klineDataObj.klineData, this.platform)
-        let depthData = getDepthData(this.klineDataObj.volumeData, this.klineDataObj.coinType);
-          let data = Object.assign({}, klineData, depthData);
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType) || this.klineDataObj.cycle !== this.cycle) {
+    chartDataObj() {
+      if (this.chartDataObj.candleData) {
+        let data = this.chartDataObj.candleData
+        data.precision = this.chartDataObj.precision
+        if (data.values && data.volumes && data.categoryData) {
+          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
             this.clearChart();
-            this.cycle = this.klineDataObj.cycle
+            this.cycle = this.chartDataObj.cycle
             this.volume.setVolumeOption(data, this.cycle)
             this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
-            this.coinType = this.klineDataObj.coinType
+            this.coinType = this.chartDataObj.coinType
           }else {
             this.volume.updateVolumeOption(data, this.cycle)
           }
+        }
       }
     },
     klineConfig() {
