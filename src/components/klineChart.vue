@@ -39,7 +39,7 @@ import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import { getLanguage, getDefaultChartSize } from '../js/utils'
-import { splitData, getDepthData } from '../js/processData'
+import { splitData, getDepthData, calculateMA } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
 // import TimeSharing from './timeSharing.vue'
 export default {
@@ -121,6 +121,7 @@ export default {
     klineDataObj() {
       let candleData
       let depthData
+      let MAData = []
       this.message = getLanguage()
       let precision = {
         price: this.klineDataObj.pricePrecision,
@@ -128,6 +129,11 @@ export default {
       }
       if (this.klineDataObj.klineData) {
         candleData = splitData(this.klineDataObj.klineData, 'pc')
+        for (var i = 0; i < this.klineConfig.MA.length; i++) {
+          MAData[i] = {}
+          MAData[i].name = this.klineConfig.MA[i].name
+          MAData[i].data = calculateMA(this.klineConfig.MA[i].name.substring(2) * 1, candleData)
+        }
       }
       if (this.klineDataObj.depthData) {
         depthData = getDepthData(this.klineDataObj.depthData);
@@ -138,7 +144,8 @@ export default {
         cycle: this.klineDataObj.cycle,
         coinType: this.klineDataObj.coinType,
         candleData: candleData,
-        depthData: depthData
+        depthData: depthData,
+        MA: MAData
       }
     },
     fullscreen() {

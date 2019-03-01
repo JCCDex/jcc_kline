@@ -5,7 +5,6 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
-import { calculateMA } from './processData';
 import { formatDecimal, getLanguage, getDefaultChartSize } from './utils';
 
 var config;
@@ -106,16 +105,15 @@ class KLineSetChartController {
                 MAData: [],
                 color: data.volumes[length][2]
             };
-            let MAConfig = this.klineConfig.MA;
-            for (var i = 0; i < MAConfig.length; i++) {
+            for (var i = 0; i < data.MAData.length; i++) {
                 toolTipData.MAData[i] = {
-                    name: MAConfig[i].name,
-                    data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[length], pricePrecision, true),
+                    name: data.MAData[i].name,
+                    data: formatDecimal(data.MAData[i].data[length], pricePrecision, true),
                 };
             }
             this.kline.hideLoading();
             let klineOption = {
-                tooltip: this.getToolTip(data, MAConfig),
+                tooltip: this.getToolTip(data),
                 xAxis: this.getXAxis(data, cycle),
                 series: this.getSeries(data)
             };
@@ -153,7 +151,7 @@ class KLineSetChartController {
         return this.kline;
     }
 
-    getToolTip(data, MAConfig) {
+    getToolTip(data) {
         return {
             formatter: function (param) {
                 param = param[0];
@@ -170,10 +168,10 @@ class KLineSetChartController {
                         MAData: [],
                         color: data.volumes[index][2]
                     };
-                    for (var i = 0; i < MAConfig.length; i++) {
+                    for (var i = 0; i < data.MAData.length; i++) {
                         toolTipData.MAData[i] = {
-                            name: MAConfig[i].name,
-                            data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[index], pricePrecision, true)
+                            name: data.MAData[i].name,
+                            data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
                         };
                     }
                 }
@@ -206,46 +204,17 @@ class KLineSetChartController {
     }
 
     getSeries(data) {
-        var s = [
-            {
-                type: 'candlestick',
-                data: data.values,
-            },
-            {
-                name: 'MA5',
-                data: calculateMA(5, data)
-            },
-            {
-                name: 'MA10',
-                data: calculateMA(10, data)
-            },
-            {
-                name: 'MA20',
-                data: calculateMA(20, data),
-            },
-            {
-                name: 'MA30',
-                data: calculateMA(30, data)
-            },
-            {
-                name: 'MA60',
-                data: calculateMA(60, data)
-            }
-        ];
-        if (this.klineConfig.defaultMA !== false) {
-            return s;
-        } else {
-            let MASeries = s[1];
-            let MAIndex = this.klineConfig.MAIndex;
-            s.splice(1, 5);
-            for (let MA of this.klineConfig.MA) {
-                s.splice(MAIndex, 0, JSON.parse(JSON.stringify(MASeries)));
-                s[MAIndex].name = MA.name;
-                s[MAIndex].data = calculateMA(MA.name.substring(2) * 1, data);
-                MAIndex++;
-            }
-            return s;
+        var s = [{
+            type: 'candlestick',
+            data: data.values,
+        }];
+        for (var i = 0; i < data.MAData.length; i++) {
+            s[i + 1] = {
+                name: data.MAData[i].name,
+                data: data.MAData[i].data
+            };
         }
+        return s;
     }
 
     getDataZoom() {

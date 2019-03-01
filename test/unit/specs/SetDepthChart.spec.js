@@ -103,6 +103,7 @@ describe('test SetDepthChart', () => {
 
 
   it('test resizeECharts if is fullScreen', () => {
+    window.innerWidth = 2180;
     const element = document.createElement('div');
     depthOption.platform = 'pc'
     let depthChart = new SetDepthChart(depthOption);
@@ -113,6 +114,7 @@ describe('test SetDepthChart', () => {
   })
 
   it('test resizeECharts if is fullScreen and oldDepthData is null', () => {
+    window.innerWidth = 2560;
     const element = document.createElement('div');
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)
@@ -122,6 +124,7 @@ describe('test SetDepthChart', () => {
   })
 
   it('test resizeECharts if not fullScreen', () => {
+    window.innerWidth = 3440;
     const element = document.createElement('div');
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)
@@ -131,6 +134,7 @@ describe('test SetDepthChart', () => {
   })
 
   it('test resizeECharts if defaultDepthSize is true', () => {
+    window.innerWidth = 3840;
     depthOption.defaultDepthSize = false
     depthOption.size = {
       width: 600,

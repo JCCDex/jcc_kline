@@ -1,17 +1,9 @@
 import ChartController from 'js/Charts.js'
 import klineController from 'js/KLine.js'
 import { linkageVolume } from 'js/linkageCharts'
-import { splitData, getDepthData } from 'js/processData'
-import testData from '../../testData/data.json'
+import testData from '../../testData/testData.json'
 
-let precision = {
-    price: 6,
-    amount: 2
-}
-let depthData = getDepthData(testData.depthData, testData.coinType, precision)
-let pcData = splitData(testData.klineData, 'pc')
-let data = Object.assign({}, pcData, depthData);
-data.precision = precision
+let data = testData.candleData
 let volumeConfig = {
     platform: 'pc',
     chartType: 'volume',
@@ -22,14 +14,26 @@ let klineConfig = {
     defaultMA: false,
     MA: [
         {
-            name: 'MA3',
-            color: '#67ff7c'
+          name: "MA5",
+          color: "#ff4d71"
         },
         {
-            name: 'MA10',
-            color: '#ff4d71'
+          name: "MA10",
+          color: "#67ff7c"
+        },
+        {
+          name: "MA20",
+          color: "#16c5ff"
+        },
+        {
+          name: "MA30",
+          color: "#f6d026"
+        },
+        { 
+          name: "MA60", 
+          color: "#e03bfa"
         }
-    ]
+      ]
 }
 
 describe('test linkageCharts', () => {

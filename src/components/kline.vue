@@ -70,6 +70,7 @@ export default {
       this.message = getLanguage();
       if (this.chartDataObj.candleData) {
         let data = this.chartDataObj.candleData
+        data.MAData = this.chartDataObj.MA
         data.precision = this.chartDataObj.precision
         if (data.values && data.volumes && data.categoryData) {
           if (this.cycle !== this.chartDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {

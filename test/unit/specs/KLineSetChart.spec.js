@@ -1,17 +1,10 @@
 import klineSetChart from 'js/KLineSetChart'
 import option from 'js/KLineOption'
-import { splitData, getDepthData } from 'js/processData'
-import testData from '../../testData/data.json'
+import testData from '../../testData/testData.json'
 
 describe('test KLineSetChart', () => {
 
-  let precision = {
-    price: 6,
-    amount: 2
-  }
-  let depthData = getDepthData(testData.depthData, testData.coinType, precision)
-  let pcData = splitData(testData.klineData, 'pc')
-  let klineData = Object.assign({}, pcData, depthData);
+  let klineData = testData.candleData
   option.defaultMA = false
   option.MAIndex = 1
   option.MA = [
@@ -36,7 +29,6 @@ describe('test KLineSetChart', () => {
       color: "#e03bfa"
     }
   ];
-  klineData.precision = precision
   
   it('test klineSetChart', () => {
     let kline = new klineSetChart(option);
@@ -168,6 +160,7 @@ describe('test KLineSetChart', () => {
   })
 
   it('test resizeECharts if is fullScreen', () => {
+    window.innerWidth = 1200;
     const element = document.createElement('div');
     option.size = {
       width: 600,
@@ -181,6 +174,7 @@ describe('test KLineSetChart', () => {
   })
 
   it('test resizeECharts if not fullScreen', () => {
+    window.innerWidth = 1360;
     const element = document.createElement('div');
     let size = {
       width: 600,
@@ -194,6 +188,7 @@ describe('test KLineSetChart', () => {
   })
 
   it('test resizeECharts if is fullScreen and defaultSize is true', () => {
+    window.innerWidth = 1430;
     const element = document.createElement('div');
     option.defaultSize = true;
     let klineChart = new klineSetChart(option);
@@ -204,6 +199,7 @@ describe('test KLineSetChart', () => {
   })
 
   it('test resizeECharts if not fullScreen', () => {
+    window.innerWidth = 1600;
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
@@ -213,6 +209,7 @@ describe('test KLineSetChart', () => {
   })
 
   it('test resizeECharts if DOM is null', () => {
+    window.innerWidth = 1920;
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
