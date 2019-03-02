@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
+    <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen" @change="fullscreenChange">
       <div v-show = "showExitFullScreen" class = "exit-full-screen">
         <div class="exit-full-screen-btn" @click = "fullScreenToggle" >Exit Full Screen(Esc)</div>
       </div>
@@ -26,8 +26,8 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj"></KLine>
-      <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></Depth>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :kline-data-obj = "klineDataObj" :isFullScreen = "isFullScreen"></KLine>
+      <Depth ref="depth" v-show = "showChart === 'depth'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig" :isFullScreen = "isFullScreen"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
@@ -51,7 +51,8 @@ export default {
       showChart: 'candle',
       fullscreen: false,
       isShow: false,
-      showExitFullScreen: false
+      showExitFullScreen: false,
+      isFullScreen: {}
     };
   },
   props: {
@@ -94,6 +95,11 @@ export default {
   methods: {
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)
+    },
+    fullscreenChange(fullscreen) {
+      this.isFullScreen = {
+        fullScreen: fullscreen
+      }
     },
     changeChart(type) {
       if (this.showChart === type) {

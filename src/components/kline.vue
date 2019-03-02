@@ -67,9 +67,19 @@ export default {
         return {
         }
       }
+    },
+    isFullScreen: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
     }
   },
   watch: {
+    isFullScreen() {
+      this.resize()
+    },
     klineDataObj() {
       if (this.klineDataObj) {
         this.message = getLanguage();
@@ -161,8 +171,7 @@ export default {
       }
     },
     resize() {
-      let isFullScreen = this.$parent.getState()
-      this.kline.resizeChart(this.$refs.klineRef, isFullScreen, this.klineConfig.size);
+      this.kline.resizeChart(this.$refs.klineRef, this.isFullScreen.fullScreen, this.klineConfig.size);
     },
     clearChart() {
       this.kline.clearChart();

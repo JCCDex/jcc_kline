@@ -31,9 +31,19 @@ export default {
         return {
         }
       }
+    },
+    isFullScreen: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
     }
   },
   watch: {
+    isFullScreen() {
+      this.resize()
+    },
     klineDataObj() {
       if (this.klineDataObj) {
         let precision = {
@@ -109,8 +119,7 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        let isFullScreen = this.$parent.getState()
-        this.depth.resizeDepthChart(this.$refs.depth, isFullScreen, this.klineConfig.size);
+        this.depth.resizeDepthChart(this.$refs.depth, this.isFullScreen.fullScreen, this.klineConfig.size);
       }
       
     },
