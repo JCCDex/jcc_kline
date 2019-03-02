@@ -8,7 +8,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 
 var volumeOption;
 var oldVolumeData;
-var toolTipData;
+var toolTipIndex;
 
 class VolumeChart {
     constructor(configs) {
@@ -82,7 +82,7 @@ class VolumeChart {
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
-            return toolTipData;
+            return toolTipIndex;
         }
     }
 
@@ -102,7 +102,7 @@ class VolumeChart {
     }
 
     getToolTipIndex() {
-        return toolTipData;
+        return toolTipIndex;
     }
 
     getVolumeEchart() {
@@ -160,7 +160,7 @@ class VolumeChart {
                 param = param[0];
                 if (param) {
                     var index = param.data[0];
-                    toolTipData = index;
+                    toolTipIndex = index;
                 }
             }
         };

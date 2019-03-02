@@ -7,21 +7,6 @@
         <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.weekPC}}</div>
         <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.monthPC}}</div>
       </div>
-      <!-- tooltip数据显示 -->
-      <!-- <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="toolTipData">
-        <div style="margin-right: 180px;">
-          <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
-          <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'" style="margin-right: 10px;">{{this.toolTipData.time}}</font>
-          <font class="tooltip-data-name">{{message.volume}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font></font>
-          <font class="tooltip-data-name">{{message.opening}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font></font>
-          <font class="tooltip-data-name">{{message.max}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.max}}</font></font>
-          <font class="tooltip-data-name">{{message.min}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font></font>
-          <font class="tooltip-data-name">{{message.closing}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font></font><br>
-        </div>
-        <div v-if = "outspreadMA">
-          <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{ getMAData(MAitem.name) }}</font></font>
-        </div>
-      </div> -->
       <!-- kline -->
       <div id="kline" ref="klineRef" :style="{height: `${klineSize.height}`, width: `${klineSize.width}`}" @mousemove="getToolTipIndex"></div>
     </div>
@@ -45,10 +30,7 @@ export default {
       },
       message: null,
       klineData: null,
-      toolTipData: null,
-      toolTipIndex: 0,
-      coinType: '',
-      outspreadMA: true
+      coinType: ''
     };
   },
   props: {
@@ -76,8 +58,8 @@ export default {
           if (this.cycle !== this.chartDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
             this.clearChart();
             this.kline.showLoading();
-            this.toolTipIndex = this.kline.setOption(data, this.chartDataObj.cycle);
-            this.$emit("listenToTipIndex", this.toolTipIndex)
+            let toolTipIndex = this.kline.setOption(data, this.chartDataObj.cycle);
+            this.$emit("listenToTipIndex", toolTipIndex)
             this.$emit("listenCandleChartEvent", this.kline.getEchart())
             this.cycle = this.chartDataObj.cycle;
             this.coinType = this.chartDataObj.coinType
@@ -129,13 +111,6 @@ export default {
     this.dispose()
   },
   methods: {
-    getMAData(name) {
-      for( let tipData of this.toolTipData.MAData) {
-        if (tipData.name === name) {
-          return tipData.data
-        }
-      }
-    },
     init() {
       this.kline.initChart(this.$refs.klineRef);
       this.resize();
@@ -150,15 +125,8 @@ export default {
       this.kline.changeDataZoom(type)
     },
     getToolTipIndex() {
-      this.toolTipIndex = this.kline.getToolTipIndex()
-      this.$emit("listenToTipIndex", this.toolTipIndex)
-    },
-    showMAData() {
-      if (!this.outspreadMA) {
-        this.outspreadMA = true
-      } else {
-        this.outspreadMA = false
-      }
+      let toolTipIndex = this.kline.getToolTipIndex()
+      this.$emit("listenToTipIndex", toolTipIndex)
     },
     resize() {
       setTimeout(this.resizeSize(), 500)

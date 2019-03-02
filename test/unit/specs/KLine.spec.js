@@ -115,12 +115,12 @@ describe('test KLine', () => {
     expect(kline.setKLineChart.kline.getOption()).not.toBeNull()
   })
 
-  it('test getToolTipData if platform is pc', () => {
+  it('test getToolTipIndex if platform is pc', () => {
     let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
-    let tipData = kline.getToolTipData()
+    let tipData = kline.getToolTipIndex()
     expect(tipData).not.toBeNull()
   })
 

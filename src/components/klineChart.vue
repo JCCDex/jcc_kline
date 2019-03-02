@@ -4,6 +4,21 @@
       <div v-show = "showExitFullScreen" class = "exit-full-screen">
         <div class="exit-full-screen-btn" @click = "fullScreenToggle" >Exit Full Screen(Esc)</div>
       </div>
+      <!-- tooltip数据显示 -->
+      <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if = "showChart === 'candle' && toolTipData">
+       <div style="margin-right: 180px;">
+          <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
+          <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'" style="margin-right: 10px;">{{this.toolTipData.time}}</font>
+          <font class="tooltip-data-name">{{message.volume}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font></font>
+          <font class="tooltip-data-name">{{message.opening}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font></font>
+          <font class="tooltip-data-name">{{message.max}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.max}}</font></font>
+          <font class="tooltip-data-name">{{message.min}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font></font>
+          <font class="tooltip-data-name">{{message.closing}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font></font><br>
+        </div>
+        <div v-if = "outspreadMA">
+          <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{ getMAData(MAitem.name) }}</font></font>
+        </div>
+      </div>
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
@@ -27,13 +42,15 @@
         </div>
       </div> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
+      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
 </template>
 <script>
+import '../icon/iconfont.css'
+import '../css/common.css'
 import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
@@ -62,7 +79,8 @@ export default {
       pricePrecision: 6,
       amountsPrecision: 2,
       chartDataObj: {},
-      toolTipData: {}
+      toolTipData: null,
+      outspreadMA: true
     };
   },
   props: {
@@ -162,10 +180,19 @@ export default {
   },
   methods: {
     getMAData(name) {
-      for( let tipData of this.toolTipData.MAData) {
-        if (tipData.name === name) {
-          return tipData.data
+      if (this.toolTipData) {
+        for( let tipData of this.toolTipData.MAData) {
+          if (tipData.name === name) {
+            return tipData.data
+          }
         }
+      }
+    },
+    showMAData() {
+      if (!this.outspreadMA) {
+        this.outspreadMA = true
+      } else {
+        this.outspreadMA = false
       }
     },
     changeCycle(cycle) {
@@ -187,24 +214,22 @@ export default {
       let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
       let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : this.pricePrecision;
       let amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : this.amountsPrecision;
-      console.log(index)
-      // this.toolTipData = {
-      //   time: data.categoryData[index],
-      //   volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-      //   opening: formatDecimal(data.values[index][0], pricePrecision, true),
-      //   closing: formatDecimal(data.values[index][1], pricePrecision, true),
-      //   max: formatDecimal(data.values[index][3], pricePrecision, true),
-      //   min: formatDecimal(data.values[index][2], pricePrecision, true),
-      //   MAData: [],
-      //   color: data.volumes[index][2]
-      // }
-      // for (var i = 0; i < data.MAData.length; i++) {
-      //   this.toolTipData.MAData[i] = {
-      //     name: data.MAData[i].name,
-      //     data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
-      //   };
-      // }
-      // console.log(this.toolTipData)
+      this.toolTipData = {
+        time: data.categoryData[index],
+        volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+        opening: formatDecimal(data.values[index][0], pricePrecision, true),
+        closing: formatDecimal(data.values[index][1], pricePrecision, true),
+        max: formatDecimal(data.values[index][3], pricePrecision, true),
+        min: formatDecimal(data.values[index][2], pricePrecision, true),
+        MAData: [],
+        color: data.volumes[index][2]
+      }
+      for (var i = 0; i < data.MAData.length; i++) {
+        this.toolTipData.MAData[i] = {
+          name: data.MAData[i].name,
+          data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+        };
+      }
     },
     changeChart(type) {
       if (this.showChart === type) {

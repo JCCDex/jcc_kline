@@ -1,4 +1,4 @@
-import { isNumber, getLanguage, formatDecimal, getClientWidth, getClientHeight } from 'js/utils'
+import { isNumber, getLanguage, formatDecimal, getClientWidth, getClientHeight, formatNumber } from 'js/utils'
 
 describe('test utils', () => {
   it('test is number', () => {
@@ -34,6 +34,10 @@ describe('test utils', () => {
 
   it('test formatDecimal if num is integer', () => {
     expect(formatDecimal('12345', 0, true)).toBe("12,345")
+  })
+
+  it('test formatNumber if value is integer', () => {
+    expect(formatNumber('123.45', 0)).toBe("123")
   })
 
   it('test getClientWidth', () => {

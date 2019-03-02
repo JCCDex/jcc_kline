@@ -1,5 +1,5 @@
 <template>
-  <div ref="volume" :style="{height: `${volumeSize.height}`, width: `${volumeSize.width}`}" @mousemove="getToolTipData()"></div>
+  <div ref="volume" :style="{height: `${volumeSize.height}`, width: `${volumeSize.width}`}" @mousemove="getToolTipIndex()"></div>
 </template>
 <script>
 import { splitData, getDepthData } from '../js/processData'
@@ -103,8 +103,9 @@ export default {
       this.volume.initVolumeChart(this.$refs.volume);
       this.resize();
     },
-    getToolTipData () {
-      let index = this.volume.getToolTipIndex()
+    getToolTipIndex () {
+      let toolTipIndex = this.volume.getToolTipIndex()
+      this.$emit("listenToTipIndex", toolTipIndex)
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {

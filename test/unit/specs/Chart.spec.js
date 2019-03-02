@@ -245,6 +245,15 @@ describe('test Chart', () => {
     expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
   })
 
+  it('test getToolTipIndex', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    let tipIndex = volume.getToolTipIndex()
+    expect(tipIndex).not.toBeNull()
+  })
+
   it('test getVolumeEchart', () => {
     let volume = new ChartController(volumeConfig)
     const element = document.createElement('div');
