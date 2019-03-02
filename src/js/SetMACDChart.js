@@ -166,9 +166,9 @@ class MACDChart {
                         color: function(params) {
                             var colorList;
                             if (params.data >= 0) {
-                                colorList = '#ef232a';
+                                colorList = '#ee4b4b';
                             } else {
-                                colorList = '#14b143';
+                                colorList = '#09e988';
                             }
                             return colorList;
                         },
