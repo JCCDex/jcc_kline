@@ -47,7 +47,7 @@ export default {
         }
       }
     },
-    isFullScreen: {
+    resizeSize: {
       type: Object,
       default: () => {
         return {
@@ -56,7 +56,7 @@ export default {
     }
   },
   watch: {
-    isFullScreen() {
+    resizeSize() {
       this.resize()
     },
     chartDataObj() {
@@ -110,14 +110,8 @@ export default {
   },
   mounted() {
     this.init();
-    if (this.klineConfig.defaultSize === true) {
-      window.addEventListener("resize", this.resize);
-    }
   },
   beforeDestroy() {
-    if (this.klineConfig.defaultSize === true) {
-      window.removeEventListener("resize", this.resize);
-    }
     this.dispose()
   },
   methods: {
@@ -139,7 +133,7 @@ export default {
       this.$emit("listenToTipIndex", toolTipIndex)
     },
     resize() {
-      this.kline.resizeChart(this.$refs.klineRef, this.isFullScreen.fullScreen, this.klineConfig.size);
+      this.kline.resizeChart(this.$refs.klineRef, this.resizeSize.isFullScreen, this.klineConfig.size);
     },
     clearChart() {
       this.kline.clearChart();

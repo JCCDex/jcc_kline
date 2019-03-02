@@ -32,7 +32,7 @@ export default {
         }
       }
     },
-    isFullScreen: {
+    resizeSize: {
       type: Object,
       default: () => {
         return {
@@ -56,7 +56,7 @@ export default {
         }
       }
     },
-    isFullScreen() {
+    resizeSize() {
       this.resize()
     },
     klineConfig() {
@@ -95,14 +95,8 @@ export default {
   },
   mounted() {
     this.init();
-    if (this.klineConfig.defaultSize === true) {
-      window.addEventListener("resize", this.resize);
-    }
   },
   beforeDestroy() {
-    if (this.klineConfig.defaultSize === true) {
-      window.removeEventListener("resize", this.resize);
-    }
     this.dispose()
   },
   methods: {
@@ -112,9 +106,8 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        this.depth.resizeDepthChart(this.$refs.depth, this.isFullScreen.fullScreen, this.klineConfig.size);
+        this.depth.resizeDepthChart(this.$refs.depth, this.resizeSize.isFullScreen, this.klineConfig.size);
       }
-      
     },
     clearChart() {
       this.depth.clearDepthEcharts();

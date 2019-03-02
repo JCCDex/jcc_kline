@@ -41,9 +41,9 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :isFullScreen = "isFullScreen"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :isFullScreen = "isFullScreen"></Volume>
-      <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :isFullScreen = "isFullScreen"></Depth>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KLine>
+      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
+      <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
@@ -81,7 +81,8 @@ export default {
       chartDataObj: {},
       toolTipData: null,
       outspreadMA: true,
-      isFullScreen: {}
+      resizeSize: {},
+      isFullScreen: false
     };
   },
   props: {
@@ -133,6 +134,11 @@ export default {
     }
     this.message = getLanguage();
   },
+  mounted() {
+    if (this.klineConfig.defaultSize === true) {
+      window.addEventListener("resize", this.resize);
+    }
+  },
   watch: {
     klineConfig() {
       this.klineConfig.platform = 'pc'
@@ -177,6 +183,11 @@ export default {
         } else {
           this.showExitFullScreen = false;
         }
+    }
+  },
+  beforeDestroy() {
+    if (this.klineConfig.defaultSize === true) {
+      window.removeEventListener("resize", this.resize);
     }
   },
   methods: {
@@ -233,8 +244,12 @@ export default {
       }
     },
     fullscreenChange(fullscreen) {
-      this.isFullScreen = {
-        fullScreen: fullscreen
+      this.isFullScreen = fullscreen
+      this.resize()
+    },
+    resize() {
+      this.resizeSize = {
+        isFullScreen: this.isFullScreen
       }
     },
     changeChart(type) {

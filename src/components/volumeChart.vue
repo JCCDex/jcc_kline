@@ -33,7 +33,7 @@ export default {
         }
       }
     },
-    isFullScreen: {
+    resizeSize: {
       type: Object,
       default: () => {
         return {
@@ -42,7 +42,7 @@ export default {
     }
   },
   watch: {
-    isFullScreen() {
+    resizeSize() {
       this.resize()
     },
     chartDataObj() {
@@ -98,14 +98,8 @@ export default {
   },
   mounted() {
     this.init();
-    if (this.klineConfig.defaultSize === true) {
-      window.addEventListener("resize", this.resize);
-    }
   },
   beforeDestroy() {
-    if (this.klineConfig.defaultSize === true) {
-      window.removeEventListener("resize", this.resize);
-    }
     this.dispose()
   },
   methods: {
@@ -119,7 +113,7 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        this.volume.resizeVolumeChart(this.$refs.volume, this.isFullScreen.fullScreen, this.klineConfig.size);
+        this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen, this.klineConfig.size);
       }
     },
     clearChart() {
