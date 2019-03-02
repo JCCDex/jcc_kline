@@ -43,8 +43,8 @@ class KLineController {
         return this.setKLineChart.getEchart();
     }
 
-    getToolTipData() {
-        return this.setKLineChart.getToolTipData();
+    getToolTipIndex() {
+        return this.setKLineChart.getToolTipIndex();
     }
 
     changeDataZoom(type) {

@@ -9,6 +9,7 @@ import { formatDecimal, getLanguage, getDefaultChartSize } from './utils';
 
 var config;
 var toolTipData;
+var toolTipIndex;
 var oldKlineData;
 var amountsPrecision = 2;
 var pricePrecision = 6;
@@ -21,6 +22,7 @@ class KLineSetChartController {
     resizeECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
+            console.log('非全屏')
             if (!this.klineConfig.defaultSize) {
                 let resizeContainer = () => {
                     if (DOM) {
@@ -41,6 +43,7 @@ class KLineSetChartController {
                 this.kline.resize();
             }
         } else {
+            console.log('全屏')
             let resizeContainer = () => {
                 DOM.style.height = size.clientHeight * 0.75 + 'px';
                 DOM.style.width = size.clientWidth + 'px';
@@ -72,6 +75,7 @@ class KLineSetChartController {
     }
 
     clearEcharts() {
+        toolTipIndex = 0;
         toolTipData = null;
         oldKlineData = null;
         this.kline.clear();
@@ -95,22 +99,23 @@ class KLineSetChartController {
             pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
             amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
             let length = data.values.length - 1;
-            toolTipData = {
-                time: data.categoryData[length],
-                volume: formatDecimal(data.values[length][5], amountsPrecision, true),
-                opening: formatDecimal(data.values[length][0], pricePrecision, true),
-                closing: formatDecimal(data.values[length][1], pricePrecision, true),
-                max: formatDecimal(data.values[length][3], pricePrecision, true),
-                min: formatDecimal(data.values[length][2], pricePrecision, true),
-                MAData: [],
-                color: data.volumes[length][2]
-            };
-            for (var i = 0; i < data.MAData.length; i++) {
-                toolTipData.MAData[i] = {
-                    name: data.MAData[i].name,
-                    data: formatDecimal(data.MAData[i].data[length], pricePrecision, true),
-                };
-            }
+            toolTipIndex = length
+            // toolTipData = {
+            //     time: data.categoryData[length],
+            //     volume: formatDecimal(data.values[length][5], amountsPrecision, true),
+            //     opening: formatDecimal(data.values[length][0], pricePrecision, true),
+            //     closing: formatDecimal(data.values[length][1], pricePrecision, true),
+            //     max: formatDecimal(data.values[length][3], pricePrecision, true),
+            //     min: formatDecimal(data.values[length][2], pricePrecision, true),
+            //     MAData: [],
+            //     color: data.volumes[length][2]
+            // };
+            // for (var i = 0; i < data.MAData.length; i++) {
+            //     toolTipData.MAData[i] = {
+            //         name: data.MAData[i].name,
+            //         data: formatDecimal(data.MAData[i].data[length], pricePrecision, true),
+            //     };
+            // }
             this.kline.hideLoading();
             let klineOption = {
                 tooltip: this.getToolTip(data),
@@ -119,7 +124,7 @@ class KLineSetChartController {
             };
             merge(config, klineOption);
             this.kline.setOption(config, true);
-            return toolTipData;
+            return toolTipIndex;
         }
     }
 
@@ -143,8 +148,8 @@ class KLineSetChartController {
         }
     }
 
-    getToolTipData() {
-        return toolTipData;
+    getToolTipIndex() {
+        return toolTipIndex;
     }
 
     getEchart() {
@@ -156,24 +161,25 @@ class KLineSetChartController {
             formatter: function (param) {
                 param = param[0];
                 if (param) {
-                    var index = param.data[0];
-                    toolTipData = {
-                        seriesName: param.seriesName,
-                        time: param.name,
-                        volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-                        opening: formatDecimal(data.values[index][0], pricePrecision, true),
-                        closing: formatDecimal(data.values[index][1], pricePrecision, true),
-                        max: formatDecimal(data.values[index][3], pricePrecision, true),
-                        min: formatDecimal(data.values[index][2], pricePrecision, true),
-                        MAData: [],
-                        color: data.volumes[index][2]
-                    };
-                    for (var i = 0; i < data.MAData.length; i++) {
-                        toolTipData.MAData[i] = {
-                            name: data.MAData[i].name,
-                            data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
-                        };
-                    }
+                    var index = param.data[0]
+                    toolTipIndex = index
+                    // toolTipData = {
+                    //     seriesName: param.seriesName,
+                    //     time: param.name,
+                    //     volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+                    //     opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                    //     closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                    //     max: formatDecimal(data.values[index][3], pricePrecision, true),
+                    //     min: formatDecimal(data.values[index][2], pricePrecision, true),
+                    //     MAData: [],
+                    //     color: data.volumes[index][2]
+                    // };
+                    // for (var i = 0; i < data.MAData.length; i++) {
+                    //     toolTipData.MAData[i] = {
+                    //         name: data.MAData[i].name,
+                    //         data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+                    //     };
+                    // }
                 }
             }
         };

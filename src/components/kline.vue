@@ -8,7 +8,7 @@
         <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.monthPC}}</div>
       </div>
       <!-- tooltip数据显示 -->
-      <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="toolTipData">
+      <!-- <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="toolTipData">
         <div style="margin-right: 180px;">
           <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
           <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'" style="margin-right: 10px;">{{this.toolTipData.time}}</font>
@@ -21,9 +21,9 @@
         <div v-if = "outspreadMA">
           <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{ getMAData(MAitem.name) }}</font></font>
         </div>
-      </div>
+      </div> -->
       <!-- kline -->
-      <div id="kline" ref="klineRef" :style="{height: `${klineSize.height}`, width: `${klineSize.width}`}" @mousemove="getToolTipData"></div>
+      <div id="kline" ref="klineRef" :style="{height: `${klineSize.height}`, width: `${klineSize.width}`}" @mousemove="getToolTipIndex"></div>
     </div>
 </template>
 <script>
@@ -46,6 +46,7 @@ export default {
       message: null,
       klineData: null,
       toolTipData: null,
+      toolTipIndex: 0,
       coinType: '',
       outspreadMA: true
     };
@@ -70,13 +71,13 @@ export default {
       this.message = getLanguage();
       if (this.chartDataObj.candleData) {
         let data = this.chartDataObj.candleData
-        data.MAData = this.chartDataObj.MA
         data.precision = this.chartDataObj.precision
         if (data.values && data.volumes && data.categoryData) {
           if (this.cycle !== this.chartDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
             this.clearChart();
             this.kline.showLoading();
-            this.toolTipData = this.kline.setOption(data, this.chartDataObj.cycle);
+            this.toolTipIndex = this.kline.setOption(data, this.chartDataObj.cycle);
+            this.$emit("listenToTipIndex", this.toolTipIndex)
             this.$emit("listenCandleChartEvent", this.kline.getEchart())
             this.cycle = this.chartDataObj.cycle;
             this.coinType = this.chartDataObj.coinType
@@ -148,8 +149,9 @@ export default {
     changeDataZoom(type) {
       this.kline.changeDataZoom(type)
     },
-    getToolTipData() {
-      this.toolTipData = this.kline.getToolTipData()
+    getToolTipIndex() {
+      this.toolTipIndex = this.kline.getToolTipIndex()
+      this.$emit("listenToTipIndex", this.toolTipIndex)
     },
     showMAData() {
       if (!this.outspreadMA) {
@@ -159,6 +161,9 @@ export default {
       }
     },
     resize() {
+      setTimeout(this.resizeSize(), 500)
+    },
+    resizeSize () {
       let isFullScreen = this.$parent.getState()
       this.kline.resizeChart(this.$refs.klineRef, isFullScreen, this.klineConfig.size);
     },

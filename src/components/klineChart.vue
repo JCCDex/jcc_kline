@@ -26,7 +26,7 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
       <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
@@ -38,7 +38,7 @@ import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
-import { getLanguage, getDefaultChartSize } from '../js/utils'
+import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
 import { splitData, getDepthData, calculateMA } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
 // import TimeSharing from './timeSharing.vue'
@@ -59,7 +59,10 @@ export default {
       showExitFullScreen: false,
       candle: null,
       volume: null,
-      chartDataObj: {}
+      pricePrecision: 6,
+      amountsPrecision: 2,
+      chartDataObj: {},
+      toolTipData: {}
     };
   },
   props: {
@@ -134,6 +137,8 @@ export default {
           MAData[i].name = this.klineConfig.MA[i].name
           MAData[i].data = calculateMA(this.klineConfig.MA[i].name.substring(2) * 1, candleData)
         }
+        candleData.MAData = MAData
+        candleData.precision = precision
       }
       if (this.klineDataObj.depthData) {
         depthData = getDepthData(this.klineDataObj.depthData);
@@ -144,8 +149,7 @@ export default {
         cycle: this.klineDataObj.cycle,
         coinType: this.klineDataObj.coinType,
         candleData: candleData,
-        depthData: depthData,
-        MA: MAData
+        depthData: depthData
       }
     },
     fullscreen() {
@@ -157,6 +161,13 @@ export default {
     }
   },
   methods: {
+    getMAData(name) {
+      for( let tipData of this.toolTipData.MAData) {
+        if (tipData.name === name) {
+          return tipData.data
+        }
+      }
+    },
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)
     },
@@ -171,6 +182,29 @@ export default {
       if (this.candle) {
         linkageVolume(this.candle, this.volume)
       }
+    },
+    getTipDataIndex(index) {
+      let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
+      let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : this.pricePrecision;
+      let amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : this.amountsPrecision;
+      console.log(index)
+      // this.toolTipData = {
+      //   time: data.categoryData[index],
+      //   volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+      //   opening: formatDecimal(data.values[index][0], pricePrecision, true),
+      //   closing: formatDecimal(data.values[index][1], pricePrecision, true),
+      //   max: formatDecimal(data.values[index][3], pricePrecision, true),
+      //   min: formatDecimal(data.values[index][2], pricePrecision, true),
+      //   MAData: [],
+      //   color: data.volumes[index][2]
+      // }
+      // for (var i = 0; i < data.MAData.length; i++) {
+      //   this.toolTipData.MAData[i] = {
+      //     name: data.MAData[i].name,
+      //     data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+      //   };
+      // }
+      // console.log(this.toolTipData)
     },
     changeChart(type) {
       if (this.showChart === type) {
