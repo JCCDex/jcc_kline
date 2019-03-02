@@ -32,9 +32,19 @@ export default {
         return {
         }
       }
+    },
+    isFullScreen: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
     }
   },
   watch: {
+    isFullScreen() {
+      this.resize()
+    },
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         let data = this.chartDataObj.candleData
@@ -109,8 +119,7 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        let isFullScreen = this.$parent.getState()
-        this.volume.resizeVolumeChart(this.$refs.volume, isFullScreen, this.klineConfig.size);
+        this.volume.resizeVolumeChart(this.$refs.volume, this.isFullScreen.fullScreen, this.klineConfig.size);
       }
     },
     clearChart() {

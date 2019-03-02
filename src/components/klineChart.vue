@@ -1,6 +1,6 @@
 <template>
   <div>
-    <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
+    <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen" @change="fullscreenChange">
       <div v-show = "showExitFullScreen" class = "exit-full-screen">
         <div class="exit-full-screen-btn" @click = "fullScreenToggle" >Exit Full Screen(Esc)</div>
       </div>
@@ -41,9 +41,9 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
-      <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :isFullScreen = "isFullScreen"></KLine>
+      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :isFullScreen = "isFullScreen"></Volume>
+      <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :isFullScreen = "isFullScreen"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
@@ -80,7 +80,8 @@ export default {
       amountsPrecision: 2,
       chartDataObj: {},
       toolTipData: null,
-      outspreadMA: true
+      outspreadMA: true,
+      isFullScreen: {}
     };
   },
   props: {
@@ -229,6 +230,11 @@ export default {
           name: data.MAData[i].name,
           data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
         };
+      }
+    },
+    fullscreenChange(fullscreen) {
+      this.isFullScreen = {
+        fullScreen: fullscreen
       }
     },
     changeChart(type) {

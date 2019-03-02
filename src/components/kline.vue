@@ -46,9 +46,19 @@ export default {
         return {
         }
       }
+    },
+    isFullScreen: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
     }
   },
   watch: {
+    isFullScreen() {
+      this.resize()
+    },
     chartDataObj() {
       this.message = getLanguage();
       if (this.chartDataObj.candleData) {
@@ -129,11 +139,7 @@ export default {
       this.$emit("listenToTipIndex", toolTipIndex)
     },
     resize() {
-      setTimeout(this.resizeSize(), 500)
-    },
-    resizeSize () {
-      let isFullScreen = this.$parent.getState()
-      this.kline.resizeChart(this.$refs.klineRef, isFullScreen, this.klineConfig.size);
+      this.kline.resizeChart(this.$refs.klineRef, this.isFullScreen.fullScreen, this.klineConfig.size);
     },
     clearChart() {
       this.kline.clearChart();
