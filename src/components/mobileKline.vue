@@ -8,7 +8,7 @@
           <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.month}}</div>
           <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.timeSharing}}</div>
         </div>
-    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height * 0.6}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipIndex"></div>
+    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height * 0.82}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipIndex"></div>
     <div style="background:#2b2f33; height:0.1rem"></div>
   </div>
 </template>

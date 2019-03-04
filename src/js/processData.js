@@ -1,6 +1,6 @@
 import { formatTime } from './utils';
 
-export const splitData = (data, platform) => {
+export const splitData = (data) => {
     if (!data) return;
     var categoryData = [];
     var values = [];

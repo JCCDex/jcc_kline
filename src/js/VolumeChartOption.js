@@ -116,7 +116,7 @@ var volumeMoobileOption = {
     },
     grid: [ // 直角坐标系内绘图网格
         {
-            top: 8,
+            top: 30,
             left: 20,
             right: 10,
             bottom: 10, // grid 组件离容器下侧的距离。
@@ -188,7 +188,7 @@ var volumeMoobileOption = {
             throttle: 0,
             type: 'inside',
             filterMode: 'filter', // 当前数据窗口外的数据，被 过滤掉。即会影响其他轴的数据范围。每个数据项，只要有一个维度在数据窗口外，整个数据项就会被过滤掉
-            start: 60,  // 数据窗口范围的起始百分比
+            start: 80,  // 数据窗口范围的起始百分比
             end: 100, // 数据窗口范围的结束百分比
             minSpan: 5 // 用于限制窗口大小的最小值（百分比值）
         }

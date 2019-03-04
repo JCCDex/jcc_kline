@@ -159,10 +159,10 @@ describe('test KLineMobileSetChart', () => {
     cycle = 'week'
     mobileKline.updateOption(data, cycle)
     mobileKline.changeDataZoom('leftShift')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(58);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(78);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(98);
     mobileKline.changeDataZoom('rightShift')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(60);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
   })
 
@@ -174,10 +174,10 @@ describe('test KLineMobileSetChart', () => {
     cycle = 'month'
     mobileKline.updateOption(data, cycle)
     mobileKline.changeDataZoom('enlarge')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(65);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(85);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
     mobileKline.changeDataZoom('narrow')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(60);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
   })
 
@@ -188,7 +188,7 @@ describe('test KLineMobileSetChart', () => {
     mobileKline.setTimeDivisionsOption(size)
     mobileKline.updateTimeDivisionOption(divisionData, precision)
     mobileKline.changeDataZoom('enlarge')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(65);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(85);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
   })
 
@@ -200,10 +200,10 @@ describe('test KLineMobileSetChart', () => {
     cycle = 'day'
     mobileKline.updateOption(data, cycle)
     mobileKline.changeDataZoom('enlarge')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(65);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(85);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
     mobileKline.changeDataZoom('refresh')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(60);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
   })
 

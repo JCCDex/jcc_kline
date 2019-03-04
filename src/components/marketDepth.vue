@@ -82,8 +82,8 @@ export default {
         this.depthSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.depthSize = {
-          height: '100%',
-          width: '572px'
+          height: '572px',
+          width: '100%'
         }
       }
     } else {

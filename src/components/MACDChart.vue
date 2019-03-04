@@ -59,8 +59,8 @@ export default {
         this.macdSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.macdSize = {
-          height: '100%',
-          width: '572px'
+          height: '572px',
+          width: '100%'
         }
       }
     } else {
