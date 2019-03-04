@@ -29,7 +29,7 @@ describe('test utils', () => {
   })
 
   it('test formatDecimal if sep is false', () => {
-    expect(formatDecimal(11232.234234234, 6, false)).toBe("11232.234234")
+    expect(formatDecimal(11232.2342, 6, false)).toBe("11232.234200")
   })
 
   it('test formatDecimal if num is integer', () => {

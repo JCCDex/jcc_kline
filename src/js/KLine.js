@@ -71,8 +71,8 @@ class KLineController {
         this.setMobileKLineChart.hideLoading();
     }
 
-    getMobileToolTipData() {
-        return this.setMobileKLineChart.getToolTipData();
+    getMobileToolTipIndex() {
+        return this.setMobileKLineChart.getToolTipIndex();
     }
 
     setMobileOption(size) {
@@ -87,8 +87,12 @@ class KLineController {
         return this.setMobileKLineChart.updateOption(data, cycle);
     }
 
-    updateTimeDivisionOption(timeDivisionData, divisionData, precision) {
-        return this.setMobileKLineChart.updateTimeDivisionOption(timeDivisionData, divisionData, precision);
+    getMobileEchart() {
+        return this.setMobileKLineChart.getMobileEchart();
+    }
+
+    updateTimeDivisionOption(divisionData, precision) {
+        return this.setMobileKLineChart.updateTimeDivisionOption(divisionData, precision);
     }
 
     changeMobileDataZoom(type) {

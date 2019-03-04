@@ -146,7 +146,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
+    mobileKline.updateTimeDivisionOption(divisionData, precision)
     expect(mobileKline.kline.getOption()).not.toBeNull();
   })
 
@@ -186,7 +186,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
+    mobileKline.updateTimeDivisionOption(divisionData, precision)
     mobileKline.changeDataZoom('enlarge')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(65);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
@@ -229,14 +229,14 @@ describe('test KLineMobileSetChart', () => {
     expect(mobileKline.kline).not.toBeNull();
   })
 
-  it('test mobile getToolTipData', () => {
+  it('test mobile getToolTipIndex', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData)
     mobileKline.updateOption(data, cycle)
-    let tipData = mobileKline.getToolTipData();
-    expect(tipData).not.toBeNull();
+    let tipIndex = mobileKline.getToolTipIndex();
+    expect(tipIndex).not.toBeNull();
   })
 
 })

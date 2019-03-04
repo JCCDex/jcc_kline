@@ -87,7 +87,6 @@ describe('test KLine', () => {
     kline.setOption(klineData, 'hour')
     expect(kline.setKLineChart.kline.getOption()).not.toBeNull()
   })
-
   it('test getEchart if platform is pc', () => {
     let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
@@ -179,6 +178,15 @@ describe('test KLine', () => {
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
   })
 
+  it('test getMobileEchart if platform is mobile', () => {
+    let mobileKline = new klineController('mobile', klineConfig)
+    const element = document.createElement('div');
+    mobileKline.initMobileChart(element)
+    mobileKline.setMobileOption(moboleSize, cycle)
+    let chart = mobileKline.getMobileEchart()
+    expect(chart).not.toBeNull()
+  })
+
   it('test updateMobileOption if platform is mobile', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
@@ -201,7 +209,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
+    mobileKline.updateTimeDivisionOption(divisionData, precision)
     expect(mobileKline.setMobileKLineChart.kline.getOption()).not.toBeNull()
   })
 
@@ -224,14 +232,14 @@ describe('test KLine', () => {
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
   })
 
-  it('test getMobileToolTipData if platform is mobile', () => {
+  it('test getMobileToolTipIndex if platform is mobile', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
     mobileKline.updateMobileOption(mobileData)
-    let mobileTipData = mobileKline.getMobileToolTipData()
-    expect(mobileTipData).not.toBeNull();
+    let mobileTipIndex = mobileKline.getMobileToolTipIndex()
+    expect(mobileTipIndex).not.toBeNull();
   })
 
   it('test changeMobileDataZoom if platform is mobile', () => {

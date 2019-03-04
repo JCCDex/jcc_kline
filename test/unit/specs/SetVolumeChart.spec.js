@@ -1,5 +1,5 @@
 import SetVolumeChart from 'js/SetVolumeChart'
-import volumeOption from 'js/VolumeChartOption'
+import { volumeOption } from 'js/VolumeChartOption'
 import { splitData, getDepthData } from 'js/processData'
 import testData from '../../testData/data.json'
 

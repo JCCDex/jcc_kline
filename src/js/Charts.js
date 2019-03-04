@@ -1,7 +1,7 @@
 import DepthChart from './SetDepthChart';
 import { depthOption, mobileDepthOption } from './DepthOption';
 import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
-import volumeOption from './VolumeChartOption';
+import { volumeOption, volumeMoobileOption } from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
 import VolumeChart from './SetVolumeChart.js';
 
@@ -28,6 +28,9 @@ class ChartController {
             if (chartsConfig.platform === 'pc') {
                 merge(volumeOption, chartsConfig);
                 this.setVolumeChart = new VolumeChart(volumeOption);
+            } else {
+                merge(volumeMoobileOption, chartsConfig);
+                this.setVolumeChart = new VolumeChart(volumeMoobileOption);
             }
         }
     }
