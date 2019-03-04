@@ -101,7 +101,7 @@ export default {
       } else {
         this.volumeSize = {
           height: '100%',
-          width: '572px'
+          width: '100%'
         }
       }
     } else {

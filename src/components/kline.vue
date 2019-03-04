@@ -14,7 +14,7 @@
 <script>
 import '../icon/iconfont.css'
 import '../css/common.css'
-import { splitData, getDepthData } from '../js/processData'
+import { getDepthData } from '../js/processData'
 import KLineController from '../js/KLine'
 import { getLanguage } from '../js/utils'
 export default {

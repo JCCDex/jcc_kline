@@ -10,7 +10,7 @@ describe('test Chart', () => {
     amount: 2
   }
   let depthData = getDepthData(testData.depthData, testData.coinType, precision)
-  let pcData = splitData(testData.klineData, 'pc')
+  let pcData = splitData(testData.klineData)
   let data = Object.assign({}, pcData, depthData);
   depthData.precision = precision
   let klineConfig = {

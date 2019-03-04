@@ -9,7 +9,7 @@ describe('test KLineMobileSetChart', () => {
     price: 6,
     amount: 2
   }
-  let data = splitData(testData.klineData, testData.platform)
+  let data = splitData(testData.klineData)
   data.precision = precision
   let timeDivisionData = testData.timeDivisionData
   timeDivisionData.precision = precision

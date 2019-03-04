@@ -9,7 +9,7 @@ describe('test KLine', () => {
     price: 6,
     amount: 2
   }
-  let mobileData = splitData(testData.klineData, 'mobile')
+  let mobileData = splitData(testData.klineData)
   mobileData.precision = precision
   let klineData = data.candleData;
   let timeDivisionData = testData.timeDivisionData

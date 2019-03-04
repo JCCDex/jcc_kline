@@ -5,12 +5,6 @@ export const splitData = (data, platform) => {
     var categoryData = [];
     var values = [];
     var volumes = [];
-    if(platform === 'mobile') {
-        data =
-    data.length > 100
-        ? data.slice(data.length - 100, data.length)
-        : data;
-    }
     for (var i = 0; i < data.length; i++) {
         categoryData.push(formatTime(data[i][0]));
         values.push( JSON.parse(JSON.stringify(data[i])));

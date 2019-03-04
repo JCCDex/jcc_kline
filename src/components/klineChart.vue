@@ -156,7 +156,7 @@ export default {
         amount: this.klineDataObj.amountPrecision
       }
       if (this.klineDataObj.klineData) {
-        candleData = splitData(this.klineDataObj.klineData, 'pc')
+        candleData = splitData(this.klineDataObj.klineData)
         for (var i = 0; i < this.klineConfig.MA.length; i++) {
           MAData[i] = {}
           MAData[i].name = this.klineConfig.MA[i].name

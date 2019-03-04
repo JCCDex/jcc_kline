@@ -110,7 +110,7 @@ export default {
         amount: this.klineDataObj.amountPrecision
       }
       if (this.klineDataObj.cycle !== "everyhour" && this.klineDataObj.klineData) {
-        candleData = splitData(this.klineDataObj.klineData, 'mobile')
+        candleData = splitData(this.klineDataObj.klineData)
         for (var i = 0; i < this.klineConfig.MA.length; i++) {
           MAData[i] = {}
           MAData[i].name = this.klineConfig.MA[i].name
