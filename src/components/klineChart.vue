@@ -223,24 +223,26 @@ export default {
       }
     },
     getTipDataIndex(index) {
-      let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
-      let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : this.pricePrecision;
-      let amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : this.amountsPrecision;
-      this.toolTipData = {
-        time: data.categoryData[index],
-        volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-        opening: formatDecimal(data.values[index][0], pricePrecision, true),
-        closing: formatDecimal(data.values[index][1], pricePrecision, true),
-        max: formatDecimal(data.values[index][3], pricePrecision, true),
-        min: formatDecimal(data.values[index][2], pricePrecision, true),
-        MAData: [],
-        color: data.volumes[index][2]
-      }
-      for (var i = 0; i < data.MAData.length; i++) {
-        this.toolTipData.MAData[i] = {
-          name: data.MAData[i].name,
-          data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
-        };
+      if (this.chartDataObj.candleData) {
+        let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
+        let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : this.pricePrecision;
+        let amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : this.amountsPrecision;
+        this.toolTipData = {
+          time: data.categoryData[index],
+          volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+          opening: formatDecimal(data.values[index][0], pricePrecision, true),
+          closing: formatDecimal(data.values[index][1], pricePrecision, true),
+          max: formatDecimal(data.values[index][3], pricePrecision, true),
+          min: formatDecimal(data.values[index][2], pricePrecision, true),
+          MAData: [],
+          color: data.volumes[index][2]
+        }
+        for (var i = 0; i < data.MAData.length; i++) {
+          this.toolTipData.MAData[i] = {
+            name: data.MAData[i].name,
+            data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+          };
+        }
       }
     },
     fullscreenChange(fullscreen) {

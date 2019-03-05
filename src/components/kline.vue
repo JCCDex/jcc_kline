@@ -2,10 +2,9 @@
     <div style="position:relative">
       <!-- Cycle按钮 -->
       <div style="position: absolute;left:10px;top:20px;z-index:1;">
-        <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hourPC}}</div>
-        <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.dayPC}}</div>
-        <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.weekPC}}</div>
-        <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.monthPC}}</div>
+        <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'" @click = "chooseCycle(item.name)">
+            {{item.name}}
+        </div>
       </div>
       <!-- kline -->
       <div id="kline" ref="klineRef" :style="{height: `${klineSize.height}`, width: `${klineSize.width}`}" @mousemove="getToolTipIndex"></div>
@@ -30,7 +29,8 @@ export default {
       },
       message: null,
       klineData: null,
-      coinType: ''
+      coinType: '',
+      intervals: null
     };
   },
   props: {
@@ -91,6 +91,7 @@ export default {
         }
         this.resize();
       }
+      
     }
   },
   created() {
@@ -104,6 +105,24 @@ export default {
         width: this.klineConfig.size.width + 'px',
         height: this.klineConfig.size.height + 'px'
       }
+    }
+    if (this.klineConfig.intervals) {
+      this.intervals = this.klineConfig.intervals
+    } else {
+      this.intervals = [
+        {
+          name: 'hour'
+        },
+        {
+          name: 'day'
+        },
+        {
+          name: 'week'
+        },
+        {
+          name: 'month'
+        }
+      ]
     }
     this.message = getLanguage();
     this.kline = new KLineController(this.platform, this.klineConfig);
