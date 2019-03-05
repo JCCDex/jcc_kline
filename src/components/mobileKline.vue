@@ -2,11 +2,9 @@
   <div class="mobile-kline" style="background-color: #161b21;">
         <!-- Cycle按钮 -->
         <div calss="mobileCycle" style = "height: 0.4rem; z-index: 9;">
-          <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.hour}}</div>
-          <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.day}}</div>
-          <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.week}}</div>
-          <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.month}}</div>
-          <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.timeSharing}}</div>
+          <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'" @click = "chooseCycle(item.name)">
+            {{item.name}}
+          </div>
         </div>
     <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height * 0.82}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipIndex"></div>
     <div style="background:#2b2f33; height:0.1rem"></div>
@@ -23,7 +21,8 @@ export default {
       kline: null,
       cycle: '',
       platform: 'mobile',
-      message: null
+      message: null,
+      intervals: null
     };
   },
   props: {
@@ -74,6 +73,27 @@ export default {
   created() {
     this.message = getLanguage();
     this.kline = new KLineController(this.platform, this.klineConfig);
+    if (this.klineConfig.intervals) {
+      this.intervals = this.klineConfig.intervals
+    } else {
+      this.intervals = [
+        {
+          name: 'hour'
+        },
+        {
+          name: 'day'
+        },
+        {
+          name: 'week'
+        },
+        {
+          name: 'month'
+        },
+        {
+          name: 'everyhour'
+        }
+      ]
+    }
   },
   mounted() {
     this.init();
