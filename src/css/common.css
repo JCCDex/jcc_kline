@@ -25,7 +25,7 @@
     z-index: 1;
     float: left;
     height: 33px;
-    -webkit-text-size-adjust:none; 
+    -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
 }
 
@@ -37,7 +37,7 @@
     z-index: 1;
     float: left;
     height: 33px;
-    -webkit-text-size-adjust:none; 
+    -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
 }
 
@@ -45,7 +45,7 @@
     color: #b9cadd;
     z-index: 2;
     font-size: 11px !important;
-    -webkit-text-size-adjust:none; 
+    -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
 }
 
@@ -53,7 +53,7 @@
     color: #b9cadd;
     z-index: 2;
     font-size: 11px !important;
-    -webkit-text-size-adjust:none; 
+    -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
 }
 
@@ -72,7 +72,7 @@
 }
 
 .kline-levitation-btn {
-    float:left; 
+    float: left;
     margin-left: 20px;
 }
 
@@ -398,7 +398,7 @@
     left: 10px;
     top: 22px;
     z-index: 1;
-    -webkit-text-size-adjust:none; 
+    -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
 }
 
@@ -410,7 +410,7 @@
     left: 10px;
     top: 22px;
     z-index: 1;
-    -webkit-text-size-adjust:none; 
+    -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
 }
 
@@ -509,8 +509,56 @@
     width: 160px;
     text-align: center;
     border: 1px solid #ececec;
-    background-color:#9c969c59;
+    background-color: #9c969c59;
     margin: 0 auto;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.chart-indicator-div {
+    float: left;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.chart-indicator-btn {
+    text-align: center;
+    line-height: 26px;
+    background: #1b2229;
+    color: #b9cadd
+}
+
+.indicator-btn-active {
+    text-align: center;
+    line-height: 26px;
+    color: #ffffff;
+    background: #3669a7;
+}
+
+.indicator-btn {
+    width: 70px;
+    height: 30px;
+    padding: 0;
+    background: #1b2229;
+    border: none;
+    margin-right: 10px;
+}
+
+.indicator-btn {
+    width: 70px;
+    height: 30px;
+    padding: 0;
+    background: #1b2229;
+    border: none;
+    color: #b9cadd;
+    margin-right: 10px;
+}
+
+.indicator-btn:active {
+    color: #b9cadd;
+}
+
+.indicator-btn:focus, .indicator-btn:hover {
+    color: #b9cadd;
+    background: #1b2229;
 }

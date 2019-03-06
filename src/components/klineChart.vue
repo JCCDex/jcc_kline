@@ -20,6 +20,13 @@
         </div>
       </div>
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
+          <!-- <el-popover placement="bottom" width="150" trigger="click">
+            <div>
+              <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
+              <div @click = "showIndicatorChart('Volume')" class = "chart-indicator-div">{{message.Volume}}</div>
+            </div>
+            <el-button slot="reference" class= "indicator-btn">{{message.indicator}}</el-button>
+          </el-popover> -->
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
@@ -42,7 +49,7 @@
         </div>
       </div> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
+      <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
@@ -51,6 +58,7 @@
 <script>
 import '../icon/iconfont.css'
 import '../css/common.css'
+import { Popover, Button } from "element-ui"
 import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
@@ -82,7 +90,8 @@ export default {
       toolTipData: null,
       outspreadMA: true,
       resizeSize: {},
-      isFullScreen: false
+      isFullScreen: false,
+      showIndicator: 'Volume'
     };
   },
   props: {
@@ -206,6 +215,12 @@ export default {
       } else {
         this.outspreadMA = false
       }
+    },
+    showIndicatorChart(indicator) {
+      if (this.showIndicator === indicator) {
+        return
+      }
+      this.showIndicator = indicator
     },
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)

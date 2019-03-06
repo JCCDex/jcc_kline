@@ -34,5 +34,8 @@
   "fullScreen": "Full Screen",
   "exitFullScreen": "Exit",
   "buy": "Buy",
-  "sell": "Sell"
+  "sell": "Sell",
+  "indicator": "Indicator",
+  "MACD": "MACD",
+  "Volume": "Volume"
 }
