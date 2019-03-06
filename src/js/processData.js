@@ -75,8 +75,8 @@ export const handleDivisionData = (datas) => {
         if (index === len - 1) {
             divisionTime = data[3];
         }
-        let t = data[0];
-        let a = data[1];
+        let t = data[0] * 1;
+        let a = data[1] * 1;
         totalMoney += t;
         totalAmount += a;
         averages.push(totalMoney / totalAmount);
