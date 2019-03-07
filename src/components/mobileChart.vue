@@ -36,7 +36,7 @@ import TimeSharing from './timeSharing.vue'
 import MACD from './MACDChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
-import { linkageVolume } from '../js/linkageCharts';
+import { linkageVolume, linkageMacd } from '../js/linkageCharts';
 export default {
   name: "mobileChart",
   components: {

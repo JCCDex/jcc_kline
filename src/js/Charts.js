@@ -154,6 +154,10 @@ class ChartController {
         this.setMACDChart.disposeMACDEChart();
     }
 
+    getMacdchart() {
+        return this.setMACDChart.getMacdchart();
+    }
+
 }
 
 export default ChartController;

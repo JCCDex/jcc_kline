@@ -55,12 +55,6 @@ var macdOption = {
             }
         }
     ],
-    dataZoom: [{
-        show: false,
-        type: 'slider',
-        start: 20,
-        end: 100
-    }],
     series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
         {
             name: 'MACD',
@@ -81,7 +75,13 @@ var macdOption = {
             yAxisIndex: 0,
             // data: data.deas
         }
-    ]
+    ],
+    dataZoom: [{
+        show: false,
+        type: 'slider',
+        start: 20,
+        end: 100
+    }],
 };
 
 export default macdOption;

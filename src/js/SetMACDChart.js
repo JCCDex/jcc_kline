@@ -10,6 +10,7 @@ var MACDOption;
 var oldMACDData;
 
 class MACDChart {
+
     constructor(configs) {
         this.macdConfig = configs;
     }
@@ -80,6 +81,10 @@ class MACDChart {
         if (oldMACDData) {
             this.updateMACDOption(oldMACDData);
         }
+    }
+
+    getMacdchart() {
+        return this.macd;
     }
 
     initMACD(DOM) {
