@@ -7,3 +7,7 @@ import 'echarts/lib/component/dataZoom';
 export const linkageVolume = (candle, volume) => {
     echarts.connect([candle, volume]);
 };
+
+export const linkageMacd = (candle, macd) => {
+    echarts.connect([candle, macd]);
+};

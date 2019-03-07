@@ -23,8 +23,9 @@
       <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
       <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
+      <!-- <MACD ref="macd" v-show = "showChart === 'candle'" v-on:listenMacdChartEvent = 'getMacdChart' :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></MACD> -->
+      <MACD ref="macd" v-show = "showChart === 'candle'" v-on:listenMacdChartEvent = 'getMacdChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></MACD>
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
-      <!-- <MACD ref="macd" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></MACD> -->
     </div>
 </template>
 <script>
@@ -32,6 +33,7 @@ import KLine from './mobileKline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import TimeSharing from './timeSharing.vue'
+import MACD from './MACDChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume } from '../js/linkageCharts';
@@ -41,7 +43,8 @@ export default {
     KLine,
     Depth,
     Volume,
-    TimeSharing
+    TimeSharing,
+    MACD
   },
   data() {
     return {
@@ -52,7 +55,8 @@ export default {
       timeSharingTipData: null,
       divisionTime: null,
       candle: null,
-      volume: null
+      volume: null,
+      macd: null
     };
   },
   props: {
@@ -159,6 +163,12 @@ export default {
       this.volume = volume
       if (this.candle) {
         linkageVolume(this.candle, this.volume)
+      }
+    },
+    getMacdChart(macd) {
+      this.macd = macd
+      if(this.candle) {
+        linkageMacd(this.candle, this.macd)
       }
     },
     getMATipData(name) {
