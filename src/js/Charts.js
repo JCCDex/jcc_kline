@@ -1,7 +1,7 @@
 import DepthChart from './SetDepthChart';
 import { depthOption, mobileDepthOption } from './DepthOption';
 import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
-import volumeOption from './VolumeChartOption';
+import { volumeOption, volumeMoobileOption } from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
 import VolumeChart from './SetVolumeChart.js';
 import macdOption from './MACDOption';
@@ -30,6 +30,9 @@ class ChartController {
             if (chartsConfig.platform === 'pc') {
                 merge(volumeOption, chartsConfig);
                 this.setVolumeChart = new VolumeChart(volumeOption);
+            } else {
+                merge(volumeMoobileOption, chartsConfig);
+                this.setVolumeChart = new VolumeChart(volumeMoobileOption);
             }
         } else if (chartsConfig.chartType === 'MACD') {
             if (chartsConfig.platform === 'mobile') {
@@ -105,6 +108,10 @@ class ChartController {
 
     setVolumeOption(data, cycle) {
         this.setVolumeChart.setVolumeOption(data, cycle);
+    }
+
+    getToolTipIndex() {
+        return this.setVolumeChart.getToolTipIndex();
     }
 
     getVolumeEchart() {

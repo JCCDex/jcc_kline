@@ -8,7 +8,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 
 var volumeOption;
 var oldVolumeData;
-var toolTipData;
+var toolTipIndex;
 
 class VolumeChart {
     constructor(configs) {
@@ -77,12 +77,12 @@ class VolumeChart {
             let option = {
                 xAxis: this.getVolumeXAxis(data, cycle),
                 yAxis: this.getVolumeYAxis(),
-                tooltip: this.getVolumeToolTip(data),
+                tooltip: this.getVolumeToolTip(),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
-            return toolTipData;
+            return toolTipIndex;
         }
     }
 
@@ -92,13 +92,17 @@ class VolumeChart {
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data, cycle),
                 yAxis: this.getVolumeYAxis(),
-                tooltip: this.getVolumeToolTip(data),
+                tooltip: this.getVolumeToolTip(),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, volumeConfig);
             volumeOption.dataZoom = this.volume.getOption().dataZoom;
             this.volume.setOption(volumeOption);
         }
+    }
+
+    getToolTipIndex() {
+        return toolTipIndex;
     }
 
     getVolumeEchart() {
@@ -150,22 +154,13 @@ class VolumeChart {
         }
     }
 
-    getVolumeToolTip(data) {
+    getVolumeToolTip() {
         return {
             formatter: function (param) {
                 param = param[0];
                 if (param) {
                     var index = param.data[0];
-                    toolTipData = {
-                        seriesName: param.seriesName,
-                        time: param.name,
-                        volume: data.values[index][5],
-                        opening: data.values[index][0],
-                        closing: data.values[index][1],
-                        max: data.values[index][3],
-                        min: data.values[index][2],
-                        color: data.volumes[index][2]
-                    };
+                    toolTipIndex = index;
                 }
             }
         };

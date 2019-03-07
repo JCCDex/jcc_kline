@@ -77,7 +77,7 @@ export default {
           amount: this.klineDataObj.amountPrecision
         }
         if (this.klineDataObj.cycle !== "everyhour") {
-          var mobileKlineData = splitData(this.klineDataObj.klineData, this.platform)
+          var mobileKlineData = splitData(this.klineDataObj.klineData)
           this.klineDataObj.categoryData = mobileKlineData.categoryData
           mobileKlineData.precision = precision
         }

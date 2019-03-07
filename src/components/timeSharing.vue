@@ -97,8 +97,8 @@ export default {
         this.timeSharingSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.timeSharingSize = {
-          height: '100%',
-          width: '572px'
+          height: '572px',
+          width: '100%'
         }
       }
     } else {

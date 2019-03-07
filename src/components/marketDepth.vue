@@ -31,6 +31,13 @@ export default {
         return {
         }
       }
+    },
+    resizeSize: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
     }
   },
   watch: {
@@ -48,6 +55,9 @@ export default {
           }
         }
       }
+    },
+    resizeSize() {
+      this.resize()
     },
     klineConfig() {
       if (this.klineConfig.platform === 'pc') {
@@ -72,8 +82,8 @@ export default {
         this.depthSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.depthSize = {
-          height: '100%',
-          width: '572px'
+          height: '572px',
+          width: '100%'
         }
       }
     } else {
@@ -85,14 +95,8 @@ export default {
   },
   mounted() {
     this.init();
-    if (this.klineConfig.defaultSize === true) {
-      window.addEventListener("resize", this.resize);
-    }
   },
   beforeDestroy() {
-    if (this.klineConfig.defaultSize === true) {
-      window.removeEventListener("resize", this.resize);
-    }
     this.dispose()
   },
   methods: {
@@ -102,10 +106,8 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        let isFullScreen = this.$parent.getState()
-        this.depth.resizeDepthChart(this.$refs.depth, isFullScreen, this.klineConfig.size);
+        this.depth.resizeDepthChart(this.$refs.depth, this.resizeSize.isFullScreen, this.klineConfig.size);
       }
-      
     },
     clearChart() {
       this.depth.clearDepthEcharts();

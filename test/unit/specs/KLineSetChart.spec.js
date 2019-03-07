@@ -150,13 +150,13 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test getToolTipData', () => {
+  it('test getToolTipIndex', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
     klineChart.setOption(klineData, 'hour')
-    let tipData = klineChart.getToolTipData()
-    expect(tipData.MA5).not.toBeNull();
+    let tipData = klineChart.getToolTipIndex()
+    expect(tipData).not.toBeNull();
   })
 
   it('test resizeECharts if is fullScreen', () => {

@@ -5,13 +5,13 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
-import { formatDecimal, getLanguage, formatTime } from './utils';
+import { getLanguage } from './utils';
 import { calculateMA } from './processData';
 
 var cycle;
 var config;
 var timeDivisionconfig;
-var toolTipData;
+var toolTipIndex;
 var amountsPrecision = 2;
 var pricePrecision = 6;
 
@@ -22,7 +22,7 @@ class KLineMobileSetChartController {
     }
 
     initMobileECharts(DOM) {
-        toolTipData = null;
+        toolTipIndex = null;
         timeDivisionconfig = null;
         this.kline = echarts.init(DOM);
         this.showLoading();
@@ -46,8 +46,7 @@ class KLineMobileSetChartController {
     setOption(size) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
-            grid: this.getGrid(size),
-            yAxis: this.getYAxis(size)
+            grid: this.getGrid(size)
         };
         merge(config, option);
         cycle = 'normal';
@@ -59,7 +58,6 @@ class KLineMobileSetChartController {
         timeDivisionconfig = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
             grid: this.getGrid(size),
-            yAxis: this.getYAxis(size),
             series: [
                 {
                     name: 'White',
@@ -86,20 +84,6 @@ class KLineMobileSetChartController {
                             width: 2
                         }
                     }
-                },
-                {
-                    name: 'Volume',
-                    type: 'bar',
-                    barMaxWidth: 20,
-                    itemStyle: {
-                        normal: {
-                            color: function (param) {
-                                return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                            }
-                        }
-                    },
-                    xAxisIndex: 1,
-                    yAxisIndex: 1
                 }
             ]
         };
@@ -113,24 +97,8 @@ class KLineMobileSetChartController {
         amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         let length = data.values.length - 1;
         let MAConfig = this.klineConfig.MA;
-        if (!toolTipData) {
-            toolTipData = {
-                time: data.categoryData[length],
-                volume: formatDecimal(data.values[length][5], amountsPrecision, true),
-                opening: formatDecimal(data.values[length][0], pricePrecision, true),
-                closing: formatDecimal(data.values[length][1], pricePrecision, true),
-                max: formatDecimal(data.values[length][3], pricePrecision, true),
-                min: formatDecimal(data.values[length][2], pricePrecision, true),
-                MAData: [],
-                color: data.volumes[length][2],
-                type: 'normal'
-            };
-            for (var i = 0; i < MAConfig.length; i++) {
-                toolTipData.MAData[i] = {
-                    name: MAConfig[i].name,
-                    data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[length], pricePrecision, true),
-                };
-            }
+        if (!toolTipIndex) {
+            toolTipIndex = length;
         }
         let updateOption = {
             xAxis: this.getXAxis(data, cycle),
@@ -140,28 +108,23 @@ class KLineMobileSetChartController {
         merge(config, updateOption);
         config.dataZoom = this.kline.getOption().dataZoom;
         this.kline.setOption(config);
-        return toolTipData;
+        return toolTipIndex;
     }
 
-    updateTimeDivisionOption(timeDivisionData, data, precision) {
+    getMobileEchart() {
+        return this.kline;
+    }
+
+    updateTimeDivisionOption(data, precision) {
         pricePrecision = !isNaN(precision.price) ? precision.price : pricePrecision;
         amountsPrecision = !isNaN(precision.amount) ? precision.amount : amountsPrecision;
-        let { times, averages, prices, volumes } = data;
-        let length = timeDivisionData.length - 1;
-        if (!toolTipData) {
-            toolTipData = {
-                time: formatTime(timeDivisionData[length][3]),
-                volume: formatDecimal(timeDivisionData[length][1], amountsPrecision, true),
-                price: formatDecimal(timeDivisionData[length][2], pricePrecision, true),
-                averagePrice: formatDecimal(averages[length], pricePrecision, true),
-                color: volumes[length][2]
-            };
+        let { times, averages, prices } = data;
+        let length = times.length - 1;
+        if (!toolTipIndex) {
+            toolTipIndex = length;
         }
         let updateTimeOption = {
             xAxis: [
-                {
-                    data: times
-                },
                 {
                     data: times
                 }
@@ -174,25 +137,12 @@ class KLineMobileSetChartController {
                 {
                     name: 'Yellow',
                     data: averages
-                },
-                {
-                    name: 'Volume',
-                    data: volumes
                 }
             ],
             tooltip: {
                 formatter: param => {
                     let dataIndex = param[0].dataIndex;
-                    let data = timeDivisionData[dataIndex];
-                    toolTipData = {
-                        time: formatTime(data[3]),
-                        volume: formatDecimal(data[1], amountsPrecision, true),
-                        price: formatDecimal(data[2], pricePrecision, true),
-                        averagePrice: formatDecimal(averages[dataIndex], pricePrecision, true),
-                        color: volumes[dataIndex][2]
-                    };
-
-
+                    toolTipIndex = dataIndex;
                 }
             }
         };
@@ -200,30 +150,11 @@ class KLineMobileSetChartController {
         timeDivisionconfig.dataZoom = this.kline.getOption().dataZoom;
         this.kline.hideLoading();
         this.kline.setOption(timeDivisionconfig);
-        return toolTipData;
+        return toolTipIndex;
     }
 
     getXAxis(data, cycle) {
         return [
-            {
-                data: data.categoryData,
-                axisLabel: {
-                    formatter(value) {
-                        if (cycle === 'hour') {
-                            return value.substring(5);
-                        }
-                        if (cycle === 'day') {
-                            return value.substring(0, 12);
-                        }
-                        if (cycle === 'week') {
-                            return value.substring(0, 12);
-                        }
-                        if (cycle === 'month') {
-                            return value.substring(0, 7);
-                        }
-                    }
-                }
-            },
             {
                 data: data.categoryData,
                 axisLabel: {
@@ -271,21 +202,6 @@ class KLineMobileSetChartController {
             {
                 name: 'MA60',
                 data: calculateMA(60, data)
-            },
-            {
-                name: 'Volume',
-                data: data.volumes,
-                type: 'bar',
-                barMaxWidth: 20,
-                itemStyle: {
-                    normal: {
-                        color: function (param) {
-                            return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                        }
-                    }
-                },
-                xAxisIndex: 1,
-                yAxisIndex: 1
             }
         ];
         if (this.klineConfig.defaultMA !== false) {
@@ -304,34 +220,18 @@ class KLineMobileSetChartController {
         }
     }
 
-    getToolTip(data, MAConfig) {
+    getToolTip() {
         return {
             formatter: function (param) {
                 param = param[0];
                 var index = param.data[0];
-                toolTipData = {
-                    time: param.name,
-                    volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-                    opening: formatDecimal(data.values[index][0], pricePrecision, true),
-                    closing: formatDecimal(data.values[index][1], pricePrecision, true),
-                    max: formatDecimal(data.values[index][3], pricePrecision, true),
-                    min: formatDecimal(data.values[index][2], pricePrecision, true),
-                    MAData: [],
-                    color: data.volumes[index][2],
-                    type: 'normal'
-                };
-                for (var i = 0; i < MAConfig.length; i++) {
-                    toolTipData.MAData[i] = {
-                        name: MAConfig[i].name,
-                        data: formatDecimal(calculateMA(MAConfig[i].name.substring(2) * 1, data)[index], pricePrecision, true)
-                    };
-                }
+                toolTipIndex = index;
             }
         };
     }
 
-    getToolTipData() {
-        return toolTipData;
+    getToolTipIndex() {
+        return toolTipIndex;
     }
 
     disposeMobileEChart() {
@@ -339,30 +239,16 @@ class KLineMobileSetChartController {
     }
 
     clearMobileEcharts() {
-        toolTipData = null;
+        toolTipIndex = null;
         this.kline.clear();
     }
 
 
     getGrid(size) {
         let g = [{
-            top: 5,
             height: `${size.height * 0.6}px`
-        },
-        {
-            height: `${size.height * 0.2}px`
         }];
         return g;
-    }
-
-    getYAxis(size) {
-        return [
-            {
-                axisLabel: {
-                    margin: -(size.width - 45)
-                }
-            }
-        ];
     }
 
     changeDataZoom(type) {

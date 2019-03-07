@@ -1,4 +1,4 @@
-import { isNumber, getLanguage, formatDecimal, getClientWidth, getClientHeight } from 'js/utils'
+import { isNumber, getLanguage, formatDecimal, getClientWidth, getClientHeight, formatNumber } from 'js/utils'
 
 describe('test utils', () => {
   it('test is number', () => {
@@ -29,11 +29,15 @@ describe('test utils', () => {
   })
 
   it('test formatDecimal if sep is false', () => {
-    expect(formatDecimal(11232.234234234, 6, false)).toBe("11232.234234")
+    expect(formatDecimal(11232.2342, 6, false)).toBe("11232.234200")
   })
 
   it('test formatDecimal if num is integer', () => {
     expect(formatDecimal('12345', 0, true)).toBe("12,345")
+  })
+
+  it('test formatNumber if value is integer', () => {
+    expect(formatNumber('123.45', 0)).toBe("123")
   })
 
   it('test getClientWidth', () => {

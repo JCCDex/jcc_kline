@@ -1,10 +1,32 @@
 <template>
   <div>
-    <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen">
+    <fullscreen ref="fullscreen" :fullscreen.sync="fullscreen" @change="fullscreenChange">
       <div v-show = "showExitFullScreen" class = "exit-full-screen">
         <div class="exit-full-screen-btn" @click = "fullScreenToggle" >Exit Full Screen(Esc)</div>
       </div>
+      <!-- tooltip数据显示 -->
+      <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if = "showChart === 'candle' && toolTipData">
+       <div style="margin-right: 180px;">
+          <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
+          <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'" style="margin-right: 10px;">{{this.toolTipData.time}}</font>
+          <font class="tooltip-data-name">{{message.volume}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font></font>
+          <font class="tooltip-data-name">{{message.opening}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font></font>
+          <font class="tooltip-data-name">{{message.max}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.max}}</font></font>
+          <font class="tooltip-data-name">{{message.min}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font></font>
+          <font class="tooltip-data-name">{{message.closing}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font></font><br>
+        </div>
+        <div v-if = "outspreadMA">
+          <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{ getMAData(MAitem.name) }}</font></font>
+        </div>
+      </div>
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
+          <!-- <el-popover placement="bottom" width="150" trigger="click">
+            <div>
+              <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
+              <div @click = "showIndicatorChart('Volume')" class = "chart-indicator-div">{{message.Volume}}</div>
+            </div>
+            <el-button slot="reference" class= "indicator-btn">{{message.indicator}}</el-button>
+          </el-popover> -->
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
@@ -26,19 +48,22 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
-      <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KLine>
+      <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
+      <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
       <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
 </template>
 <script>
+import '../icon/iconfont.css'
+import '../css/common.css'
+import { Popover, Button } from "element-ui"
 import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
-import { getLanguage, getDefaultChartSize } from '../js/utils'
+import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
 import { splitData, getDepthData, calculateMA } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
 // import TimeSharing from './timeSharing.vue'
@@ -59,7 +84,14 @@ export default {
       showExitFullScreen: false,
       candle: null,
       volume: null,
-      chartDataObj: {}
+      pricePrecision: 6,
+      amountsPrecision: 2,
+      chartDataObj: {},
+      toolTipData: null,
+      outspreadMA: true,
+      resizeSize: {},
+      isFullScreen: false,
+      showIndicator: 'Volume'
     };
   },
   props: {
@@ -111,6 +143,11 @@ export default {
     }
     this.message = getLanguage();
   },
+  mounted() {
+    if (this.klineConfig.defaultSize === true) {
+      window.addEventListener("resize", this.resize);
+    }
+  },
   watch: {
     klineConfig() {
       this.klineConfig.platform = 'pc'
@@ -128,12 +165,14 @@ export default {
         amount: this.klineDataObj.amountPrecision
       }
       if (this.klineDataObj.klineData) {
-        candleData = splitData(this.klineDataObj.klineData, 'pc')
+        candleData = splitData(this.klineDataObj.klineData)
         for (var i = 0; i < this.klineConfig.MA.length; i++) {
           MAData[i] = {}
           MAData[i].name = this.klineConfig.MA[i].name
           MAData[i].data = calculateMA(this.klineConfig.MA[i].name.substring(2) * 1, candleData)
         }
+        candleData.MAData = MAData
+        candleData.precision = precision
       }
       if (this.klineDataObj.depthData) {
         depthData = getDepthData(this.klineDataObj.depthData);
@@ -144,8 +183,7 @@ export default {
         cycle: this.klineDataObj.cycle,
         coinType: this.klineDataObj.coinType,
         candleData: candleData,
-        depthData: depthData,
-        MA: MAData
+        depthData: depthData
       }
     },
     fullscreen() {
@@ -156,7 +194,34 @@ export default {
         }
     }
   },
+  beforeDestroy() {
+    if (this.klineConfig.defaultSize === true) {
+      window.removeEventListener("resize", this.resize);
+    }
+  },
   methods: {
+    getMAData(name) {
+      if (this.toolTipData) {
+        for( let tipData of this.toolTipData.MAData) {
+          if (tipData.name === name) {
+            return tipData.data
+          }
+        }
+      }
+    },
+    showMAData() {
+      if (!this.outspreadMA) {
+        this.outspreadMA = true
+      } else {
+        this.outspreadMA = false
+      }
+    },
+    showIndicatorChart(indicator) {
+      if (this.showIndicator === indicator) {
+        return
+      }
+      this.showIndicator = indicator
+    },
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)
     },
@@ -170,6 +235,38 @@ export default {
       this.volume = volume
       if (this.candle) {
         linkageVolume(this.candle, this.volume)
+      }
+    },
+    getTipDataIndex(index) {
+      if (this.chartDataObj.candleData) {
+        let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
+        let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : this.pricePrecision;
+        let amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : this.amountsPrecision;
+        this.toolTipData = {
+          time: data.categoryData[index],
+          volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+          opening: formatDecimal(data.values[index][0], pricePrecision, true),
+          closing: formatDecimal(data.values[index][1], pricePrecision, true),
+          max: formatDecimal(data.values[index][3], pricePrecision, true),
+          min: formatDecimal(data.values[index][2], pricePrecision, true),
+          MAData: [],
+          color: data.volumes[index][2]
+        }
+        for (var i = 0; i < data.MAData.length; i++) {
+          this.toolTipData.MAData[i] = {
+            name: data.MAData[i].name,
+            data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+          };
+        }
+      }
+    },
+    fullscreenChange(fullscreen) {
+      this.isFullScreen = fullscreen
+      this.resize()
+    },
+    resize() {
+      this.resizeSize = {
+        isFullScreen: this.isFullScreen
       }
     },
     changeChart(type) {

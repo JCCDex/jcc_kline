@@ -9,7 +9,7 @@ describe('test KLine', () => {
     price: 6,
     amount: 2
   }
-  let mobileData = splitData(testData.klineData, 'mobile')
+  let mobileData = splitData(testData.klineData)
   mobileData.precision = precision
   let klineData = data.candleData;
   let timeDivisionData = testData.timeDivisionData
@@ -87,7 +87,6 @@ describe('test KLine', () => {
     kline.setOption(klineData, 'hour')
     expect(kline.setKLineChart.kline.getOption()).not.toBeNull()
   })
-
   it('test getEchart if platform is pc', () => {
     let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
@@ -115,12 +114,12 @@ describe('test KLine', () => {
     expect(kline.setKLineChart.kline.getOption()).not.toBeNull()
   })
 
-  it('test getToolTipData if platform is pc', () => {
+  it('test getToolTipIndex if platform is pc', () => {
     let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
-    let tipData = kline.getToolTipData()
+    let tipData = kline.getToolTipIndex()
     expect(tipData).not.toBeNull()
   })
 
@@ -179,6 +178,15 @@ describe('test KLine', () => {
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
   })
 
+  it('test getMobileEchart if platform is mobile', () => {
+    let mobileKline = new klineController('mobile', klineConfig)
+    const element = document.createElement('div');
+    mobileKline.initMobileChart(element)
+    mobileKline.setMobileOption(moboleSize, cycle)
+    let chart = mobileKline.getMobileEchart()
+    expect(chart).not.toBeNull()
+  })
+
   it('test updateMobileOption if platform is mobile', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
@@ -201,7 +209,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setTimeDivisionsOption(size)
-    mobileKline.updateTimeDivisionOption(timeDivisionData, divisionData, precision)
+    mobileKline.updateTimeDivisionOption(divisionData, precision)
     expect(mobileKline.setMobileKLineChart.kline.getOption()).not.toBeNull()
   })
 
@@ -224,14 +232,14 @@ describe('test KLine', () => {
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
   })
 
-  it('test getMobileToolTipData if platform is mobile', () => {
+  it('test getMobileToolTipIndex if platform is mobile', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
     mobileKline.updateMobileOption(mobileData)
-    let mobileTipData = mobileKline.getMobileToolTipData()
-    expect(mobileTipData).not.toBeNull();
+    let mobileTipIndex = mobileKline.getMobileToolTipIndex()
+    expect(mobileTipIndex).not.toBeNull();
   })
 
   it('test changeMobileDataZoom if platform is mobile', () => {
@@ -241,19 +249,19 @@ describe('test KLine', () => {
     mobileKline.setMobileOption(moboleSize, cycle)
     mobileKline.updateMobileOption(mobileData)
     mobileKline.changeMobileDataZoom('leftShift')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(58);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(78);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(98);
     mobileKline.changeMobileDataZoom('rightShift')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(60);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
     mobileKline.changeMobileDataZoom('enlarge')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(65);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(85);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
     mobileKline.changeMobileDataZoom('refresh')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(60);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
     mobileKline.changeMobileDataZoom('narrow')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(55);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(75);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
   })
 

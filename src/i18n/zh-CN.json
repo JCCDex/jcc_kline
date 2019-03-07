@@ -34,5 +34,8 @@
   "fullScreen": "全屏",
   "exitFullScreen": "退出全屏",
   "buy": "买入",
-  "sell": "卖出"
+  "sell": "卖出",
+  "indicator": "技术指标",
+  "MACD": "MACD",
+  "Volume": "成交量"
 }

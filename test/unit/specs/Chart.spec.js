@@ -10,7 +10,7 @@ describe('test Chart', () => {
     amount: 2
   }
   let depthData = getDepthData(testData.depthData, testData.coinType, precision)
-  let pcData = splitData(testData.klineData, 'pc')
+  let pcData = splitData(testData.klineData)
   let data = Object.assign({}, pcData, depthData);
   depthData.precision = precision
   let klineConfig = {
@@ -243,6 +243,15 @@ describe('test Chart', () => {
     volume.initVolumeChart(element)
     volume.setVolumeOption(data)
     expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
+  })
+
+  it('test getToolTipIndex', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    let tipIndex = volume.getToolTipIndex()
+    expect(tipIndex).not.toBeNull()
   })
 
   it('test getVolumeEchart', () => {

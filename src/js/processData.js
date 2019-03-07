@@ -1,16 +1,10 @@
 import { formatTime } from './utils';
 
-export const splitData = (data, platform) => {
+export const splitData = (data) => {
     if (!data) return;
     var categoryData = [];
     var values = [];
     var volumes = [];
-    if(platform === 'mobile') {
-        data =
-    data.length > 100
-        ? data.slice(data.length - 100, data.length)
-        : data;
-    }
     for (var i = 0; i < data.length; i++) {
         categoryData.push(formatTime(data[i][0]));
         values.push( JSON.parse(JSON.stringify(data[i])));
@@ -76,8 +70,8 @@ export const handleDivisionData = (datas) => {
         if (index === len - 1) {
             divisionTime = data[3];
         }
-        let t = data[0];
-        let a = data[1];
+        let t = data[0] * 1;
+        let a = data[1] * 1;
         totalMoney += t;
         totalAmount += a;
         averages.push(totalMoney / totalAmount);
