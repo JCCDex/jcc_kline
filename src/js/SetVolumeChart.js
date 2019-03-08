@@ -134,24 +134,22 @@ class VolumeChart {
     }
 
     getVolumeYAxis() {
-        if (this.volumeConfig.platform === 'pc') {
-            return [
-                {
-                    gridIndex: 0,
-                    axisLabel: {
-                        formatter: function (value) {
-                            if (value >= 1000 && value < 1000000) {
-                                return (value / 1000) + 'K';
-                            } else if (value >= 1000000) {
-                                return (value / 1000000) + 'M';
-                            } else {
-                                return value;
-                            }
+        return [
+            {
+                gridIndex: 0,
+                axisLabel: {
+                    formatter: function (value) {
+                        if (value >= 1000 && value < 1000000) {
+                            return (value / 1000) + 'K';
+                        } else if (value >= 1000000) {
+                            return (value / 1000000) + 'M';
+                        } else {
+                            return value;
                         }
                     }
                 }
-            ];
-        }
+            }
+        ];
     }
 
     getVolumeToolTip() {
