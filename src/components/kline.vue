@@ -2,8 +2,15 @@
     <div style="position:relative">
       <!-- Cycle按钮 -->
       <div style="position: absolute;left:10px;top:20px;z-index:1;">
-        <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'" @click = "chooseCycle(item.name)">
-            {{item.name}}
+        <div v-for= "(item, index) in intervals" :key = "item.id" :class="cycle === item.name ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">
+            <div v-if = "item.values">
+              <select class = "cycle-select" v-model= "item.name"  @change= "chooseCycle($event)">
+                <option v-for= "(value, index) in item.values" v-bind:value = "value.value">{{value.label}}</option>
+              </select>
+            </div>
+            <div v-else @click = "chooseCycle(item.name)">
+              {{item.name}}
+            </div>
         </div>
       </div>
       <!-- kline -->
@@ -30,7 +37,8 @@ export default {
       message: null,
       klineData: null,
       coinType: '',
-      intervals: null
+      intervals: null,
+      intervalValue: ''
     };
   },
   props: {
@@ -139,10 +147,14 @@ export default {
       this.resize();
     },
     chooseCycle(cycle) {
+      let selectCycle = cycle
+      if (cycle instanceof Object) {
+         selectCycle = cycle.target.value
+      }
       if (this.cycle === cycle) {
         return;
       }
-      this.$emit("listenToChildEvent", cycle)
+      this.$emit("listenToChildEvent", selectCycle)
     },
     changeDataZoom(type) {
       this.kline.changeDataZoom(type)
