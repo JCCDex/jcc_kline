@@ -117,7 +117,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharingData.timeDivisionData.precision = precision
+    timeSharingData.divisionData.precision = precision
     timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })

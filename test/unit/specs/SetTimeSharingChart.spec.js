@@ -16,16 +16,6 @@ describe('test setTimeSharingChart', () => {
     expect(TimeSharing).toBeInstanceOf(TimeSharingChart)
   })
 
-  it('test getTimeSharingGrid', () => {
-    let TimeSharing = new TimeSharingChart(timeSharingOption);
-    expect(TimeSharing.getTimeSharingGrid()).not.toBeNull()
-  })
-
-  it('test getTimeSharingYAxis', () => {
-    let TimeSharing = new TimeSharingChart(timeSharingOption);
-    expect(TimeSharing.getTimeSharingYAxis()).not.toBeNull()
-  })
-
   it('test getTimeSharingXAxis', () => {
     let TimeSharing = new TimeSharingChart(timeSharingOption);
     expect(TimeSharing.getTimeSharingXAxis()).not.toBeNull()
@@ -65,7 +55,19 @@ describe('test setTimeSharingChart', () => {
     const element = document.createElement('div');
     let TimeSharing = new TimeSharingChart(timeSharingOption);
     TimeSharing.initTimeSharingECharts(element)
-    timeSharingData.timeDivisionData.precision = precision
+    timeSharingData.divisionData.precision = precision
+     TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
+  })
+
+  it('test setTimeSharingOption if precision not number', () => {
+    const element = document.createElement('div');
+    let TimeSharing = new TimeSharingChart(timeSharingOption);
+    TimeSharing.initTimeSharingECharts(element)
+    timeSharingData.divisionData.precision = {
+      price: 'a',
+      amount: 'c'
+    }
      TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
   })
@@ -74,6 +76,7 @@ describe('test setTimeSharingChart', () => {
     const element = document.createElement('div');
     let TimeSharing = new TimeSharingChart(timeSharingOption);
     TimeSharing.initTimeSharingECharts(element)
+    timeSharingData.divisionData.precision = precision
     TimeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     TimeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
@@ -261,12 +264,5 @@ describe('test setTimeSharingChart', () => {
     TimeSharing.resizeECharts(element, true)
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
   })
-
-  it('test getTimeSharingGrid if platform is mobile', () => {
-    timeSharingOption.platform = 'mobile'
-    let TimeSharing = new TimeSharingChart(timeSharingOption);
-    expect(TimeSharing.getTimeSharingGrid()).not.toBeNull()
-  })
-
 
 })

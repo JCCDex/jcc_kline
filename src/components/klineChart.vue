@@ -51,7 +51,7 @@
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KLine>
       <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
-      <!-- <time-sharing ref="timeSharing" v-show="showChart === 'timeSharing'" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></time-sharing> -->
+      <!-- <time-sharing ref="timeSharing" v-show= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></time-sharing> -->
     </fullscreen>
   </div>
 </template>
@@ -64,7 +64,7 @@ import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
-import { splitData, getDepthData, calculateMA } from '../js/processData'
+import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
 // import TimeSharing from './timeSharing.vue'
 export default {
@@ -158,6 +158,8 @@ export default {
     klineDataObj() {
       let candleData
       let depthData
+      let timeDivisionData
+      let divisionData
       let MAData = []
       this.message = getLanguage()
       let precision = {
@@ -177,13 +179,20 @@ export default {
       if (this.klineDataObj.depthData) {
         depthData = getDepthData(this.klineDataObj.depthData);
       }
+      if (this.klineDataObj.timeDivisionData) {
+        timeDivisionData = this.klineDataObj.timeDivisionData
+        divisionData = handleDivisionData(timeDivisionData)
+        this.divisionTime = divisionData.divisionTime
+      }
       this.chartDataObj = {
         platform: 'pc',
         precision: precision,
         cycle: this.klineDataObj.cycle,
         coinType: this.klineDataObj.coinType,
         candleData: candleData,
-        depthData: depthData
+        depthData: depthData,
+        divisionData: divisionData,
+        timeDivisionData: timeDivisionData
       }
     },
     fullscreen() {

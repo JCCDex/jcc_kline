@@ -5,7 +5,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
-import { getClientWidth, getLanguage, getClientHeight, formatTime, formatDecimal } from './utils';
+import { getClientWidth, getLanguage, getClientHeight, formatDecimal } from './utils';
 
 var timeSharingSize = {
     width: 0,
@@ -132,8 +132,8 @@ class TimeSharingChart {
     }
 
     setTimeSharingOption(timeDivisionData, data) {
-        pricePrecision = !isNaN(timeDivisionData.precision.price) ? timeDivisionData.precision.price : pricePrecision;
-        amountsPrecision = !isNaN(timeDivisionData.precision.amount) ? timeDivisionData.precision.amount : amountsPrecision;
+        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         timeSharingOption = JSON.parse(JSON.stringify(this.timeSharingConfig));
         oldTimeSharingData = {
             timeDivisionData: timeDivisionData,
@@ -142,17 +142,15 @@ class TimeSharingChart {
         let { times, averages, prices, volumes } = data;
         let length = timeDivisionData.length - 1;
         toolTipData = {
-            time: formatTime(timeDivisionData[length][3]),
-            volume: formatDecimal(timeDivisionData[length][1], amountsPrecision, true),
-            price: formatDecimal(timeDivisionData[length][2], pricePrecision, true),
+            time: times[length][3],
+            volume: formatDecimal(volumes[length][1], amountsPrecision, true),
+            price: formatDecimal(prices[length], pricePrecision, true),
             averagePrice: formatDecimal(averages[length], pricePrecision, true),
             color: volumes[length][2]
         };
         let option = {
-            grid: this.getTimeSharingGrid(),
             xAxis: this.getTimeSharingXAxis(times),
-            yAxis: this.getTimeSharingYAxis(),
-            tooltip: this.getTimeSharingToolTip(timeDivisionData, averages, volumes),
+            tooltip: this.getTimeSharingToolTip(data),
             series: this.getTimeSharingSeries(prices, averages, volumes),
             dataZoom: this.getTimeSharingDataZoom()
         };
@@ -163,14 +161,12 @@ class TimeSharingChart {
     }
 
     updateTimeSharingOption(timeDivisionData, data) {
-        pricePrecision = !isNaN(timeDivisionData.precision.price) ? timeDivisionData.precision.price : pricePrecision;
-        amountsPrecision = !isNaN(timeDivisionData.precision.amount) ? timeDivisionData.precision.amount : amountsPrecision;
+        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
+        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         let { times, averages, prices, volumes } = data;
         let option = {
-            grid: this.getTimeSharingGrid(),
             xAxis: this.getTimeSharingXAxis(times),
-            yAxis: this.getTimeSharingYAxis(),
-            tooltip: this.getTimeSharingToolTip(timeDivisionData, averages, volumes),
+            tooltip: this.getTimeSharingToolTip(data),
             series: this.getTimeSharingSeries(prices, averages, volumes)
         };
         merge(timeSharingOption, option);
@@ -182,76 +178,31 @@ class TimeSharingChart {
         return toolTipData;
     }
 
-    getTimeSharingGrid() {
-        if (this.timeSharingConfig.platform === 'pc') {
-            return [
-                {
-                    height: timeSharingSize.height / 600 * 360 + 'px'
-                }, {
-                    height: timeSharingSize.height / 600 * 100 + 'px'
-                }
-            ];
-        } else {
-            return [
-                {
-                    height: `${this.timeSharingConfig.size.height * 0.6}px`
-                }, {
-                    height: `${this.timeSharingConfig.size.height * 0.2}px`
-                }
-            ];
-        }
-    }
-
     getTimeSharingXAxis(times) {
         return [{
             gridIndex: 0,
-            data: times
-        },
-        {
-            gridIndex: 1,
             data: times
         }
         ];
     }
 
-    getTimeSharingYAxis() {
-        var y = [{
-            gridIndex: 0
-        },
-        {
-            gridIndex: 1,
-            axisLabel: {
-                formatter: function (value) {
-                    if (value >= 1000 && value < 1000000) {
-                        return (value / 1000) + 'K';
-                    } else if (value >= 1000000) {
-                        return (value / 1000000) + 'M';
-                    } else {
-                        return value;
-                    }
-                }
-            }
-        }];
-        return y;
-    }
-
-    getTimeSharingToolTip(timeDivisionData, averages, volumes) {
-        return {
-            formatter: param => {
+    getTimeSharingToolTip(data) {
+        var toolTip = {
+            formatter: function (param) {
                 let dataIndex = param[0].dataIndex;
-                let data = timeDivisionData[dataIndex];
                 toolTipData = {
-                    time: formatTime(data[3]),
-                    volume: formatDecimal(data[1], amountsPrecision, true),
-                    price: formatDecimal(data[2], amountsPrecision, true),
-                    averagePrice: formatDecimal(averages[dataIndex], pricePrecision, true),
-                    color: volumes[dataIndex][2]
+                    time: data.times[dataIndex],
+                    volume: formatDecimal(data.volumes[dataIndex][1], amountsPrecision, true),
+                    price: formatDecimal(data.prices[dataIndex], pricePrecision, true),
+                    averagePrice: formatDecimal(data.averages[dataIndex], pricePrecision, true),
+                    color: data.volumes[dataIndex][2]
                 };
             }
         };
+        return toolTip;
     }
 
-    getTimeSharingSeries(prices, averages, volumes) {
+    getTimeSharingSeries(prices, averages) {
         return [{
             name: 'White',
             data: prices
@@ -259,16 +210,6 @@ class TimeSharingChart {
         {
             name: 'Yellow',
             data: averages
-        }, {
-            name: 'Volume',
-            data: volumes,
-            itemStyle: {
-                normal: {
-                    color: function (param) {
-                        return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                    }
-                }
-            }
         }
         ];
     }
@@ -279,7 +220,6 @@ class TimeSharingChart {
                 id: 'dataZoomX',
                 type: 'inside',
                 filterMode: 'filter',
-                xAxisIndex: [0, 1],
                 start: 60,
                 end: 100,
                 minSpan: 5

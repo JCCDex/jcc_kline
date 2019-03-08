@@ -30,12 +30,11 @@ export default {
       timeSharingTipData: null,
       divisionTime: null,
       timeDivisionData: null,
-      message: null,
-      isRefresh: true
+      message: null
     };
   },
   props: {
-    klineDataObj: {
+    chartDataObj: {
       type: Object,
       default: () => {
         return {}
@@ -51,23 +50,18 @@ export default {
     }
   },
   watch: {
-    klineDataObj() {
-      if (this.klineDataObj.timeDivisionData) {
-        let precision = {
-          price: this.klineDataObj.pricePrecision,
-          amount: this.klineDataObj.amountPrecision
-        }
-        let timeDivisionData = this.klineDataObj.timeDivisionData;
-        let divisionData = handleDivisionData(timeDivisionData)
-        this.divisionTime = divisionData.divisionTime;
-        this.message = getLanguage();
-        timeDivisionData.precision = precision;
-        if (JSON.stringify(this.coinType) !== JSON.stringify(this.klineDataObj.coinType)) {
-          this.clearChart()
+    chartDataObj() {
+      this.message = getLanguage();
+      let precision = this.chartDataObj.precision
+      if (this.chartDataObj.divisionData) {
+          let timeDivisionData = this.chartDataObj.timeDivisionData
+          let divisionData = this.chartDataObj.divisionData
+          divisionData.precision = precision
+        if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
+           this.clearChart()
           this.timeSharingTipData = this.timeSharing.setTimeSharingOption(timeDivisionData, divisionData)
           this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, false, this.klineConfig.size)
-          this.coinType = this.klineDataObj.coinType
-          this.isRefresh = false
+          this.coinType = this.chartDataObj.coinType
         } else {
           this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
         }
@@ -81,8 +75,8 @@ export default {
         }
         if (JSON.stringify(size) !== JSON.stringify(this.timeSharingSize) && this.klineConfig.defaultSize === false) {
           this.timeSharingSize = {
-            width: this.klineConfig.size.width + 'px',
-            height: this.klineConfig.size.height + 'px'
+            height: '572px',
+            width: '100%'
           }
           this.resizeSize();
         }
