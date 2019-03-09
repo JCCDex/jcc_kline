@@ -65,20 +65,8 @@ describe('test KLineMobileSetChart', () => {
     expect(mobileKline.kline).not.toBeNull();
   })
 
-  it('test mobile updateOption if not precision', () => {
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption);
-    mobileKline.initMobileECharts(element)
-    data.precision.price = undefined
-    data.precision.amount = undefined
-    mobileKline.setOption(mobileData, cycle)
-    mobileKline.updateOption(data)
-    expect(mobileKline.kline).not.toBeNull();
-  })
-
   it('test mobile setOption if cycle is day', () => {
     cycle = "day"
-    data.precision = precision
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)

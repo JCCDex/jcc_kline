@@ -19,6 +19,14 @@
           <font v-for="MAitem in this.klineConfig.MA" :key="MAitem.id" :style = "{ color: MAitem.color, marginRight: '12px'}">{{MAitem.name}}<font>:&nbsp;{{ getMAData(MAitem.name) }}</font></font>
         </div>
       </div>
+      <!-- timeDivision tootip 数据显示 -->
+      <div :class="this.message.language === 'en' ? 'time-sharing-en-pc' : 'time-sharing-zh-pc'" v-if = "timeSharingTipData && showChart === 'timeSharing'">
+        <font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.time}}</font>
+        <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.volume}}</font> &nbsp;
+        <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.price}}</font> &nbsp;
+        <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
+      </div>
+      <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
           <!-- <el-popover placement="bottom" width="150" trigger="click">
             <div>
@@ -31,6 +39,7 @@
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
       </div>
+      <!-- 全屏按钮 -->
       <div style="position: absolute;right:30px;top:23px;z-index:5;" class="full-screen-div">
           <i v-show = "!fullscreen" class="icon iconfont icon-full-screen" @click="fullScreenToggle">
             <span v-show="!fullscreen" :class=" message.language === 'zh' ? 'icon-fullscreen-tooltip' : 'icon-fullscreen-entip'"><font style="font-size:14px;line-height:22px;">{{message.fullScreen}}</font></span>
@@ -39,6 +48,7 @@
             <span v-show="fullscreen" :class=" message.language === 'zh' ? 'exit-fullscreen-tooltip' : 'exit-fullscreen-entip'"><font style="font-size:14px;line-height:22px;">{{message.exitFullScreen}}</font></span>
           </i>
       </div>
+      <!-- 平移、刷新、缩放按钮 -->
       <!-- <div class = "kline-levitation-div" v-show = "showChart === 'candle'" @mouseenter="enter()" @mouseleave="leave()">
         <div class="kline-levitation-icon" v-show = "isShow">
           <div class="kline-levitation-btn" @click = "changeDataZoom('leftShift')">左移</div>
@@ -48,10 +58,11 @@
           <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
         </div>
       </div> -->
+      <!-- 图表 -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenToTipIndex = "getTipDataIndex" v-on:listenToChildEvent = "changeCycle" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KLine>
-      <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
-      <!-- <time-sharing ref="timeSharing" v-show= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></time-sharing> -->
+      <!-- <time-sharing ref="timeSharing" v-if= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" v-on:listenToTipIndex = "getTipDataIndex" v-on:listenTimeSharingChart = "getTimeSharingChart"></time-sharing> -->
+      <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart !== 'depth'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
     </fullscreen>
   </div>
 </template>
@@ -63,10 +74,10 @@ import Fullscreen from "vue-fullscreen/src/component.vue"
 import KLine from './kline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
+// import TimeSharing from './timeSharing.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
 import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
-// import TimeSharing from './timeSharing.vue'
 export default {
   name: "klineChart",
   components: {
@@ -84,10 +95,12 @@ export default {
       showExitFullScreen: false,
       candle: null,
       volume: null,
+      timeSharing: null,
       pricePrecision: 6,
       amountsPrecision: 2,
       chartDataObj: {},
       toolTipData: null,
+      timeSharingTipData: null,
       outspreadMA: true,
       resizeSize: {},
       isFullScreen: false,
@@ -166,6 +179,7 @@ export default {
         price: this.klineDataObj.pricePrecision,
         amount: this.klineDataObj.amountPrecision
       }
+      let cycle = this.klineDataObj.cycle
       if (this.klineDataObj.klineData) {
         candleData = splitData(this.klineDataObj.klineData)
         for (var i = 0; i < this.klineConfig.MA.length; i++) {
@@ -184,10 +198,13 @@ export default {
         divisionData = handleDivisionData(timeDivisionData)
         this.divisionTime = divisionData.divisionTime
       }
+      if (this.showChart === 'timeSharing') {
+        cycle = 'everyhour'
+      }
       this.chartDataObj = {
         platform: 'pc',
         precision: precision,
-        cycle: this.klineDataObj.cycle,
+        cycle: cycle,
         coinType: this.klineDataObj.coinType,
         candleData: candleData,
         depthData: depthData,
@@ -240,32 +257,55 @@ export default {
         linkageVolume(this.candle, this.volume)
       }
     },
+    getTimeSharingChart(timeSharing) {
+      this.timeSharing = timeSharing
+      if (this.volume) {
+        linkageVolume(this.timeSharing, this.volume)
+      }
+    },
     getVolumeChart(volume) {
       this.volume = volume
       if (this.candle) {
         linkageVolume(this.candle, this.volume)
       }
+      if (this.timeSharing) {
+        linkageVolume(this.timeSharing, this.volume)
+      }
     },
     getTipDataIndex(index) {
-      if (this.chartDataObj.candleData) {
-        let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
-        let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : this.pricePrecision;
-        let amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : this.amountsPrecision;
-        this.toolTipData = {
-          time: data.categoryData[index],
-          volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-          opening: formatDecimal(data.values[index][0], pricePrecision, true),
-          closing: formatDecimal(data.values[index][1], pricePrecision, true),
-          max: formatDecimal(data.values[index][3], pricePrecision, true),
-          min: formatDecimal(data.values[index][2], pricePrecision, true),
-          MAData: [],
-          color: data.volumes[index][2]
-        }
-        for (var i = 0; i < data.MAData.length; i++) {
-          this.toolTipData.MAData[i] = {
-            name: data.MAData[i].name,
-            data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
-          };
+      if (this.chartDataObj.precision) {
+        let precision = this.chartDataObj.precision
+        let pricePrecision = !isNaN(precision.price) ? precision.price : this.pricePrecision;
+        let amountsPrecision = !isNaN(precision.amount) ? precision.amount : this.amountsPrecision;
+        if (this.chartDataObj.candleData && this.showChart !== 'timeSharing') {
+          let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
+          if (data.values[index] && data.categoryData[index]) {
+            this.toolTipData = {
+              time: data.categoryData[index],
+              volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+              opening: formatDecimal(data.values[index][0], pricePrecision, true),
+              closing: formatDecimal(data.values[index][1], pricePrecision, true),
+              max: formatDecimal(data.values[index][3], pricePrecision, true),
+              min: formatDecimal(data.values[index][2], pricePrecision, true),
+              MAData: [],
+              color: data.volumes[index][2]
+            }
+            for (var i = 0; i < data.MAData.length; i++) {
+              this.toolTipData.MAData[i] = {
+                name: data.MAData[i].name,
+                data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+              };
+            }
+          }
+        } else if (this.chartDataObj.divisionData && this.showChart === 'timeSharing') {
+          let data = JSON.parse(JSON.stringify(this.chartDataObj.divisionData))
+          this.timeSharingTipData = {
+            time: data.times[index],
+            volume: formatDecimal(data.volumes[index][1], amountsPrecision, true),
+            price: formatDecimal(data.prices[index], pricePrecision, true),
+            averagePrice: formatDecimal(data.averages[index], pricePrecision, true),
+            color: data.volumes[index][2]
+          }
         }
       }
     },

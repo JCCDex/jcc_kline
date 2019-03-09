@@ -1,22 +1,12 @@
 <template>
-  <div>
-        <!-- timeDivision tootip 数据显示 -->
-          <div :class="this.platform === 'pc' ? this.message.language === 'en' ? 'time-sharing-en-pc' : 'time-sharing-zh-pc' : this.message.language === 'en' ? 'time-sharing-en-mobile' : 'time-sharing-zh-mobile'" v-if="timeSharingTipData">
-            <font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.time}}</font>
-            <font class="mobile-tooltip-name">{{message.volumeMobile}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.volume}}</font> &nbsp;
-            <font class="mobile-tooltip-name">{{message.price}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.price}}</font> &nbsp;
-            <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
-          </div>
     <div id = "timeSharing" ref = "timeSharing" :style="{height: `${timeSharingSize.height}`, width: `${timeSharingSize.width}`}" @mousemove="getTimeSharingTipData"></div>
-  </div>
 </template>
 <script>
-import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+import '../css/common.css'
 import { splitData, handleDivisionData } from '../js/processData'
 import ChartController from '../js/Charts'
 import { getLanguage } from '../js/utils'
 export default {
-  name: "timeSharing",
   data() {
     return {
       kline: null,
@@ -27,10 +17,8 @@ export default {
         width: ''
       },
       coinType: null,
-      timeSharingTipData: null,
-      divisionTime: null,
-      timeDivisionData: null,
-      message: null
+      message: null,
+      timeSharingData: null
     };
   },
   props: {
@@ -54,16 +42,17 @@ export default {
       this.message = getLanguage();
       let precision = this.chartDataObj.precision
       if (this.chartDataObj.divisionData) {
-          let timeDivisionData = this.chartDataObj.timeDivisionData
           let divisionData = this.chartDataObj.divisionData
           divisionData.precision = precision
         if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
            this.clearChart()
-          this.timeSharingTipData = this.timeSharing.setTimeSharingOption(timeDivisionData, divisionData)
+          let tipIndex = this.timeSharing.setTimeSharingOption(divisionData)
+          this.$emit("listenToTipIndex", tipIndex)
+          this.$emit("listenTimeSharingChart", this.timeSharing.getTimeSharingChart())
           this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, false, this.klineConfig.size)
           this.coinType = this.chartDataObj.coinType
         } else {
-          this.timeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+          this.timeSharing.updateTimeSharingOption(divisionData);
         }
       }
     },
@@ -113,7 +102,6 @@ export default {
     if (this.klineConfig.defaultSize === true) {
       window.removeEventListener("resize", this.resizeSize);
     }
-    this.timeSharingTipData = null;
     this.dispose()
   },
   methods: {
@@ -131,7 +119,8 @@ export default {
       this.timeSharing.clearTimeSharingEcharts();
     },
     getTimeSharingTipData() {
-      this.timeSharingTipData = this.timeSharing.getTimeSharingTipData()
+      let toolTipIndex = this.timeSharing.getTimeSharingTipIndex()
+      this.$emit("listenToTipIndex", toolTipIndex)
     },
     dispose() {
       this.timeSharing.disposeTimeSharingEChart()

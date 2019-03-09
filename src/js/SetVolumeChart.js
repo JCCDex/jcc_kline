@@ -110,26 +110,34 @@ class VolumeChart {
     }
 
     getVolumeXAxis(data, cycle) {
-        var x = [{
-            gridIndex: 0,
-            data: data.categoryData,
-            axisLabel: {
-                formatter(value) {
-                    if (cycle === 'hour') {
-                        return value.substring(5);
-                    }
-                    if (cycle === 'day') {
-                        return value.substring(0, 12);
-                    }
-                    if (cycle === 'week') {
-                        return value.substring(0, 12);
-                    }
-                    if (cycle === 'month') {
-                        return value.substring(0, 7);
+        var x;
+        if (cycle !== 'everyhour') {
+            x = [{
+                gridIndex: 0,
+                data: data.categoryData,
+                axisLabel: {
+                    formatter(value) {
+                        if (cycle === 'hour') {
+                            return value.substring(5);
+                        }
+                        if (cycle === 'day') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'week') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'month') {
+                            return value.substring(0, 7);
+                        }
                     }
                 }
-            }
-        }];
+            }];
+        } else {
+            x = [{
+                gridIndex: 0,
+                data: data.times
+            }];
+        }
         return x;
     }
 

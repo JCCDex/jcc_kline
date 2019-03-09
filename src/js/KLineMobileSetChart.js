@@ -12,8 +12,6 @@ var cycle;
 var config;
 var timeDivisionconfig;
 var toolTipIndex;
-var amountsPrecision = 2;
-var pricePrecision = 6;
 
 
 class KLineMobileSetChartController {
@@ -93,8 +91,6 @@ class KLineMobileSetChartController {
     }
 
     updateOption(data, cycle) {
-        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
-        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         let length = data.values.length - 1;
         let MAConfig = this.klineConfig.MA;
         if (!toolTipIndex) {
@@ -115,9 +111,7 @@ class KLineMobileSetChartController {
         return this.kline;
     }
 
-    updateTimeDivisionOption(data, precision) {
-        pricePrecision = !isNaN(precision.price) ? precision.price : pricePrecision;
-        amountsPrecision = !isNaN(precision.amount) ? precision.amount : amountsPrecision;
+    updateTimeDivisionOption(data) {
         let { times, averages, prices } = data;
         let length = times.length - 1;
         if (!toolTipIndex) {

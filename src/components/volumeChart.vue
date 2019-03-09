@@ -55,7 +55,8 @@ export default {
             this.clearChart();
             this.refreshCycle = 0
             this.cycle = this.chartDataObj.cycle
-            this.volume.setVolumeOption(data, this.cycle)
+            let toolTipIndex = this.volume.setVolumeOption(data, this.cycle)
+            this.$emit("listenToTipIndex", toolTipIndex)
             this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
             this.coinType = this.chartDataObj.coinType
           }else {
@@ -69,7 +70,8 @@ export default {
         let divisionData = this.chartDataObj.divisionData
         if (this.refreshCycle !== 1 && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
           this.clearChart();
-          this.volume.setVolumeOption(divisionData, this.cycle)
+          let toolTipIndex = this.volume.setVolumeOption(divisionData, this.cycle)
+          this.$emit("listenToTipIndex", toolTipIndex)
           this.refreshCycle = 1
           this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
         } else {
