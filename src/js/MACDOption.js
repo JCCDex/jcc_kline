@@ -30,10 +30,10 @@ var macdOption = {
     ],
     xAxis: [ // 直角坐标系 grid 中的 x 轴
         {
-        type: 'category',
-        gridIndex: 0,
-        // data: data.times,
-        axisLabel: {show: false}
+            type: 'category',
+            gridIndex: 0,
+            // data: data.times,
+            axisLabel: {show: false}
         }
     ],
     yAxis: [ // 直角坐标系 grid 中的y轴

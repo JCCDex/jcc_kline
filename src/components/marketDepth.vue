@@ -1,5 +1,8 @@
 <template>
-    <div id="depth" ref="depth" :style="{height: `${depthSize.height}`, width: `${depthSize.width}`}"></div>
+    <div>
+      <div v-if="isMobile" style="background:#2b2f33; height:0.1rem"></div>
+      <div id="depth" ref="depth" :style="{height: `${depthSize.height}`, width: `${depthSize.width}`}"></div>
+    </div>
 </template>
 <script>
 import { getDepthData } from '../js/processData'
@@ -15,7 +18,8 @@ export default {
       depthSize: {
         height: '',
         width: ''
-      }
+      },
+      isMobile:false
     };
   },
   props: {
@@ -87,6 +91,7 @@ export default {
         }
       }
     } else {
+      this.isMobile = true;
       this.depthSize.height = this.klineConfig.depthSize.height + 'px'
       this.depthSize.width = this.klineConfig.depthSize.width + 'px'
     }

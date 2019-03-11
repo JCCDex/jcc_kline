@@ -5,6 +5,12 @@ export const splitData = (data) => {
     var categoryData = [];
     var values = [];
     var volumes = [];
+    var MACDData = [];
+    let EMA12;
+    let EMA26;
+    let DIFF;
+    let DEA;
+    let MACD;
     for (var i = 0; i < data.length; i++) {
         categoryData.push(formatTime(data[i][0]));
         values.push( JSON.parse(JSON.stringify(data[i])));
@@ -26,13 +32,49 @@ export const splitData = (data) => {
             data[i][6],
             status
         ]);
+        
+        EMA12 = getEMA12(i, EMA12, values[0][1]);
+        EMA26 = getEMA26(i, EMA26, values[0][1]);
+        DIFF = EMA12 - EMA26;
+        DEA = getDEA(DIFF, DEA);
+        MACD =  2 * (DIFF-DEA);
+        MACDData.push([
+            DIFF,
+            DEA,
+            MACD
+        ]);
     }
     return {
         categoryData: categoryData,
         values: values,
-        volumes: volumes
+        volumes: volumes,
+        MACDData: MACDData
     };
 };
+
+export const getEMA12 = (i, oldEMA12, closingPrice) => {
+    if (i === 0) {
+        return closingPrice;
+    } else {
+        return (2*closingPrice+(12-1)*oldEMA12)/(12+1);
+    }
+}
+
+export const getEMA26 = (i, oldEMA26, closingPrice) => {
+    if (i === 0) {
+        return closingPrice;
+    } else {
+        return (2*closingPrice+(26-1)*oldEMA26)/(26+1);
+    }
+}
+
+export const getDEA = (i, DIFF, oldDEA) => {
+    if (i === 0) {
+        return 0;
+    } else {
+        return 2/(9+1) * DIFF + 8/(9+1) * oldDEA
+    }
+}
 
 export const getDepthData = (data) => {
     if (!data) return;
