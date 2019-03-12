@@ -32,13 +32,13 @@ export const splitData = (data) => {
             data[i][6],
             status
         ]);
-        
-        EMA12 = getEMA12(i, EMA12, values[0][1]);
-        EMA26 = getEMA26(i, EMA26, values[0][1]);
+        EMA12 = getEMA12(i, EMA12, values[i][1]);
+        EMA26 = getEMA26(i, EMA26, values[i][1]);
         DIFF = EMA12 - EMA26;
-        DEA = getDEA(DIFF, DEA);
+        DEA = getDEA(i, DIFF, DEA);
         MACD =  2 * (DIFF-DEA);
         MACDData.push([
+            formatTime(data[i][0]),
             DIFF,
             DEA,
             MACD
@@ -56,7 +56,7 @@ export const getEMA12 = (i, oldEMA12, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (2*closingPrice+(12-1)*oldEMA12)/(12+1);
+        return (2/13)*closingPrice + (11/13)*oldEMA12;
     }
 }
 
@@ -64,7 +64,7 @@ export const getEMA26 = (i, oldEMA26, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (2*closingPrice+(26-1)*oldEMA26)/(26+1);
+        return (2/27)*closingPrice + (25/27)*oldEMA26;
     }
 }
 
@@ -72,7 +72,7 @@ export const getDEA = (i, DIFF, oldDEA) => {
     if (i === 0) {
         return 0;
     } else {
-        return 2/(9+1) * DIFF + 8/(9+1) * oldDEA
+        return 0.2 * DIFF + 0.8 * oldDEA
     }
 }
 
