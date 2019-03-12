@@ -111,7 +111,6 @@ export const calculateMA = (dayCount, data) => {
 
 export const getKDJData = (dayCount, data) => {
     if (!data) { return; }
-    console.log(JSON.parse(JSON.stringify(data)))
     var RSV = [];
     var KData = [];
     var DData = [];
@@ -130,17 +129,16 @@ export const getKDJData = (dayCount, data) => {
                 lowestPriceData.push(countData[3]);
                 highestPriceData.push(countData[4]);
             }
-            let smallToBigLowestPriceData = JSON.parse(JSON.stringify(lowestPriceData))
+            let smallToBigLowestPriceData = JSON.parse(JSON.stringify(lowestPriceData));
             smallToBigLowestPriceData = smallToBigLowestPriceData.sort(function (a, b) {
                 return a - b;
             });
-            console.log(smallToBigLowestPriceData)
-            let lowestPrice = smallToBigLowestPriceData[0]
-            let bigToSmallHighestPriceData = JSON.parse(JSON.stringify(lowestPriceData))
+            let lowestPrice = smallToBigLowestPriceData[0];
+            let bigToSmallHighestPriceData = JSON.parse(JSON.stringify(lowestPriceData));
             bigToSmallHighestPriceData = bigToSmallHighestPriceData.sort(function (a, b) {
                 return b - a;
-            })
-            let highestPrice = bigToSmallHighestPriceData[0]
+            });
+            let highestPrice = bigToSmallHighestPriceData[0];
             let RSVData = (data[i][2] - lowestPrice) / (highestPrice - lowestPrice) * 100;
             RSV.push(RSVData);
             let KBeforeData;
