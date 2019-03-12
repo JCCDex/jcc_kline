@@ -110,7 +110,8 @@ export const calculateMA = (dayCount, data) => {
 
 
 export const getKDJData = (dayCount, data) => {
-    if (!data) { return }
+    if (!data) { return; }
+    console.log(JSON.parse(JSON.stringify(data)))
     var RSV = [];
     var KData = [];
     var DData = [];
@@ -122,37 +123,41 @@ export const getKDJData = (dayCount, data) => {
             DData.push('-');
             JData.push('-');
         } else {
-            var dayCountData = data.slice(i - dayCount + 1, i)
+            var dayCountData = data.slice(i - dayCount + 1, i + 1);
             var lowestPriceData = [];
             var highestPriceData = [];
             for (var countData of dayCountData) {
-                lowestPriceData.push(countData[3])
-                highestPriceData.push(countData[4])
+                lowestPriceData.push(countData[3]);
+                highestPriceData.push(countData[4]);
             }
-
-            var lowestPrice = lowestPriceData.sort(function (a, b) {
+            let smallToBigLowestPriceData = JSON.parse(JSON.stringify(lowestPriceData))
+            smallToBigLowestPriceData = smallToBigLowestPriceData.sort(function (a, b) {
                 return a - b;
-            })[0]
-            var highestPrice = highestPriceData.sort(function (a, b) {
+            });
+            console.log(smallToBigLowestPriceData)
+            let lowestPrice = smallToBigLowestPriceData[0]
+            let bigToSmallHighestPriceData = JSON.parse(JSON.stringify(lowestPriceData))
+            bigToSmallHighestPriceData = bigToSmallHighestPriceData.sort(function (a, b) {
                 return b - a;
-            })[0]
-            var RSVData = (data[i][2] - lowestPrice) / (highestPrice - lowestPrice) * 100
-            RSV.push(RSVData)
-            var KBeforeData
+            })
+            let highestPrice = bigToSmallHighestPriceData[0]
+            let RSVData = (data[i][2] - lowestPrice) / (highestPrice - lowestPrice) * 100;
+            RSV.push(RSVData);
+            let KBeforeData;
             if (!isNaN(KData[i - 1])) {
-                KBeforeData = KData[i - 1]
+                KBeforeData = KData[i - 1];
             } else {
-                KBeforeData = 50
+                KBeforeData = 50;
             }
-            var DBeforeData
+            let DBeforeData;
             if (!isNaN(DData[i - 1])) {
-                DBeforeData = KData[i - 1]
+                DBeforeData = KData[i - 1];
             } else {
-                DBeforeData = 50
+                DBeforeData = 50;
             }
-            KData.push(2 / 3 * KBeforeData + 1 / 3 * RSV[i])
-            DData.push(2 / 3 * DBeforeData + 1 / 3 * KData[i])
-            JData.push(3 * KData[i] - 2 * DData[i])
+            KData.push(2 / 3 * KBeforeData + 1 / 3 * RSV[i]);
+            DData.push(2 / 3 * DBeforeData + 1 / 3 * KData[i]);
+            JData.push(3 * KData[i] - 2 * DData[i]);
         }
     }
     return {
@@ -160,5 +165,5 @@ export const getKDJData = (dayCount, data) => {
         K: KData,
         D: DData,
         J: JData
-    }
-}
+    };
+};
