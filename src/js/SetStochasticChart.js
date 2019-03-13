@@ -17,7 +17,7 @@ class StochasticChartController {
     resizeECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
-            if (!this.stochasticConfig.defaultSize) {
+            if (this.stochasticConfig.defaultSize === false) {
                 let resizeContainer = () => {
                     if (DOM) {
                         DOM.style.height = resizeSize.height * 0.25 + 'px';
@@ -200,8 +200,6 @@ class StochasticChartController {
             this.stochastic.dispose();
         }
     }
-
-
 
 }
 

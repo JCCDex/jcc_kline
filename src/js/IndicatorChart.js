@@ -3,12 +3,8 @@ import StochasticChartController from './SetStochasticChart';
 class IndicatorChartController {
     constructor(chartsConfig) {
         var merge = require('lodash.merge');
-        if (chartsConfig.chartType === 'stochastic') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setStochasticChart = new StochasticChartController(StochasticOption);
-            }
-        }
+        merge(StochasticOption, chartsConfig);
+        this.setStochasticChart = new StochasticChartController(StochasticOption);
     }
 
     /* 绘制随机指标（KDJ） */
