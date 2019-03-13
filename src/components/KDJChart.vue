@@ -53,7 +53,7 @@ export default {
         KDJData.categoryData = JSON.parse(JSON.stringify(this.chartDataObj.candleData.categoryData))
         if (KDJData) {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
-            this.clearChart();
+            this.stochastic.clearStochasticEcharts();
             this.cycle = this.chartDataObj.cycle
             this.toolTipData = this.stochastic.setStochasticOption(KDJData, this.cycle)
             this.$emit("listenStochasticChartEvent", this.stochastic.getStochasticEchart())
@@ -116,9 +116,6 @@ export default {
       if (this.klineConfig.platform === 'pc') {
         this.stochastic.resizeStochasticChart(this.$refs.stochastic, this.resizeSize.isFullScreen, this.klineConfig.size);
       }
-    },
-    clearChart() {
-      this.stochastic.clearStochasticEcharts();
     },
     dispose() {
       this.stochastic.disposeStochasticEcharts()

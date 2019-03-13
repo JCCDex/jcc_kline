@@ -35,8 +35,18 @@ describe('test IndicatorChart', () => {
         expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
     })
 
+    it('test setStochasticOption if platform is mobile', () => {
+        const element = document.createElement('div');
+        StochasticConfig.platform = 'mobile'
+        let indicator = new IndicatorChart(StochasticConfig);
+        indicator.initStochasticChart(element)
+        indicator.setStochasticOption(KDJData, 'hour')
+        expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
+    })
+
     it('test updateStochasticOption', () => {
         const element = document.createElement('div');
+        StochasticConfig.platform = 'pc'
         let indicator = new IndicatorChart(StochasticConfig);
         indicator.initStochasticChart(element)
         indicator.setStochasticOption(KDJData, 'day')

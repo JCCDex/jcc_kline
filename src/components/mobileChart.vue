@@ -23,6 +23,7 @@
       <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
       <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
+      <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
@@ -31,6 +32,7 @@ import KLine from './mobileKline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import TimeSharing from './timeSharing.vue'
+import KDJ from './KDJChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume } from '../js/linkageCharts';
@@ -40,7 +42,8 @@ export default {
     KLine,
     Depth,
     Volume,
-    TimeSharing
+    TimeSharing,
+    KDJ
   },
   data() {
     return {
@@ -51,7 +54,8 @@ export default {
       timeSharingTipData: null,
       divisionTime: null,
       candle: null,
-      volume: null
+      volume: null,
+      stochastic: null
     };
   },
   props: {
@@ -158,6 +162,12 @@ export default {
       this.volume = volume
       if (this.candle) {
         linkageVolume(this.candle, this.volume)
+      }
+    },
+    getKDJChart(KDJ) {
+      this.stochastic = KDJ
+      if (this.candle) {
+        linkageVolume(this.candle, this.stochastic)
       }
     },
     getMATipData(name) {

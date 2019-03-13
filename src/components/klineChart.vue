@@ -63,7 +63,7 @@
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
       <!-- <time-sharing ref="timeSharing" v-if= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" v-on:listenToTipIndex = "getTipDataIndex" v-on:listenTimeSharingChart = "getTimeSharingChart"></time-sharing> -->
       <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart !== 'depth'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
-      <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ>
+      <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ> -->
     </fullscreen>
   </div>
 </template>
@@ -80,7 +80,6 @@ import KDJ from './KDJChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
 import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
-import testData from '../js/testData'
 export default {
   name: "klineChart",
   components: {
@@ -212,6 +211,7 @@ export default {
         cycle: cycle,
         coinType: this.klineDataObj.coinType,
         candleData: candleData,
+        depthData: depthData,
         divisionData: divisionData,
         timeDivisionData: timeDivisionData
       }

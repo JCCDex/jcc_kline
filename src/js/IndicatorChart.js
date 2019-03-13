@@ -1,10 +1,15 @@
-import { StochasticOption } from './IndicatorsLineOption';
+import { StochasticOption, mobileIndicatorsLine } from './IndicatorsLineOption';
 import StochasticChartController from './SetStochasticChart';
 class IndicatorChartController {
     constructor(chartsConfig) {
         var merge = require('lodash.merge');
-        merge(StochasticOption, chartsConfig);
-        this.setStochasticChart = new StochasticChartController(StochasticOption);
+        if (chartsConfig.platform === 'pc') {
+            merge(StochasticOption, chartsConfig);
+            this.setStochasticChart = new StochasticChartController(StochasticOption);
+        } else {
+            merge(mobileIndicatorsLine, chartsConfig);
+            this.setStochasticChart = new StochasticChartController(mobileIndicatorsLine);
+        }
     }
 
     /* 绘制随机指标（KDJ） */
