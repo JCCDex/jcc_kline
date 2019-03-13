@@ -1,8 +1,8 @@
 <template>
-  <div ref="stochastic" :style="{height: `${stochasticSize.height}`, width: `${stochasticSize.width}`}" @mousemove="getToolTipIndex()"></div>
+  <div ref="stochastic" :style="{height: `${stochasticSize.height}`, width: `${stochasticSize.width}`}" @mousemove="getToolTipData()"></div>
 </template>
 <script>
-import { splitData, getDepthData } from '../js/processData'
+import { splitData, getDepthData, getKDJData } from '../js/processData'
 import IndicatorChart from '../js/IndicatorChart'
 import { getLanguage } from '../js/utils'
 export default {
@@ -12,8 +12,8 @@ export default {
       stochastic: null,
       coinType: '',
       cycle: '',
-      refreshCycle: 0,
       chartType: 'stochastic',
+      toolTipData: null,
       stochasticSize: {
         height: '',
         width: ''
@@ -47,35 +47,20 @@ export default {
       this.resize()
     },
     chartDataObj() {
-      if (this.chartDataObj.candleData && this.chartDataObj.cycle !== 'everyhour') {
-        let data = this.chartDataObj.candleData
-        data.precision = this.chartDataObj.precision
-        if (data.values && data.stochastics && data.categoryData) {
+      if (this.chartDataObj.candleData) {
+        let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData.values))
+        let KDJData = getKDJData(9, data)
+        KDJData.categoryData = JSON.parse(JSON.stringify(this.chartDataObj.candleData.categoryData))
+        if (KDJData) {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
             this.clearChart();
-            this.refreshCycle = 0
             this.cycle = this.chartDataObj.cycle
-            let toolTipIndex = this.stochastic.setStochasticOption(data, this.cycle)
-            this.$emit("listenToTipIndex", toolTipIndex)
+            this.toolTipData = this.stochastic.setStochasticOption(KDJData, this.cycle)
             this.$emit("listenStochasticChartEvent", this.stochastic.getStochasticEchart())
             this.coinType = this.chartDataObj.coinType
           }else {
-            this.stochastic.updateStochasticOption(data, this.cycle)
+            this.stochastic.updateStochasticOption(KDJData, this.cycle)
           }
-        }
-      }
-      if (this.chartDataObj.cycle === "everyhour" && this.chartDataObj.timeDivisionData) {
-        this.cycle = this.chartDataObj.cycle
-        let timeDivisionData = this.chartDataObj.timeDivisionData
-        let divisionData = this.chartDataObj.divisionData
-        if (this.refreshCycle !== 1 && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.stochastics !== null) {
-          this.clearChart();
-          let toolTipIndex = this.stochastic.setStochasticOption(divisionData, this.cycle)
-          this.$emit("listenToTipIndex", toolTipIndex)
-          this.refreshCycle = 1
-          this.$emit("listenStochasticChartEvent", this.stochastic.getStochasticEchart())
-        } else {
-           this.stochastic.updateStochasticOption(divisionData, this.cycle)
         }
       }
     },
@@ -124,9 +109,8 @@ export default {
       this.stochastic.initStochasticChart(this.$refs.stochastic);
       this.resize();
     },
-    getToolTipIndex () {
-      let toolTipIndex = this.stochastic.getToolTipIndex()
-      this.$emit("listenToTipIndex", toolTipIndex)
+    getToolTipData () {
+      this.toolTipData = this.stochastic.getToolTipData()
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {

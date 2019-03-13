@@ -126,8 +126,8 @@ export const getKDJData = (dayCount, data) => {
             var lowestPriceData = [];
             var highestPriceData = [];
             for (var countData of dayCountData) {
-                lowestPriceData.push(countData[3]);
-                highestPriceData.push(countData[4]);
+                lowestPriceData.push(countData[2]);
+                highestPriceData.push(countData[3]);
             }
             let smallToBigLowestPriceData = JSON.parse(JSON.stringify(lowestPriceData));
             smallToBigLowestPriceData = smallToBigLowestPriceData.sort(function (a, b) {
@@ -139,7 +139,7 @@ export const getKDJData = (dayCount, data) => {
                 return b - a;
             });
             let highestPrice = bigToSmallHighestPriceData[0];
-            let RSVData = (data[i][2] - lowestPrice) / (highestPrice - lowestPrice) * 100;
+            let RSVData = (data[i][1] - lowestPrice) / (highestPrice - lowestPrice) * 100;
             RSV.push(RSVData);
             let KBeforeData;
             if (!isNaN(KData[i - 1])) {
