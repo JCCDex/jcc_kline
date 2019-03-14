@@ -23,7 +23,7 @@
       <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
       <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
-      <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
+      <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
@@ -50,6 +50,7 @@ export default {
       showChart: "candle",
       message: null,
       chartDataObj: {},
+      toolTipIndex: null,
       toolTipData: null,
       timeSharingTipData: null,
       divisionTime: null,
@@ -178,6 +179,7 @@ export default {
       }
     },
     getTipDataIndex(index) {
+      this.toolTipIndex = index
       if (this.chartDataObj.precision.price) {
         var precision = JSON.parse(JSON.stringify(this.chartDataObj.precision))
         var pricePrecision = !isNaN(precision.price) ? precision.price : this.pricePrecision;

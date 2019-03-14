@@ -1,9 +1,12 @@
 <template>
   <div>
-    <div :class = "this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'" v-if = "toolTipData">
-      <font style = "color: #67ff7c;">K:{{toolTipData.K}}&nbsp;</font>
-      <font style = "color: #ff4d71;">D:{{toolTipData.D}}&nbsp;</font>
-      <font style = "color: #f6d026;">J:{{toolTipData.J}}&nbsp;</font>
+    <div
+      :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
+      v-if="toolTipData"
+    >
+      <font style="color: #67ff7c;">K:{{toolTipData.K}}&nbsp;</font>
+      <font style="color: #ff4d71;">D:{{toolTipData.D}}&nbsp;</font>
+      <font style="color: #f6d026;">J:{{toolTipData.J}}&nbsp;</font>
     </div>
     <div
       ref="stochastic"
@@ -15,12 +18,13 @@
 <script>
 import { splitData, getDepthData, getKDJData } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "stochastic",
   data() {
     return {
       stochastic: null,
+      KDJData: null,
       coinType: "",
       cycle: "",
       chartType: "stochastic",
@@ -49,9 +53,26 @@ export default {
       default: () => {
         return {};
       }
+    },
+    toolTipIndex: {
+      type: Number,
+      default: null
     }
   },
   watch: {
+    toolTipIndex() {
+      let index = this.toolTipIndex;
+      if (this.KDJData) {
+        let pricePrecision = !isNaN(this.KDJData.precision.price)
+          ? this.KDJData.precision.price
+          : 6;
+        this.toolTipData = {
+          K: formatDecimal(this.KDJData.K[index], pricePrecision, true),
+          D: formatDecimal(this.KDJData.D[index], pricePrecision, true),
+          J: formatDecimal(this.KDJData.J[index], pricePrecision, true)
+        };
+      }
+    },
     resizeSize() {
       this.resize();
     },
@@ -60,12 +81,12 @@ export default {
         let data = JSON.parse(
           JSON.stringify(this.chartDataObj.candleData.values)
         );
-        let KDJData = getKDJData(9, data);
-        KDJData.precision = this.chartDataObj.precision
-        KDJData.categoryData = JSON.parse(
+        this.KDJData = getKDJData(9, data);
+        this.KDJData.precision = this.chartDataObj.precision;
+        this.KDJData.categoryData = JSON.parse(
           JSON.stringify(this.chartDataObj.candleData.categoryData)
         );
-        if (KDJData) {
+        if (this.KDJData) {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
@@ -74,7 +95,7 @@ export default {
             this.stochastic.clearStochasticEcharts();
             this.cycle = this.chartDataObj.cycle;
             this.toolTipData = this.stochastic.setStochasticOption(
-              KDJData,
+              this.KDJData,
               this.cycle
             );
             this.$emit(
@@ -83,7 +104,7 @@ export default {
             );
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.stochastic.updateStochasticOption(KDJData, this.cycle);
+            this.stochastic.updateStochasticOption(this.KDJData, this.cycle);
           }
         }
       }
