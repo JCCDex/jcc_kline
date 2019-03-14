@@ -11,12 +11,11 @@
       <div :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'" v-if="toolTipData">
         <div style="margin-right: 180px;">
           <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
-          <font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'" style="margin-right: 10px;">{{this.toolTipData.time}}</font>
-          <font class="tooltip-data-name">{{message.volume}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.volume}}</font></font>
-          <font class="tooltip-data-name">{{message.opening}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.opening}}</font></font>
-          <font class="tooltip-data-name">{{message.max}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.max}}</font></font>
-          <font class="tooltip-data-name">{{message.min}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.min}}</font></font>
-          <font class="tooltip-data-name">{{message.closing}}<font :class="toolTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.toolTipData.closing}}</font></font><br>
+          <font class="tooltip-data-name">{{message.opening}}{{this.toolTipData.opening}}</font>
+          <font class="tooltip-data-name">{{message.closing}}{{this.toolTipData.closing}}</font>
+          <font class="tooltip-data-name">{{message.max}}{{this.toolTipData.max}}</font>
+          <font class="tooltip-data-name">{{message.min}}{{this.toolTipData.min}}</font>
+          <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font><br>
         </div>
         <div v-if = "outspreadMA">
           <font class="tooltip-data-ma5">MA5: {{this.toolTipData.MA5}}</font> &nbsp;
