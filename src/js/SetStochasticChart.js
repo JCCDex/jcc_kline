@@ -3,7 +3,7 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
-import { getLanguage, getDefaultChartSize } from './utils';
+import { getLanguage, getDefaultChartSize, formatDecimal } from './utils';
 
 var toolTipData;
 var oldStochasticData;
@@ -71,6 +71,7 @@ class StochasticChartController {
     setStochasticOption(data, cycle) {
         oldStochasticData = data;
         if (data) {
+            let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6
             stochasticOption = JSON.parse(JSON.stringify(this.stochasticConfig));
             this.stochastic.hideLoading();
             let option = {
@@ -80,9 +81,9 @@ class StochasticChartController {
             };
             let length = data.K.length - 1;
             toolTipData = {
-                K: data.K[length],
-                D: data.D[length],
-                J: data.J[length]
+                K: formatDecimal(data.K[length], pricePrecision, true),
+                D: formatDecimal(data.D[length], pricePrecision, true),
+                J: formatDecimal(data.J[length], pricePrecision, true)
             };
             merge(stochasticOption, option);
             this.stochastic.setOption(stochasticOption, true);
@@ -139,13 +140,14 @@ class StochasticChartController {
     getStochasticToolTip(data) {
         return {
             formatter: function (param) {
+                let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6
                 param = param[0];
                 if (param) {
                     var index = param.dataIndex;
                     toolTipData = {
-                        K: data.K[index],
-                        D: data.D[index],
-                        J: data.J[index]
+                        K: formatDecimal(data.K[index], pricePrecision, true),
+                        D: formatDecimal(data.D[index], pricePrecision, true),
+                        J: formatDecimal(data.J[index], pricePrecision, true)
                     };
                 }
             }

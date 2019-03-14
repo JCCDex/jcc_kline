@@ -579,4 +579,6 @@
 
 .mobile-stochastic-tip {
     position: absolute;
+    font-size: 0.24rem;
+    z-index: 9;
 }

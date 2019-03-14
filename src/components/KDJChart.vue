@@ -61,6 +61,7 @@ export default {
           JSON.stringify(this.chartDataObj.candleData.values)
         );
         let KDJData = getKDJData(9, data);
+        KDJData.precision = this.chartDataObj.precision
         KDJData.categoryData = JSON.parse(
           JSON.stringify(this.chartDataObj.candleData.categoryData)
         );
@@ -148,7 +149,7 @@ export default {
       }
     },
     dispose() {
-      this.stochastic.disposeStochasticEcharts();
+      this.stochastic.disposeStochasticEChart();
     }
   }
 };
