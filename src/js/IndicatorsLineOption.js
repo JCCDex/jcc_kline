@@ -11,10 +11,10 @@ var StochasticOption = {
     },
     grid: [ // 直角坐标系内绘图网格
         {
-            top: 8,
+            top: 20,
             left: 5,
             right: 65,
-            bottom: 10, // grid 组件离容器下侧的距离。
+            bottom: 5, // grid 组件离容器下侧的距离。
             // backgroundColor: "#1b2229", // 网格背景色
             borderColor: '#1b2229', // 网格的边框颜色
             show: true // 是否显示直角坐标系网格。

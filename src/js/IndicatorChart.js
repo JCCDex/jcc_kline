@@ -30,7 +30,7 @@ class IndicatorChartController {
     }
 
     setStochasticOption(data, cycle) {
-        this.setStochasticChart.setStochasticOption(data, cycle);
+        return this.setStochasticChart.setStochasticOption(data, cycle);
     }
 
     updateStochasticOption(data, cycle) {

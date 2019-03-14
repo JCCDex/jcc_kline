@@ -108,7 +108,7 @@ export default {
       outspreadMA: true,
       resizeSize: {},
       isFullScreen: false,
-      showIndicator: 'Stochastic'
+      showIndicator: 'Volume'
     };
   },
   props: {

@@ -568,3 +568,15 @@
     border: none;
     color: #b9cadd;
 }
+
+.stochastic-tip-data {
+    position: absolute;
+    font-size: 11px !important;
+    -webkit-text-size-adjust: none;
+    -webkit-transform: scale(0.92, 0.92);
+    z-index: 9;
+}
+
+.mobile-stochastic-tip {
+    position: absolute;
+}

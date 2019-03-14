@@ -116,7 +116,7 @@ export const getKDJData = (dayCount, data) => {
     var DData = [];
     var JData = [];
     for (var i = 0; i < data.length; i++) {
-        if (i < dayCount -1) {
+        if (i < dayCount - 1) {
             RSV.push('-');
             KData.push('-');
             DData.push('-');
@@ -165,3 +165,24 @@ export const getKDJData = (dayCount, data) => {
         J: JData
     };
 };
+
+export const getOBVData = (data) => {
+    var OBV = [];
+    var OnBalanceVolume
+    for (var i = 0; i < data.length; i++) {
+        if (i === 0) {
+            OBV.push('-')
+            OnBalanceVolume = 0;
+        } else {
+            let oldValues = JSON.parse(JSON.stringify(data[i - 1]))
+            let values = JSON.parse(JSON.stringify(data[i]))
+            if (values[2] > oldValues[2]) {
+                OnBalanceVolume = OnBalanceVolume + values[6]
+            } else if (values[2] < oldValues[2]) {
+                OnBalanceVolume = OnBalanceVolume - values[6]
+            }
+            OBV.push(OnBalanceVolume)
+        }
+    }
+    return OBV
+}
