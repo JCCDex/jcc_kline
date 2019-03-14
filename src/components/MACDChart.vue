@@ -30,6 +30,13 @@ export default {
         return {
         }
       }
+    },
+    resizeSize: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
     }
   },
   
