@@ -4,6 +4,9 @@ import testData from '../../testData/testData.json'
 
 let KDJData = getKDJData(9, testData.candleData.values)
 KDJData.categoryData = testData.candleData.categoryData
+KDJData.precision = {
+    price: 'a'
+}
 let StochasticConfig = {
     chartType: 'stochastic',
     platform: 'pc',

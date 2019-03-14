@@ -1,4 +1,4 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData } from 'js/processData'
 import testData from '../../testData/data.json'
 import { getKDJData } from '../../../src/js/processData.js';
 
@@ -108,9 +108,18 @@ describe('test processData', () => {
   })
 
   it ('test getKDJData if data is null', () => {
-    let KDJData
-    KDJData = getKDJData(9, null)
+    let KDJData = getKDJData(9, null)
     expect(KDJData).toBe(undefined)
+  })
+
+  it('test getOBVData', () => {
+    let OBVData = getOBVData(testData.klineData)
+    expect(OBVData).not.toBeNull()
+  })
+
+  it('test getOBVData if data is null', () => {
+    let OBVData = getOBVData(null)
+    expect(OBVData).toBe(undefined)
   })
 
 })

@@ -71,7 +71,7 @@ class StochasticChartController {
     setStochasticOption(data, cycle) {
         oldStochasticData = data;
         if (data) {
-            let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6
+            let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6;
             stochasticOption = JSON.parse(JSON.stringify(this.stochasticConfig));
             this.stochastic.hideLoading();
             let option = {
@@ -138,9 +138,9 @@ class StochasticChartController {
     }
 
     getStochasticToolTip(data) {
+        let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6;
         return {
             formatter: function (param) {
-                let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6
                 param = param[0];
                 if (param) {
                     var index = param.dataIndex;

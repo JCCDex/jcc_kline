@@ -5,6 +5,7 @@ import testData from '../../testData/testData.json'
 
 let KDJData = getKDJData(9, testData.candleData.values)
 KDJData.categoryData = testData.candleData.categoryData
+KDJData.precision = testData.precision
 let size = {
     height: 1080,
     width: 1920
