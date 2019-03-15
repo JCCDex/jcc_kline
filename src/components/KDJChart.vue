@@ -82,7 +82,7 @@ export default {
           JSON.stringify(this.chartDataObj.candleData.values)
         );
         this.KDJData = getKDJData(9, data);
-        let index = this.KDJData.K.length - 1;
+        let index = this.chartDataObj.index
         this.$emit("listenToTipIndex", index);
         this.KDJData.precision = this.chartDataObj.precision;
         this.KDJData.categoryData = JSON.parse(

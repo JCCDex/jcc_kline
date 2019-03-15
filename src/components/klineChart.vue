@@ -242,6 +242,7 @@ export default {
         platform: 'pc',
         precision: precision,
         cycle: cycle,
+        index: this.toolTipIndex,
         klineData: this.klineDataObj.klineData,
         indicators: this.showIndicator,
         coinType: data.coinType,

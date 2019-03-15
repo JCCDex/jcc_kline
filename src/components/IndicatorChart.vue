@@ -74,7 +74,7 @@ export default {
         };
         if (this.chartDataObj.indicators === "OBV") {
           let OBVData = getOBVData(this.chartDataObj.klineData);
-          let index = OBVData.length - 1;
+          let index = this.chartDataObj.index
           this.$emit("listenToTipIndex", index);
           this.indicatorData.indicatorData = OBVData;
         }
