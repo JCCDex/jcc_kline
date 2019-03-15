@@ -135,7 +135,7 @@ class StochasticChartController {
                 param = param[0];
                 if (param) {
                     var index = param.dataIndex;
-                    toolTipIndex = index
+                    toolTipIndex = index;
                 }
             }
         };

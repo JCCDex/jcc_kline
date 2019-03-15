@@ -3,7 +3,7 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
-import { getLanguage, getDefaultChartSize, formatDecimal } from './utils';
+import { getLanguage, getDefaultChartSize } from './utils';
 
 var toolTipIndex;
 var oldIndicatorData;
@@ -136,15 +136,15 @@ class IndicatorChartController {
                 param = param[0];
                 if (param) {
                     var index = param.dataIndex;
-                    toolTipIndex = index
+                    toolTipIndex = index;
                 }
             }
         };
     }
 
     getIndicatorSeries(data) {
-        var series = []
-        if (data.indicator === "OBV") {
+        var series = [];
+        if (data.indicator === 'OBV') {
             series = [
                 {
                     name: 'OBV',
@@ -157,9 +157,9 @@ class IndicatorChartController {
                         }
                     }
                 }
-            ]
+            ];
         }
-        return series
+        return series;
     }
 
     clearIndicatorEcharts() {

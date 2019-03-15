@@ -1,10 +1,10 @@
 import { StochasticOption, mobileIndicatorsLine } from './IndicatorsLineOption';
 import StochasticChartController from './SetStochasticChart';
-import IndicatorChart from './SetIndicatorChart'
+import IndicatorChart from './SetIndicatorChart';
 class IndicatorChartController {
     constructor(chartsConfig) {
         var merge = require('lodash.merge');
-        if (chartsConfig.chartType === "stochastic") {
+        if (chartsConfig.chartType === 'stochastic') {
             if (chartsConfig.platform === 'pc') {
                 merge(StochasticOption, chartsConfig);
                 this.setStochasticChart = new StochasticChartController(StochasticOption);
@@ -12,11 +12,9 @@ class IndicatorChartController {
                 merge(mobileIndicatorsLine, chartsConfig);
                 this.setStochasticChart = new StochasticChartController(mobileIndicatorsLine);
             }
-        } else if (chartsConfig.chartType === "indicator") {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setIndicatorChart = new IndicatorChart(StochasticOption);
-            }
+        } else {
+            merge(StochasticOption, chartsConfig);
+            this.setIndicatorChart = new IndicatorChart(StochasticOption);
         }
     }
 
@@ -53,6 +51,8 @@ class IndicatorChartController {
         this.setStochasticChart.disposeStochasticEChart();
     }
 
+    /* 绘制OBV指标 */
+
     initIndicatorChart(DOM) {
         this.setIndicatorChart.initIndicatorECharts(DOM);
     }
@@ -84,7 +84,6 @@ class IndicatorChartController {
     disposeIndicatorEChart() {
         this.setIndicatorChart.disposeIndicatorEChart();
     }
-
 
 }
 
