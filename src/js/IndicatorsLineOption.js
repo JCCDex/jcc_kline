@@ -1,4 +1,4 @@
-var volumeOption = {
+var StochasticOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
     tooltip: { // 提示框组件。
@@ -89,8 +89,8 @@ var volumeOption = {
     ],
     series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
         {
-            name: 'Volume',
-            type: 'bar',  // 柱状/条形图
+            name: 'IndicatorsLine',
+            type: 'line',  // 柱状/条形图
             barMaxWidth: 10, // 柱条的最大宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
             itemStyle: {
                 normal: {
@@ -103,7 +103,7 @@ var volumeOption = {
     ]
 };
 
-var volumeMoobileOption = {
+var mobileIndicatorsLine = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
     tooltip: { // 提示框组件。
@@ -195,8 +195,8 @@ var volumeMoobileOption = {
     ],
     series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
         {
-            name: 'Volume',
-            type: 'bar',  // 柱状/条形图
+            name: 'IndicatorsLine',
+            type: 'line',  // 柱状/条形图
             barMaxWidth: 10, // 柱条的最大宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
             itemStyle: {
                 normal: {
@@ -209,4 +209,4 @@ var volumeMoobileOption = {
     ]
 };
 
-export { volumeOption, volumeMoobileOption };
+export { StochasticOption, mobileIndicatorsLine };

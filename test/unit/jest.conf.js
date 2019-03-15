@@ -39,6 +39,7 @@ module.exports = {
     '!src/js/TimeSharingOption.js',
     '!src/js/DepthOption.js',
     '!src/js/VolumeChartOption.js',
+    '!src/js/IndicatorsLineOption.js',
     '!src/main.js',
     '!**/node_modules/**'
   ]

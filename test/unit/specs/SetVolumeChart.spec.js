@@ -22,6 +22,11 @@ describe('test SetVolumeChart', () => {
         expect(volume.getVolumeSeries(data)).not.toBeNull()
     })
 
+    it('test getVolumeXAxis', () => {
+        let volume = new SetVolumeChart(volumeOption);
+        expect(volume.getVolumeXAxis(data, 'everyhour')).not.toBeNull()
+    })
+
     it('test initVolumeECharts', () => {
         const element = document.createElement('div');
         let volume = new SetVolumeChart(volumeOption);

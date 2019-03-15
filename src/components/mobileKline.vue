@@ -3,7 +3,14 @@
         <!-- Cycle按钮 -->
         <div calss="mobileCycle" style = "height: 0.4rem; z-index: 9;">
           <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'" @click = "chooseCycle(item.name)">
-            {{item.name}}
+            <div v-if = "item.values">
+                <select class = "cycle-select" v-model= "item.name"  @change= "chooseCycle($event)">
+                  <option v-for= "(value, index) in item.values" v-bind:value = "value.value">{{value.label}}</option>
+                </select>
+              </div>
+              <div v-else @click = "chooseCycle(item.name)">
+                {{item.name}}
+              </div>
           </div>
         </div>
     <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height * 0.82}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipIndex"></div>
@@ -106,10 +113,14 @@ export default {
       this.kline.initMobileChart(this.$refs.klineRef);
     },
     chooseCycle(cycle) {
+      let selectCycle = cycle
+      if (cycle instanceof Object) {
+         selectCycle = cycle.target.value
+      }
       if (this.cycle === cycle) {
         return;
       }
-      this.$emit("listenToChildEvent", cycle)
+      this.$emit("listenToChildEvent", selectCycle)
     },
     getToolTipIndex() {
       let toolTipIndex

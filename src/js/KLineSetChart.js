@@ -10,8 +10,6 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var config;
 var toolTipIndex;
 var oldKlineData;
-var amountsPrecision = 2;
-var pricePrecision = 6;
 
 class KLineSetChartController {
     constructor(configs) {
@@ -92,8 +90,6 @@ class KLineSetChartController {
         };
         config = JSON.parse(JSON.stringify(this.klineConfig));
         if (data) {
-            pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
-            amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
             let length = data.values.length - 1;
             toolTipIndex = length;
             this.kline.hideLoading();
@@ -109,8 +105,6 @@ class KLineSetChartController {
     }
 
     updateOption(data, cycle) {
-        pricePrecision = !isNaN(data.precision.price) ? data.precision.price : pricePrecision;
-        amountsPrecision = !isNaN(data.precision.amount) ? data.precision.amount : amountsPrecision;
         oldKlineData = {
             oldData: data,
             oldCycle: cycle

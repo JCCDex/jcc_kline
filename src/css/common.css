@@ -562,3 +562,23 @@
     color: #b9cadd;
     background: #1b2229;
 }
+
+.cycle-select {
+    background: #1b2229;
+    border: none;
+    color: #b9cadd;
+}
+
+.stochastic-tip-data {
+    position: absolute;
+    font-size: 11px !important;
+    -webkit-text-size-adjust: none;
+    -webkit-transform: scale(0.92, 0.92);
+    z-index: 9;
+}
+
+.mobile-stochastic-tip {
+    position: absolute;
+    font-size: 0.24rem;
+    z-index: 9;
+}

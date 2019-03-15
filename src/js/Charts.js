@@ -76,16 +76,20 @@ class ChartController {
         this.setTimeSharing.resizeECharts(DOM, isFullScreen, size);
     }
 
-    setTimeSharingOption(timeDivisionData, divisionData) {
-        return this.setTimeSharing.setTimeSharingOption(timeDivisionData, divisionData);
+    setTimeSharingOption(divisionData) {
+        return this.setTimeSharing.setTimeSharingOption(divisionData);
     }
 
-    updateTimeSharingOption(timeDivisionData, divisionData) {
-        this.setTimeSharing.updateTimeSharingOption(timeDivisionData, divisionData);
+    updateTimeSharingOption(divisionData) {
+        this.setTimeSharing.updateTimeSharingOption(divisionData);
     }
 
-    getTimeSharingTipData() {
-        return this.setTimeSharing.getTimeSharingTipData();
+    getTimeSharingChart() {
+        return this.setTimeSharing.getTimeSharingEchart();
+    }
+
+    getTimeSharingTipIndex() {
+        return this.setTimeSharing.getTimeSharingTipIndex();
     }
 
     clearTimeSharingEcharts() {
@@ -107,7 +111,7 @@ class ChartController {
     }
 
     setVolumeOption(data, cycle) {
-        this.setVolumeChart.setVolumeOption(data, cycle);
+        return this.setVolumeChart.setVolumeOption(data, cycle);
     }
 
     getToolTipIndex() {

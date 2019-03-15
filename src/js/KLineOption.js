@@ -1,13 +1,6 @@
 var option = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
-    // axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置，坐标轴指示器是指示坐标轴当前刻度的工具。
-    //     link: { // 不同轴的 axisPointer 可以进行联动，在这里设置。联动表示轴能同步一起活动。轴依据他们的 axisPointer 当前对应的值来联动。
-    //         xAxisIndex: [0, 1] //// 表示所有 xAxisIndex 为 0、1 的坐标轴联动。
-    //     },
-    //     label: { //坐标轴指示器的文本标签。
-    //     }
-    // },
     tooltip: { // 提示框组件。
         trigger: 'axis', //触发类型。当前为坐标轴触发
         animation: false,
@@ -31,14 +24,6 @@ var option = {
             bottom: 20, // grid 组件离容器下侧的距离。
             right: 65, // grid 组件离容器右侧的距离。
         }
-        // {
-        //     left: 5,
-        //     right: 65,
-        //     bottom: 10, // grid 组件离容器下侧的距离。
-        //     // backgroundColor: "#1b2229", // 网格背景色
-        //     borderColor: '#1b2229', // 网格的边框颜色
-        //     show: true // 是否显示直角坐标系网格。
-        // }
     ],
     xAxis: [ // 直角坐标系 grid 中的 x 轴
         {
@@ -70,33 +55,6 @@ var option = {
                 z: 100
             }
         }
-        // {
-        //     type: 'category',
-        //     gridIndex: 1,
-        //     // scale: true,
-        //     boundaryGap: true,
-        //     axisLine: {
-        //         onZero: false
-        //     },
-        //     axisTick: {
-        //         show: false
-        //     },
-        //     splitLine: {
-        //         show: false
-        //     },
-        //     axisLabel: {
-        //         show: false
-        //     },
-        //     axisPointer: {
-        //         z: 100,
-        //         label: {
-        //             show: false
-        //         }
-        //     },
-        //     splitNumber: 20,
-        //     min: 'dataMin',
-        //     max: 'dataMax'
-        // }
     ],
     yAxis: [ // 直角坐标系 grid 中的y轴
         {
@@ -126,31 +84,6 @@ var option = {
                 verticalAlign: 'middle' // 文字垂直对齐方式，默认自动
             }
         }
-        // {
-        //     scale: true,
-        //     gridIndex: 1,
-        //     splitNumber: 2,
-        //     position: 'right',
-        //     splitLine: {
-        //         lineStyle: {
-        //             color: '#37404b',
-        //             type: 'dotted'
-        //         }
-        //     },
-        //     axisLine: {
-        //         show: false,
-        //         lineStyle: {
-        //             color: '#37404b'
-        //         }
-        //     },
-        //     axisLabel: {
-        //         show: true,
-        //         margin: 0,
-        //         color: '#9aa4ac',
-        //         fontSize: 12,
-        //         verticalAlign: 'middle'
-        //     }
-        // }
     ],
     dataZoom: [ // 用于区域缩放，从而能自由关注细节的数据信息，或者概览数据整体，或者去除离群点的影响
         {
@@ -248,20 +181,6 @@ var option = {
                 }
             }
         }
-        // {
-        //     name: 'Volume',
-        //     type: 'bar',  // 柱状/条形图
-        //     barMaxWidth: 10, // 柱条的最大宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
-        //     itemStyle: {
-        //         normal: {
-        //             color: function(param) { // 柱条的颜色
-        //                 return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-        //             }
-        //         }
-        //     },
-        //     xAxisIndex: 1, // 使用的 x 轴的 index，在单个图表实例中存在多个 x 轴的时候有用
-        //     yAxisIndex: 1, // 使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
-        // }
     ]
 };
   

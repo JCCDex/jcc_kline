@@ -117,8 +117,8 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharingData.timeDivisionData.precision = precision
-    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharingData.divisionData.precision = precision
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
@@ -126,17 +126,26 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.updateTimeSharingOption(timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
-  it('test getTimeSharingTipData', () => {
+  it('test getTimeSharingChart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
-    let tipsData = timeSharing.getTimeSharingTipData()
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    let EChart = timeSharing.getTimeSharingChart()
+    expect(EChart).not.toBeNull()
+  })
+
+  it('test getTimeSharingTipIndex', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    let tipsData = timeSharing.getTimeSharingTipIndex()
     expect(tipsData).not.toBeNull()
   })
 
@@ -148,9 +157,9 @@ describe('test Chart', () => {
     }
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false, resizeSize)
-    timeSharing.updateTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharing.updateTimeSharingOption(timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, true, resizeSize)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -163,7 +172,7 @@ describe('test Chart', () => {
     }
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false, resizeSize)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -172,7 +181,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
     timeSharing.disposeTimeSharingEChart()
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -181,7 +190,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.timeDivisionData, timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
     timeSharing.clearTimeSharingEcharts()
     expect(timeSharing.setTimeSharing.timeSharing.getOption().series).toEqual(new Array)
   })

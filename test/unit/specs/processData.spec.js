@@ -1,5 +1,6 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData } from 'js/processData'
 import testData from '../../testData/data.json'
+import { getKDJData } from '../../../src/js/processData.js';
 
 let precision = {
   price: 6,
@@ -99,6 +100,26 @@ describe('test processData', () => {
     data.values.push([1, 'aaa', 123213])
     let MA5 = calculateMA(5, data)
     expect(MA5).not.toBeNull()
+  })
+
+  it ('test getKDJData', () => {
+    let KDJData = getKDJData(9, testData.klineData)
+    expect(KDJData).not.toBeNull()
+  })
+
+  it ('test getKDJData if data is null', () => {
+    let KDJData = getKDJData(9, null)
+    expect(KDJData).toBe(undefined)
+  })
+
+  it('test getOBVData', () => {
+    let OBVData = getOBVData(testData.klineData)
+    expect(OBVData).not.toBeNull()
+  })
+
+  it('test getOBVData if data is null', () => {
+    let OBVData = getOBVData(null)
+    expect(OBVData).toBe(undefined)
   })
 
 })

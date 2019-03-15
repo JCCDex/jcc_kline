@@ -13,7 +13,7 @@ export const splitData = (data) => {
     let MACD;
     for (var i = 0; i < data.length; i++) {
         categoryData.push(formatTime(data[i][0]));
-        values.push( JSON.parse(JSON.stringify(data[i])));
+        values.push(JSON.parse(JSON.stringify(data[i])));
         values[i].splice(0, 1);
         let status;
         if (data[i][1] > data[i][2]) {
@@ -148,4 +148,84 @@ export const calculateMA = (dayCount, data) => {
         result.push(+(sum / dayCount));
     }
     return result;
+};
+
+
+export const getKDJData = (dayCount, data) => {
+    if (!data) { return; }
+    var RSV = [];
+    var KData = [];
+    var DData = [];
+    var JData = [];
+    for (var i = 0; i < data.length; i++) {
+        if (i < dayCount - 1) {
+            RSV.push('-');
+            KData.push('-');
+            DData.push('-');
+            JData.push('-');
+        } else {
+            var dayCountData = data.slice(i - dayCount + 1, i + 1);
+            var lowestPriceData = [];
+            var highestPriceData = [];
+            for (var countData of dayCountData) {
+                lowestPriceData.push(countData[2]);
+                highestPriceData.push(countData[3]);
+            }
+            let smallToBigLowestPriceData = JSON.parse(JSON.stringify(lowestPriceData));
+            smallToBigLowestPriceData = smallToBigLowestPriceData.sort(function (a, b) {
+                return a - b;
+            });
+            let lowestPrice = smallToBigLowestPriceData[0];
+            let bigToSmallHighestPriceData = JSON.parse(JSON.stringify(lowestPriceData));
+            bigToSmallHighestPriceData = bigToSmallHighestPriceData.sort(function (a, b) {
+                return b - a;
+            });
+            let highestPrice = bigToSmallHighestPriceData[0];
+            let RSVData = (data[i][1] - lowestPrice) / (highestPrice - lowestPrice) * 100;
+            RSV.push(RSVData);
+            let KBeforeData;
+            if (!isNaN(KData[i - 1])) {
+                KBeforeData = KData[i - 1];
+            } else {
+                KBeforeData = 50;
+            }
+            let DBeforeData;
+            if (!isNaN(DData[i - 1])) {
+                DBeforeData = KData[i - 1];
+            } else {
+                DBeforeData = 50;
+            }
+            KData.push(2 / 3 * KBeforeData + 1 / 3 * RSV[i]);
+            DData.push(2 / 3 * DBeforeData + 1 / 3 * KData[i]);
+            JData.push(3 * KData[i] - 2 * DData[i]);
+        }
+    }
+    return {
+        RSV: RSV,
+        K: KData,
+        D: DData,
+        J: JData
+    };
+};
+
+export const getOBVData = (data) => {
+    if (!data) { return }
+    var OBV = [];
+    var OnBalanceVolume;
+    for (var i = 0; i < data.length; i++) {
+        if (i === 0) {
+            OBV.push('-');
+            OnBalanceVolume = 0;
+        } else {
+            let oldValues = JSON.parse(JSON.stringify(data[i - 1]));
+            let values = JSON.parse(JSON.stringify(data[i]));
+            if (values[2] > oldValues[2]) {
+                OnBalanceVolume = OnBalanceVolume + values[6];
+            } else if (values[2] < oldValues[2]) {
+                OnBalanceVolume = OnBalanceVolume - values[6];
+            }
+            OBV.push(OnBalanceVolume);
+        }
+    }
+    return OBV;
 };

@@ -110,48 +110,54 @@ class VolumeChart {
     }
 
     getVolumeXAxis(data, cycle) {
-        var x = [{
-            gridIndex: 0,
-            data: data.categoryData,
-            axisLabel: {
-                formatter(value) {
-                    if (cycle === 'hour') {
-                        return value.substring(5);
-                    }
-                    if (cycle === 'day') {
-                        return value.substring(0, 12);
-                    }
-                    if (cycle === 'week') {
-                        return value.substring(0, 12);
-                    }
-                    if (cycle === 'month') {
-                        return value.substring(0, 7);
+        var x;
+        if (cycle !== 'everyhour') {
+            x = [{
+                gridIndex: 0,
+                data: data.categoryData,
+                axisLabel: {
+                    formatter(value) {
+                        if (cycle === 'hour') {
+                            return value.substring(5);
+                        }
+                        if (cycle === 'day') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'week') {
+                            return value.substring(0, 12);
+                        }
+                        if (cycle === 'month') {
+                            return value.substring(0, 7);
+                        }
                     }
                 }
-            }
-        }];
+            }];
+        } else {
+            x = [{
+                gridIndex: 0,
+                data: data.times
+            }];
+        }
         return x;
     }
 
     getVolumeYAxis() {
-        if (this.volumeConfig.platform === 'pc') {
-            return [
-                {
-                    gridIndex: 0,
-                    axisLabel: {
-                        formatter: function (value) {
-                            if (value >= 1000 && value < 1000000) {
-                                return (value / 1000) + 'K';
-                            } else if (value >= 1000000) {
-                                return (value / 1000000) + 'M';
-                            } else {
-                                return value;
-                            }
+        return [
+            {
+                gridIndex: 0,
+                axisLabel: {
+                    formatter: function (value) {
+                        if (value >= 1000 && value < 1000000) {
+                            return (value / 1000) + 'K';
+                        } else if (value >= 1000000) {
+                            return (value / 1000000) + 'M';
+                        } else {
+                            return value;
                         }
                     }
                 }
-            ];
-        }
+            }
+        ];
     }
 
     getVolumeToolTip() {
