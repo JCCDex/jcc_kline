@@ -161,6 +161,7 @@ class StochasticChartController {
                 data: data.K,
                 type: 'line',
                 barMaxWidth: 10,
+                symbol: 'none',
                 itemStyle: {
                     normal: {
                         color: '#67ff7c'
@@ -172,6 +173,7 @@ class StochasticChartController {
                 data: data.D,
                 type: 'line',
                 barMaxWidth: 10,
+                symbol: 'none',
                 itemStyle: {
                     normal: {
                         color: '#ff4d71'
@@ -183,6 +185,7 @@ class StochasticChartController {
                 data: data.J,
                 type: 'line',
                 barMaxWidth: 10,
+                symbol: 'none',
                 itemStyle: {
                     normal: {
                         color: '#f6d026'

@@ -37,5 +37,7 @@
   "sell": "卖出",
   "indicator": "技术指标",
   "MACD": "MACD",
-  "Volume": "成交量"
+  "Volume": "成交量",
+  "KDJ": "KDJ",
+  "OBV": "OBV"
 }

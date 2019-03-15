@@ -1,14 +1,22 @@
 import { StochasticOption, mobileIndicatorsLine } from './IndicatorsLineOption';
 import StochasticChartController from './SetStochasticChart';
+import IndicatorChart from './SetIndicatorChart'
 class IndicatorChartController {
     constructor(chartsConfig) {
         var merge = require('lodash.merge');
-        if (chartsConfig.platform === 'pc') {
-            merge(StochasticOption, chartsConfig);
-            this.setStochasticChart = new StochasticChartController(StochasticOption);
-        } else {
-            merge(mobileIndicatorsLine, chartsConfig);
-            this.setStochasticChart = new StochasticChartController(mobileIndicatorsLine);
+        if (chartsConfig.chartType === "stochastic") {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setStochasticChart = new StochasticChartController(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setStochasticChart = new StochasticChartController(mobileIndicatorsLine);
+            }
+        } else if (chartsConfig.chartType === "indicator") {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setIndicatorChart = new IndicatorChart(StochasticOption);
+            }
         }
     }
 
@@ -44,6 +52,39 @@ class IndicatorChartController {
     disposeStochasticEChart() {
         this.setStochasticChart.disposeStochasticEChart();
     }
+
+    initIndicatorChart(DOM) {
+        this.setIndicatorChart.initIndicatorECharts(DOM);
+    }
+
+    resizeIndicatorChart(DOM, isFullScreen, size) {
+        this.setIndicatorChart.resizeECharts(DOM, isFullScreen, size);
+    }
+
+    getIndicatorEchart() {
+        return this.setIndicatorChart.getIndicatorEchart();
+    }
+
+    getToolTipData() {
+        return this.setIndicatorChart.getToolTipData();
+    }
+
+    setIndicatorOption(data, cycle) {
+        this.setIndicatorChart.setIndicatorOption(data, cycle);
+    }
+
+    updateIndicatorOption(data, cycle) {
+        this.setIndicatorChart.updateIndicatorOption(data, cycle);
+    }
+
+    clearIndicatorEcharts() {
+        this.setIndicatorChart.clearIndicatorEcharts();
+    }
+
+    disposeIndicatorEChart() {
+        this.setIndicatorChart.disposeIndicatorEChart();
+    }
+
 
 }
 

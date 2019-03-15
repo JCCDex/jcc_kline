@@ -28,13 +28,15 @@
       </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
-          <!-- <el-popover placement="bottom" width="150" trigger="click">
+          <el-popover placement="bottom" width="150" trigger="click">
             <div>
+              <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
               <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
+              <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
               <div @click = "showIndicatorChart('Volume')" class = "chart-indicator-div">{{message.Volume}}</div>
             </div>
             <el-button slot="reference" class= "indicator-btn">{{message.indicator}}</el-button>
-          </el-popover> -->
+          </el-popover>
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
@@ -63,7 +65,8 @@
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
       <!-- <time-sharing ref="timeSharing" v-if= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" v-on:listenToTipIndex = "getTipDataIndex" v-on:listenTimeSharingChart = "getTimeSharingChart"></time-sharing> -->
       <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart !== 'depth'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
-      <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ> -->
+      <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ>
+      <IndicatorChart ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></IndicatorChart>
     </fullscreen>
   </div>
 </template>
@@ -77,6 +80,7 @@ import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 // import TimeSharing from './timeSharing.vue'
 import KDJ from './KDJChart.vue'
+import IndicatorChart from './IndicatorChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
 import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
@@ -87,7 +91,8 @@ export default {
     Depth,
     Volume,
     Fullscreen,
-    KDJ
+    KDJ,
+    IndicatorChart
     // TimeSharing
   },
   data() {
@@ -100,6 +105,7 @@ export default {
       volume: null,
       timeSharing: null,
       stochastic: null,
+      indicator: null,
       pricePrecision: 6,
       amountsPrecision: 2,
       chartDataObj: {},
@@ -174,48 +180,8 @@ export default {
       }
     },
     klineDataObj() {
-      let candleData
-      let depthData
-      let timeDivisionData
-      let divisionData
-      let MAData = []
-      this.message = getLanguage()
-      let precision = {
-        price: this.klineDataObj.pricePrecision,
-        amount: this.klineDataObj.amountPrecision
-      }
-      let cycle = this.klineDataObj.cycle
-      if (this.klineDataObj.klineData) {
-        candleData = splitData(this.klineDataObj.klineData)
-        for (var i = 0; i < this.klineConfig.MA.length; i++) {
-          MAData[i] = {}
-          MAData[i].name = this.klineConfig.MA[i].name
-          MAData[i].data = calculateMA(this.klineConfig.MA[i].name.substring(2) * 1, candleData)
-        }
-        candleData.MAData = MAData
-        candleData.precision = precision
-      }
-      if (this.klineDataObj.depthData) {
-        depthData = getDepthData(this.klineDataObj.depthData);
-      }
-      if (this.klineDataObj.timeDivisionData) {
-        timeDivisionData = this.klineDataObj.timeDivisionData
-        divisionData = handleDivisionData(timeDivisionData)
-        this.divisionTime = divisionData.divisionTime
-      }
-      if (this.showChart === 'timeSharing') {
-        cycle = 'everyhour'
-      }
-      this.chartDataObj = {
-        platform: 'pc',
-        precision: precision,
-        cycle: cycle,
-        coinType: this.klineDataObj.coinType,
-        candleData: candleData,
-        depthData: depthData,
-        divisionData: divisionData,
-        timeDivisionData: timeDivisionData
-      }
+      this.changeChartDataObj(this.klineDataObj)
+      
     },
     fullscreen() {
       if (this.fullscreen && (getLanguage().language === "en")) {
@@ -240,6 +206,52 @@ export default {
         }
       }
     },
+    changeChartDataObj(data) {
+      let candleData
+      let depthData
+      let timeDivisionData
+      let divisionData
+      let MAData = []
+      this.message = getLanguage()
+      let precision = {
+        price: data.pricePrecision,
+        amount: data.amountPrecision
+      }
+      let cycle = data.cycle
+      if (data.klineData) {
+        candleData = splitData(data.klineData)
+        for (var i = 0; i < this.klineConfig.MA.length; i++) {
+          MAData[i] = {}
+          MAData[i].name = this.klineConfig.MA[i].name
+          MAData[i].data = calculateMA(this.klineConfig.MA[i].name.substring(2) * 1, candleData)
+        }
+        candleData.MAData = MAData
+        candleData.precision = precision
+      }
+      if (data.depthData) {
+        depthData = getDepthData(data.depthData);
+      }
+      if (data.timeDivisionData) {
+        timeDivisionData = data.timeDivisionData
+        divisionData = handleDivisionData(timeDivisionData)
+        this.divisionTime = divisionData.divisionTime
+      }
+      if (this.showChart === 'timeSharing') {
+        cycle = 'everyhour'
+      }
+      this.chartDataObj = {
+        platform: 'pc',
+        precision: precision,
+        cycle: cycle,
+        klineData: this.klineDataObj.klineData,
+        indicators: this.showIndicator,
+        coinType: data.coinType,
+        candleData: candleData,
+        depthData: depthData,
+        divisionData: divisionData,
+        timeDivisionData: timeDivisionData
+      }
+    },
     showMAData() {
       if (!this.outspreadMA) {
         this.outspreadMA = true
@@ -252,6 +264,7 @@ export default {
         return
       }
       this.showIndicator = indicator
+      this.changeChartDataObj(this.klineDataObj)
     },
     changeCycle(cycle) {
       this.$emit("listenToChildEvent", cycle)
@@ -284,6 +297,15 @@ export default {
       }
       if (this.timeSharing) {
         linkageVolume(this.timeSharing, this.stochastic)
+      }
+    },
+    getIndicatorChart(indicator) {
+      this.indicator = indicator
+      if (this.candle) {
+        linkageVolume(this.candle, this.indicator)
+      }
+      if (this.timeSharing) {
+        linkageVolume(this.timeSharing, this.indicator)
       }
     },
     getTipDataIndex(index) {
