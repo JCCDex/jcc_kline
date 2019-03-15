@@ -33,7 +33,6 @@
               <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
               <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
               <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
-              <div @click = "showIndicatorChart('Volume')" class = "chart-indicator-div">{{message.Volume}}</div>
             </div>
             <el-button slot="reference" class= "indicator-btn">{{message.indicator}}</el-button>
           </el-popover>
@@ -309,39 +308,41 @@ export default {
       }
     },
     getTipDataIndex(index) {
-      this.toolTipIndex = index
-      if (this.chartDataObj.precision) {
-        let precision = this.chartDataObj.precision
-        let pricePrecision = !isNaN(precision.price) ? precision.price : this.pricePrecision;
-        let amountsPrecision = !isNaN(precision.amount) ? precision.amount : this.amountsPrecision;
-        if (this.chartDataObj.candleData && this.showChart !== 'timeSharing') {
-          let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
-          if (data.values[index] && data.categoryData[index]) {
-            this.toolTipData = {
-              time: data.categoryData[index],
-              volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-              opening: formatDecimal(data.values[index][0], pricePrecision, true),
-              closing: formatDecimal(data.values[index][1], pricePrecision, true),
-              max: formatDecimal(data.values[index][3], pricePrecision, true),
-              min: formatDecimal(data.values[index][2], pricePrecision, true),
-              MAData: [],
+      if (!isNaN(index)) {
+        this.toolTipIndex = index
+        if (this.chartDataObj.precision) {
+          let precision = this.chartDataObj.precision
+          let pricePrecision = !isNaN(precision.price) ? precision.price : this.pricePrecision;
+          let amountsPrecision = !isNaN(precision.amount) ? precision.amount : this.amountsPrecision;
+          if (this.chartDataObj.candleData && this.showChart !== 'timeSharing') {
+            let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
+            if (data.values[index] && data.categoryData[index]) {
+              this.toolTipData = {
+                time: data.categoryData[index],
+                volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+                opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                max: formatDecimal(data.values[index][3], pricePrecision, true),
+                min: formatDecimal(data.values[index][2], pricePrecision, true),
+                MAData: [],
+                color: data.volumes[index][2]
+              }
+              for (var i = 0; i < data.MAData.length; i++) {
+                this.toolTipData.MAData[i] = {
+                  name: data.MAData[i].name,
+                  data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+                };
+              }
+            }
+          } else if (this.chartDataObj.divisionData && this.showChart === 'timeSharing') {
+            let data = JSON.parse(JSON.stringify(this.chartDataObj.divisionData))
+            this.timeSharingTipData = {
+              time: data.times[index],
+              volume: formatDecimal(data.volumes[index][1], amountsPrecision, true),
+              price: formatDecimal(data.prices[index], pricePrecision, true),
+              averagePrice: formatDecimal(data.averages[index], pricePrecision, true),
               color: data.volumes[index][2]
             }
-            for (var i = 0; i < data.MAData.length; i++) {
-              this.toolTipData.MAData[i] = {
-                name: data.MAData[i].name,
-                data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
-              };
-            }
-          }
-        } else if (this.chartDataObj.divisionData && this.showChart === 'timeSharing') {
-          let data = JSON.parse(JSON.stringify(this.chartDataObj.divisionData))
-          this.timeSharingTipData = {
-            time: data.times[index],
-            volume: formatDecimal(data.volumes[index][1], amountsPrecision, true),
-            price: formatDecimal(data.prices[index], pricePrecision, true),
-            averagePrice: formatDecimal(data.averages[index], pricePrecision, true),
-            color: data.volumes[index][2]
           }
         }
       }

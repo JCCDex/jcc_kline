@@ -1,6 +1,11 @@
 <template>
   <div>
-    <div v-if="toolTipData">{{toolTipData.OBV}}</div>
+    <div
+      :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
+      v-if="toolTipData"
+    >
+      <font style="color: #67ff7c;">OBV:&nbsp;{{toolTipData.OBV}}</font>
+    </div>
     <div
       ref="indicator"
       :style="{height: `${indicatorSize.height}`, width: `${indicatorSize.width}`}"
@@ -26,7 +31,6 @@ export default {
       coinType: "",
       cycle: "",
       chartType: "indicator",
-      toolTipIndex: null,
       toolTipData: null,
       indicatorSize: {
         height: "",
@@ -151,7 +155,7 @@ export default {
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.indicator.getToolTipData();
+      let index = this.indicator.getIndicatorTipData();
       this.$emit("listenToTipIndex", index);
     },
     resize() {

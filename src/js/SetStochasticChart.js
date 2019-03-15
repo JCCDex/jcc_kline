@@ -3,9 +3,9 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
-import { getLanguage, getDefaultChartSize, formatDecimal } from './utils';
+import { getLanguage, getDefaultChartSize } from './utils';
 
-var toolTipData;
+var toolTipIndex;
 var oldStochasticData;
 var stochasticOption;
 
@@ -71,23 +71,15 @@ class StochasticChartController {
     setStochasticOption(data, cycle) {
         oldStochasticData = data;
         if (data) {
-            let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6;
             stochasticOption = JSON.parse(JSON.stringify(this.stochasticConfig));
             this.stochastic.hideLoading();
             let option = {
                 xAxis: this.getStochasticXAxis(data, cycle),
-                tooltip: this.getStochasticToolTip(data),
+                tooltip: this.getStochasticToolTip(),
                 series: this.getStochasticSeries(data)
-            };
-            let length = data.K.length - 1;
-            toolTipData = {
-                K: formatDecimal(data.K[length], pricePrecision, true),
-                D: formatDecimal(data.D[length], pricePrecision, true),
-                J: formatDecimal(data.J[length], pricePrecision, true)
             };
             merge(stochasticOption, option);
             this.stochastic.setOption(stochasticOption, true);
-            return toolTipData;
         }
     }
 
@@ -96,7 +88,7 @@ class StochasticChartController {
         if (this.stochastic.getOption()) {
             let stochasticConfig = {
                 xAxis: this.getStochasticXAxis(data, cycle),
-                tooltip: this.getStochasticToolTip(data),
+                tooltip: this.getStochasticToolTip(),
                 series: this.getStochasticSeries(data)
             };
             merge(stochasticOption, stochasticConfig);
@@ -106,7 +98,7 @@ class StochasticChartController {
     }
 
     getToolTipData() {
-        return toolTipData;
+        return toolTipIndex;
     }
 
     getStochasticEchart() {
@@ -137,18 +129,13 @@ class StochasticChartController {
         return x;
     }
 
-    getStochasticToolTip(data) {
-        let pricePrecision = !isNaN(data.precision.price) ? data.precision.price : 6;
+    getStochasticToolTip() {
         return {
             formatter: function (param) {
                 param = param[0];
                 if (param) {
                     var index = param.dataIndex;
-                    toolTipData = {
-                        K: formatDecimal(data.K[index], pricePrecision, true),
-                        D: formatDecimal(data.D[index], pricePrecision, true),
-                        J: formatDecimal(data.J[index], pricePrecision, true)
-                    };
+                    toolTipIndex = index
                 }
             }
         };

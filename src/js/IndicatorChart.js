@@ -33,12 +33,12 @@ class IndicatorChartController {
         return this.setStochasticChart.getStochasticEchart();
     }
 
-    getToolTipData() {
+    getStochasticTipData() {
         return this.setStochasticChart.getToolTipData();
     }
 
     setStochasticOption(data, cycle) {
-        return this.setStochasticChart.setStochasticOption(data, cycle);
+        this.setStochasticChart.setStochasticOption(data, cycle);
     }
 
     updateStochasticOption(data, cycle) {
@@ -65,7 +65,7 @@ class IndicatorChartController {
         return this.setIndicatorChart.getIndicatorEchart();
     }
 
-    getToolTipData() {
+    getIndicatorTipData() {
         return this.setIndicatorChart.getToolTipData();
     }
 
