@@ -120,6 +120,15 @@ describe('test IndicatorChart', () => {
         expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
     })
 
+    it('test setIndicatorOption if platform is mobile', () => {
+        const element = document.createElement('div');
+        Config.platform = "mobile"
+        let indicator = new IndicatorChart(Config);
+        indicator.initIndicatorChart(element)
+        indicator.setIndicatorOption(KDJData, 'hour')
+        expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
+    })
+
     it('test updateIndicatorOption', () => {
         const element = document.createElement('div');
         Config.platform = 'pc'
