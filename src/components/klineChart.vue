@@ -63,7 +63,8 @@
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
       <!-- <time-sharing ref="timeSharing" v-if= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" v-on:listenToTipIndex = "getTipDataIndex" v-on:listenTimeSharingChart = "getTimeSharingChart"></time-sharing> -->
       <Volume ref = 'volume' v-show = "showIndicator === 'Volume' && showChart !== 'depth'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
-      <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ> -->
+      <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ>
+      <MACD ref = "macd" v-show = "showIndicator === 'MACD' && showChart !== 'depth'" v-on:listenMacdChartEvent = 'getMacdchart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" ></MACD>
     </fullscreen>
   </div>
 </template>
@@ -77,6 +78,7 @@ import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 // import TimeSharing from './timeSharing.vue'
 import KDJ from './KDJChart.vue'
+import MACD from './MACDChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
 import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
@@ -87,7 +89,8 @@ export default {
     Depth,
     Volume,
     Fullscreen,
-    KDJ
+    KDJ,
+    MACD
     // TimeSharing
   },
   data() {
@@ -100,6 +103,7 @@ export default {
       volume: null,
       timeSharing: null,
       stochastic: null,
+      macd: null,
       pricePrecision: 6,
       amountsPrecision: 2,
       chartDataObj: {},
@@ -109,7 +113,7 @@ export default {
       outspreadMA: true,
       resizeSize: {},
       isFullScreen: false,
-      showIndicator: 'Volume'
+      showIndicator: 'MACD'
     };
   },
   props: {
@@ -284,6 +288,15 @@ export default {
       }
       if (this.timeSharing) {
         linkageVolume(this.timeSharing, this.stochastic)
+      }
+    },
+    getMacdchart(macd) {
+      this.macd = macd
+      if (this.candle) {
+        linkageVolume(this.candle, this.macd)
+      }
+      if (this.timeSharing) {
+        linkageVolume(this.timeSharing, this.macd)
       }
     },
     getTipDataIndex(index) {

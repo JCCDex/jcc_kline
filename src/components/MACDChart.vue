@@ -53,13 +53,13 @@ export default {
             var macdData = this.splitData(data.MACDData);
             this.macd.setMACDOption(macdData);
             this.coinType = this.chartDataObj.coinType
+            this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
           } else {
             // var macdData = this.splitData(data.MACDData);
             // this.amcd.updateMACDOption(macdData)
           }
         }
       }
-      this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
     },
     klineConfig() {
       if (this.klineConfig.platform === 'pc') {
@@ -70,7 +70,7 @@ export default {
         if (JSON.stringify(size) !== JSON.stringify(this.macdSize) && this.klineConfig.defaultSize === false) {
           this.macdSize = {
             width: this.klineConfig.size.width + 'px',
-            height: this.klineConfig.size.height + 'px'
+            height: this.klineConfig.size.height * 0.25　+ 'px'
           }
           this.resize();
         }
@@ -81,7 +81,7 @@ export default {
   created() {
     if (this.klineConfig.platform === 'pc') {
       if (!this.klineConfig.defaultSize) {
-        this.macdSize.height = this.klineConfig.size.height + 'px'
+        this.macdSize.height = this.klineConfig.size.height * 0.25 + 'px'
         this.macdSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.macdSize = {
@@ -90,7 +90,7 @@ export default {
         }
       }
     } else {
-      this.macdSize.height = this.klineConfig.macdSize.height + 'px'
+      this.macdSize.height = this.klineConfig.macdSize.height * 0.4 + 'px'
       this.macdSize.width = this.klineConfig.macdSize.width + 'px'
     }
     this.klineConfig.chartType = 'MACD';

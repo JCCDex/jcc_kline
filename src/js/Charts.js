@@ -4,7 +4,7 @@ import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
 import { volumeOption, volumeMoobileOption } from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
 import VolumeChart from './SetVolumeChart.js';
-import macdOption from './MACDOption';
+import { macdOption, macdMobileOption } from './MACDOption';
 import MACDChart from './SetMACDChart.js';
 
 class ChartController {
@@ -36,6 +36,9 @@ class ChartController {
             }
         } else if (chartsConfig.chartType === 'MACD') {
             if (chartsConfig.platform === 'mobile') {
+                merge(macdMobileOption, chartsConfig);
+                this.setMACDChart = new MACDChart(macdMobileOption);
+            } else {
                 merge(macdOption, chartsConfig);
                 this.setMACDChart = new MACDChart(macdOption);
             }
