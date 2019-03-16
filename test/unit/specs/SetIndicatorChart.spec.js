@@ -131,4 +131,13 @@ describe('test SetIndicatorChart', () => {
         indicator.disposeIndicatorEChart()
         expect(indicator.indicator).toBeNull();
     })
+
+    it('test updateIndicatorOption if indicator getOption is null', () => {
+        const element = document.createElement('div');
+        let indicator = new SetIndicatorChart(StochasticOption);
+        indicator.initIndicatorECharts(element)
+        indicator.updateIndicatorOption(OBVData, 'week')
+        expect(indicator).not.toBeNull();
+    })
+
 })

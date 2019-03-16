@@ -50,6 +50,14 @@ describe('test SetVolumeChart', () => {
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 
+    it('test setVolumeOption if data is null', () => {
+        const element = document.createElement('div');
+        let volumeChart = new SetVolumeChart(volumeOption);
+        volumeChart.initVolumeECharts(element)
+        volumeChart.setVolumeOption(null, 'hour')
+        expect(volumeChart.volume.getOption()).not.toBeNull();
+    })
+
     it('test updateVolumeOption', () => {
         const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
@@ -118,6 +126,14 @@ describe('test SetVolumeChart', () => {
         volumeChart.volume = null;
         volumeChart.disposeVolumeEChart()
         expect(volumeChart.volume).toBeNull();
+    })
+
+    it('test updateVolumeOption if volume getOption is null', () => {
+        const element = document.createElement('div');
+        let volumeChart = new SetVolumeChart(volumeOption);
+        volumeChart.initVolumeECharts(element)
+        volumeChart.updateVolumeOption(data, 'day')
+        expect(volumeChart).not.toBeNull();
     })
 
 })
