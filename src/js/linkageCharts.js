@@ -5,5 +5,7 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/dataZoom';
 
 export const linkageVolume = (candle, volume) => {
-    echarts.connect([candle, volume]);
+    if (candle && volume) {
+        echarts.connect([candle, volume]);
+    }
 };

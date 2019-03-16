@@ -13,8 +13,13 @@ class IndicatorChartController {
                 this.setStochasticChart = new StochasticChartController(mobileIndicatorsLine);
             }
         } else {
-            merge(StochasticOption, chartsConfig);
-            this.setIndicatorChart = new IndicatorChart(StochasticOption);
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setIndicatorChart = new IndicatorChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setIndicatorChart = new IndicatorChart(mobileIndicatorsLine);
+            }
         }
     }
 
