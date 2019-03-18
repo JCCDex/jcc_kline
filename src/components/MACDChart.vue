@@ -42,21 +42,36 @@ export default {
   
   watch: {
     chartDataObj() {
+      debugger
       if (this.chartDataObj.candleData && this.chartDataObj.cycle !== 'everyhour') {
         let data = this.chartDataObj.candleData
         data.precision = this.chartDataObj.precision
-        if (data.values && data.volumes && data.categoryData) {
+        if (data.MACDData && data.categoryData) {
+          var macdData = this.splitData(data.MACDData);
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
             this.clearChart();
             this.refreshCycle = 0
             this.cycle = this.chartDataObj.cycle
-            var macdData = this.splitData(data.MACDData);
             this.macd.setMACDOption(macdData);
             this.coinType = this.chartDataObj.coinType
             this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
           } else {
-            // var macdData = this.splitData(data.MACDData);
-            // this.amcd.updateMACDOption(macdData)
+            this.macd.updateMACDOption(macdData);
+          }
+        }
+      } 
+      if (this.chartDataObj.divisionData && this.chartDataObj.cycle === 'everyhour') {
+        let data = this.chartDataObj.divisionData;
+        if (data.MACDData) {
+          var macdData = this.splitData(data.MACDData);
+          if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
+            this.clearChart();
+            this.cycle = this.chartDataObj.cycle
+            this.macd.setMACDOption(macdData);
+            this.coinType = this.chartDataObj.coinType
+            this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
+          } else {
+            this.macd.updateMACDOption(macdData);
           }
         }
       }
@@ -90,7 +105,7 @@ export default {
         }
       }
     } else {
-      this.macdSize.height = this.klineConfig.macdSize.height * 0.4 + 'px'
+      this.macdSize.height = this.klineConfig.macdSize.height * 0.8 + 'px'
       this.macdSize.width = this.klineConfig.macdSize.width + 'px'
     }
     this.klineConfig.chartType = 'MACD';

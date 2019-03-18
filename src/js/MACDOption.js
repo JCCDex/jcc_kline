@@ -170,19 +170,17 @@ var macdMobileOption = {
             type: 'bar',
             xAxisIndex: 0,
             yAxisIndex: 0,
-            // data: data.macds,
+            barWidth: 2,
         },{
             name: 'DIF',
             type: 'line',
             xAxisIndex: 0,
             yAxisIndex: 0,
-            // data: data.difs
         },{
             name: 'DEA',
             type: 'line',
             xAxisIndex: 0,
             yAxisIndex: 0,
-            // data: data.deas
         }
     ],
     dataZoom: [ // 用于区域缩放，从而能自由关注细节的数据信息，或者概览数据整体，或者去除离群点的影响

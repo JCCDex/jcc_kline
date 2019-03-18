@@ -56,7 +56,7 @@ export const getEMA12 = (i, oldEMA12, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.1538*closingPrice + 0.8462*oldEMA12).toFixed(6);
+        return (0.153846154*closingPrice + 0.846153846*oldEMA12).toFixed(6);
     }
 }
 
@@ -64,7 +64,7 @@ export const getEMA26 = (i, oldEMA26, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.0741*closingPrice + 0.9259*oldEMA26).toFixed(6);
+        return (0.074074074*closingPrice + 0.925925926*oldEMA26).toFixed(6);
     }
 }
 
@@ -98,6 +98,7 @@ export const getDepthData = (data) => {
 };
 
 export const handleDivisionData = (datas) => {
+    debugger
     let prices = [];
     let averages = [];
     let times = [];
@@ -106,6 +107,13 @@ export const handleDivisionData = (datas) => {
     let totalMoney = 0;
     let divisionTime = 0;
     let len = datas.length;
+    var MACDData = [];
+    let EMA12;
+    let EMA26;
+    let DIFF;
+    let DEA;
+    let MACD;
+
     for (var index = 0; index < len; index++) {
         let data = datas[index];
         prices.push(data[2]);
@@ -119,13 +127,27 @@ export const handleDivisionData = (datas) => {
         averages.push(totalMoney / totalAmount);
         times.push(formatTime(data[3]));
         volumes.push([index, a, data[4] === 0 ? -1 : 1]);
+
+        EMA12 = getEMA12(index, EMA12, data[2]);
+        EMA26 = getEMA26(index, EMA26, data[2]);
+        DIFF = (EMA12 - EMA26).toFixed(6);
+        DEA = getDEA(index, DIFF, DEA);
+        MACD =  (2 * (DIFF-DEA)).toFixed(6);
+        MACDData.push([
+            formatTime(data[3]),
+            DIFF,
+            DEA,
+            MACD
+        ]);
+
     }
     return {
         prices,
         averages,
         times,
         volumes,
-        divisionTime
+        divisionTime,
+        MACDData
     };
 };
 
