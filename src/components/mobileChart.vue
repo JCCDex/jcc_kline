@@ -26,6 +26,7 @@
       <MACD ref="macd" v-show = "showChart === 'candle'" v-on:listenMacdChartEvent = 'getMacdChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></MACD>
       <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
       <!-- <Indicator ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Indicator> -->
+      <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></DMI>
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
@@ -36,6 +37,7 @@ import Volume from './volumeChart.vue'
 import TimeSharing from './timeSharing.vue'
 import MACD from './MACDChart.vue'
 import KDJ from './KDJChart.vue'
+import DMI from './DMIChart.vue'
 import Indicator from './IndicatorChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
@@ -49,12 +51,13 @@ export default {
     TimeSharing,
     MACD,
     KDJ,
+    DMI,
     Indicator
   },
   data() {
     return {
       showChart: "candle",
-      showIndicatorChart: "OBV",
+      showIndicatorChart: "DMI",
       message: null,
       chartDataObj: {},
       toolTipIndex: null,

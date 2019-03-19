@@ -78,7 +78,6 @@ class IndicatorChartController {
                 tooltip: this.getIndicatorToolTip(),
                 series: this.getIndicatorSeries(data)
             };
-            
             merge(indicatorOption, option);
             this.indicator.setOption(indicatorOption, true);
         }
@@ -144,11 +143,57 @@ class IndicatorChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'OBV') {
+        if (data.indicator === 'OBV' && data.indicatorData) {
             series = [
                 {
                     name: 'OBV',
-                    data: data.indicatorData,
+                    data: data.indicatorData.OBV,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                }
+            ];
+        } else if (data.indicator === 'DMI' && data.indicatorData) {
+            series = [
+                {
+                    name: 'PDI',
+                    data: data.indicatorData.PDI,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e6e6e6'
+                        }
+                    }
+                },
+                {
+                    name: 'MDI',
+                    data: data.indicatorData.MDI,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#f6d026'
+                        }
+                    }
+                },
+                {
+                    name: 'ADX',
+                    data: data.indicatorData.ADX,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e03bfa'
+                        }
+                    }
+                }, {
+                    name: 'ADXR',
+                    data: data.indicatorData.ADXR,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {

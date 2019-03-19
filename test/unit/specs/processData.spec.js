@@ -1,5 +1,6 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData } from 'js/processData'
 import testData from '../../testData/data.json'
+import data from '../../testData/testData.json'
 import { getKDJData } from '../../../src/js/processData.js';
 
 let precision = {
@@ -102,12 +103,12 @@ describe('test processData', () => {
     expect(MA5).not.toBeNull()
   })
 
-  it ('test getKDJData', () => {
+  it('test getKDJData', () => {
     let KDJData = getKDJData(9, testData.klineData)
     expect(KDJData).not.toBeNull()
   })
 
-  it ('test getKDJData if data is null', () => {
+  it('test getKDJData if data is null', () => {
     let KDJData = getKDJData(9, null)
     expect(KDJData).toBe(undefined)
   })
@@ -120,6 +121,16 @@ describe('test processData', () => {
   it('test getOBVData if data is null', () => {
     let OBVData = getOBVData(null)
     expect(OBVData).toBe(undefined)
+  })
+
+  it('test getDMIData', () => {
+    let DMIData = getDMIData(data.candleData.values)
+    expect(DMIData).not.toBeNull()
+  })
+
+  it('test getDMIData if data is null', () => {
+    let DMIData = getDMIData(null)
+    expect(DMIData).toBe(undefined)
   })
 
 })
