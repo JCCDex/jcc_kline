@@ -157,7 +157,7 @@ class IndicatorChartController {
                     }
                 }
             ];
-        } else if (data.indicator === "DMI" && data.indicatorData) {
+        } else if (data.indicator === 'DMI' && data.indicatorData) {
             series = [
                 {
                     name: 'PDI',
@@ -202,7 +202,7 @@ class IndicatorChartController {
                         }
                     }
                 }
-            ]
+            ];
         }
         return series;
     }
