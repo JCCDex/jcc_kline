@@ -31,6 +31,7 @@
           <el-popover placement="bottom" width="150" trigger="click">
             <div>
               <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
+              <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br>
               <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
               <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
             </div>

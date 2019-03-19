@@ -90,12 +90,12 @@ export const handleDivisionData = (datas) => {
 export const calculateMA = (dayCount, data) => {
     var result = [];
     for (var i = 0, len = data.values.length; i < len; i++) {
-        if (i < dayCount) {
+        if (i < dayCount - 1) {
             result.push('-');
             continue;
         }
         var sum = 0;
-        for (var j = 0; j < dayCount; j++) {
+        for (var j = 0; j < dayCount - 1; j++) {
             let item = parseFloat(data.values[i - j][1]);
             if (isNaN(item)) {
                 sum += 0;
@@ -187,3 +187,94 @@ export const getOBVData = (data) => {
     }
     return OBV;
 };
+
+export const getDMIData = (data) => {
+    if (!data) { return; }
+    let datas = JSON.parse(JSON.stringify(data));
+    var PDM = []; //上升动向
+    var MDM = []; //下降动向
+    var TR = []; //真实波动
+    for (let i = 0; i < datas.length; i++) {
+        let TRa;
+        let TRb;
+        let TRc;
+        if (i === 0) {
+            PDM.push(0)
+            MDM.push(0)
+            TRb = 0
+            TRc = 0
+        } else {
+            PDM.push(datas[i][3] - datas[i - 1][3] <= 0 ? 0 : datas[i][3] - datas[i - 1][3])
+            MDM.push(datas[i - 1][2] - datas[i][2] <= 0 ? 0 : datas[i - 1][2] - datas[i][2])
+            TRb = datas[i][3] - datas[i - 1][1]
+            TRc = datas[i][2] - datas[i - 1][1]
+        }
+        TRa = datas[i][3] - datas[i][2]
+        TR.push(Math.max(Math.abs(TRa), Math.abs(TRb), Math.abs(TRc)))
+    }
+
+    var PDI = []; //上升方向指标线
+    var MDI = []; //下降方向指标线
+    var PDM14 = calculateEMA(14, JSON.parse(JSON.stringify(PDM)))
+    var MDM14 = calculateEMA(14, JSON.parse(JSON.stringify(MDM)))
+    var TR14 = calculateEMA(14, JSON.parse(JSON.stringify(TR)))
+    for (let j = 0; j < PDM.length; j++) {
+        if (isNaN(PDM14[j]) || isNaN(TR14[j])) {
+            PDI.push('-')
+        } else {
+            PDI.push((PDM14[j] / TR14[j]) * 100)
+        }
+        if (isNaN(MDM14[j]) || isNaN(TR14[j])) {
+            MDI.push('-')
+        } else {
+            MDI.push((MDM14[j] / TR14[j]) * 100)
+        }
+    }
+
+    var DX = []; //动向指数
+    var ADX = []; //动向平均数
+    for (let i = 0; i < PDI.length; i++) {
+        if (isNaN(PDI[i]) || isNaN(MDI[i])) {
+            DX.push('-')
+        } else {
+            DX.push((Math.abs(MDI[i] - PDI[i]) / (MDI[i] + PDI[i])) * 100)
+        }
+    }
+    ADX = calculateEMA(13 + 6, DX)
+
+    var ADXR = []; //评估数值 ADXR=（当日的ADX+前6日的ADX）÷2
+    for (let i = 0; i < ADX.length; i++) {
+        if (i < 5 || isNaN(ADX[i]) || isNaN(ADX[i - 5])) {
+            ADXR.push('-')
+        } else {
+            ADXR.push((ADX[i] + ADX[i - 5]) / 2)
+        }
+    }
+    return {
+        PDI: PDI,
+        MDI: MDI,
+        ADX: ADX,
+        ADXR: ADXR
+    }
+}
+
+export const calculateEMA = (periodic, data) => {
+    var result = [];
+    for (var i = 0, len = data.length; i < len; i++) {
+        if (i < periodic - 1) {
+            result.push('-');
+            continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < periodic - 1; j++) {
+            let item = parseFloat(data[i - j]);
+            if (isNaN(item)) {
+                sum += 0;
+            } else {
+                sum += item;
+            }
+        }
+        result.push((sum / periodic));
+    }
+    return result;
+}
