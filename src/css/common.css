@@ -582,3 +582,18 @@
     font-size: 0.24rem;
     z-index: 9;
 }
+
+.macd-tip-data {
+    position: absolute;
+    font-size: 11px !important;
+    -webkit-text-size-adjust: none;
+    -webkit-transform: scale(0.92, 0.92);
+    z-index: 9;
+}
+
+.mobile-macd-tip {
+    position: absolute;
+    font-size: 0.16rem;
+    margin-left: 0.2rem;
+    z-index: 9;
+}

@@ -1,5 +1,15 @@
 <template>
+  <div>
+    <div
+      :class="this.klineConfig.platform === 'pc' ? 'macd-tip-data' : 'mobile-macd-tip'"
+      v-if="toolTipData"
+    >
+      <font style="color: #67ff7c;">MACD:{{toolTipData.macd}}&nbsp;</font>
+      <font style="color: #ff4d71;">DIFF:{{toolTipData.diff}}&nbsp;</font>
+      <font style="color: #f6d026;">DEA:{{toolTipData.dea}}&nbsp;</font>
+    </div>
     <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"></div>
+  </div>
 </template>
 <script>
 import ChartController from '../js/Charts'
@@ -10,6 +20,8 @@ export default {
     return {
       coinType: '',
       chartType: 'MACD',
+      macdData:"",
+      toolTipData: null,
       macd: '',
       macdSize: {
         height: '',
@@ -37,17 +49,40 @@ export default {
         return {
         }
       }
+    },
+    toolTipIndex: {
+      type: Number,
+      default: null
     }
   },
   
   watch: {
-    chartDataObj() {
+    toolTipIndex() {
       debugger
+      let index = this.toolTipIndex;
+      if (this.macdData) {
+        this.toolTipData = {
+          macd: this.macdData.macds[index],
+          diff: this.macdData.difs[index],
+          dea: this.macdData.deas[index]
+        }
+      }
+    },
+    chartDataObj() {
       if (this.chartDataObj.candleData && this.chartDataObj.cycle !== 'everyhour') {
         let data = this.chartDataObj.candleData
         data.precision = this.chartDataObj.precision
         if (data.MACDData && data.categoryData) {
           var macdData = this.splitData(data.MACDData);
+          this.macdData = macdData;
+          if (this.macdData) {
+            let index = this.toolTipIndex;
+            this.toolTipData = {
+              macd: this.macdData.macds[index],
+              diff: this.macdData.difs[index],
+              dea: this.macdData.deas[index]
+            }
+          }
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
             this.clearChart();
             this.refreshCycle = 0
@@ -64,6 +99,15 @@ export default {
         let data = this.chartDataObj.divisionData;
         if (data.MACDData) {
           var macdData = this.splitData(data.MACDData);
+          this.macdData = macdData;
+          if (this.macdData) {
+            let index = this.toolTipIndex;
+            this.toolTipData = {
+              macd: this.macdData.macds[index],
+              diff: this.macdData.difs[index],
+              dea: this.macdData.deas[index]
+            }
+          }
           if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
             this.clearChart();
             this.cycle = this.chartDataObj.cycle
