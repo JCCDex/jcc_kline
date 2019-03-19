@@ -143,11 +143,11 @@ class IndicatorChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'OBV') {
+        if (data.indicator === 'OBV' && data.indicatorData) {
             series = [
                 {
                     name: 'OBV',
-                    data: data.indicatorData,
+                    data: data.indicatorData.OBV,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -157,7 +157,7 @@ class IndicatorChartController {
                     }
                 }
             ];
-        } else if (data.indicator === "DMI") {
+        } else if (data.indicator === "DMI" && data.indicatorData) {
             series = [
                 {
                     name: 'PDI',

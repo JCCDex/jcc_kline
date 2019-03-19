@@ -185,7 +185,7 @@ export const getOBVData = (data) => {
             OBV.push(OnBalanceVolume);
         }
     }
-    return OBV;
+    return { OBV: OBV };
 };
 
 export const getDMIData = (data) => {

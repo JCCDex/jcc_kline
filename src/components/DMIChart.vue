@@ -4,7 +4,10 @@
       :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
       v-if="toolTipData"
     >
-      <font style="color: #67ff7c;">OBV:&nbsp;{{toolTipData.OBV}}</font>
+      <font style="color: #e6e6e6;">PDI:{{this.toolTipData.PDI}}</font>
+      <font style="color: #f6d026;">MDI:{{this.toolTipData.MDI}}</font>
+      <font style="color: #e03bfa;">ADX:{{this.toolTipData.ADX}}</font>
+      <font style="color: #67ff7c;">ADXR:{{this.toolTipData.ADXR}}</font>
     </div>
     <div
       ref="indicator"
@@ -18,7 +21,7 @@ import {
   splitData,
   getDepthData,
   getKDJData,
-  getOBVData
+  getDMIData
 } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
@@ -28,7 +31,7 @@ export default {
     return {
       indicator: null,
       indicatorData: null,
-      OBVData: null,
+      DMIData: null,
       coinType: "",
       cycle: "",
       chartType: "indicator",
@@ -73,11 +76,11 @@ export default {
           indicator: this.chartDataObj.indicators,
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        if (this.chartDataObj.indicators === "OBV") {
-          this.OBVData = getOBVData(this.chartDataObj.klineData);
+        if (this.chartDataObj.indicators === "DMI") {
+          this.DMIData = getDMIData(this.chartDataObj.candleData.values);
           let index = this.chartDataObj.index;
           this.$emit("listenToTipIndex", index);
-          this.indicatorData.indicatorData = this.OBVData;
+          this.indicatorData.indicatorData = this.DMIData;
         }
       }
       if (this.indicatorData) {
@@ -119,12 +122,15 @@ export default {
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
-      let amountPrecision = !isNaN(this.chartDataObj.precision.amount)
-        ? this.chartDataObj.precision.amount
+      let pricePrecision = !isNaN(this.chartDataObj.precision.price)
+        ? this.chartDataObj.precision.price
         : 6;
-      if (this.chartDataObj.indicators === "OBV") {
+      if (this.chartDataObj.indicators === "DMI") {
         this.toolTipData = {
-          OBV: formatDecimal(this.OBVData[index], amountPrecision, true)
+          PDI: formatDecimal(this.DMIData.PDI[index], pricePrecision, true),
+          MDI: formatDecimal(this.DMIData.MDI[index], pricePrecision, true),
+          ADX: formatDecimal(this.DMIData.ADX[index], pricePrecision, true),
+          ADXR: formatDecimal(this.DMIData.ADXR[index], pricePrecision, true)
         };
       }
     }
