@@ -231,7 +231,7 @@ export const getKDJData = (dayCount, data) => {
 };
 
 export const getOBVData = (data) => {
-    if (!data) { return }
+    if (!data) { return; }
     var OBV = [];
     var OnBalanceVolume;
     for (var i = 0; i < data.length; i++) {

@@ -32,6 +32,14 @@ describe('test SetStochasticChart', () => {
         expect(stochastic.stochastic.getOption()).not.toBeNull();
     })
 
+    it('test setStochasticOption if data is null', () => {
+        const element = document.createElement('div');
+        let stochastic = new SetStochasticChart(StochasticOption);
+        stochastic.initStochasticECharts(element)
+        stochastic.setStochasticOption(null, 'hour')
+        expect(stochastic.stochastic.getOption()).not.toBeNull();
+    })
+
     it('test updateStochasticOption', () => {
         const element = document.createElement('div');
         let stochastic = new SetStochasticChart(StochasticOption);
@@ -68,6 +76,15 @@ describe('test SetStochasticChart', () => {
         expect(stochastic.stochastic.getOption()).not.toBeNull();
     })
 
+    it('test resizeECharts if DOM is null', () => {
+        const element = document.createElement('div');
+        let stochastic = new SetStochasticChart(StochasticOption);
+        stochastic.initStochasticECharts(element)
+        stochastic.setStochasticOption(KDJData, 'hour')
+        stochastic.resizeECharts(null, false, size)
+        expect(stochastic.stochastic.getOption()).not.toBeNull();
+    })
+
     it('test resizeECharts if isFullScreen is true', () => {
         const element = document.createElement('div');
         let stochastic = new SetStochasticChart(StochasticOption);
@@ -93,5 +110,13 @@ describe('test SetStochasticChart', () => {
         stochastic.setStochasticOption(KDJData, 'hour')
         stochastic.disposeStochasticEChart()
         expect(stochastic.stochastic.getOption()).not.toBeNull();
+    })
+
+    it('test updateStochasticOption if getOption is null', () => {
+        const element = document.createElement('div');
+        let stochastic = new SetStochasticChart(StochasticOption);
+        stochastic.initStochasticECharts(element)
+        stochastic.updateStochasticOption(KDJData, 'week')
+        expect(stochastic).not.toBeNull();
     })
 })

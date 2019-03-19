@@ -4,9 +4,9 @@
       :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
       v-if="toolTipData"
     >
-      <font style="color: #67ff7c;">K:{{toolTipData.K}}&nbsp;</font>
-      <font style="color: #ff4d71;">D:{{toolTipData.D}}&nbsp;</font>
-      <font style="color: #f6d026;">J:{{toolTipData.J}}&nbsp;</font>
+      <font style="color: #67ff7c;">K:&nbsp;{{toolTipData.K}}&nbsp;</font>
+      <font style="color: #ff4d71;">D:&nbsp;{{toolTipData.D}}&nbsp;</font>
+      <font style="color: #f6d026;">J:&nbsp;{{toolTipData.J}}&nbsp;</font>
     </div>
     <div
       ref="stochastic"
@@ -82,6 +82,8 @@ export default {
           JSON.stringify(this.chartDataObj.candleData.values)
         );
         this.KDJData = getKDJData(9, data);
+        let index = this.chartDataObj.index
+        this.$emit("listenToTipIndex", index);
         this.KDJData.precision = this.chartDataObj.precision;
         this.KDJData.categoryData = JSON.parse(
           JSON.stringify(this.chartDataObj.candleData.categoryData)
@@ -94,10 +96,7 @@ export default {
           ) {
             this.stochastic.clearStochasticEcharts();
             this.cycle = this.chartDataObj.cycle;
-            this.toolTipData = this.stochastic.setStochasticOption(
-              this.KDJData,
-              this.cycle
-            );
+            this.stochastic.setStochasticOption(this.KDJData, this.cycle);
             this.$emit(
               "listenStochasticChartEvent",
               this.stochastic.getStochasticEchart()
@@ -158,7 +157,8 @@ export default {
       this.resize();
     },
     getToolTipData() {
-      this.toolTipData = this.stochastic.getToolTipData();
+      let index = this.stochastic.getStochasticTipData();
+      this.$emit("listenToTipIndex", index);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

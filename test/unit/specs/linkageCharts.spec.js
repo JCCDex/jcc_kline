@@ -53,4 +53,14 @@ describe('test linkageCharts', () => {
         linkageVolume(klineChart, volumeChart)
     })
 
+    it('test getVolumeEchart if volumeChart is null', () => {
+      let kline = new klineController('pc', klineConfig)
+      const element = document.createElement('div');
+      kline.initChart(element)
+      kline.setOption(data, 'hour')
+      let klineChart = kline.getEchart()
+      let volumeChart = null
+      linkageVolume(klineChart, volumeChart)
+  })
+
 })

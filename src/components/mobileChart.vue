@@ -25,6 +25,7 @@
       <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
       <MACD ref="macd" v-show = "showChart === 'candle'" v-on:listenMacdChartEvent = 'getMacdChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></MACD>
       <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
+      <!-- <Indicator ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Indicator> -->
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
@@ -35,6 +36,7 @@ import Volume from './volumeChart.vue'
 import TimeSharing from './timeSharing.vue'
 import MACD from './MACDChart.vue'
 import KDJ from './KDJChart.vue'
+import Indicator from './IndicatorChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume, linkageMacd } from '../js/linkageCharts';
@@ -46,11 +48,13 @@ export default {
     Volume,
     TimeSharing,
     MACD,
-    KDJ
+    KDJ,
+    Indicator
   },
   data() {
     return {
       showChart: "candle",
+      showIndicatorChart: "OBV",
       message: null,
       chartDataObj: {},
       toolTipIndex: null,
@@ -60,7 +64,8 @@ export default {
       candle: null,
       volume: null,
       macd: null,
-      stochastic: null
+      stochastic: null,
+      indicator: null
     };
   },
   props: {
@@ -139,6 +144,8 @@ export default {
       this.chartDataObj = {
         platform: 'mobile',
         precision: precision,
+        klineData: this.klineDataObj.klineData,
+        indicators: this.showIndicatorChart,
         cycle: this.klineDataObj.cycle,
         coinType: this.klineDataObj.coinType,
         candleData: candleData,
@@ -181,6 +188,12 @@ export default {
         linkageVolume(this.candle, this.stochastic)
       }
     },
+    getIndicatorChart(indicator) {
+      this.indicator = indicator
+      if (this.candle) {
+        linkageVolume(this.candle, this.indicator)
+      }
+    },
     getMATipData(name) {
       for( let tipData of this.toolTipData.MAData) {
         if (tipData.name === name) {
@@ -189,40 +202,42 @@ export default {
       }
     },
     getTipDataIndex(index) {
-      this.toolTipIndex = index
-      if (this.chartDataObj.precision.price) {
-        var precision = JSON.parse(JSON.stringify(this.chartDataObj.precision))
-        var pricePrecision = !isNaN(precision.price) ? precision.price : this.pricePrecision;
-        var amountsPrecision = !isNaN(precision.amount) ? precision.amount : this.amountsPrecision;
-        if (this.chartDataObj.candleData && this.chartDataObj.cycle !== "everyhour") {
-          let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
-          if (data.values[index] && data.categoryData[index] && data.volumes[index]) {
-            this.toolTipData = {
-              time: data.categoryData[index],
-              volume: formatDecimal(data.values[index][5], amountsPrecision, true),
-              opening: formatDecimal(data.values[index][0], pricePrecision, true),
-              closing: formatDecimal(data.values[index][1], pricePrecision, true),
-              max: formatDecimal(data.values[index][3], pricePrecision, true),
-              min: formatDecimal(data.values[index][2], pricePrecision, true),
-              MAData: [],
-              color: data.volumes[index][2]
+      if (index) {
+        this.toolTipIndex = index
+        if (this.chartDataObj.precision.price) {
+          var precision = JSON.parse(JSON.stringify(this.chartDataObj.precision))
+          var pricePrecision = !isNaN(precision.price) ? precision.price : this.pricePrecision;
+          var amountsPrecision = !isNaN(precision.amount) ? precision.amount : this.amountsPrecision;
+          if (this.chartDataObj.candleData && this.chartDataObj.cycle !== "everyhour") {
+            let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
+            if (data.values[index] && data.categoryData[index] && data.volumes[index]) {
+              this.toolTipData = {
+                time: data.categoryData[index],
+                volume: formatDecimal(data.values[index][5], amountsPrecision, true),
+                opening: formatDecimal(data.values[index][0], pricePrecision, true),
+                closing: formatDecimal(data.values[index][1], pricePrecision, true),
+                max: formatDecimal(data.values[index][3], pricePrecision, true),
+                min: formatDecimal(data.values[index][2], pricePrecision, true),
+                MAData: [],
+                color: data.volumes[index][2]
+              }
             }
-          }
-          for (var i = 0; i < data.MAData.length; i++) {
-            this.toolTipData.MAData[i] = {
-              name: data.MAData[i].name,
-              data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
-            };
-          }
-        } else if (this.chartDataObj.divisionData && this.chartDataObj.cycle === "everyhour") {
-          let data = JSON.parse(JSON.stringify(this.chartDataObj.divisionData))
-          if (data.averages[index] && data.volumes[index] && data.prices[index]) {
-            this.timeSharingTipData = {
-              time: data.times[index],
-              volume: formatDecimal(data.volumes[index][1], amountsPrecision, true),
-              price: formatDecimal(data.prices[index], pricePrecision, true),
-              averagePrice: formatDecimal(data.averages[index], pricePrecision, true),
-              color: data.volumes[index][2]
+            for (var i = 0; i < data.MAData.length; i++) {
+              this.toolTipData.MAData[i] = {
+                name: data.MAData[i].name,
+                data: formatDecimal(data.MAData[i].data[index], pricePrecision, true),
+              };
+            }
+          } else if (this.chartDataObj.divisionData && this.chartDataObj.cycle === "everyhour") {
+            let data = JSON.parse(JSON.stringify(this.chartDataObj.divisionData))
+            if (data.averages[index] && data.volumes[index] && data.prices[index]) {
+              this.timeSharingTipData = {
+                time: data.times[index],
+                volume: formatDecimal(data.volumes[index][1], amountsPrecision, true),
+                price: formatDecimal(data.prices[index], pricePrecision, true),
+                averagePrice: formatDecimal(data.averages[index], pricePrecision, true),
+                color: data.volumes[index][2]
+              }
             }
           }
         }
