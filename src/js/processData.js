@@ -215,9 +215,9 @@ export const getDMIData = (data) => {
 
     var PDI = []; //上升方向指标线
     var MDI = []; //下降方向指标线
-    var PDM14 = calculateEMA(14, JSON.parse(JSON.stringify(PDM)));
-    var MDM14 = calculateEMA(14, JSON.parse(JSON.stringify(MDM)));
-    var TR14 = calculateEMA(14, JSON.parse(JSON.stringify(TR)));
+    var PDM14 = getMAData(14, JSON.parse(JSON.stringify(PDM)));
+    var MDM14 = getMAData(14, JSON.parse(JSON.stringify(MDM)));
+    var TR14 = getMAData(14, JSON.parse(JSON.stringify(TR)));
     for (let j = 0; j < PDM.length; j++) {
         if (isNaN(PDM14[j]) || isNaN(TR14[j])) {
             PDI.push('-');
@@ -240,7 +240,7 @@ export const getDMIData = (data) => {
             DX.push((Math.abs(MDI[i] - PDI[i]) / (MDI[i] + PDI[i])) * 100);
         }
     }
-    ADX = calculateEMA(13 + 6, DX);
+    ADX = getMAData(13 + 6, DX);
 
     var ADXR = []; //评估数值 ADXR=（当日的ADX+前6日的ADX）÷2
     for (let i = 0; i < ADX.length; i++) {
@@ -258,7 +258,7 @@ export const getDMIData = (data) => {
     };
 };
 
-export const calculateEMA = (periodic, data) => {
+export const getMAData = (periodic, data) => {
     var result = [];
     for (var i = 0, len = data.length; i < len; i++) {
         if (i < periodic - 1) {
