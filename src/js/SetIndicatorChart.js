@@ -91,7 +91,9 @@ class IndicatorChartController {
                 tooltip: this.getIndicatorToolTip(),
                 series: this.getIndicatorSeries(data)
             };
+            let option = JSON.parse(JSON.stringify(indicatorConfig));
             merge(indicatorOption, indicatorConfig);
+            indicatorOption.series = JSON.parse(JSON.stringify(option.series));
             indicatorOption.dataZoom = this.indicator.getOption().dataZoom;
             this.indicator.setOption(indicatorOption);
         }
@@ -143,7 +145,7 @@ class IndicatorChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'OBV' && data.indicatorData) {
+        if (data.indicator === 'OBV' && data.indicatorData.OBV) {
             series = [
                 {
                     name: 'OBV',
@@ -157,7 +159,7 @@ class IndicatorChartController {
                     }
                 }
             ];
-        } else if (data.indicator === 'DMI' && data.indicatorData) {
+        } else if (data.indicator === 'DMI' && data.indicatorData.PDI) {
             series = [
                 {
                     name: 'PDI',
