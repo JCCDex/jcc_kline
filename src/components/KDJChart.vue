@@ -16,7 +16,7 @@
   </div>
 </template>
 <script>
-import { splitData, getDepthData, getKDJData } from "../js/processData";
+import { getKDJData } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -82,7 +82,7 @@ export default {
           JSON.stringify(this.chartDataObj.candleData.values)
         );
         this.KDJData = getKDJData(9, data);
-        let index = this.chartDataObj.index
+        let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.KDJData.precision = this.chartDataObj.precision;
         this.KDJData.categoryData = JSON.parse(
