@@ -8,6 +8,7 @@ import { getLanguage,　getDefaultChartSize } from './utils';
 
 var MACDOption;
 var oldMACDData;
+var toolTipIndex;
 
 class MACDChart {
 
@@ -81,6 +82,7 @@ class MACDChart {
             let option = {
                 xAxis: this.getMACDXAxis(data),
                 yAxis: this.getMACDYAxis(),
+                tooltip: this.getMACDToolTip(),
                 series: this.getMACDSeries(data)
             };
             merge(MACDOption, option);
@@ -94,6 +96,7 @@ class MACDChart {
             let macdConfig = {
                 xAxis: this.getMACDXAxis(data),
                 yAxis: this.getMACDYAxis(),
+                tooltip: this.getMACDToolTip(),
                 series: this.getMACDSeries(data)
             };
             merge(MACDOption, macdConfig);
@@ -163,6 +166,22 @@ class MACDChart {
         if (this.macd) {
             this.macd.dispose();
         }
+    }
+
+    getToolTipData() {
+        return toolTipIndex;
+    }
+
+    getMACDToolTip() {
+        return {
+            formatter: function (param) {
+                param = param[0];
+                if (param) {
+                    var index = param.dataIndex;
+                    toolTipIndex = index;
+                }
+            }
+        };
     }
 }
 

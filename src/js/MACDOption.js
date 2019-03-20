@@ -1,24 +1,6 @@
 var macdOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
-    // tooltip: { // 提示框组件。
-    //     trigger: 'axis', //触发类型。当前为坐标轴触发
-    //     animation: false,
-    //     axisPointer: { // 坐标轴指示器配置项。
-    //         type: 'cross', // 指示器类型。当前为十字准星指示器。其实是种简写，表示启用两个正交的轴的 axisPointer。
-    //         link: { xAxisIndex: 'all' }
-    //     },
-    //     backgroundColor: 'rgba(245, 245, 245, 0.5)', // 提示框浮层的背景颜色。
-    //     borderWidth: 1, // 提示框浮层的边框宽。
-    //     borderColor: '#ccc', // 提示框浮层的边框颜色。
-    //     padding: 10, // 提示框浮层内边距，单位px
-    //     textStyle: { // 提示框浮层的文本样式
-    //         // fontSize: '0.1rem', // 文字的字体大小
-    //         color: '#ffffff', // 文字的颜色
-    //         fontFamily: 'Avenir, Helvetica, Arial, sans-serif' // 文字的字体系列
-    //     },
-    //     extraCssText: 'background:#252332;border:0;opacity: 1;fontSize: 18px', // 文字本身的描边颜色
-    // },
     tooltip: { // 提示框组件。
         trigger: 'axis', //触发类型。当前为坐标轴触发
         animation: false,
@@ -42,6 +24,12 @@ var macdOption = {
         {
             type: 'category',
             gridIndex: 0,
+            axisPointer: {
+                z: 100,
+                label: {
+                    show: false
+                }
+            },
             // data: data.times,
             axisLabel: {show: false}
         }
@@ -118,25 +106,13 @@ var macdOption = {
 var macdMobileOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
-    // tooltip: { // 提示框组件。
-    //     // show: false,
-    //     trigger: 'axis', //触发类型。当前为坐标轴触发
-    //     animation: false,
-    //     axisPointer: { // 坐标轴指示器配置项。
-    //         type: 'cross', // 指示器类型。当前为十字准星指示器。其实是种简写，表示启用两个正交的轴的 axisPointer。
-    //         link: { xAxisIndex: 'all' }
-    //     },
-    //     backgroundColor: 'rgba(245, 245, 245, 0.5)', // 提示框浮层的背景颜色。
-    //     borderWidth: 1, // 提示框浮层的边框宽。
-    //     borderColor: '#ccc', // 提示框浮层的边框颜色。
-    //     padding: 10, // 提示框浮层内边距，单位px
-    //     textStyle: { // 提示框浮层的文本样式
-    //         // fontSize: '0.1rem', // 文字的字体大小
-    //         color: '#ffffff', // 文字的颜色
-    //         fontFamily: 'Avenir, Helvetica, Arial, sans-serif' // 文字的字体系列
-    //     },
-    //     extraCssText: 'background:#252332;border:0;opacity: 1;fontSize: 18px', // 文字本身的描边颜色
-    // },
+    axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置,坐标轴指示器是指示坐标轴当前刻度的工具
+        link: { xAxisIndex: 'all' },
+        label: { // 坐标轴指示器的文本标签
+            backgroundColor: '#232b34', // 背景色
+            fontSize: 22, // 字体大小
+        }
+    },
     tooltip: { // 提示框组件。
         trigger: 'axis', //触发类型。当前为坐标轴触发
         animation: false,
@@ -160,6 +136,12 @@ var macdMobileOption = {
         {
             type: 'category',
             gridIndex: 0,
+            axisPointer: {
+                z: 100,
+                label: {
+                    show: false
+                }
+            },
             // data: data.times,
             axisLabel: {show: false}
         }
@@ -173,33 +155,41 @@ var macdMobileOption = {
                 show: false,
                 onZero: false,
             },
+            axisLine: {
+                show: false,
+                lineStyle: {
+                    color: '#37404b'
+                }
+            },
             axisTick: {show: false},
             splitLine: {show: false},
-            axisLabel: {
-                show: true,
-                inside: true,
-                margin: 0,
-                color: '#9aa4ac',
-                fontSize: 22,
-                verticalAlign: 'bottom'
+            axisLabel: { // 坐标轴刻度标签的相关设置
+                show: true, // 是否显示刻度标签
+                margin: 0, // 刻度标签与轴线之间的距离
+                color: '#b7c2ce', // 刻度标签文字的颜色
+                fontSize: 22, // 文字的字体大小
+                verticalAlign: 'bottom',
+                inside: true
             }
         }
     ],
     series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
         {
             name: 'MACD',
-            type: 'bar',
+            type: 'bar', // 柱状/条形图
             xAxisIndex: 0,
             yAxisIndex: 0,
-            barWidth: 2,
+            barWidth: 2, // 柱条的宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
         },{
             name: 'DIF',
-            type: 'line',
+            type: 'line', // 折线图
+            symbol: "none",
             xAxisIndex: 0,
             yAxisIndex: 0,
         },{
             name: 'DEA',
             type: 'line',
+            symbol: "none",
             xAxisIndex: 0,
             yAxisIndex: 0,
         }

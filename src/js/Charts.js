@@ -165,6 +165,10 @@ class ChartController {
         return this.setMACDChart.getMacdchart();
     }
 
+    getMacdTipData() {
+        return this.setMACDChart.getToolTipData();
+    }
+
 }
 
 export default ChartController;

@@ -106,6 +106,13 @@ var volumeOption = {
 var volumeMoobileOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
+    axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置,坐标轴指示器是指示坐标轴当前刻度的工具
+        link: { xAxisIndex: 'all' },
+        label: { // 坐标轴指示器的文本标签
+            backgroundColor: '#232b34', // 背景色
+            fontSize:22, // 字体大小
+        }
+    },
     tooltip: { // 提示框组件。
         trigger: 'axis', //触发类型。当前为坐标轴触发
         animation: false,

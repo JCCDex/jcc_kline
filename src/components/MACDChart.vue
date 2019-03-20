@@ -8,7 +8,9 @@
       <font style="color: #ff4d71;">DIFF:{{toolTipData.diff}}&nbsp;</font>
       <font style="color: #f6d026;">DEA:{{toolTipData.dea}}&nbsp;</font>
     </div>
-    <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"></div>
+    <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"
+    @mousemove="getToolTipData()"
+    ></div>
   </div>
 </template>
 <script>
@@ -58,7 +60,6 @@ export default {
   
   watch: {
     toolTipIndex() {
-      debugger
       let index = this.toolTipIndex;
       if (this.macdData) {
         this.toolTipData = {
@@ -77,6 +78,7 @@ export default {
           this.macdData = macdData;
           if (this.macdData) {
             let index = this.toolTipIndex;
+            this.$emit("listenToTipIndex", index);
             this.toolTipData = {
               macd: this.macdData.macds[index],
               diff: this.macdData.difs[index],
@@ -102,6 +104,7 @@ export default {
           this.macdData = macdData;
           if (this.macdData) {
             let index = this.toolTipIndex;
+            this.$emit("listenToTipIndex", index);
             this.toolTipData = {
               macd: this.macdData.macds[index],
               diff: this.macdData.difs[index],
@@ -171,6 +174,11 @@ export default {
     init() {
       this.macd.initMACDECharts(this.$refs.macd);
       this.resize();
+    },
+    getToolTipData() {
+      debugger
+      let index = this.macd.getMacdTipData();
+      this.$emit("listenToTipIndex", index);
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
