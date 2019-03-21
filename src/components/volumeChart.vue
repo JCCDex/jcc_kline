@@ -102,7 +102,7 @@ export default {
         this.volumeSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.volumeSize = {
-          height: '572px',
+          height: '107px',
           width: '100%'
         }
       }

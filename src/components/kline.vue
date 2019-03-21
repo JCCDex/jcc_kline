@@ -109,7 +109,7 @@ export default {
     if (this.klineConfig.defaultSize) {
       this.klineSize = {
         width: '100%',
-        height: '572px'
+        height: '100px'
       }
     } else {
       this.klineSize = {

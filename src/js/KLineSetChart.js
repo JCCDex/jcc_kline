@@ -22,7 +22,7 @@ class KLineSetChartController {
             if (!this.klineConfig.defaultSize) {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = resizeSize.height * 0.75 + 'px';
+                        DOM.style.height = resizeSize.height * 0.60 + 'px';
                         DOM.style.width = resizeSize.width + 'px';
                     }
                 };
@@ -31,7 +31,7 @@ class KLineSetChartController {
             } else {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = size.height * 0.75 + 'px';
+                        DOM.style.height = size.height * 0.60 + 'px';
                         DOM.style.width = size.width + 'px';
                     }
                 };
@@ -40,7 +40,7 @@ class KLineSetChartController {
             }
         } else {
             let resizeContainer = () => {
-                DOM.style.height = size.clientHeight * 0.75 + 'px';
+                DOM.style.height = size.clientHeight * 0.60 + 'px';
                 DOM.style.width = size.clientWidth + 'px';
             };
             resizeContainer(this);

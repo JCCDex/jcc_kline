@@ -59,6 +59,9 @@ export default {
   },
   
   watch: {
+    resizeSize() {
+      this.resize()
+    },
     toolTipIndex() {
       let index = this.toolTipIndex;
       if (this.macdData) {
@@ -147,12 +150,12 @@ export default {
         this.macdSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.macdSize = {
-          height: '572px',
+          height: '107px',
           width: '100%'
         }
       }
     } else {
-      this.macdSize.height = this.klineConfig.macdSize.height * 0.8 + 'px'
+      this.macdSize.height = this.klineConfig.macdSize.height * 0.4 + 'px'
       this.macdSize.width = this.klineConfig.macdSize.width + 'px'
     }
     this.klineConfig.chartType = 'MACD';
@@ -176,7 +179,6 @@ export default {
       this.resize();
     },
     getToolTipData() {
-      debugger
       let index = this.macd.getMacdTipData();
       this.$emit("listenToTipIndex", index);
     },

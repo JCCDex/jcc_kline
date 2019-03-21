@@ -21,7 +21,7 @@ class VolumeChart {
             if (!this.volumeConfig.defaultSize) {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = resizeSize.height * 0.25 + 'px';
+                        DOM.style.height = resizeSize.height * 0.20 + 'px';
                         DOM.style.width = resizeSize.width + 'px';
                     }
                 };
@@ -30,7 +30,7 @@ class VolumeChart {
             } else {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = size.height * 0.25 + 'px';
+                        DOM.style.height = size.height * 0.20 + 'px';
                         DOM.style.width = size.width + 'px';
                     }
                 };
@@ -39,7 +39,7 @@ class VolumeChart {
             }
         } else {
             let resizeContainer = () => {
-                DOM.style.height = size.clientHeight * 0.25 + 'px';
+                DOM.style.height = size.clientHeight * 0.20 + 'px';
                 DOM.style.width = size.clientWidth + 'px';
             };
             resizeContainer(this);
