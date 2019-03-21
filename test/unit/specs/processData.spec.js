@@ -1,4 +1,4 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData, getTRIXData } from 'js/processData'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 import { getKDJData } from '../../../src/js/processData.js';
@@ -131,6 +131,16 @@ describe('test processData', () => {
   it('test getDMIData if data is null', () => {
     let DMIData = getDMIData(null)
     expect(DMIData).toBe(undefined)
+  })
+
+  it('test getTRIXData', () => {
+    let TRIXData = getTRIXData(data.candleData.values)
+    expect(TRIXData).not.toBeNull()
+  })
+
+  it('test getTRIXData if data is null', () => {
+    let TRIXData = getTRIXData(null)
+    expect(TRIXData).toBe(undefined)
   })
 
 })
