@@ -64,7 +64,7 @@ export default {
       this.resize();
     },
     chartDataObj() {
-      if (this.chartDataObj.klineData) {
+      if (this.chartDataObj.candleData) {
         this.indicatorsData = {
           indicator: this.chartDataObj.indicators,
           categoryData: this.chartDataObj.candleData.categoryData
@@ -113,14 +113,16 @@ export default {
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
-      let pricePrecision = !isNaN(this.chartDataObj.precision.price)
-        ? this.chartDataObj.precision.price
-        : 6;
-      if (this.TRIXData) {
-        this.toolTipData = {
-          TRIX: parseFloat(this.TRIXData.TRIX[index]).toFixed(4),
-          MATRIX: parseFloat(this.TRIXData.MATRIX[index]).toFixed(4)
-        };
+      if (index) {
+        if (this.chartDataObj.candleData && this.TRIXData) {
+          this.TRIXData = getTRIXData(this.chartDataObj.candleData.values);
+        }
+        if (this.TRIXData) {
+          this.toolTipData = {
+            TRIX: parseFloat(this.TRIXData.TRIX[index]).toFixed(4),
+            MATRIX: parseFloat(this.TRIXData.MATRIX[index]).toFixed(4)
+          };
+        }
       }
     }
   },

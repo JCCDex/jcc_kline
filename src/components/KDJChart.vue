@@ -62,15 +62,20 @@ export default {
   watch: {
     toolTipIndex() {
       let index = this.toolTipIndex;
-      if (this.KDJData) {
-        let pricePrecision = !isNaN(this.KDJData.precision.price)
-          ? this.KDJData.precision.price
-          : 6;
-        this.toolTipData = {
-          K: parseFloat(this.KDJData.K[index]).toFixed(4),
-          D: parseFloat(this.KDJData.D[index]).toFixed(4),
-          J: parseFloat(this.KDJData.J[index]).toFixed(4)
-        };
+      if (index) {
+        if (this.chartDataObj.candleData && !this.KDJData) {
+          let data = JSON.parse(
+            JSON.stringify(this.chartDataObj.candleData.values)
+          );
+          this.KDJData = getKDJData(9, data);
+        }
+        if (this.KDJData) {
+          this.toolTipData = {
+            K: parseFloat(this.KDJData.K[index]).toFixed(4),
+            D: parseFloat(this.KDJData.D[index]).toFixed(4),
+            J: parseFloat(this.KDJData.J[index]).toFixed(4)
+          };
+        }
       }
     },
     resizeSize() {

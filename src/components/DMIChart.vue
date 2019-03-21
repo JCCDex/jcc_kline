@@ -64,20 +64,25 @@ export default {
   watch: {
     toolTipIndex() {
       let index = this.toolTipIndex;
-      if (this.DMIData) {
-        this.toolTipData = {
-          PDI: parseFloat(this.DMIData.PDI[index]).toFixed(4),
-          MDI: parseFloat(this.DMIData.MDI[index]).toFixed(4),
-          ADX: parseFloat(this.DMIData.ADX[index]).toFixed(4),
-          ADXR: parseFloat(this.DMIData.ADXR[index]).toFixed(4)
-        };
+      if (index) {
+        if (this.chartDataObj.candleData && !this.DMIData) {
+          this.DMIData = getDMIData(this.chartDataObj.candleData.values);
+        }
+        if (this.DMIData) {
+          this.toolTipData = {
+            PDI: parseFloat(this.DMIData.PDI[index]).toFixed(4),
+            MDI: parseFloat(this.DMIData.MDI[index]).toFixed(4),
+            ADX: parseFloat(this.DMIData.ADX[index]).toFixed(4),
+            ADXR: parseFloat(this.DMIData.ADXR[index]).toFixed(4)
+          };
+        }
       }
     },
     resizeSize() {
       this.resize();
     },
     chartDataObj() {
-      if (this.chartDataObj.klineData) {
+      if (this.chartDataObj.candleData) {
         this.indicatorsData = {
           indicator: this.chartDataObj.indicators,
           categoryData: this.chartDataObj.candleData.categoryData

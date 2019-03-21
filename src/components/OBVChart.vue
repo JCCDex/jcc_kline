@@ -115,10 +115,15 @@ export default {
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
-      if (this.OBVData) {
-        this.toolTipData = {
-          OBV: parseFloat(this.OBVData.OBV[index]).toFixed(2)
-        };
+      if (index) {
+        if (this.chartDataObj.klineData && !this.OBVData) {
+          this.OBVData = getOBVData(this.chartDataObj.klineData);
+        }
+        if (this.OBVData) {
+          this.toolTipData = {
+            OBV: parseFloat(this.OBVData.OBV[index]).toFixed(2)
+          };
+        }
       }
     }
   },

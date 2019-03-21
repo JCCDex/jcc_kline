@@ -23,9 +23,10 @@
       <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
       <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
       <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
-      <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
+      <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ>
       <!-- <OBV ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></OBV> -->
       <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></DMI>
+      <!-- <TRIX ref = "indicator" v-show = "showIndicatorChart === 'TRIX'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></TRIX> -->
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
@@ -37,6 +38,7 @@ import TimeSharing from './timeSharing.vue'
 import KDJ from './KDJChart.vue'
 import DMI from './DMIChart.vue'
 import OBV from './OBVChart.vue'
+import TRIX from './TRIXChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume } from '../js/linkageCharts';
@@ -49,7 +51,8 @@ export default {
     TimeSharing,
     KDJ,
     DMI,
-    OBV
+    OBV,
+    TRIX
   },
   data() {
     return {
@@ -131,6 +134,9 @@ export default {
         }
         candleData.MAData = MAData
         candleData.precision = precision
+        if (!this.toolTipIndex) {
+          this.toolTipIndex = candleData.values.length - 1
+        }
       }
       if (this.klineDataObj.depthData) {
         depthData = getDepthData(this.klineDataObj.depthData);
@@ -139,6 +145,9 @@ export default {
         timeDivisionData = this.klineDataObj.timeDivisionData
         divisionData = handleDivisionData(timeDivisionData)
         this.divisionTime = divisionData.divisionTime
+        if (!this.toolTipIndex) {
+          this.toolTipIndex = divisionData.prices.length - 1
+        }
       }
       this.chartDataObj = {
         platform: 'mobile',
@@ -147,6 +156,7 @@ export default {
         indicators: this.showIndicatorChart,
         cycle: this.klineDataObj.cycle,
         coinType: this.klineDataObj.coinType,
+        index: this.toolTipIndex,
         candleData: candleData,
         depthData: depthData,
         timeDivisionData: timeDivisionData,
@@ -161,6 +171,7 @@ export default {
       } else {
         this.timeSharingTipData = null
       }
+      this.toolTipIndex = null
       this.$emit("listenToChildEvent", cycle)
     },
     getCandleChart(candle) {
