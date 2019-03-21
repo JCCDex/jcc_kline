@@ -4,10 +4,8 @@
       :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
       v-if="toolTipData"
     >
-      <!-- <font style="color: #e6e6e6;">PDI:{{this.toolTipData.PDI}}</font>
-      <font style="color: #f6d026;">MDI:{{this.toolTipData.MDI}}</font>
-      <font style="color: #e03bfa;">ADX:{{this.toolTipData.ADX}}</font>
-      <font style="color: #67ff7c;">ADXR:{{this.toolTipData.ADXR}}</font>-->
+      <font style="color: #e6e6e6;">TRIX:{{this.toolTipData.TRIX}}</font>
+      <font style="color: #f6d026;">MATRIX:{{this.toolTipData.MATRIX}}</font>
     </div>
     <div
       ref="TRIX"
@@ -19,7 +17,7 @@
 <script>
 import { getTRIXData } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage, formatDecimal } from "../js/utils";
+import { getLanguage } from "../js/utils";
 export default {
   name: "TRIX",
   data() {
@@ -67,16 +65,16 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.klineData) {
-        this.indicatorData = {
+        this.indicatorsData = {
           indicator: this.chartDataObj.indicators,
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        // getTRIXData(this.chartDataObj.candleData.values);
+        this.TRIXData = getTRIXData(this.chartDataObj.candleData.values);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
-        //   this.indicatorData.indicatorData = this.TRIXData;
+        this.indicatorsData.indicatorData = this.TRIXData;
       }
-      if (this.indicatorData) {
+      if (this.indicatorsData) {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
@@ -84,14 +82,14 @@ export default {
         ) {
           this.TRIX.clearIndicatorEcharts();
           this.cycle = this.chartDataObj.cycle;
-          this.TRIX.setIndicatorOption(this.indicatorData, this.cycle);
+          this.TRIX.setIndicatorOption(this.indicatorsData, this.cycle);
           this.$emit(
             "listenIndicatorChartEvent",
             this.TRIX.getIndicatorEchart()
           );
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.TRIX.updateIndicatorOption(this.indicatorData, this.cycle);
+          this.TRIX.updateIndicatorOption(this.indicatorsData, this.cycle);
         }
       }
     },
@@ -118,12 +116,10 @@ export default {
       let pricePrecision = !isNaN(this.chartDataObj.precision.price)
         ? this.chartDataObj.precision.price
         : 6;
-      if (this.chartDataObj.indicators === "TRIX") {
+      if (this.TRIXData) {
         this.toolTipData = {
-          //   PDI: formatDecimal(this.TRIXData.PDI[index], pricePrecision, true),
-          //   MDI: formatDecimal(this.TRIXData.MDI[index], pricePrecision, true),
-          //   ADX: formatDecimal(this.TRIXData.ADX[index], pricePrecision, true),
-          //   ADXR: formatDecimal(this.TRIXData.ADXR[index], pricePrecision, true)
+          TRIX: parseFloat(this.TRIXData.TRIX[index]).toFixed(4),
+          MATRIX: parseFloat(this.TRIXData.MATRIX[index]).toFixed(4)
         };
       }
     }

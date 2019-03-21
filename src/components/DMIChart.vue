@@ -19,7 +19,7 @@
 <script>
 import { getDMIData } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage, formatDecimal } from "../js/utils";
+import { getLanguage } from "../js/utils";
 export default {
   name: "DMI",
   data() {
@@ -65,14 +65,11 @@ export default {
     toolTipIndex() {
       let index = this.toolTipIndex;
       if (this.DMIData) {
-        let pricePrecision = !isNaN(this.chartDataObj.precision.price)
-          ? this.chartDataObj.precision.price
-          : 6;
         this.toolTipData = {
-          PDI: formatDecimal(this.DMIData.PDI[index], pricePrecision, true),
-          MDI: formatDecimal(this.DMIData.MDI[index], pricePrecision, true),
-          ADX: formatDecimal(this.DMIData.ADX[index], pricePrecision, true),
-          ADXR: formatDecimal(this.DMIData.ADXR[index], pricePrecision, true)
+          PDI: parseFloat(this.DMIData.PDI[index]).toFixed(4),
+          MDI: parseFloat(this.DMIData.MDI[index]).toFixed(4),
+          ADX: parseFloat(this.DMIData.ADX[index]).toFixed(4),
+          ADXR: parseFloat(this.DMIData.ADXR[index]).toFixed(4)
         };
       }
     },

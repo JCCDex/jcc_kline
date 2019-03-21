@@ -205,6 +205,31 @@ class IndicatorChartController {
                     }
                 }
             ];
+        } else if (data.indicator === 'TRIX' && data.indicatorData.TRIX) {
+            series = [
+                {
+                    name: 'TRIX',
+                    data: data.indicatorData.TRIX,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e6e6e6'
+                        }
+                    }
+                },
+                {
+                    name: 'MATRIX',
+                    data: data.indicatorData.MATRIX,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#f6d026'
+                        }
+                    }
+                }
+            ];
         }
         return series;
     }

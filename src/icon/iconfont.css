@@ -1,8 +1,8 @@
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1553132508446'); /* IE9 */
-  src: url('iconfont.eot?t=1553132508446#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.ttf?t=1553132508446') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  url('iconfont.svg?t=1553132508446#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1553151109597'); /* IE9 */
+  src: url('iconfont.eot?t=1553151109597#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.ttf?t=1553151109597') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1553151109597#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -27,6 +27,10 @@
 
 .icon-full-screen:before {
   content: "\e6c2";
+}
+
+.icon-popover-close:before {
+  content: "\e6c8";
 }
 
 .icon-indicator:before {
