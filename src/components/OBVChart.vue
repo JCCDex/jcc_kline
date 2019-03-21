@@ -16,7 +16,7 @@
 <script>
 import { getOBVData } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage, formatDecimal } from "../js/utils";
+import { getLanguage } from "../js/utils";
 export default {
   name: "OBV",
   data() {
@@ -115,12 +115,9 @@ export default {
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
-      let amountPrecision = !isNaN(this.chartDataObj.precision.amount)
-        ? this.chartDataObj.precision.amount
-        : 6;
       if (this.OBVData) {
         this.toolTipData = {
-          OBV: this.OBVData.OBV[index].toFixed(2)
+          OBV: parseFloat(this.OBVData.OBV[index]).toFixed(2)
         };
       }
     }

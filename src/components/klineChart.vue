@@ -68,7 +68,7 @@
       <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ>
       <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></DMI>
       <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></OBV>
-      <!-- <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></TRIX> -->
+      <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></TRIX>
     </fullscreen>
   </div>
 </template>

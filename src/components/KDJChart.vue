@@ -18,7 +18,7 @@
 <script>
 import { getKDJData } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage, formatDecimal } from "../js/utils";
+import { getLanguage } from "../js/utils";
 export default {
   name: "stochastic",
   data() {
@@ -67,9 +67,9 @@ export default {
           ? this.KDJData.precision.price
           : 6;
         this.toolTipData = {
-          K: formatDecimal(this.KDJData.K[index], pricePrecision, true),
-          D: formatDecimal(this.KDJData.D[index], pricePrecision, true),
-          J: formatDecimal(this.KDJData.J[index], pricePrecision, true)
+          K: parseFloat(this.KDJData.K[index]).toFixed(4),
+          D: parseFloat(this.KDJData.D[index]).toFixed(4),
+          J: parseFloat(this.KDJData.J[index]).toFixed(4)
         };
       }
     },
