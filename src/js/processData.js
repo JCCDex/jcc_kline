@@ -58,7 +58,7 @@ export const getEMA12 = (i, oldEMA12, closingPrice) => {
     } else {
         return (0.153846154*closingPrice + 0.846153846*oldEMA12).toFixed(6);
     }
-}
+};
 
 export const getEMA26 = (i, oldEMA26, closingPrice) => {
     if (i === 0) {
@@ -66,7 +66,7 @@ export const getEMA26 = (i, oldEMA26, closingPrice) => {
     } else {
         return (0.074074074*closingPrice + 0.925925926*oldEMA26).toFixed(6);
     }
-}
+};
 
 export const getDEA = (i, DIFF, oldDEA) => {
     if (i === 0) {
@@ -74,7 +74,7 @@ export const getDEA = (i, DIFF, oldDEA) => {
     } else {
         return (0.2 * DIFF + 0.8 * oldDEA).toFixed(6);
     }
-}
+};
 
 export const getDepthData = (data) => {
     if (!data) return;
@@ -98,7 +98,6 @@ export const getDepthData = (data) => {
 };
 
 export const handleDivisionData = (datas) => {
-    debugger
     let prices = [];
     let averages = [];
     let times = [];

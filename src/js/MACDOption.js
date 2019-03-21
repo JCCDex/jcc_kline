@@ -153,10 +153,6 @@ var macdMobileOption = {
             position: 'right', // y 轴的位置
             axisLine: {
                 show: false,
-                onZero: false,
-            },
-            axisLine: {
-                show: false,
                 lineStyle: {
                     color: '#37404b'
                 }
@@ -183,13 +179,13 @@ var macdMobileOption = {
         },{
             name: 'DIF',
             type: 'line', // 折线图
-            symbol: "none",
+            symbol: 'none',
             xAxisIndex: 0,
             yAxisIndex: 0,
         },{
             name: 'DEA',
             type: 'line',
-            symbol: "none",
+            symbol: 'none',
             xAxisIndex: 0,
             yAxisIndex: 0,
         }

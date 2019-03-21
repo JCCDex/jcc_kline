@@ -4,7 +4,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
-import { getLanguage,　getDefaultChartSize } from './utils';
+import { getLanguage, getDefaultChartSize } from './utils';
 
 var MACDOption;
 var oldMACDData;
