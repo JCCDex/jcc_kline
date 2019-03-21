@@ -4,36 +4,34 @@
       :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
       v-if="toolTipData"
     >
-      <font style="color: #67ff7c;">OBV:&nbsp;{{toolTipData.OBV}}</font>
+      <!-- <font style="color: #e6e6e6;">PDI:{{this.toolTipData.PDI}}</font>
+      <font style="color: #f6d026;">MDI:{{this.toolTipData.MDI}}</font>
+      <font style="color: #e03bfa;">ADX:{{this.toolTipData.ADX}}</font>
+      <font style="color: #67ff7c;">ADXR:{{this.toolTipData.ADXR}}</font>-->
     </div>
     <div
-      ref="indicator"
-      :style="{height: `${indicatorSize.height}`, width: `${indicatorSize.width}`}"
+      ref="TRIX"
+      :style="{height: `${TRIXSize.height}`, width: `${TRIXSize.width}`}"
       @mousemove="getToolTipIndex()"
     ></div>
   </div>
 </template>
 <script>
-import {
-  splitData,
-  getDepthData,
-  getKDJData,
-  getOBVData
-} from "../js/processData";
+import { getTRIXData } from "../js/processData";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
-  name: "indicator",
+  name: "TRIX",
   data() {
     return {
       indicator: null,
       indicatorData: null,
-      OBVData: null,
+      TRIXData: null,
       coinType: "",
       cycle: "",
       chartType: "indicator",
       toolTipData: null,
-      indicatorSize: {
+      TRIXSize: {
         height: "",
         width: ""
       }
@@ -73,12 +71,10 @@ export default {
           indicator: this.chartDataObj.indicators,
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        if (this.chartDataObj.indicators === "OBV") {
-          this.OBVData = getOBVData(this.chartDataObj.klineData);
-          let index = this.chartDataObj.index;
-          this.$emit("listenToTipIndex", index);
-          this.indicatorData.indicatorData = this.OBVData;
-        }
+        // getTRIXData(this.chartDataObj.candleData.values);
+        let index = this.chartDataObj.index;
+        this.$emit("listenToTipIndex", index);
+        //   this.indicatorData.indicatorData = this.TRIXData;
       }
       if (this.indicatorData) {
         if (
@@ -86,16 +82,16 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.chartDataObj.cycle !== this.cycle
         ) {
-          this.indicator.clearIndicatorEcharts();
+          this.TRIX.clearIndicatorEcharts();
           this.cycle = this.chartDataObj.cycle;
-          this.indicator.setIndicatorOption(this.indicatorData, this.cycle);
+          this.TRIX.setIndicatorOption(this.indicatorData, this.cycle);
           this.$emit(
             "listenIndicatorChartEvent",
-            this.indicator.getIndicatorEchart()
+            this.TRIX.getIndicatorEchart()
           );
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.indicator.updateIndicatorOption(this.indicatorData, this.cycle);
+          this.TRIX.updateIndicatorOption(this.indicatorData, this.cycle);
         }
       }
     },
@@ -106,10 +102,10 @@ export default {
           height: this.klineConfig.size.height + "px"
         };
         if (
-          JSON.stringify(size) !== JSON.stringify(this.indicatorSize) &&
+          JSON.stringify(size) !== JSON.stringify(this.TRIXSize) &&
           this.klineConfig.defaultSize === false
         ) {
-          this.indicatorSize = {
+          this.TRIXSize = {
             width: this.klineConfig.size.width + "px",
             height: this.klineConfig.size.height * 0.25 + "px"
           };
@@ -119,12 +115,15 @@ export default {
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
-      let amountPrecision = !isNaN(this.chartDataObj.precision.amount)
-        ? this.chartDataObj.precision.amount
+      let pricePrecision = !isNaN(this.chartDataObj.precision.price)
+        ? this.chartDataObj.precision.price
         : 6;
-      if (this.chartDataObj.indicators === "OBV") {
+      if (this.chartDataObj.indicators === "TRIX") {
         this.toolTipData = {
-          OBV: formatDecimal(this.OBVData[index], amountPrecision, true)
+          //   PDI: formatDecimal(this.TRIXData.PDI[index], pricePrecision, true),
+          //   MDI: formatDecimal(this.TRIXData.MDI[index], pricePrecision, true),
+          //   ADX: formatDecimal(this.TRIXData.ADX[index], pricePrecision, true),
+          //   ADXR: formatDecimal(this.TRIXData.ADXR[index], pricePrecision, true)
         };
       }
     }
@@ -132,20 +131,20 @@ export default {
   created() {
     if (this.klineConfig.platform === "pc") {
       if (!this.klineConfig.defaultSize) {
-        this.indicatorSize.height = this.klineConfig.size.height * 0.25 + "px";
-        this.indicatorSize.width = this.klineConfig.size.width + "px";
+        this.TRIXSize.height = this.klineConfig.size.height * 0.25 + "px";
+        this.TRIXSize.width = this.klineConfig.size.width + "px";
       } else {
-        this.indicatorSize = {
+        this.TRIXSize = {
           height: "132px",
           width: "100%"
         };
       }
     } else {
-      this.indicatorSize.height = this.klineConfig.size.height * 0.4 + "px";
-      this.indicatorSize.width = this.klineConfig.size.width + "px";
+      this.TRIXSize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.TRIXSize.width = this.klineConfig.size.width + "px";
     }
     this.klineConfig.chartType = "indicator";
-    this.indicator = new IndicatorChart(this.klineConfig);
+    this.TRIX = new IndicatorChart(this.klineConfig);
   },
   mounted() {
     this.init();
@@ -155,24 +154,24 @@ export default {
   },
   methods: {
     init() {
-      this.indicator.initIndicatorChart(this.$refs.indicator);
+      this.TRIX.initIndicatorChart(this.$refs.TRIX);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.indicator.getIndicatorTipData();
+      let index = this.TRIX.getIndicatorTipData();
       this.$emit("listenToTipIndex", index);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.indicator.resizeIndicatorChart(
-          this.$refs.indicator,
+        this.TRIX.resizeIndicatorChart(
+          this.$refs.TRIX,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
         );
       }
     },
     dispose() {
-      this.indicator.disposeIndicatorEChart();
+      this.TRIX.disposeIndicatorEChart();
     }
   }
 };

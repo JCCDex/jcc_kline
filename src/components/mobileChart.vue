@@ -25,8 +25,8 @@
       <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
       <MACD ref="macd" v-show = "showChart === 'candle'" v-on:listenMacdChartEvent = 'getMacdChart' :toolTipIndex = "toolTipIndex" @listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></MACD>
       <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
-      <!-- <Indicator ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Indicator> -->
-      <!-- <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></DMI> -->
+      <!-- <OBV ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></OBV> -->
+      <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></DMI>
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
@@ -38,7 +38,7 @@ import TimeSharing from './timeSharing.vue'
 import MACD from './MACDChart.vue'
 import KDJ from './KDJChart.vue'
 import DMI from './DMIChart.vue'
-import Indicator from './IndicatorChart.vue'
+import OBV from './OBVChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume, linkageMacd } from '../js/linkageCharts';
@@ -52,7 +52,7 @@ export default {
     MACD,
     KDJ,
     DMI,
-    Indicator
+    OBV
   },
   data() {
     return {
