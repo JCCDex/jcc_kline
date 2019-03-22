@@ -136,7 +136,7 @@ export default {
       outspreadMA: true,
       resizeSize: {},
       isFullScreen: false,
-      showIndicator: 'MACD',
+      showIndicator: null,
       isClose: false
     };
   },
@@ -283,12 +283,17 @@ export default {
       }
     },
     showIndicatorChart(indicator) {
-      if (this.showIndicator === indicator) {
-        return
+      // if (this.showIndicator === indicator) {
+      //   return
+      // }
+      if (this.showIndicator === null) {
+        this.showIndicator = indicator
+        this.isClose = false
+      } else {
+        this.showIndicator = null
+        this.isClose = true
       }
-      this.isClose = false
       this.resize()
-      this.showIndicator = indicator
       this.changeChartDataObj(this.klineDataObj)
     },
     changeCycle(cycle) {
@@ -413,7 +418,7 @@ export default {
       this.isShow = false;
     },
     getMacdClose(isClose) {
-      this.showIndicator = "default";
+      this.showIndicator = null;
       this.isClose = isClose;
       this.resize();
     }

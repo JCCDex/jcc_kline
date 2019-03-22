@@ -17,7 +17,7 @@ class VolumeChart {
 
     resizeECharts(DOM, isFullScreen, isCloseIndicator, resizeSize) {
         let size = getDefaultChartSize();
-        let csale = isCloseIndicator ? 0.3 : 0.2;
+        let csale = isCloseIndicator===false ? 0.2 : 0.3;
         if (!isFullScreen) {
             if (!this.volumeConfig.defaultSize) {
                 let resizeContainer = () => {
