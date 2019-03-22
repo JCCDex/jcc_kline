@@ -177,8 +177,13 @@
 }
 
 .icon-popover-close {
-    font-size: 10px;
+    font-size: 10px !important;
     color: #b9cadd;
+}
+
+.icon-popover-close:hover {
+    font-size: 10px;
+    color: #1bdafd;
 }
 
 .icon-full-screen:hover {

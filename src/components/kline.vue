@@ -167,7 +167,7 @@ export default {
       this.$emit("listenToTipIndex", toolTipIndex)
     },
     resize() {
-      this.kline.resizeChart(this.$refs.klineRef, this.resizeSize.isFullScreen, this.klineConfig.size);
+      this.kline.resizeChart(this.$refs.klineRef, this.resizeSize.isFullScreen, this.resizeSize.isCloseIndicator, this.klineConfig.size);
     },
     clearChart() {
       this.kline.clearChart();

@@ -130,7 +130,7 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen, this.klineConfig.size);
+        this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen,　this.resizeSize.isCloseIndicator, this.klineConfig.size);
       }
     },
     clearChart() {

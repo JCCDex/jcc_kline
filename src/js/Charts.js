@@ -109,8 +109,8 @@ class ChartController {
         this.setVolumeChart.initVolumeECharts(DOM);
     }
 
-    resizeVolumeChart(DOM, isFullScreen, size) {
-        this.setVolumeChart.resizeECharts(DOM, isFullScreen, size);
+    resizeVolumeChart(DOM, isFullScreen, isCloseIndicator, size) {
+        this.setVolumeChart.resizeECharts(DOM, isFullScreen, isCloseIndicator, size);
     }
 
     setVolumeOption(data, cycle) {

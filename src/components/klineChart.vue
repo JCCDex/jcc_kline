@@ -27,29 +27,21 @@
       </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
-          
-          <div style="position: absolute;right:158px;top:4px;z-index:5;" class="icon-indicator-div">
-            <i v-show = "false" class="icon iconfont icon-indicator" @click="fullScreenToggle"></i>
-            <!-- <i v-show = "true" class="icon iconfont icon-indicator">
-              <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
-            </i> -->
-
-          <el-popover placement="bottom" width="80" trigger="click">
-            <div class="indicatorOpt">
-              <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
-              <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br>
-              <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
-              <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
-              <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
-            </div>
-            <!-- <i slot="reference" class= "icon iconfont icon-indicator">{{message.indicator}}</i> -->
-            <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
-              <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
-            </i>
-            <!-- <i v-show = "true" slot="reference" class="icon iconfont icon-indicator"> -->
-          </el-popover>
-
+          <div style="position: absolute;right:150px;top:4px;z-index:5;" class="icon-indicator-div">
+            <el-popover placement="bottom" width="60" trigger="click">
+              <div class="indicatorOpt">
+                <!-- <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
+                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br> -->
+                <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
+                <!-- <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
+                <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br> -->
+              </div>
+              <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
+                <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
+              </i>
+            </el-popover>
           </div>
+
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
@@ -78,7 +70,7 @@
       <Depth ref="depth" v-show = "showChart === 'depth'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" :resize-size = "resizeSize"></Depth>
       <!-- <time-sharing ref="timeSharing" v-if= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" v-on:listenToTipIndex = "getTipDataIndex" v-on:listenTimeSharingChart = "getTimeSharingChart"></time-sharing> -->
       <Volume ref = 'volume' v-show = "showChart !== 'depth'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></Volume>
-      <MACD ref = "macd" v-show = "showIndicator === 'MACD' && showChart !== 'depth'" v-on:listenMacdChartEvent = 'getMacdchart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" ></MACD>
+      <MACD ref = "macd" v-show = "showIndicator === 'MACD' && showChart !== 'depth'" v-on:listenMacdChartEvent = 'getMacdchart' v-on:listenMacdChartClose = 'getMacdClose' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" ></MACD>
       <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ>
       <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></DMI>
       <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></OBV>
@@ -139,6 +131,7 @@ export default {
       resizeSize: {},
       isFullScreen: false,
       showIndicator: 'MACD',
+      isClose: false
     };
   },
   props: {
@@ -287,6 +280,8 @@ export default {
       if (this.showIndicator === indicator) {
         return
       }
+      this.isClose = false
+      this.resize()
       this.showIndicator = indicator
       this.changeChartDataObj(this.klineDataObj)
     },
@@ -387,7 +382,8 @@ export default {
     },
     resize() {
       this.resizeSize = {
-        isFullScreen: this.isFullScreen
+        isFullScreen: this.isFullScreen,
+        isCloseIndicator: this.isClose
       }
     },
     changeChart(type) {
@@ -409,6 +405,11 @@ export default {
     },
     leave() {
       this.isShow = false;
+    },
+    getMacdClose(isClose) {
+      this.showIndicator = "default";
+      this.isClose = isClose;
+      this.resize();
     }
   }
 }

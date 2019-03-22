@@ -8,7 +8,7 @@
       <font style="color: #ff4d71;">DIFF:{{toolTipData.diff}}&nbsp;</font>
       <font style="color: #f6d026;">DEA:{{toolTipData.dea}}&nbsp;</font>
     </div>
-      <div  @click = "closeMacd" style="position: absolute;right:70px;z-index:5;" v-show = "true" class="icon iconfont icon-popover-close"></div>
+      <i @click = "closeMacd" style="position:absolute;right:70px;z-index:5;" v-show = "true" class="icon iconfont icon-popover-close"></i>
     <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"
     @mousemove="getToolTipData()"
     ></div>
@@ -212,7 +212,7 @@ export default {
         };
     },
     closeMacd() {
-      alert("qqq")
+      this.$emit("listenMacdChartClose", true)
     }
   }
 }

@@ -16,13 +16,15 @@ class KLineSetChartController {
         this.klineConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen, resizeSize) {
+    resizeECharts(DOM, isFullScreen, isCloseIndicator, resizeSize) {
+        debugger
         let size = getDefaultChartSize();
+        let csale =　isCloseIndicator ? 0.7 : 0.6;
         if (!isFullScreen) {
             if (!this.klineConfig.defaultSize) {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = resizeSize.height * 0.60 + 'px';
+                        DOM.style.height = resizeSize.height * csale + 'px';
                         DOM.style.width = resizeSize.width + 'px';
                     }
                 };
@@ -31,7 +33,7 @@ class KLineSetChartController {
             } else {
                 let resizeContainer = () => {
                     if (DOM) {
-                        DOM.style.height = size.height * 0.60 + 'px';
+                        DOM.style.height = size.height * csale + 'px';
                         DOM.style.width = size.width + 'px';
                     }
                 };
@@ -40,7 +42,7 @@ class KLineSetChartController {
             }
         } else {
             let resizeContainer = () => {
-                DOM.style.height = size.clientHeight * 0.60 + 'px';
+                DOM.style.height = size.clientHeight * csale + 'px';
                 DOM.style.width = size.clientWidth + 'px';
             };
             resizeContainer(this);
