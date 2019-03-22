@@ -81,6 +81,106 @@
     color: #b9cadd;
 }
 
+.icon-indicator-div {
+    position: relative;
+    display: inline-block;
+}
+
+.icon-indicator {
+    font-size: 18px;
+    color: #b9cadd;
+}
+
+.icon-indicator:hover {
+    font-size: 18px;
+    color: #1bdafd;
+}
+
+.icon-indicator-div .icon-indicator-ch {
+    visibility: hidden;
+    width: 46px;
+    height: 24px;
+    background-color: #ffffff;
+    color: #101010;
+    text-align: center;
+    border-radius: 4px;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -23px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.icon-indicator-div .icon-indicator-ch::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+
+.icon-indicator-div:hover .icon-indicator-ch {
+    visibility: visible;
+    opacity: 1;
+}
+
+.icon-indicator-div:hover .icon-indicator-en {
+    visibility: visible;
+    opacity: 1;
+}
+
+.icon-indicator-div .icon-indicator-en {
+    visibility: hidden;
+    width: 46px;
+    height: 24px;
+    background-color: #ffffff;
+    color: #101010;
+    text-align: center;
+    border-radius: 4px;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -23px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.icon-indicator-div .icon-indicator-en::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 4px;
+    border-style: solid;
+    border-color: #ffffff transparent transparent transparent;
+}
+
+.indicatorOpt {
+    color: #e6e6e6;
+    background-color: #1e262c;
+    font-size: 14px;
+    font-family: "Microsoft YaHei";
+}
+
+.full-screen-div:hover .icon-fullscreen-tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+.icon-popover-close {
+    font-size: 10px;
+    color: #b9cadd;
+}
+
 .icon-full-screen:hover {
     font-size: 18px;
     color: #1bdafd;

@@ -27,16 +27,29 @@
       </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
-          <el-popover placement="bottom" width="150" trigger="click">
-            <div>
+          
+          <div style="position: absolute;right:158px;top:4px;z-index:5;" class="icon-indicator-div">
+            <i v-show = "false" class="icon iconfont icon-indicator" @click="fullScreenToggle"></i>
+            <!-- <i v-show = "true" class="icon iconfont icon-indicator">
+              <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
+            </i> -->
+
+          <el-popover placement="bottom" width="80" trigger="click">
+            <div class="indicatorOpt">
               <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
               <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br>
               <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
               <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
               <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
             </div>
-            <el-button slot="reference" class= "indicator-btn">{{message.indicator}}</el-button>
+            <!-- <i slot="reference" class= "icon iconfont icon-indicator">{{message.indicator}}</i> -->
+            <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
+              <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
+            </i>
+            <!-- <i v-show = "true" slot="reference" class="icon iconfont icon-indicator"> -->
           </el-popover>
+
+          </div>
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
           <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
@@ -125,7 +138,7 @@ export default {
       outspreadMA: true,
       resizeSize: {},
       isFullScreen: false,
-      showIndicator: 'MACD'
+      showIndicator: 'MACD',
     };
   },
   props: {
