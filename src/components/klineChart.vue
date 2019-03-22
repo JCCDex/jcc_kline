@@ -27,19 +27,25 @@
       </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
-          <div style="position: absolute;right:150px;top:4px;z-index:5;" class="icon-indicator-div">
+          <!-- <div style="position: absolute;right:150px;top:4px;z-index:5;" class="icon-indicator-div">
             <el-popover placement="bottom" width="60" trigger="click">
               <div class="indicatorOpt">
-                <!-- <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
-                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br> -->
+                <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
+                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br>
                 <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
-                <!-- <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
-                <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br> -->
+                <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
+                <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
               </div>
               <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
                 <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
               </i>
             </el-popover>
+          </div> -->
+
+           <div style="position: absolute;right:154px;top:4px;z-index:5;" class="icon-indicator-div">
+              <i v-show = "true" @click = "showIndicatorChart('MACD')" class="icon iconfont icon-indicator">
+                <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span>
+              </i>
           </div>
 
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
