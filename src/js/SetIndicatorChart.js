@@ -230,6 +230,42 @@ class IndicatorChartController {
                     }
                 }
             ];
+        } else if (data.indicator === 'RSI' && data.indicatorData.RSI6) {
+            series = [
+                {
+                    name: 'RSI6',
+                    data: data.indicatorData.RSI6,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                },
+                {
+                    name: 'RSI12',
+                    data: data.indicatorData.RSI12,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#16c5ff'
+                        }
+                    }
+                },
+                {
+                    name: 'RSI24',
+                    data: data.indicatorData.RSI24,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e03bfa'
+                        }
+                    }
+                }
+            ];
         }
         return series;
     }

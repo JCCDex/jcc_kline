@@ -33,6 +33,7 @@
               <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br>
               <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
               <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
+              <div @click = "showIndicatorChart('RSI')" class = "chart-indicator-div">RSI</div><br>
               <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
             </div>
             <el-button slot="reference" class= "indicator-btn">{{message.indicator}}</el-button>
@@ -68,6 +69,7 @@
       <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></KDJ>
       <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></DMI>
       <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></OBV>
+      <RSI ref = "indicator" v-show = "showIndicator === 'RSI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></RSI>
       <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize"></TRIX>
     </fullscreen>
   </div>
@@ -84,6 +86,7 @@ import Volume from './volumeChart.vue'
 import KDJ from './KDJChart.vue'
 import DMI from './DMIChart.vue'
 import OBV from './OBVChart.vue'
+import RSI from './RSIChart.vue'
 import TRIX from './TRIXChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
 import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
@@ -97,6 +100,7 @@ export default {
     Fullscreen,
     KDJ,
     DMI,
+    RSI,
     OBV,
     TRIX
     // TimeSharing
