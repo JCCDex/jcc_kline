@@ -5,10 +5,10 @@
       v-if="toolTipData"
     >
       <font style="color: #67ff7c;">MACD:{{toolTipData.macd}}&nbsp;</font>
-      <font style="color: #ff4d71;">DIFF:{{toolTipData.diff}}&nbsp;</font>
-      <font style="color: #f6d026;">DEA:{{toolTipData.dea}}&nbsp;</font>
+      <font style="color: #fd1d57;">DIFF:{{toolTipData.diff}}&nbsp;</font>
+      <font style="color: #ffd801;">DEA:{{toolTipData.dea}}&nbsp;</font>
     </div>
-      <i @click = "closeMacd" style="position:absolute;right:70px;z-index:5;" v-show = "true" class="icon iconfont icon-popover-close"></i>
+      <i v-show = "isPC" @click = "closeMacd" style="position:absolute;right:70px;z-index:5;" class="icon iconfont icon-popover-close"></i>
     <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"
     @mousemove="getToolTipData()"
     ></div>
@@ -26,6 +26,7 @@ export default {
       macdData:"",
       toolTipData: null,
       macd: '',
+      isPC:false,
       macdSize: {
         height: '',
         width: ''
@@ -146,12 +147,13 @@ export default {
   
   created() {
     if (this.klineConfig.platform === 'pc') {
+      this.isPC = true;
       if (!this.klineConfig.defaultSize) {
         this.macdSize.height = this.klineConfig.size.height * 0.25 + 'px'
         this.macdSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.macdSize = {
-          height: '107px',
+          height: '527px',
           width: '100%'
         }
       }

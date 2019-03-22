@@ -34,9 +34,9 @@ export const splitData = (data) => {
         ]);
         EMA12 = getEMA12(i, EMA12, values[i][1]);
         EMA26 = getEMA26(i, EMA26, values[i][1]);
-        DIFF = (EMA12 - EMA26).toFixed(6);
+        DIFF = (EMA12 - EMA26).toFixed(7);
         DEA = getDEA(i, DIFF, DEA);
-        MACD =  (2 * (DIFF-DEA)).toFixed(6);
+        MACD =  (2 * (DIFF-DEA)).toFixed(7);
         MACDData.push([
             formatTime(data[i][0]),
             DIFF,
@@ -56,7 +56,7 @@ export const getEMA12 = (i, oldEMA12, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.153846154*closingPrice + 0.846153846*oldEMA12).toFixed(6);
+        return (0.153846154*closingPrice + 0.846153846*oldEMA12).toFixed(7);
     }
 };
 
@@ -64,7 +64,7 @@ export const getEMA26 = (i, oldEMA26, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.074074074*closingPrice + 0.925925926*oldEMA26).toFixed(6);
+        return (0.074074074*closingPrice + 0.925925926*oldEMA26).toFixed(7);
     }
 };
 
@@ -72,7 +72,7 @@ export const getDEA = (i, DIFF, oldDEA) => {
     if (i === 0) {
         return 0;
     } else {
-        return (0.2 * DIFF + 0.8 * oldDEA).toFixed(6);
+        return (0.2 * DIFF + 0.8 * oldDEA).toFixed(7);
     }
 };
 

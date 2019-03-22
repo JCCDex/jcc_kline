@@ -70,9 +70,11 @@ var macdOption = {
             symbol: 'none', // 
             smooth: true, //  是否平滑显示 
             showSymbol: false, // 是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示。
-            lineStyle: { // 线的样式
+            lineStyle: {
                 normal: {
-                    width: 1 // 线宽
+                    color: '#fd1d57',
+                    opacity: 1,
+                    width: 1
                 }
             }
         },{
@@ -83,9 +85,11 @@ var macdOption = {
             symbol: 'none', // 
             smooth: true, //  是否平滑显示 
             showSymbol: false, // 是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示。
-            lineStyle: { // 线的样式
+            lineStyle: {
                 normal: {
-                    width: 1 // 线宽
+                    color: '#ffd801',
+                    opacity: 1,
+                    width: 1
                 }
             }
         }
@@ -182,12 +186,26 @@ var macdMobileOption = {
             symbol: 'none',
             xAxisIndex: 0,
             yAxisIndex: 0,
+            lineStyle: {
+                normal: {
+                    color: '#fd1d57',
+                    opacity: 1,
+                    width: 1
+                }
+            }
         },{
             name: 'DEA',
             type: 'line',
             symbol: 'none',
             xAxisIndex: 0,
             yAxisIndex: 0,
+            lineStyle: {
+                normal: {
+                    color: '#ffd801',
+                    opacity: 1,
+                    width: 1
+                }
+            }
         }
     ],
     dataZoom: [ // 用于区域缩放，从而能自由关注细节的数据信息，或者概览数据整体，或者去除离群点的影响
