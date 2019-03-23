@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div style="background:#2b2f33; height:0.02rem"></div>
     <div
       :class="this.klineConfig.platform === 'pc' ? 'macd-tip-data' : 'mobile-macd-tip'"
       v-if="toolTipData"
@@ -158,8 +159,8 @@ export default {
         }
       }
     } else {
-      this.macdSize.height = this.klineConfig.macdSize.height * 0.4 + 'px'
-      this.macdSize.width = this.klineConfig.macdSize.width + 'px'
+      this.macdSize.height = this.klineConfig.size.height * 0.3 + 'px'
+      this.macdSize.width = this.klineConfig.size.width + 'px'
     }
     this.klineConfig.chartType = 'MACD';
     this.macd = new ChartController(this.klineConfig);

@@ -107,7 +107,7 @@ export default {
         }
       }
     } else {
-      this.volumeSize.height = this.klineConfig.size.height * 0.4 + 'px'
+      this.volumeSize.height = this.klineConfig.size.height * 0.3 + 'px'
       this.volumeSize.width = this.klineConfig.size.width + 'px'
     }
     this.klineConfig.chartType = 'volume';

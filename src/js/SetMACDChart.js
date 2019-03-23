@@ -40,7 +40,7 @@ class MACDChart {
             }
         } else {
             let resizeContainer = () => {
-                DOM.style.height = size.clientHeight * 0.30 + 'px';
+                DOM.style.height = size.clientHeight * 0.199 + 'px';
                 DOM.style.width = size.clientWidth + 'px';
             };
             resizeContainer(this);

@@ -34,9 +34,9 @@ export const splitData = (data) => {
         ]);
         EMA12 = getEMA12(i, EMA12, values[i][1]);
         EMA26 = getEMA26(i, EMA26, values[i][1]);
-        DIFF = (EMA12 - EMA26).toFixed(7);
+        DIFF = (EMA12 - EMA26).toFixed(8);
         DEA = getDEA(i, DIFF, DEA);
-        MACD =  (2 * (DIFF-DEA)).toFixed(7);
+        MACD =  (2 * (DIFF-DEA)).toFixed(8);
         MACDData.push([
             formatTime(data[i][0]),
             DIFF,
@@ -56,7 +56,7 @@ export const getEMA12 = (i, oldEMA12, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.153846154*closingPrice + 0.846153846*oldEMA12).toFixed(7);
+        return (0.153846154*closingPrice + 0.846153846*oldEMA12).toFixed(8);
     }
 };
 
@@ -64,7 +64,7 @@ export const getEMA26 = (i, oldEMA26, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.074074074*closingPrice + 0.925925926*oldEMA26).toFixed(7);
+        return (0.074074074*closingPrice + 0.925925926*oldEMA26).toFixed(8);
     }
 };
 
@@ -72,7 +72,7 @@ export const getDEA = (i, DIFF, oldDEA) => {
     if (i === 0) {
         return 0;
     } else {
-        return (0.2 * DIFF + 0.8 * oldDEA).toFixed(7);
+        return (0.2 * DIFF + 0.8 * oldDEA).toFixed(8);
     }
 };
 
@@ -323,23 +323,23 @@ export const getDMIData = (data) => {
 
 export const getTRIXData = (datas) => {
     var TR = [];
-    let TRa = calculateEMAByCandleData(datas, 12)
-    let TRb = getEMAData(TRa, 12)
-    TR = getEMAData(TRb, 12)
+    let TRa = calculateEMAByCandleData(datas, 12);
+    let TRb = getEMAData(TRa, 12);
+    TR = getEMAData(TRb, 12);
     var TRIX = [];
     for (let i = 0; i < TR.length; i++) {
         if (i === 0) {
-            TRIX.push('-')
+            TRIX.push('-');
         } else {
-            TRIX.push((TR[i] - TR[i - 1]) / TR[i - 1] * 100)
+            TRIX.push((TR[i] - TR[i - 1]) / TR[i - 1] * 100);
         }
     }
-    var MATRIX = getMAData(20, TRIX)
+    var MATRIX = getMAData(20, TRIX);
     return {
         TRIX: TRIX,
         MATRIX: MATRIX
-    }
-}
+    };
+};
 
 export const getMAData = (periodic, data) => {
     var result = [];
@@ -366,24 +366,24 @@ export const calculateEMAByCandleData = (data, periodic) => {
     var EMA = [];
     for (let i = 0; i < data.length; i++) {
         if (i === 0) {
-            EMA.push(data[i][1])
+            EMA.push(data[i][1]);
         } else {
-            let value = (2 * data[i][1] + (periodic - 1) * EMA[i - 1]) / (periodic + 1)
-            EMA.push(value)
+            let value = (2 * data[i][1] + (periodic - 1) * EMA[i - 1]) / (periodic + 1);
+            EMA.push(value);
         }
     }
     return EMA;
-}
+};
 
 export const getEMAData = (data, periodic) => {
     var EMA = [];
     for (let i = 0; i < data.length; i++) {
         if (i === 0) {
-            EMA.push(data[i])
+            EMA.push(data[i]);
         } else {
-            EMA.push((2 * data[i] + (periodic - 1) * EMA[i - 1]) / (periodic + 1))
+            EMA.push((2 * data[i] + (periodic - 1) * EMA[i - 1]) / (periodic + 1));
         }
     }
     return EMA;
-}
+};
 

@@ -17,9 +17,8 @@ class KLineSetChartController {
     }
 
     resizeECharts(DOM, isFullScreen, isCloseIndicator, resizeSize) {
-        debugger
         let size = getDefaultChartSize();
-        let csale =　isCloseIndicator===false ? 0.6 : 0.7;
+        let csale = isCloseIndicator === false ? 0.6 : 0.7;
         if (!isFullScreen) {
             if (!this.klineConfig.defaultSize) {
                 let resizeContainer = () => {

@@ -19,12 +19,12 @@
           </div> -->
           <div style="float:right; margin-right:0.2rem; margin-top:0.05rem" class="icon-indicator-div">
             <i v-show = "true" @click = "openCloseMacd" class="icon iconfont icon-indicator">
-              <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span>
+              <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
             </i>
           </div>
         </div>
     <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height * 0.82}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipIndex"></div>
-    <div style="background:#2b2f33; height:0.1rem"></div>
+    <div style="background:#2b2f33; height:0.02rem"></div>
   </div>
 </template>
 <script>
