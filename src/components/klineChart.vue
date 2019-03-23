@@ -42,7 +42,7 @@
             </el-popover>
           </div> -->
 
-           <div style="position: absolute;right:154px;top:4px;z-index:5;" class="icon-indicator-div">
+           <div v-show = "showChart==='candle'" style="position: absolute;right:154px;top:4px;z-index:5;" class="icon-indicator-div">
               <i v-show = "true" @click = "showIndicatorChart('MACD')" class="icon iconfont icon-indicator">
                 <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span>
               </i>
