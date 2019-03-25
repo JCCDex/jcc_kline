@@ -12,6 +12,7 @@ var depthSize = {
 };
 var depthOption;
 var oldDepthData;
+var mobileToolTipData;
 var amountsPrecision = 2;
 var pricePrecision = 6;
 
@@ -150,6 +151,10 @@ class DepthChart {
         }
     }
 
+    getMobileTipsData() {
+        return mobileToolTipData;
+    }
+
     getDepthYAxis() {
         if (this.depthConfig.platform === 'mobile') {
             return [
@@ -170,47 +175,66 @@ class DepthChart {
     }
 
     getDepthToolTip() {
+        var toolTip = {}
         let message = getLanguage();
         var fontSize = '';
-        if (this.depthConfig.platform === 'mobile') {
-            fontSize = 'font-size:20px';
-        }
-        var toolTip = {
-            formatter: function (param) {
-                param = param[0];
-                if (param) {
-                    if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
-                        return [
-                            '<div style="text-align:left; ' + fontSize + '">',
-                            '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
-                            message.sellPrice +
-                            formatDecimal(param.data[0], pricePrecision, true) +
-                            '<br/>',
-                            '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
-                            message.sellTotal +
-                            formatDecimal(param.data[1], amountsPrecision, true) +
-                            '<br/>',
-                            '</div>'
-                        ].join('');
-                    } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
-                        return [
-                            '<div style="text-align:left; ' + fontSize + '">',
-                            '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
-                            message.buyPrice +
-                            formatDecimal(param.data[0], pricePrecision, true) +
-                            '<br/>',
-                            '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
-                            message.buyTotal +
-                            formatDecimal(param.data[1], amountsPrecision, true) +
-                            '<br/>',
-                            '</div>'
-                        ].join('');
+        if (this.depthConfig.platform === 'pc') {
+            toolTip = {
+                formatter: function (param) {
+                    param = param[0];
+                    if (param) {
+                        if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
+                            return [
+                                '<div style="text-align:left; ' + fontSize + '">',
+                                '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                                message.sellPrice +
+                                formatDecimal(param.data[0], pricePrecision, true) +
+                                '<br/>',
+                                '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                                message.sellTotal +
+                                formatDecimal(param.data[1], amountsPrecision, true) +
+                                '<br/>',
+                                '</div>'
+                            ].join('');
+                        } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
+                            return [
+                                '<div style="text-align:left; ' + fontSize + '">',
+                                '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                                message.buyPrice +
+                                formatDecimal(param.data[0], pricePrecision, true) +
+                                '<br/>',
+                                '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
+                                message.buyTotal +
+                                formatDecimal(param.data[1], amountsPrecision, true) +
+                                '<br/>',
+                                '</div>'
+                            ].join('');
+                        }
                     }
                 }
-            }
-        };
-        if (this.depthConfig.platform === 'mobile') {
-            toolTip.hideDelay = 5000;
+            };
+        } else if (this.depthConfig.platform === 'mobile') {
+            fontSize = 'font-size:20px';
+            toolTip = {
+                formatter: function (param) {
+                    param = param[0];
+                    if (param) {
+                        if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
+                            mobileToolTipData = {
+                                price: formatDecimal(param.data[0], pricePrecision, true),
+                                total: formatDecimal(param.data[1], amountsPrecision, true),
+                                type: 'Sell'
+                            }
+                        } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
+                            mobileToolTipData = {
+                                price: formatDecimal(param.data[0], pricePrecision, true),
+                                total: formatDecimal(param.data[1], amountsPrecision, true),
+                                type: 'Buy'
+                            }
+                        }
+                    }
+                }
+            };
         }
         return toolTip;
     }

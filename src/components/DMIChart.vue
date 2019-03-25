@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
+      :class="this.klineConfig.platform === 'pc' ? 'kline-tip' : 'mobile-kline-tip'"
       v-if="toolTipData"
     >
       <font style="color: #e6e6e6;">PDI:{{this.toolTipData.PDI}}</font>

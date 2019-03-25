@@ -52,6 +52,10 @@ class ChartController {
         this.setDepthChart.updateDepthOption(data);
     }
 
+    getMobileTipsData() {
+        return this.setDepthChart.getMobileTipsData();
+    }
+
     clearDepthEcharts() {
         this.setDepthChart.clearDepthEcharts();
     }
