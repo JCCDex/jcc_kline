@@ -86,11 +86,11 @@ export default {
     chartDataObj() {
       if (this.isRefresh) {
         if (this.currentCycle !== "everyhour") {
-          this.isRefresh = false;
           this.kline.setMobileOption(this.klineConfig.size);
-        } else {
           this.isRefresh = false;
+        } else {
           this.kline.setTimeDivisionsOption(this.klineConfig.size);
+          this.isRefresh = false;
         }
       }
       if (this.chartDataObj.candleData) {

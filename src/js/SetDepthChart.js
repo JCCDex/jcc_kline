@@ -175,7 +175,7 @@ class DepthChart {
     }
 
     getDepthToolTip() {
-        var toolTip = {}
+        var toolTip = {};
         let message = getLanguage();
         var fontSize = '';
         if (this.depthConfig.platform === 'pc') {
@@ -224,13 +224,13 @@ class DepthChart {
                                 price: formatDecimal(param.data[0], pricePrecision, true),
                                 total: formatDecimal(param.data[1], amountsPrecision, true),
                                 type: 'Sell'
-                            }
+                            };
                         } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
                             mobileToolTipData = {
                                 price: formatDecimal(param.data[0], pricePrecision, true),
                                 total: formatDecimal(param.data[1], amountsPrecision, true),
                                 type: 'Buy'
-                            }
+                            };
                         }
                     }
                 }

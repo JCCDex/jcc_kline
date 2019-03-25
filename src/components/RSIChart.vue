@@ -27,7 +27,8 @@ export default {
       indicatorsData: null,
       RSIData: null,
       coinType: "",
-      cycle: "",
+      currentCycle: '',
+      isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
       RSISize: {
@@ -58,9 +59,22 @@ export default {
     toolTipIndex: {
       type: Number,
       default: null
+    },
+    cycle: {
+      type: String,
+      default: 'hour'
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.OBV.clearIndicatorEcharts();
+        this.clearChart();
+        this.OBV.showLoading()
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     resizeSize() {
       this.resize();
     },
@@ -89,18 +103,18 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.chartDataObj.cycle !== this.cycle
+          this.isRefresh
         ) {
           this.RSI.clearIndicatorEcharts();
-          this.cycle = this.chartDataObj.cycle;
-          this.RSI.setIndicatorOption(this.indicatorsData, this.cycle);
+          this.RSI.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.isRefresh = false
           this.$emit(
             "listenIndicatorChartEvent",
             this.RSI.getIndicatorEchart()
           );
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.RSI.updateIndicatorOption(this.indicatorsData, this.cycle);
+          this.RSI.updateIndicatorOption(this.indicatorsData, this.currentCycle);
         }
       }
     },

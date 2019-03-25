@@ -28,7 +28,8 @@ export default {
       indicatorsData: null,
       DMIData: null,
       coinType: "",
-      cycle: "",
+      currentCycle: '',
+      isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
       DMISize: {
@@ -59,9 +60,21 @@ export default {
     toolTipIndex: {
       type: Number,
       default: null
+    },
+    cycle: {
+      type: String,
+      default: 'hour'
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.DMI.clearIndicatorEcharts();
+        this.DMI.showLoading()
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     toolTipIndex() {
       let index = this.toolTipIndex;
       if (index) {
@@ -102,18 +115,18 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.chartDataObj.cycle !== this.cycle
+          this.isRefresh
         ) {
           this.DMI.clearIndicatorEcharts();
-          this.cycle = this.chartDataObj.cycle;
-          this.DMI.setIndicatorOption(this.indicatorsData, this.cycle);
+          this.DMI.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.isRefresh = false
           this.$emit(
             "listenIndicatorChartEvent",
             this.DMI.getIndicatorEchart()
           );
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.DMI.updateIndicatorOption(this.indicatorsData, this.cycle);
+          this.DMI.updateIndicatorOption(this.indicatorsData, this.currentCycle);
         }
       }
     },

@@ -26,7 +26,8 @@ export default {
       stochastic: null,
       KDJData: null,
       coinType: "",
-      cycle: "",
+      currentCycle: '',
+      isRefresh: true,
       chartType: "stochastic",
       toolTipData: null,
       stochasticSize: {
@@ -57,9 +58,21 @@ export default {
     toolTipIndex: {
       type: Number,
       default: null
+    },
+    cycle: {
+      type: String,
+      default: 'hour'
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.stochastic.clearStochasticEcharts();
+        this.stochastic.showLoading()
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     toolTipIndex() {
       let index = this.toolTipIndex;
       if (index) {
@@ -97,18 +110,18 @@ export default {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.chartDataObj.cycle !== this.cycle
+            this.isRefresh
           ) {
             this.stochastic.clearStochasticEcharts();
-            this.cycle = this.chartDataObj.cycle;
-            this.stochastic.setStochasticOption(this.KDJData, this.cycle);
+            this.stochastic.setStochasticOption(this.KDJData, this.currentCycle);
+            this.isRefresh = false
             this.$emit(
               "listenStochasticChartEvent",
               this.stochastic.getStochasticEchart()
             );
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.stochastic.updateStochasticOption(this.KDJData, this.cycle);
+            this.stochastic.updateStochasticOption(this.KDJData, this.currentCycle);
           }
         }
       }

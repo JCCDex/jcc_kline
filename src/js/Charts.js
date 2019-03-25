@@ -113,7 +113,7 @@ class ChartController {
     }
 
     showLoading () {
-        this.setVolumeChart.showLoading()
+        this.setVolumeChart.showLoading();
     }
 
     getToolTipIndex() {

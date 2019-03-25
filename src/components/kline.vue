@@ -2,10 +2,10 @@
     <div style="position:relative">
       <!-- Cycle按钮 -->
       <div style="position: absolute;left:10px;top:20px;z-index:1;">
-        <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hourPC}}</div>
-        <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.dayPC}}</div>
-        <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.weekPC}}</div>
-        <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.monthPC}}</div>
+        <div @click = "chooseCycle('hour')" :class="this.currentCycle === 'hour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.hourPC}}</div>
+        <div @click = "chooseCycle('day')" :class="this.currentCycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.dayPC}}</div>
+        <div @click = "chooseCycle('week')" :class="this.currentCycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.weekPC}}</div>
+        <div @click = "chooseCycle('month')" :class="this.currentCycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">{{message.monthPC}}</div>
         <!-- <div v-for= "(item, index) in intervals" :key = "item.id" :class="cycle === item.name ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'">
             <div v-if = "item.values">
               <select class = "cycle-select" v-model= "item.name"  @change= "chooseCycle($event)">
@@ -31,7 +31,8 @@ export default {
   data() {
     return {
       kline: null,
-      cycle: 'hour',
+      currentCycle: '',
+      isRefresh: true,
       platform: 'pc',
       klineSize: {
         width: 0,
@@ -64,9 +65,16 @@ export default {
         return {
         }
       }
+    },
+    cycle: {
+      type: String,
+      default: 'hour'  
     }
   },
   watch: {
+    cycle () {
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     resizeSize() {
       this.resize()
     },
@@ -76,16 +84,14 @@ export default {
         let data = this.chartDataObj.candleData
         data.precision = this.chartDataObj.precision
         if (data.values && data.volumes && data.categoryData) {
-          if (this.cycle !== this.chartDataObj.cycle || JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
-            this.clearChart();
-            this.kline.showLoading();
-            let toolTipIndex = this.kline.setOption(data, this.chartDataObj.cycle);
+          if (this.isRefresh || JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
+            let toolTipIndex = this.kline.setOption(data, this.currentCycle);
+            this.isRefresh = false
             this.$emit("listenToTipIndex", toolTipIndex)
             this.$emit("listenCandleChartEvent", this.kline.getEchart())
-            this.cycle = this.chartDataObj.cycle;
             this.coinType = this.chartDataObj.coinType
           } else {
-              this.kline.updateOption(data, this.chartDataObj.cycle);
+            this.kline.updateOption(data, this.currentCycle);
           }
         }
       }
@@ -154,9 +160,13 @@ export default {
       if (cycle instanceof Object) {
          selectCycle = cycle.target.value
       }
-      if (this.cycle === cycle) {
+      if (this.currentCycle === cycle) {
         return;
       }
+      this.clearChart();
+      this.kline.showLoading();
+      this.currentCycle = selectCycle;
+      this.isRefresh = true
       this.$emit("listenToChildEvent", selectCycle)
     },
     changeDataZoom(type) {
