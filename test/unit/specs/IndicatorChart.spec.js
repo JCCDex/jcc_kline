@@ -38,6 +38,15 @@ describe('test IndicatorChart', () => {
         expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
     })
 
+    it('test showStochasticLoading', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initStochasticChart(element)
+        indicator.setStochasticOption(KDJData, 'hour')
+        indicator.showStochasticLoading()
+        expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
+    })
+
     it('test setStochasticOption if platform is mobile', () => {
         const element = document.createElement('div');
         Config.platform = 'mobile'
@@ -102,7 +111,7 @@ describe('test IndicatorChart', () => {
         expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
     })
 
-    /* 测试绘制OBV指标的方法 */
+    /* 测试绘制指标线的方法 */
 
     it('test initIndicatorChart', () => {
         Config.chartType = 'indicator'
@@ -117,6 +126,14 @@ describe('test IndicatorChart', () => {
         let indicator = new IndicatorChart(Config);
         indicator.initIndicatorChart(element)
         indicator.setIndicatorOption(KDJData, 'hour')
+        expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test showLoading', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initIndicatorChart(element)
+        indicator.showLoading(KDJData, 'hour')
         expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
     })
 

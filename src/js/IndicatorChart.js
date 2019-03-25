@@ -44,8 +44,8 @@ class IndicatorChartController {
         this.setStochasticChart.setStochasticOption(data, cycle);
     }
 
-    showLoading() {
-        this.setIndicatorChart.showLoading
+    showStochasticLoading() {
+        this.setStochasticChart.showLoading();
     }
 
     updateStochasticOption(data, cycle) {
@@ -75,7 +75,7 @@ class IndicatorChartController {
     }
 
     showLoading() {
-        this.setIndicatorChart.showLoading()
+        this.setIndicatorChart.showLoading();
     }
 
     getIndicatorTipData() {

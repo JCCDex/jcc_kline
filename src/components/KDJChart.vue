@@ -68,7 +68,7 @@ export default {
     cycle () {
       if (this.cycle !== this.currentCycle) {
         this.stochastic.clearStochasticEcharts();
-        this.stochastic.showLoading()
+        this.stochastic.showStochasticLoading()
         this.isRefresh = true
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
