@@ -67,9 +67,8 @@ export default {
   watch: {
     cycle () {
       if (this.cycle !== this.currentCycle) {
-        this.OBV.clearIndicatorEcharts();
-        this.clearChart();
-        this.OBV.showLoading()
+        this.TRIX.clearIndicatorEcharts();
+        this.TRIX.showLoading()
         this.isRefresh = true
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
