@@ -4,23 +4,23 @@
     <div calss="mobileCycle" style="height: 0.4rem; z-index: 9;">
       <div
         @click="chooseCycle('hour')"
-        :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+        :class="this.currentCycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.hour}}</div>
       <div
         @click="chooseCycle('day')"
-        :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+        :class="this.currentCycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.day}}</div>
       <div
         @click="chooseCycle('week')"
-        :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+        :class="this.currentCycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.week}}</div>
       <div
         @click="chooseCycle('month')"
-        :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+        :class="this.currentCycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.month}}</div>
       <div
         @click="chooseCycle('everyhour')"
-        :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+        :class="this.currentCycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.timeSharing}}</div>
       <!-- <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'" @click = "chooseCycle(item.name)">
             <div v-if = "item.values">
@@ -51,8 +51,8 @@ export default {
   data() {
     return {
       kline: null,
-      cycle: "",
       platform: "mobile",
+      currentCycle: '',
       isRefresh: true,
       message: null,
       intervals: null
@@ -70,15 +70,22 @@ export default {
       default: () => {
         return {};
       }
+    },
+    cycle: {
+      type: String,
+      default: 'hour'  
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     chartDataObj() {
       if (this.isRefresh) {
-        if (this.cycle !== this.chartDataObj.cycle) {
-          this.cycle = this.chartDataObj.cycle;
-        }
-        if (this.chartDataObj.cycle !== "everyhour") {
+        if (this.currentCycle !== "everyhour") {
           this.isRefresh = false;
           this.kline.setMobileOption(this.klineConfig.size);
         } else {
@@ -89,21 +96,21 @@ export default {
       if (this.chartDataObj.candleData) {
         let candleData = this.chartDataObj.candleData;
         if (
-          this.chartDataObj.cycle !== "everyhour" &&
+          this.currentCycle !== "everyhour" &&
           candleData.values !== null &&
           candleData.volumes !== null &&
           candleData.categoryData !== null
         ) {
           let toolTipIndex = this.kline.updateMobileOption(
             candleData,
-            this.cycle
+            this.currentCycle
           );
           this.$emit("listenCandleChartEvent", this.kline.getMobileEchart());
           this.$emit("listenTipIndex", toolTipIndex);
         }
       }
       if (
-        this.chartDataObj.cycle === "everyhour" &&
+        this.currentCycle === "everyhour" &&
         this.chartDataObj.divisionData
       ) {
         let divisionData = this.chartDataObj.divisionData;
@@ -162,18 +169,18 @@ export default {
       if (cycle instanceof Object) {
         selectCycle = cycle.target.value;
       }
-      if (this.cycle === cycle) {
+      if (this.currentCycle === cycle) {
         return;
       }
       this.clearChart();
       this.kline.showMobileLoading();
-      this.cycle = cycle;
+      this.currentCycle = cycle;
       this.isRefresh = true;
       this.$emit("listenToChildEvent", selectCycle);
     },
     getToolTipIndex() {
       let toolTipIndex;
-      if (this.cycle !== "everyhour") {
+      if (this.currentCycle !== "everyhour") {
         toolTipIndex = this.kline.getMobileToolTipIndex();
       } else {
         toolTipIndex = this.kline.getMobileToolTipIndex();

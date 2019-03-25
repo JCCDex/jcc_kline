@@ -21,12 +21,12 @@
         <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
       </div>
       <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></KLine>
+      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></Volume>
       <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KDJ> -->
       <!-- <OBV ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></OBV> -->
-      <RSI ref = "indicator" v-show = "showIndicatorChart === 'RSI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></RSI>
-      <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></DMI>
+      <!-- <RSI ref = "indicator" v-show = "showIndicatorChart === 'RSI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></RSI>
+      <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></DMI> -->
       <!-- <TRIX ref = "indicator" v-show = "showIndicatorChart === 'TRIX'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></TRIX> -->
       <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
@@ -62,6 +62,7 @@ export default {
       showChart: "candle",
       showIndicatorChart: "RSI",
       message: null,
+      cycle: '',
       chartDataObj: {},
       toolTipIndex: null,
       toolTipData: null,
@@ -152,6 +153,7 @@ export default {
           this.toolTipIndex = divisionData.prices.length - 1
         }
       }
+      this.cycle = this.klineDataObj.cycle
       this.chartDataObj = {
         platform: 'mobile',
         precision: precision,
@@ -169,11 +171,9 @@ export default {
   },
   methods: {
     changeCycle(cycle) {
-      if (cycle === "everyhour") {
-        this.toolTipData = null
-      } else {
-        this.timeSharingTipData = null
-      }
+      this.toolTipData = null
+      this.timeSharingTipData = null
+      this.cycle = cycle
       this.toolTipIndex = null
       this.$emit("listenToChildEvent", cycle)
     },
