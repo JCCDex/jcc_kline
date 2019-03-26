@@ -1,4 +1,4 @@
-var volumeOption = {
+var macdOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
     tooltip: { // 提示框组件。
@@ -24,55 +24,73 @@ var volumeOption = {
         {
             type: 'category',
             gridIndex: 0,
-            // scale: true,
-            boundaryGap: true,
-            axisLine: {
-                onZero: false
-            },
-            axisTick: {
-                show: false
-            },
-            splitLine: {
-                show: false
-            },
-            axisLabel: {
-                show: false
-            },
             axisPointer: {
                 z: 100,
                 label: {
                     show: false
                 }
             },
-            splitNumber: 20,
-            min: 'dataMin',
-            max: 'dataMax'
+            // data: data.times,
+            axisLabel: {show: false}
         }
     ],
     yAxis: [ // 直角坐标系 grid 中的y轴
         {
-            scale: true,
             gridIndex: 0,
-            splitNumber: 2,
-            position: 'right',
-            splitLine: {
-                lineStyle: {
-                    color: '#37404b',
-                    type: 'dotted'
-                }
-            },
+            splitNumber: 4,
+            position: 'right', // y 轴的位置
             axisLine: {
                 show: false,
-                lineStyle: {
-                    color: '#37404b'
-                }
+                onZero: false,
             },
+            axisTick: {show: false},
+            splitLine: {show: false},
             axisLabel: {
-                show: true,
-                margin: 0,
-                color: '#9aa4ac',
-                fontSize: 12,
-                verticalAlign: 'middle'
+                show: true, // 是否显示刻度标签
+                margin: 0, // 刻度标签与轴线之间的距离
+                color: '#9aa4ac', // 刻度标签文字的颜色
+                fontSize: 12, // 刻度标签文字的字体大小
+                verticalAlign: 'middle' // 文字垂直对齐方式，默认自动
+            }
+        }
+    ],
+    series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
+        {
+            name: 'MACD',
+            type: 'bar',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            barWidth: 2,
+            // data: data.macds,
+        },{
+            name: 'DIF',
+            type: 'line',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            symbol: 'none', // 
+            smooth: true, //  是否平滑显示 
+            showSymbol: false, // 是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示。
+            lineStyle: {
+                normal: {
+                    color: '#fd1d57',
+                    opacity: 1,
+                    width: 1
+                }
+            }
+        },{
+            name: 'DEA',
+            type: 'line',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            symbol: 'none', // 
+            smooth: true, //  是否平滑显示 
+            showSymbol: false, // 是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示。
+            lineStyle: {
+                normal: {
+                    color: '#ffd801',
+                    opacity: 1,
+                    width: 1
+                }
             }
         }
     ],
@@ -86,31 +104,17 @@ var volumeOption = {
             end: 100, // 数据窗口范围的结束百分比
             minSpan: 5 // 用于限制窗口大小的最小值（百分比值）
         }
-    ],
-    series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
-        {
-            name: 'Volume',
-            type: 'bar',  // 柱状/条形图
-            barMaxWidth: 10, // 柱条的最大宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
-            itemStyle: {
-                normal: {
-                    color: function (param) { // 柱条的颜色
-                        return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                    }
-                }
-            }
-        }
     ]
 };
 
-var volumeMoobileOption = {
+var macdMobileOption = {
     backgroundColor: '#161b21', // K线图背景色，默认'#161b21'
     animation: false, // 是否开启动画。
     axisPointer: { // 坐标轴指示器（axisPointer）的全局公用设置,坐标轴指示器是指示坐标轴当前刻度的工具
         link: { xAxisIndex: 'all' },
         label: { // 坐标轴指示器的文本标签
             backgroundColor: '#232b34', // 背景色
-            fontSize:22, // 字体大小
+            fontSize: 22, // 字体大小
         }
     },
     tooltip: { // 提示框组件。
@@ -136,56 +140,71 @@ var volumeMoobileOption = {
         {
             type: 'category',
             gridIndex: 0,
-            // scale: true,
-            boundaryGap: true,
-            axisLine: {
-                onZero: false
-            },
-            axisTick: {
-                show: false
-            },
-            splitLine: {
-                show: false
-            },
-            axisLabel: {
-                show: false
-            },
             axisPointer: {
                 z: 100,
                 label: {
                     show: false
                 }
             },
-            splitNumber: 20,
-            min: 'dataMin',
-            max: 'dataMax'
+            // data: data.times,
+            axisLabel: {show: false}
         }
     ],
     yAxis: [ // 直角坐标系 grid 中的y轴
         {
-            scale: true,
             gridIndex: 0,
-            splitNumber: 2,
-            position: 'right',
-            splitLine: {
-                lineStyle: {
-                    color: '#37404b',
-                    type: 'dotted'
-                }
-            },
+            splitNumber: 4,
+            position: 'right', // y 轴的位置
             axisLine: {
                 show: false,
                 lineStyle: {
                     color: '#37404b'
                 }
             },
-            axisLabel: {
-                show: true,
-                inside: true,
-                margin: 0,
-                color: '#9aa4ac',
-                fontSize: 22,
-                verticalAlign: 'bottom'
+            axisTick: {show: false},
+            splitLine: {show: false},
+            axisLabel: { // 坐标轴刻度标签的相关设置
+                show: true, // 是否显示刻度标签
+                margin: 0, // 刻度标签与轴线之间的距离
+                color: '#b7c2ce', // 刻度标签文字的颜色
+                fontSize: 22, // 文字的字体大小
+                verticalAlign: 'bottom',
+                inside: true
+            }
+        }
+    ],
+    series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
+        {
+            name: 'MACD',
+            type: 'bar', // 柱状/条形图
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            barWidth: 2, // 柱条的宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
+        },{
+            name: 'DIF',
+            type: 'line', // 折线图
+            symbol: 'none',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            lineStyle: {
+                normal: {
+                    color: '#fd1d57',
+                    opacity: 1,
+                    width: 1
+                }
+            }
+        },{
+            name: 'DEA',
+            type: 'line',
+            symbol: 'none',
+            xAxisIndex: 0,
+            yAxisIndex: 0,
+            lineStyle: {
+                normal: {
+                    color: '#ffd801',
+                    opacity: 1,
+                    width: 1
+                }
             }
         }
     ],
@@ -199,21 +218,7 @@ var volumeMoobileOption = {
             end: 100, // 数据窗口范围的结束百分比
             minSpan: 5 // 用于限制窗口大小的最小值（百分比值）
         }
-    ],
-    series: [ // 系列列表。每个系列通过 type 决定自己的图表类型
-        {
-            name: 'Volume',
-            type: 'bar',  // 柱状/条形图
-            barMaxWidth: 10, // 柱条的最大宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
-            itemStyle: {
-                normal: {
-                    color: function (param) { // 柱条的颜色
-                        return param.value[2] <= 0 ? '#ee4b4b' : '#3ee99f';
-                    }
-                }
-            }
-        }
     ]
 };
 
-export { volumeOption, volumeMoobileOption };
+export {macdOption, macdMobileOption};

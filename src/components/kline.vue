@@ -115,7 +115,7 @@ export default {
     if (this.klineConfig.defaultSize) {
       this.klineSize = {
         width: '100%',
-        height: '572px'
+        height: '100px'
       }
     } else {
       this.klineSize = {
@@ -177,7 +177,7 @@ export default {
       this.$emit("listenToTipIndex", toolTipIndex)
     },
     resize() {
-      this.kline.resizeChart(this.$refs.klineRef, this.resizeSize.isFullScreen, this.klineConfig.size);
+      this.kline.resizeChart(this.$refs.klineRef, this.resizeSize.isFullScreen, this.resizeSize.isCloseIndicator, this.klineConfig.size);
     },
     clearChart() {
       this.kline.clearChart();

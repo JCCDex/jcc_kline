@@ -4,6 +4,8 @@ import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
 import { volumeOption, volumeMoobileOption } from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
 import VolumeChart from './SetVolumeChart.js';
+import { macdOption, macdMobileOption } from './MACDOption';
+import MACDChart from './SetMACDChart.js';
 
 class ChartController {
     constructor(chartsConfig) {
@@ -32,9 +34,16 @@ class ChartController {
                 merge(volumeMoobileOption, chartsConfig);
                 this.setVolumeChart = new VolumeChart(volumeMoobileOption);
             }
+        } else if (chartsConfig.chartType === 'MACD') {
+            if (chartsConfig.platform === 'mobile') {
+                merge(macdMobileOption, chartsConfig);
+                this.setMACDChart = new MACDChart(macdMobileOption);
+            } else {
+                merge(macdOption, chartsConfig);
+                this.setMACDChart = new MACDChart(macdOption);
+            }
         }
     }
-
     /* 绘制深度图 */
     initDepth(DOM) {
         this.setDepthChart.initDepthECharts(DOM);
@@ -104,8 +113,8 @@ class ChartController {
         this.setVolumeChart.initVolumeECharts(DOM);
     }
 
-    resizeVolumeChart(DOM, isFullScreen, size) {
-        this.setVolumeChart.resizeECharts(DOM, isFullScreen, size);
+    resizeVolumeChart(DOM, isFullScreen, isCloseIndicator, size) {
+        this.setVolumeChart.resizeECharts(DOM, isFullScreen, isCloseIndicator, size);
     }
 
     setVolumeOption(data, cycle) {
@@ -134,6 +143,39 @@ class ChartController {
 
     disposeVolumeEcharts() {
         this.setVolumeChart.disposeVolumeEChart();
+    }
+
+    /* 绘制AMCD指标 */
+    initMACDECharts(DOM) {
+        this.setMACDChart.initMACD(DOM);
+    }
+
+    resizeMACDChart(DOM, isFullScreen, size) {
+        this.setMACDChart.resizeECharts(DOM, isFullScreen, size);
+    }
+
+    setMACDOption(data) {
+        this.setMACDChart.setMACDOption(data);
+    }
+
+    updateMACDOption(data) {
+        this.setMACDChart.updateMACDOption(data);
+    }
+
+    clearMACDEcharts() {
+        this.setMACDChart.clearMACDEcharts();
+    }
+
+    disposeMACDEChart() {
+        this.setMACDChart.disposeMACDEChart();
+    }
+
+    getMacdchart() {
+        return this.setMACDChart.getMacdchart();
+    }
+
+    getMacdTipData() {
+        return this.setMACDChart.getToolTipData();
     }
 
 }

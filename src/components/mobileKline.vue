@@ -32,6 +32,11 @@
                 {{item.name}}
               </div>
       </div>-->
+      <div style="float:right; margin-right:0.2rem; margin-top:0.05rem" class="icon-indicator-div">
+        <i v-show = "true" @click = "openCloseMacd" class="icon iconfont icon-indicator">
+          <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
+        </i>
+      </div>
     </div>
     <div
       id="kline"
@@ -194,7 +199,10 @@ export default {
       this.kline.clearMobileChart();
     },
     dispose() {
-      this.kline.disposeMobileChart();
+      this.kline.disposeMobileChart()
+    },
+    openCloseMacd() {
+      this.$emit("listenMacdChartOpenClose", true)
     }
   }
 };

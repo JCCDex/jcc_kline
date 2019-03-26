@@ -1,5 +1,19 @@
 <template>
-    <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"></div>
+  <div>
+    <div style="background:#2b2f33; height:0.02rem"></div>
+    <div
+      :class="this.klineConfig.platform === 'pc' ? 'macd-tip-data' : 'mobile-macd-tip'"
+      v-if="toolTipData"
+    >
+      <font style="color: #67ff7c;">MACD:{{toolTipData.macd}}&nbsp;</font>
+      <font style="color: #fd1d57;">DIFF:{{toolTipData.diff}}&nbsp;</font>
+      <font style="color: #ffd801;">DEA:{{toolTipData.dea}}&nbsp;</font>
+    </div>
+      <i v-show = "isPC" @click = "closeMacd" style="position:absolute;right:70px;z-index:5;" class="icon iconfont icon-popover-close"></i>
+    <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"
+    @mousemove="getToolTipData()"
+    ></div>
+  </div>
 </template>
 <script>
 import ChartController from '../js/Charts'
@@ -10,7 +24,10 @@ export default {
     return {
       coinType: '',
       chartType: 'MACD',
+      macdData:"",
+      toolTipData: null,
       macd: '',
+      isPC:false,
       macdSize: {
         height: '',
         width: ''
@@ -18,7 +35,7 @@ export default {
     };
   },
   props: {
-    klineDataObj: {
+    chartDataObj: {
       type: Object,
       default: () => {
         return {}
@@ -30,11 +47,87 @@ export default {
         return {
         }
       }
+    },
+    resizeSize: {
+      type: Object,
+      default: () => {
+        return {
+        }
+      }
+    },
+    toolTipIndex: {
+      type: Number,
+      default: null
     }
   },
+  
   watch: {
-    klineDataObj() {
-      
+    resizeSize() {
+      this.resize()
+    },
+    toolTipIndex() {
+      let index = this.toolTipIndex;
+      if (this.macdData) {
+        this.toolTipData = {
+          macd: this.macdData.macds[index],
+          diff: this.macdData.difs[index],
+          dea: this.macdData.deas[index]
+        }
+      }
+    },
+    chartDataObj() {
+      if (this.chartDataObj.candleData && this.chartDataObj.cycle !== 'everyhour') {
+        let data = this.chartDataObj.candleData
+        data.precision = this.chartDataObj.precision
+        if (data.MACDData && data.categoryData) {
+          var macdData = this.splitData(data.MACDData);
+          this.macdData = macdData;
+          if (this.macdData) {
+            let index = this.toolTipIndex;
+            this.$emit("listenToTipIndex", index);
+            this.toolTipData = {
+              macd: this.macdData.macds[index],
+              diff: this.macdData.difs[index],
+              dea: this.macdData.deas[index]
+            }
+          }
+          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
+            this.clearChart();
+            this.refreshCycle = 0
+            this.cycle = this.chartDataObj.cycle
+            this.macd.setMACDOption(macdData);
+            this.coinType = this.chartDataObj.coinType
+            this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
+          } else {
+            this.macd.updateMACDOption(macdData);
+          }
+        }
+      } 
+      if (this.chartDataObj.divisionData && this.chartDataObj.cycle === 'everyhour') {
+        let data = this.chartDataObj.divisionData;
+        if (data.MACDData) {
+          var macdData = this.splitData(data.MACDData);
+          this.macdData = macdData;
+          if (this.macdData) {
+            let index = this.toolTipIndex;
+            this.$emit("listenToTipIndex", index);
+            this.toolTipData = {
+              macd: this.macdData.macds[index],
+              diff: this.macdData.difs[index],
+              dea: this.macdData.deas[index]
+            }
+          }
+          if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
+            this.clearChart();
+            this.cycle = this.chartDataObj.cycle
+            this.macd.setMACDOption(macdData);
+            this.coinType = this.chartDataObj.coinType
+            this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
+          } else {
+            this.macd.updateMACDOption(macdData);
+          }
+        }
+      }
     },
     klineConfig() {
       if (this.klineConfig.platform === 'pc') {
@@ -45,30 +138,32 @@ export default {
         if (JSON.stringify(size) !== JSON.stringify(this.macdSize) && this.klineConfig.defaultSize === false) {
           this.macdSize = {
             width: this.klineConfig.size.width + 'px',
-            height: this.klineConfig.size.height + 'px'
+            height: this.klineConfig.size.height * 0.25　+ 'px'
           }
           this.resize();
         }
       }
     }
   },
+  
   created() {
     if (this.klineConfig.platform === 'pc') {
+      this.isPC = true;
       if (!this.klineConfig.defaultSize) {
-        this.macdSize.height = this.klineConfig.size.height + 'px'
+        this.macdSize.height = this.klineConfig.size.height * 0.25 + 'px'
         this.macdSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.macdSize = {
-          height: '572px',
+          height: '527px',
           width: '100%'
         }
       }
     } else {
-      this.macdSize.height = this.klineConfig.macdSize.height + 'px'
-      this.macdSize.width = this.klineConfig.macdSize.width + 'px'
+      this.macdSize.height = this.klineConfig.size.height * 0.3 + 'px'
+      this.macdSize.width = this.klineConfig.size.width + 'px'
     }
     this.klineConfig.chartType = 'MACD';
-    this.Macd = new ChartController(this.klineConfig);
+    this.macd = new ChartController(this.klineConfig);
   },
   mounted() {
     this.init();
@@ -84,8 +179,12 @@ export default {
   },
   methods: {
     init() {
-      this.macd.initMACD(this.$refs.macd);
+      this.macd.initMACDECharts(this.$refs.macd);
       this.resize();
+    },
+    getToolTipData() {
+      let index = this.macd.getMacdTipData();
+      this.$emit("listenToTipIndex", index);
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
@@ -98,6 +197,25 @@ export default {
     },
     dispose() {
       this.macd.disposeMACDEChart()
+    },
+    splitData(rawData) {
+        var times = [];
+        var macds = []; var difs = []; var deas = [];
+        for (var i = 0; i < rawData.length; i++) {
+            times.push(rawData[i].splice(0, 1)[0]);
+            macds.push(rawData[i][2]);
+            difs.push(rawData[i][0]);
+            deas.push(rawData[i][1]);
+        }
+        return {
+            times: times,
+            macds: macds,
+            difs: difs,
+            deas: deas
+        };
+    },
+    closeMacd() {
+      this.$emit("listenMacdChartClose", true)
     }
   }
 }

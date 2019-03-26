@@ -111,12 +111,12 @@ export default {
         this.volumeSize.width = this.klineConfig.size.width + 'px'
       } else {
         this.volumeSize = {
-          height: '572px',
+          height: '107px',
           width: '100%'
         }
       }
     } else {
-      this.volumeSize.height = this.klineConfig.size.height * 0.4 + 'px'
+      this.volumeSize.height = this.klineConfig.size.height * 0.3 + 'px'
       this.volumeSize.width = this.klineConfig.size.width + 'px'
     }
     this.klineConfig.chartType = 'volume';
@@ -139,7 +139,7 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === 'pc') {
-        this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen, this.klineConfig.size);
+        this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen,　this.resizeSize.isCloseIndicator, this.klineConfig.size);
       }
     },
     clearChart() {

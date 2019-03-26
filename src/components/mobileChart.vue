@@ -21,14 +21,15 @@
         <font class="mobile-tooltip-name">{{message.averagePrice}}</font><font :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'">{{this.timeSharingTipData.averagePrice}}</font> &nbsp;<br> 
       </div>
       <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
-      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></KLine>
-      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></Volume>
+      <KLine ref="candle" v-show = "showChart === 'candle'" v-on:listenToChildEvent = "changeCycle" v-on:listenTipIndex = "getTipDataIndex" v-on:listenCandleChartEvent = 'getCandleChart' v-on:listenMacdChartOpenClose = 'getMacdOpenClose' :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></KLine>
+      <Volume ref = 'volume' v-show = "showChart === 'candle'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></Volume>
+      <MACD ref="macd" v-show = "showIndicatorChart === 'MACD'" v-on:listenMacdChartEvent = 'getMacdChart' :toolTipIndex = "toolTipIndex" @listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj"></MACD>
       <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></KDJ> -->
       <!-- <OBV ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></OBV> -->
       <!-- <RSI ref = "indicator" v-show = "showIndicatorChart === 'RSI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></RSI>
       <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></DMI> -->
       <!-- <TRIX ref = "indicator" v-show = "showIndicatorChart === 'TRIX'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></TRIX> -->
-      <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
+     <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
 <script>
@@ -36,6 +37,7 @@ import KLine from './mobileKline.vue'
 import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import TimeSharing from './timeSharing.vue'
+import MACD from './MACDChart.vue'
 import KDJ from './KDJChart.vue'
 import DMI from './DMIChart.vue'
 import OBV from './OBVChart.vue'
@@ -43,7 +45,7 @@ import RSI from './RSIChart.vue'
 import TRIX from './TRIXChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
-import { linkageVolume } from '../js/linkageCharts';
+import { linkageVolume, linkageMacd } from '../js/linkageCharts';
 export default {
   name: "mobileChart",
   components: {
@@ -51,6 +53,7 @@ export default {
     Depth,
     Volume,
     TimeSharing,
+    MACD,
     KDJ,
     DMI,
     OBV,
@@ -60,7 +63,7 @@ export default {
   data() {
     return {
       showChart: "candle",
-      showIndicatorChart: "RSI",
+      showIndicatorChart: null,
       message: null,
       cycle: '',
       chartDataObj: {},
@@ -70,6 +73,7 @@ export default {
       divisionTime: null,
       candle: null,
       volume: null,
+      macd: null,
       stochastic: null,
       indicator: null
     };
@@ -189,6 +193,12 @@ export default {
         linkageVolume(this.candle, this.volume)
       }
     },
+    getMacdChart(macd) {
+      this.macd = macd
+      if(this.candle) {
+        linkageMacd(this.candle, this.macd)
+      }
+    },
     getKDJChart(KDJ) {
       this.stochastic = KDJ
       if (this.candle) {
@@ -207,6 +217,9 @@ export default {
           return tipData.data
         }
       }
+    },
+    getMacdOpenClose() {
+      this.showIndicatorChart = this.showIndicatorChart === "MACD" ? null : "MACD";
     },
     getTipDataIndex(index) {
       if (index) {

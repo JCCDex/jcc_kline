@@ -165,7 +165,7 @@ describe('test KLineSetChart', () => {
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
     klineChart.setOption(klineData, 'hour')
-    klineChart.resizeECharts(element, false, size)
+    klineChart.resizeECharts(element, false, false, size)
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
