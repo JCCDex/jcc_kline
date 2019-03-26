@@ -86,7 +86,7 @@ describe('test SetVolumeChart', () => {
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data, 'month')
-        volumeChart.resizeECharts(element, false, size)
+        volumeChart.resizeECharts(element, false, false, size)
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 

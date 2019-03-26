@@ -2,6 +2,7 @@ import ChartController from 'js/Charts.js'
 import { splitData, getDepthData } from 'js/processData'
 import testData from '../../testData/data.json'
 import timeSharingData from '../../testData/timeSharingData.json'
+import macdData from '../../testData/macdData.json'
 
 describe('test Chart', () => {
 
@@ -212,7 +213,7 @@ describe('test Chart', () => {
     expect(depth).not.toBeNull()
   })
 
-  // 测试深度图绘制方法
+  // 测试成交量绘制方法
   let volumeConfig = {
     platform: 'pc',
     chartType: 'volume',
@@ -299,4 +300,82 @@ describe('test Chart', () => {
     expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
   })
 
+
+  // MACD指标测试
+  let macdConfig = {
+    platform: 'pc',
+    chartType: 'MACD',
+    defaultSize: true
+  }
+
+  it('test ChartController if platform is pc and chartType is MACD', () => {
+    let macd = new ChartController(macdConfig)
+    expect(macd).toBeInstanceOf(ChartController)
+  })
+
+  it('test initMACDECharts', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    expect(macd.setMACDChart.macd).not.toBeNull()
+  })
+
+  it('test initMACDECharts if platform not pc', () => {
+    macdConfig.platform = 'mobile'
+    let macd = new ChartController(macdConfig)
+    expect(macd).toBeInstanceOf(ChartController)
+  })
+
+  it('test resizeMACDChart if not fullScreen', () => {
+    macdConfig.platform = 'pc'
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    macd.resizeMACDChart(element, false)
+    expect(macd.setMACDChart.macd).not.toBeNull()
+  })
+
+  it('test setMACDOption', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element);
+    macd.setMACDOption(macdData);
+    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
+  })
+
+  it('test getMacdchart', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    macd.setMACDOption(macdData)
+    let macdChart = macd.getMacdchart()
+    expect(macdChart).not.toBeNull()
+  })
+
+  it('test updateMACDOption', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    macd.setMACDOption(macdData)
+    macd.updateMACDOption(data)
+    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
+  })
+
+  it('test clearMACDEcharts', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    macd.setMACDOption(macdData)
+    macd.clearMACDEcharts()
+    expect(macd.setMACDChart.macd.getOption().series).not.toBeNull()
+  })
+
+  it('test disposeMACDEChart', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    macd.setMACDOption(macdData)
+    macd.disposeMACDEChart()
+    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
+  })
 })

@@ -1,12 +1,17 @@
 import ChartController from 'js/Charts.js'
 import klineController from 'js/KLine.js'
-import { linkageVolume } from 'js/linkageCharts'
+import { linkageVolume, linkageMacd } from 'js/linkageCharts'
 import testData from '../../testData/testData.json'
 
 let data = testData.candleData
 let volumeConfig = {
     platform: 'pc',
     chartType: 'volume',
+    defaultSize: true
+  }
+let macdConfig = {
+    platform: 'pc',
+    chartType: 'MACD',
     defaultSize: true
   }
 let klineConfig = {
@@ -62,5 +67,20 @@ describe('test linkageCharts', () => {
       let volumeChart = null
       linkageVolume(klineChart, volumeChart)
   })
+
+
+  it('test linkageMacd', () => {
+    let kline = new klineController('pc', klineConfig)
+    const element = document.createElement('div');
+    kline.initChart(element)
+    kline.setOption(data, 'hour')
+    let klineChart = kline.getEchart()
+
+    let macd = new ChartController(macdConfig)
+    macd.initMACDECharts(element)
+    macd.setMACDOption(data)
+
+    linkageMacd(klineChart, macd)
+})
 
 })

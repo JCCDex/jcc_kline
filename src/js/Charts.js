@@ -137,6 +137,7 @@ class ChartController {
         this.setVolumeChart.disposeVolumeEChart();
     }
 
+    /* 绘制AMCD指标 */
     initMACDECharts(DOM) {
         this.setMACDChart.initMACD(DOM);
     }
