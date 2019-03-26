@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
+      :class="this.klineConfig.platform === 'pc' ? 'kline-tip' : 'mobile-kline-tip'"
       v-if="toolTipData"
     >
       <font style="color: #e6e6e6;">PDI:{{this.toolTipData.PDI}}</font>
@@ -28,7 +28,8 @@ export default {
       indicatorsData: null,
       DMIData: null,
       coinType: "",
-      cycle: "",
+      currentCycle: '',
+      isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
       DMISize: {
@@ -59,25 +60,45 @@ export default {
     toolTipIndex: {
       type: Number,
       default: null
+    },
+    cycle: {
+      type: String,
+      default: 'hour'
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.DMI.clearIndicatorEcharts();
+        this.DMI.showLoading()
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     toolTipIndex() {
       let index = this.toolTipIndex;
-      if (this.DMIData) {
-        this.toolTipData = {
-          PDI: parseFloat(this.DMIData.PDI[index]).toFixed(4),
-          MDI: parseFloat(this.DMIData.MDI[index]).toFixed(4),
-          ADX: parseFloat(this.DMIData.ADX[index]).toFixed(4),
-          ADXR: parseFloat(this.DMIData.ADXR[index]).toFixed(4)
-        };
+      if (index) {
+        if (this.chartDataObj.candleData && !this.DMIData) {
+          let data = JSON.parse(
+            JSON.stringify(this.chartDataObj.candleData.values)
+          );
+          this.DMIData = getDMIData(data);
+        }
+        if (this.DMIData) {
+          this.toolTipData = {
+            PDI: parseFloat(this.DMIData.PDI[index]).toFixed(4),
+            MDI: parseFloat(this.DMIData.MDI[index]).toFixed(4),
+            ADX: parseFloat(this.DMIData.ADX[index]).toFixed(4),
+            ADXR: parseFloat(this.DMIData.ADXR[index]).toFixed(4)
+          };
+        }
       }
     },
     resizeSize() {
       this.resize();
     },
     chartDataObj() {
-      if (this.chartDataObj.klineData) {
+      if (this.chartDataObj.candleData) {
         this.indicatorsData = {
           indicator: this.chartDataObj.indicators,
           categoryData: this.chartDataObj.candleData.categoryData
@@ -94,18 +115,18 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.chartDataObj.cycle !== this.cycle
+          this.isRefresh
         ) {
           this.DMI.clearIndicatorEcharts();
-          this.cycle = this.chartDataObj.cycle;
-          this.DMI.setIndicatorOption(this.indicatorsData, this.cycle);
+          this.DMI.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.isRefresh = false
           this.$emit(
             "listenIndicatorChartEvent",
             this.DMI.getIndicatorEchart()
           );
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.DMI.updateIndicatorOption(this.indicatorsData, this.cycle);
+          this.DMI.updateIndicatorOption(this.indicatorsData, this.currentCycle);
         }
       }
     },

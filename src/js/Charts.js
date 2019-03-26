@@ -61,6 +61,10 @@ class ChartController {
         this.setDepthChart.updateDepthOption(data);
     }
 
+    getMobileTipsData() {
+        return this.setDepthChart.getMobileTipsData();
+    }
+
     clearDepthEcharts() {
         this.setDepthChart.clearDepthEcharts();
     }
@@ -115,6 +119,10 @@ class ChartController {
 
     setVolumeOption(data, cycle) {
         return this.setVolumeChart.setVolumeOption(data, cycle);
+    }
+
+    showLoading () {
+        this.setVolumeChart.showLoading();
     }
 
     getToolTipIndex() {

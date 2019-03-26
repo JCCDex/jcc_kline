@@ -1,13 +1,28 @@
 <template>
   <div class="mobile-kline" style="background-color: #161b21;">
-        <!-- Cycle按钮 -->
-        <div calss="mobileCycle" style = "height: 0.4rem; z-index: 9;">
-          <div @click = "chooseCycle('hour')" :class="this.cycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.hour}}</div>
-          <div @click = "chooseCycle('day')" :class="this.cycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.day}}</div>
-          <div @click = "chooseCycle('week')" :class="this.cycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.week}}</div>
-          <div @click = "chooseCycle('month')" :class="this.cycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.month}}</div>
-          <div @click = "chooseCycle('everyhour')" :class="this.cycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'">{{message.timeSharing}}</div>
-          <!-- <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'" @click = "chooseCycle(item.name)">
+    <!-- Cycle按钮 -->
+    <div calss="mobileCycle" style="height: 0.4rem; z-index: 9;">
+      <div
+        @click="chooseCycle('hour')"
+        :class="this.currentCycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+      >{{message.hour}}</div>
+      <div
+        @click="chooseCycle('day')"
+        :class="this.currentCycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+      >{{message.day}}</div>
+      <div
+        @click="chooseCycle('week')"
+        :class="this.currentCycle === 'week' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+      >{{message.week}}</div>
+      <div
+        @click="chooseCycle('month')"
+        :class="this.currentCycle === 'month' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+      >{{message.month}}</div>
+      <div
+        @click="chooseCycle('everyhour')"
+        :class="this.currentCycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
+      >{{message.timeSharing}}</div>
+      <!-- <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'" @click = "chooseCycle(item.name)">
             <div v-if = "item.values">
                 <select class = "cycle-select" v-model= "item.name"  @change= "chooseCycle($event)">
                   <option v-for= "(value, index) in item.values" v-bind:value = "value.value">{{value.label}}</option>
@@ -16,28 +31,34 @@
               <div v-else @click = "chooseCycle(item.name)">
                 {{item.name}}
               </div>
-          </div> -->
-          <div style="float:right; margin-right:0.2rem; margin-top:0.05rem" class="icon-indicator-div">
-            <i v-show = "true" @click = "openCloseMacd" class="icon iconfont icon-indicator">
-              <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
-            </i>
-          </div>
-        </div>
-    <div id = "kline" ref = "klineRef" :style="{height: `${klineConfig.size.height * 0.82}px`, width: `${klineConfig.size.width}px`}" @click="getToolTipIndex"></div>
-    <div style="background:#2b2f33; height:0.02rem"></div>
+      </div>-->
+      <div style="float:right; margin-right:0.2rem; margin-top:0.05rem" class="icon-indicator-div">
+        <i v-show = "true" @click = "openCloseMacd" class="icon iconfont icon-indicator">
+          <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
+        </i>
+      </div>
+    </div>
+    <div
+      id="kline"
+      ref="klineRef"
+      :style="{height: `${klineConfig.size.height * 0.82}px`, width: `${klineConfig.size.width}px`}"
+      @click="getToolTipIndex"
+    ></div>
+    <div style="background:#2b2f33; height:0.1rem"></div>
   </div>
 </template>
 <script>
-import '../css/common.css'                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
-import KLineController from '../js/KLine'
-import { getLanguage } from '../js/utils'
+import "../css/common.css";
+import KLineController from "../js/KLine";
+import { getLanguage } from "../js/utils";
 export default {
   name: "mKline",
   data() {
     return {
       kline: null,
-      cycle: '',
-      platform: 'mobile',
+      platform: "mobile",
+      currentCycle: '',
+      isRefresh: true,
       message: null,
       intervals: null
     };
@@ -46,43 +67,69 @@ export default {
     chartDataObj: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       }
     },
     klineConfig: {
       type: Object,
       default: () => {
-        return {
-        }
+        return {};
       }
+    },
+    cycle: {
+      type: String,
+      default: 'hour'  
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     chartDataObj() {
-      if (this.chartDataObj.cycle !== this.cycle) {
-        this.clearChart()
-        this.kline.showMobileLoading()
-        if (this.chartDataObj.cycle !== "everyhour") {
-          this.cycle = this.chartDataObj.cycle
-          this.kline.setMobileOption(this.klineConfig.size)
+      if (this.isRefresh) {
+        if (this.currentCycle !== "everyhour") {
+          this.kline.setMobileOption(this.klineConfig.size);
+          this.isRefresh = false;
         } else {
-          this.cycle = this.chartDataObj.cycle
-          this.kline.setTimeDivisionsOption(this.klineConfig.size)
+          this.kline.setTimeDivisionsOption(this.klineConfig.size);
+          this.isRefresh = false;
         }
       }
       if (this.chartDataObj.candleData) {
-        let candleData = this.chartDataObj.candleData
-        if (this.chartDataObj.cycle !== "everyhour" && candleData.values !== null && candleData.volumes !== null && candleData.categoryData !== null) {
-          let toolTipIndex = this.kline.updateMobileOption(candleData, this.cycle);
-          this.$emit("listenCandleChartEvent", this.kline.getMobileEchart())
-          this.$emit("listenTipIndex", toolTipIndex)
+        let candleData = this.chartDataObj.candleData;
+        if (
+          this.currentCycle !== "everyhour" &&
+          candleData.values !== null &&
+          candleData.volumes !== null &&
+          candleData.categoryData !== null
+        ) {
+          let toolTipIndex = this.kline.updateMobileOption(
+            candleData,
+            this.currentCycle
+          );
+          this.$emit("listenCandleChartEvent", this.kline.getMobileEchart());
+          this.$emit("listenTipIndex", toolTipIndex);
         }
       }
-      if (this.chartDataObj.cycle === "everyhour" && this.chartDataObj.divisionData) {
-        let divisionData = this.chartDataObj.divisionData
-        if (divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-          let toolTipIndex = this.kline.updateTimeDivisionOption(divisionData, this.chartDataObj.precision);
-          this.$emit("listenTipIndex", toolTipIndex)
+      if (
+        this.currentCycle === "everyhour" &&
+        this.chartDataObj.divisionData
+      ) {
+        let divisionData = this.chartDataObj.divisionData;
+        if (
+          divisionData.times !== null &&
+          divisionData.averages !== null &&
+          divisionData.prices !== null &&
+          divisionData.volumes !== null
+        ) {
+          let toolTipIndex = this.kline.updateTimeDivisionOption(
+            divisionData,
+            this.chartDataObj.precision
+          );
+          this.$emit("listenTipIndex", toolTipIndex);
         }
       }
     }
@@ -116,33 +163,37 @@ export default {
     this.init();
   },
   beforeDestroy() {
-    this.dispose()
+    this.dispose();
   },
   methods: {
     init() {
       this.kline.initMobileChart(this.$refs.klineRef);
     },
     chooseCycle(cycle) {
-      let selectCycle = cycle
+      let selectCycle = cycle;
       if (cycle instanceof Object) {
-         selectCycle = cycle.target.value
+        selectCycle = cycle.target.value;
       }
-      if (this.cycle === cycle) {
+      if (this.currentCycle === cycle) {
         return;
       }
-      this.$emit("listenToChildEvent", selectCycle)
+      this.clearChart();
+      this.kline.showMobileLoading();
+      this.currentCycle = cycle;
+      this.isRefresh = true;
+      this.$emit("listenToChildEvent", selectCycle);
     },
     getToolTipIndex() {
-      let toolTipIndex
-      if (this.cycle !== 'everyhour') {
-        toolTipIndex = this.kline.getMobileToolTipIndex()
+      let toolTipIndex;
+      if (this.currentCycle !== "everyhour") {
+        toolTipIndex = this.kline.getMobileToolTipIndex();
       } else {
-        toolTipIndex = this.kline.getMobileToolTipIndex()
+        toolTipIndex = this.kline.getMobileToolTipIndex();
       }
-      this.$emit("listenTipIndex", toolTipIndex)
+      this.$emit("listenTipIndex", toolTipIndex);
     },
     changeDataZoom(type) {
-      this.kline.changeMobileDataZoom(type)
+      this.kline.changeMobileDataZoom(type);
     },
     clearChart() {
       this.kline.clearMobileChart();
@@ -154,5 +205,5 @@ export default {
       this.$emit("listenMacdChartOpenClose", true)
     }
   }
-}
+};
 </script>

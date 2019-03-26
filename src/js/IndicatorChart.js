@@ -44,6 +44,10 @@ class IndicatorChartController {
         this.setStochasticChart.setStochasticOption(data, cycle);
     }
 
+    showStochasticLoading() {
+        this.setStochasticChart.showLoading();
+    }
+
     updateStochasticOption(data, cycle) {
         this.setStochasticChart.updateStochasticOption(data, cycle);
     }
@@ -56,7 +60,7 @@ class IndicatorChartController {
         this.setStochasticChart.disposeStochasticEChart();
     }
 
-    /* 绘制OBV指标 */
+    /* 绘制指标线 */
 
     initIndicatorChart(DOM) {
         this.setIndicatorChart.initIndicatorECharts(DOM);
@@ -68,6 +72,10 @@ class IndicatorChartController {
 
     getIndicatorEchart() {
         return this.setIndicatorChart.getIndicatorEchart();
+    }
+
+    showLoading() {
+        this.setIndicatorChart.showLoading();
     }
 
     getIndicatorTipData() {

@@ -1,108 +1,126 @@
 <template>
-    <div>
-      <div v-if="isMobile" style="background:#2b2f33; height:0.1rem"></div>
-      <div id="depth" ref="depth" :style="{height: `${depthSize.height}`, width: `${depthSize.width}`}"></div>
+  <div>
+    <div v-if="tipsData" class="mobile-kline-tip">
+      <div v-if="tipsData.type === 'Buy'" style="color:#ee4b4b;">
+        <font>{{message.buyPrice}}{{tipsData.price}}</font>
+        <font>{{message.buyTotal}}{{tipsData.total}}</font>
+      </div>
+      <div v-if="tipsData.type === 'Sell'" style="color:#09e988;">
+        <font>{{message.sellPrice}}{{tipsData.price}}</font>
+        <font>{{message.sellTotal}}{{tipsData.total}}</font>
+      </div>
     </div>
+    <div
+      id="depth"
+      ref="depth"
+      :style="{height: `${depthSize.height}`, width: `${depthSize.width}`}"
+      @mousemove="getMobileTipData"
+    ></div>
+  </div>
 </template>
 <script>
-import { getDepthData } from '../js/processData'
-import ChartController from '../js/Charts'
-import { getLanguage } from '../js/utils'
+import { getDepthData } from "../js/processData";
+import ChartController from "../js/Charts";
+import { getLanguage } from "../js/utils";
 export default {
   name: "depth",
   data() {
     return {
       depth: null,
-      coinType: '',
-      chartType: 'depth',
+      coinType: "",
+      chartType: "depth",
+      message: null,
+      tipsData: null,
       depthSize: {
-        height: '',
-        width: ''
-      },
-      isMobile:false
+        height: "",
+        width: ""
+      }
     };
   },
   props: {
     chartDataObj: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       }
     },
     klineConfig: {
       type: Object,
       default: () => {
-        return {
-        }
+        return {};
       }
     },
     resizeSize: {
       type: Object,
       default: () => {
-        return {
-        }
+        return {};
       }
     }
   },
   watch: {
     chartDataObj() {
       if (this.chartDataObj.depthData) {
-        let data = this.chartDataObj.depthData
-        data.precision = this.chartDataObj.precision
+        let data = this.chartDataObj.depthData;
+        data.precision = this.chartDataObj.precision;
         if (data) {
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
+          if (
+            JSON.stringify(this.coinType) !==
+            JSON.stringify(this.chartDataObj.coinType)
+          ) {
             this.clearChart();
-            this.depth.setDepthOption(data)
-            this.coinType = this.chartDataObj.coinType
-          }else {
-            this.depth.updateDepthOption(data)
+            this.depth.setDepthOption(data);
+            this.coinType = this.chartDataObj.coinType;
+          } else {
+            this.depth.updateDepthOption(data);
           }
         }
       }
     },
     resizeSize() {
-      this.resize()
+      this.resize();
     },
     klineConfig() {
-      if (this.klineConfig.platform === 'pc') {
+      if (this.klineConfig.platform === "pc") {
         let size = {
-          width: this.klineConfig.size.width + 'px',
-          height: this.klineConfig.size.height + 'px'
-        }
-        if (JSON.stringify(size) !== JSON.stringify(this.depthSize) && this.klineConfig.defaultSize === false) {
+          width: this.klineConfig.size.width + "px",
+          height: this.klineConfig.size.height + "px"
+        };
+        if (
+          JSON.stringify(size) !== JSON.stringify(this.depthSize) &&
+          this.klineConfig.defaultSize === false
+        ) {
           this.depthSize = {
-            width: this.klineConfig.size.width + 'px',
-            height: this.klineConfig.size.height + 'px'
-          }
+            width: this.klineConfig.size.width + "px",
+            height: this.klineConfig.size.height + "px"
+          };
           this.resize();
         }
       }
     }
   },
   created() {
-    if (this.klineConfig.platform === 'pc') {
+    if (this.klineConfig.platform === "pc") {
       if (!this.klineConfig.defaultSize) {
-        this.depthSize.height = this.klineConfig.size.height + 'px'
-        this.depthSize.width = this.klineConfig.size.width + 'px'
+        this.depthSize.height = this.klineConfig.size.height + "px";
+        this.depthSize.width = this.klineConfig.size.width + "px";
       } else {
         this.depthSize = {
-          height: '572px',
-          width: '100%'
-        }
+          height: "572px",
+          width: "100%"
+        };
       }
     } else {
-      this.isMobile = true;
-      this.depthSize.height = this.klineConfig.depthSize.height + 'px'
-      this.depthSize.width = this.klineConfig.depthSize.width + 'px'
+      this.depthSize.height = this.klineConfig.depthSize.height + "px";
+      this.depthSize.width = this.klineConfig.depthSize.width + "px";
     }
-    this.klineConfig.chartType = 'depth';
+    this.klineConfig.chartType = "depth";
     this.depth = new ChartController(this.klineConfig);
   },
   mounted() {
     this.init();
   },
   beforeDestroy() {
-    this.dispose()
+    this.dispose();
   },
   methods: {
     init() {
@@ -110,16 +128,26 @@ export default {
       this.resize();
     },
     resize() {
-      if (this.klineConfig.platform === 'pc') {
-        this.depth.resizeDepthChart(this.$refs.depth, this.resizeSize.isFullScreen, this.klineConfig.size);
+      if (this.klineConfig.platform === "pc") {
+        this.depth.resizeDepthChart(
+          this.$refs.depth,
+          this.resizeSize.isFullScreen,
+          this.klineConfig.size
+        );
+      }
+    },
+    getMobileTipData() {
+      if (this.klineConfig.platform === "mobile") {
+        this.message = getLanguage();
+        this.tipsData = this.depth.getMobileTipsData();
       }
     },
     clearChart() {
       this.depth.clearDepthEcharts();
     },
     dispose() {
-      this.depth.disposeDepthEChart()
+      this.depth.disposeDepthEChart();
     }
   }
-}
+};
 </script>

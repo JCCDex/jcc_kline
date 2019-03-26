@@ -11,8 +11,9 @@ export default {
     return {
       volume: null,
       coinType: '',
-      cycle: '',
+      currentCycle: '',
       refreshCycle: 0,
+      isRefresh: true,
       chartType: 'volume',
       volumeSize: {
         height: '',
@@ -40,42 +41,50 @@ export default {
         return {
         }
       }
+    },
+    cycle: {
+      type: String,
+      default: 'hour'
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.clearChart();
+        this.volume.showLoading()
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     resizeSize() {
       this.resize()
     },
     chartDataObj() {
-      if (this.chartDataObj.candleData && this.chartDataObj.cycle !== 'everyhour') {
+      if (this.chartDataObj.candleData && this.currentCycle !== 'everyhour') {
         let data = this.chartDataObj.candleData
         data.precision = this.chartDataObj.precision
         if (data.values && data.volumes && data.categoryData) {
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
-            this.clearChart();
-            this.refreshCycle = 0
-            this.cycle = this.chartDataObj.cycle
-            let toolTipIndex = this.volume.setVolumeOption(data, this.cycle)
+          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
+            let toolTipIndex = this.volume.setVolumeOption(data, this.currentCycle)
+            this.isRefresh = false
             this.$emit("listenToTipIndex", toolTipIndex)
             this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
             this.coinType = this.chartDataObj.coinType
           }else {
-            this.volume.updateVolumeOption(data, this.cycle)
+            this.volume.updateVolumeOption(data, this.currentCycle)
           }
         }
       }
-      if (this.chartDataObj.cycle === "everyhour" && this.chartDataObj.timeDivisionData) {
-        this.cycle = this.chartDataObj.cycle
+      if (this.currentCycle === "everyhour" && this.chartDataObj.timeDivisionData) {
         let timeDivisionData = this.chartDataObj.timeDivisionData
         let divisionData = this.chartDataObj.divisionData
-        if (this.refreshCycle !== 1 && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-          this.clearChart();
-          let toolTipIndex = this.volume.setVolumeOption(divisionData, this.cycle)
+        if (this.isRefresh && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
+          let toolTipIndex = this.volume.setVolumeOption(divisionData, this.currentCycle)
+          this.isRefresh = false
           this.$emit("listenToTipIndex", toolTipIndex)
-          this.refreshCycle = 1
           this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
         } else {
-           this.volume.updateVolumeOption(divisionData, this.cycle)
+           this.volume.updateVolumeOption(divisionData, this.currentCycle)
         }
       }
     },

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      :class="this.klineConfig.platform === 'pc' ? 'stochastic-tip-data' : 'mobile-stochastic-tip'"
+      :class="this.klineConfig.platform === 'pc' ? 'kline-tip' : 'mobile-kline-tip'"
       v-if="toolTipData"
     >
       <font style="color: #67ff7c;">K:&nbsp;{{toolTipData.K}}&nbsp;</font>
@@ -26,7 +26,8 @@ export default {
       stochastic: null,
       KDJData: null,
       coinType: "",
-      cycle: "",
+      currentCycle: '',
+      isRefresh: true,
       chartType: "stochastic",
       toolTipData: null,
       stochasticSize: {
@@ -57,20 +58,37 @@ export default {
     toolTipIndex: {
       type: Number,
       default: null
+    },
+    cycle: {
+      type: String,
+      default: 'hour'
     }
   },
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.stochastic.clearStochasticEcharts();
+        this.stochastic.showStochasticLoading()
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     toolTipIndex() {
       let index = this.toolTipIndex;
-      if (this.KDJData) {
-        let pricePrecision = !isNaN(this.KDJData.precision.price)
-          ? this.KDJData.precision.price
-          : 6;
-        this.toolTipData = {
-          K: parseFloat(this.KDJData.K[index]).toFixed(4),
-          D: parseFloat(this.KDJData.D[index]).toFixed(4),
-          J: parseFloat(this.KDJData.J[index]).toFixed(4)
-        };
+      if (index) {
+        if (this.chartDataObj.candleData && !this.KDJData) {
+          let data = JSON.parse(
+            JSON.stringify(this.chartDataObj.candleData.values)
+          );
+          this.KDJData = getKDJData(9, data);
+        }
+        if (this.KDJData) {
+          this.toolTipData = {
+            K: parseFloat(this.KDJData.K[index]).toFixed(4),
+            D: parseFloat(this.KDJData.D[index]).toFixed(4),
+            J: parseFloat(this.KDJData.J[index]).toFixed(4)
+          };
+        }
       }
     },
     resizeSize() {
@@ -92,18 +110,18 @@ export default {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.chartDataObj.cycle !== this.cycle
+            this.isRefresh
           ) {
             this.stochastic.clearStochasticEcharts();
-            this.cycle = this.chartDataObj.cycle;
-            this.stochastic.setStochasticOption(this.KDJData, this.cycle);
+            this.stochastic.setStochasticOption(this.KDJData, this.currentCycle);
+            this.isRefresh = false
             this.$emit(
               "listenStochasticChartEvent",
               this.stochastic.getStochasticEchart()
             );
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.stochastic.updateStochasticOption(this.KDJData, this.cycle);
+            this.stochastic.updateStochasticOption(this.KDJData, this.currentCycle);
           }
         }
       }

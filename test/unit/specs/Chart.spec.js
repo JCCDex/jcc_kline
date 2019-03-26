@@ -214,6 +214,16 @@ describe('test Chart', () => {
   })
 
   // 测试成交量绘制方法
+  it('test getMobileTipsData if platform is mobile and chartType is depth', () => {
+    let depth = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    depth.initDepth(element)
+    depth.setDepthOption(depthData)
+    let tipsData = depth.getMobileTipsData()
+    expect(tipsData).toBe(undefined)
+  })
+
+  // 测试交易量图绘制方法
   let volumeConfig = {
     platform: 'pc',
     chartType: 'volume',
@@ -252,6 +262,15 @@ describe('test Chart', () => {
     const element = document.createElement('div');
     volume.initVolumeChart(element)
     volume.setVolumeOption(data)
+    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
+  })
+
+  it('test showLoading', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.showLoading()
     expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
   })
 
