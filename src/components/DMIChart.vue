@@ -9,6 +9,12 @@
       <font style="color: #e03bfa;">ADX:{{this.toolTipData.ADX}}</font>
       <font style="color: #67ff7c;">ADXR:{{this.toolTipData.ADXR}}</font>
     </div>
+    <i
+      v-if
+      @click="closeChart"
+      style="position:absolute;right:70px;z-index:5;"
+      class="icon iconfont icon-popover-close"
+    ></i>
     <div
       ref="DMI"
       :style="{height: `${DMISize.height}`, width: `${DMISize.width}`}"
@@ -28,7 +34,7 @@ export default {
       indicatorsData: null,
       DMIData: null,
       coinType: "",
-      currentCycle: '',
+      currentCycle: "",
       isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
@@ -63,17 +69,17 @@ export default {
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-    cycle () {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
         this.DMI.clearIndicatorEcharts();
-        this.DMI.showLoading()
-        this.isRefresh = true
+        this.DMI.showLoading();
+        this.isRefresh = true;
       }
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
@@ -108,10 +114,7 @@ export default {
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.DMIData;
       }
-      if (
-        this.indicatorsData &&
-        this.indicatorsData.indicatorData
-      ) {
+      if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
@@ -119,14 +122,17 @@ export default {
         ) {
           this.DMI.clearIndicatorEcharts();
           this.DMI.setIndicatorOption(this.indicatorsData, this.currentCycle);
-          this.isRefresh = false
+          this.isRefresh = false;
           this.$emit(
             "listenIndicatorChartEvent",
             this.DMI.getIndicatorEchart()
           );
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.DMI.updateIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.DMI.updateIndicatorOption(
+            this.indicatorsData,
+            this.currentCycle
+          );
         }
       }
     },
@@ -181,6 +187,9 @@ export default {
     getToolTipIndex() {
       let index = this.DMI.getIndicatorTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    closeChart() {
+      this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

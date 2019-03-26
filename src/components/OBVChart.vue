@@ -6,6 +6,12 @@
     >
       <font style="color: #67ff7c;">OBV:&nbsp;{{toolTipData.OBV}}</font>
     </div>
+    <i
+      v-if
+      @click="closeChart"
+      style="position:absolute;right:70px;z-index:5;"
+      class="icon iconfont icon-popover-close"
+    ></i>
     <div
       ref="OBV"
       :style="{height: `${OBVSize.height}`, width: `${OBVSize.width}`}"
@@ -172,6 +178,9 @@ export default {
     getToolTipIndex() {
       let index = this.OBV.getIndicatorTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    closeChart() {
+      this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
