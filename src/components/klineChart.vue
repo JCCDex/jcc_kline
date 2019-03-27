@@ -27,26 +27,27 @@
       </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
-          <div style="position: absolute;right:150px;top:4px;z-index:5;" class="icon-indicator-div">
+          <!-- <div style="position: absolute;right:150px;top:4px;z-index:5;" class="icon-indicator-div">
             <el-popover placement="bottom" width="60" trigger="click">
               <div class="indicatorOpt">
                 <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
-                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br>
+                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">{{message.DMI}}</div><br>
                 <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
-                <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
+                <div @click = "showIndicatorChart('Boll')" class = "chart-indicator-div">{{message.Boll}}</div><br>
+                <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">{{message.TRIX}}</div><br>
                 <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
               </div>
               <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
                 <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
               </i>
             </el-popover>
-          </div>
+          </div> -->
 
-           <!-- <div v-show = "showChart==='candle'" style="position: absolute;right:154px;top:4px;z-index:5;" class="icon-indicator-div">
+           <div v-show = "showChart==='candle'" style="position: absolute;right:154px;top:4px;z-index:5;" class="icon-indicator-div">
               <i v-show = "true" @click = "showIndicatorChart('MACD')" class="icon iconfont icon-indicator">
                 <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span>
               </i>
-          </div> -->
+          </div>
 
           <div @click = "changeChart('candle')" :class = "this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">{{message.candle}}</div>
           <div @click = "changeChart('depth')" :class = "this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'" style="margin-left: 10px;margin-right: 20px;">{{message.depth}}</div>
@@ -95,13 +96,13 @@ import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 // import TimeSharing from './timeSharing.vue'
 import MACD from './MACDChart.vue'
-import KDJ from './KDJChart.vue'
-import DMI from './DMIChart.vue'
-import OBV from './OBVChart.vue'
-import RSI from './RSIChart.vue'
-import TRIX from './TRIXChart.vue'
+// import KDJ from './KDJChart.vue'
+// import DMI from './DMIChart.vue'
+// import OBV from './OBVChart.vue'
+// import RSI from './RSIChart.vue'
+// import TRIX from './TRIXChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
-import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
+import { splitData, getDepthData, calculateMA, handleDivisionData, getBollData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
 export default {
   name: "klineChart",
@@ -110,12 +111,12 @@ export default {
     Depth,
     Volume,
     Fullscreen,
-    MACD,
-    KDJ,
-    DMI,
-    RSI,
-    OBV,
-    TRIX
+    MACD
+    // KDJ,
+    // DMI,
+    // RSI,
+    // OBV,
+    // TRIX
     // TimeSharing
   },
   data() {
@@ -141,7 +142,8 @@ export default {
       resizeSize: {},
       isFullScreen: false,
       showIndicator: null,
-      isClose: false
+      relevanceIndicator: 'MA',
+      isClose: true
     };
   },
   props: {
@@ -251,6 +253,11 @@ export default {
           MAData[i].name = this.klineConfig.MA[i].name
           MAData[i].data = calculateMA(this.klineConfig.MA[i].name.substring(2) * 1, candleData)
         }
+        if (this.relevanceIndicator === "Boll") {
+          let BollData = getBollData(candleData, 20)
+          candleData.BollData = BollData
+        }
+        candleData.indicatorType = this.relevanceIndicator
         candleData.MAData = MAData
         candleData.precision = precision
       }
@@ -287,15 +294,18 @@ export default {
       }
     },
     showIndicatorChart(indicator) {
-      // if (this.showIndicator === indicator) {
-      //   return
-      // }
-      if (this.showIndicator === null) {
-        this.showIndicator = indicator
-        this.isClose = false
-      } else {
+      if (indicator === 'Boll') {
+        if (indicator === this.relevanceIndicator) {
+          this.relevanceIndicator = ""
+        } else {
+          this.relevanceIndicator = "Boll"
+        }
+      } else if (indicator === this.showIndicator) {
         this.showIndicator = null
         this.isClose = true
+      } else {
+        this.showIndicator = indicator
+        this.isClose = false
       }
       this.resize()
       this.changeChartDataObj(this.klineDataObj)

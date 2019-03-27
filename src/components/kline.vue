@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       kline: null,
-      currentCycle: '',
+      currentCycle: 'hour',
       isRefresh: true,
       platform: 'pc',
       klineSize: {

@@ -5,6 +5,7 @@ import testData from '../../testData/testData.json'
 describe('test KLineSetChart', () => {
 
   let klineData = testData.candleData
+  klineData.indicatorType = "Boll"
   option.defaultMA = false
   option.MAIndex = 1
   option.MA = [
@@ -84,6 +85,7 @@ describe('test KLineSetChart', () => {
   })
 
   it('test setOption if cycle is month', () => {
+    klineData.indicatorType = ""
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
