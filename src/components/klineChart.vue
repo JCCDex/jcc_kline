@@ -9,9 +9,9 @@
        <div style="margin-right: 180px;">
           <i :class="outspreadMA ? 'icon iconfont icon-kline-hide' : 'icon iconfont icon-kline-show'" @click="showMAData"></i>
           <font class="tooltip-data-name">{{message.opening}}{{this.toolTipData.opening}}</font>
+          <font class="tooltip-data-name">{{message.closing}}{{this.toolTipData.closing}}</font>
           <font class="tooltip-data-name">{{message.max}}{{this.toolTipData.max}}</font>
           <font class="tooltip-data-name">{{message.min}}{{this.toolTipData.min}}</font>
-          <font class="tooltip-data-name">{{message.closing}}{{this.toolTipData.closing}}</font>
           <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font><br>
         </div>
         <div v-if = "outspreadMA">

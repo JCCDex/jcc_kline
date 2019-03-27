@@ -38,11 +38,11 @@ import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 import TimeSharing from './timeSharing.vue'
 import MACD from './MACDChart.vue'
-import KDJ from './KDJChart.vue'
-import DMI from './DMIChart.vue'
-import OBV from './OBVChart.vue'
-import RSI from './RSIChart.vue'
-import TRIX from './TRIXChart.vue'
+// import KDJ from './KDJChart.vue'
+// import DMI from './DMIChart.vue'
+// import OBV from './OBVChart.vue'
+// import RSI from './RSIChart.vue'
+// import TRIX from './TRIXChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume, linkageMacd } from '../js/linkageCharts';
@@ -53,12 +53,12 @@ export default {
     Depth,
     Volume,
     TimeSharing,
-    MACD,
-    KDJ,
-    DMI,
-    OBV,
-    RSI,
-    TRIX
+    MACD
+    // KDJ,
+    // DMI,
+    // OBV,
+    // RSI,
+    // TRIX
   },
   data() {
     return {
