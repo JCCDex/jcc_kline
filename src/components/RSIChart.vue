@@ -8,6 +8,12 @@
       <font style="color: #16c5ff;">RSI12:&nbsp;{{toolTipData.RSI12}}</font>
       <font style="color: #e03bfa;">RSI24:&nbsp;{{toolTipData.RSI24}}</font>
     </div>
+    <i
+      v-if
+      @click="closeChart"
+      style="position:absolute;right:70px;z-index:5;"
+      class="icon iconfont icon-popover-close"
+    ></i>
     <div
       ref="RSI"
       :style="{height: `${RSISize.height}`, width: `${RSISize.width}`}"
@@ -190,6 +196,9 @@ export default {
     getToolTipIndex() {
       let index = this.RSI.getIndicatorTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    closeChart() {
+      this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

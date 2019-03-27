@@ -31,9 +31,10 @@
             <el-popover placement="bottom" width="60" trigger="click">
               <div class="indicatorOpt">
                 <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
-                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">DMI</div><br>
+                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">{{message.DMI}}</div><br>
                 <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
-                <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">TRIX</div><br>
+                <div @click = "showIndicatorChart('Boll')" class = "chart-indicator-div">{{message.Boll}}</div><br>
+                <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">{{message.TRIX}}</div><br>
                 <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
               </div>
               <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
@@ -77,11 +78,11 @@
       <!-- <time-sharing ref="timeSharing" v-if= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" v-on:listenToTipIndex = "getTipDataIndex" v-on:listenTimeSharingChart = "getTimeSharingChart"></time-sharing> -->
       <Volume ref = 'volume' v-show = "showChart !== 'depth'" v-on:listenVolumeChartEvent = 'getVolumeChart' v-on:listenToTipIndex = "getTipDataIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></Volume>
       <MACD ref = "macd" v-show = "showIndicator === 'MACD' && showChart !== 'depth'" v-on:listenMacdChartEvent = 'getMacdchart' v-on:listenMacdChartClose = 'getMacdClose' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></MACD>
-      <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></KDJ>
-      <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></DMI>
-      <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></OBV>
-      <RSI ref = "indicator" v-show = "showIndicator === 'RSI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></RSI>
-      <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></TRIX> -->
+      <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></KDJ>
+      <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></DMI>
+      <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></OBV>
+      <RSI ref = "indicator" v-show = "showIndicator === 'RSI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></RSI>
+      <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></TRIX> -->
     </fullscreen>
   </div>
 </template>
@@ -95,13 +96,13 @@ import Depth from './marketDepth.vue'
 import Volume from './volumeChart.vue'
 // import TimeSharing from './timeSharing.vue'
 import MACD from './MACDChart.vue'
-import KDJ from './KDJChart.vue'
-import DMI from './DMIChart.vue'
-import OBV from './OBVChart.vue'
-import RSI from './RSIChart.vue'
-import TRIX from './TRIXChart.vue'
+// import KDJ from './KDJChart.vue'
+// import DMI from './DMIChart.vue'
+// import OBV from './OBVChart.vue'
+// import RSI from './RSIChart.vue'
+// import TRIX from './TRIXChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from '../js/utils'
-import { splitData, getDepthData, calculateMA, handleDivisionData } from '../js/processData'
+import { splitData, getDepthData, calculateMA, handleDivisionData, getBollData } from '../js/processData'
 import { linkageVolume } from '../js/linkageCharts'
 export default {
   name: "klineChart",
@@ -110,12 +111,12 @@ export default {
     Depth,
     Volume,
     Fullscreen,
-    MACD,
-    KDJ,
-    DMI,
-    RSI,
-    OBV,
-    TRIX
+    MACD
+    // KDJ,
+    // DMI,
+    // RSI,
+    // OBV,
+    // TRIX
     // TimeSharing
   },
   data() {
@@ -141,7 +142,8 @@ export default {
       resizeSize: {},
       isFullScreen: false,
       showIndicator: null,
-      isClose: false
+      relevanceIndicator: 'MA',
+      isClose: true
     };
   },
   props: {
@@ -251,6 +253,11 @@ export default {
           MAData[i].name = this.klineConfig.MA[i].name
           MAData[i].data = calculateMA(this.klineConfig.MA[i].name.substring(2) * 1, candleData)
         }
+        if (this.relevanceIndicator === "Boll") {
+          let BollData = getBollData(candleData, 20)
+          candleData.BollData = BollData
+        }
+        candleData.indicatorType = this.relevanceIndicator
         candleData.MAData = MAData
         candleData.precision = precision
       }
@@ -287,15 +294,18 @@ export default {
       }
     },
     showIndicatorChart(indicator) {
-      // if (this.showIndicator === indicator) {
-      //   return
-      // }
-      if (this.showIndicator === null) {
-        this.showIndicator = indicator
-        this.isClose = false
-      } else {
+      if (indicator === 'Boll') {
+        if (indicator === this.relevanceIndicator) {
+          this.relevanceIndicator = ""
+        } else {
+          this.relevanceIndicator = "Boll"
+        }
+      } else if (indicator === this.showIndicator) {
         this.showIndicator = null
         this.isClose = true
+      } else {
+        this.showIndicator = indicator
+        this.isClose = false
       }
       this.resize()
       this.changeChartDataObj(this.klineDataObj)
@@ -425,6 +435,11 @@ export default {
       this.isShow = false;
     },
     getMacdClose(isClose) {
+      this.showIndicator = null;
+      this.isClose = isClose;
+      this.resize();
+    },
+    closeIndicatorChart(isClose) {
       this.showIndicator = null;
       this.isClose = isClose;
       this.resize();

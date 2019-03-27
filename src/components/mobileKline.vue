@@ -58,7 +58,7 @@ export default {
     return {
       kline: null,
       platform: "mobile",
-      currentCycle: '',
+      currentCycle: 'hour',
       isRefresh: true,
       message: null,
       intervals: null,

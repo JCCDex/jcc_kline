@@ -7,6 +7,12 @@
       <font style="color: #e6e6e6;">TRIX:{{this.toolTipData.TRIX}}</font>
       <font style="color: #f6d026;">MATRIX:{{this.toolTipData.MATRIX}}</font>
     </div>
+    <i
+      v-if
+      @click="closeChart"
+      style="position:absolute;right:70px;z-index:5;"
+      class="icon iconfont icon-popover-close"
+    ></i>
     <div
       ref="TRIX"
       :style="{height: `${TRIXSize.height}`, width: `${TRIXSize.width}`}"
@@ -171,6 +177,9 @@ export default {
     getToolTipIndex() {
       let index = this.TRIX.getIndicatorTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    closeChart() {
+      this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

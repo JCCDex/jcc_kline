@@ -31,7 +31,7 @@ export default {
   data() {
     return {
       kline: null,
-      currentCycle: '',
+      currentCycle: 'hour',
       isRefresh: true,
       platform: 'pc',
       klineSize: {
@@ -115,7 +115,7 @@ export default {
     if (this.klineConfig.defaultSize) {
       this.klineSize = {
         width: '100%',
-        height: '374px'
+        height: '533px'
       }
     } else {
       this.klineSize = {

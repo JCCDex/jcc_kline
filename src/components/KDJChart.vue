@@ -8,6 +8,12 @@
       <font style="color: #ff4d71;">D:&nbsp;{{toolTipData.D}}&nbsp;</font>
       <font style="color: #f6d026;">J:&nbsp;{{toolTipData.J}}&nbsp;</font>
     </div>
+    <i
+      v-if
+      @click="closeChart"
+      style="position:absolute;right:70px;z-index:5;"
+      class="icon iconfont icon-popover-close"
+    ></i>
     <div
       ref="stochastic"
       :style="{height: `${stochasticSize.height}`, width: `${stochasticSize.width}`}"
@@ -177,6 +183,9 @@ export default {
     getToolTipData() {
       let index = this.stochastic.getStochasticTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    closeChart() {
+      this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

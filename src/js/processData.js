@@ -385,6 +385,41 @@ export const getRSIData = (datas, periodic) => {
     return RSI;
 };
 
+export const getBollData = (datas, periodic) => {
+    if (!datas) return;
+    let UB = []; //上轨线
+    let MB = []; //中轨线
+    let LB = []; //下轨线
+    let MD = []; //标准差
+    let MAData = calculateMA(periodic, datas);
+    for (let i = 0; i < MAData.length; i++) {
+        if (isNaN(MAData[i - 1])) {
+            UB.push('-');
+            MB.push('-');
+            LB.push('-');
+            MD.push('-');
+        } else {
+            MB.push(MAData[i - 1]);
+            let MDValues = 0;
+            for (let j = i - periodic; j < i; j++) {
+                if (isNaN(MAData[j])) {
+                    MDValues = MDValues + Math.pow((datas.values[j][1]), 2);
+                } else {
+                    MDValues = MDValues + Math.pow((datas.values[j][1] - MAData[j]), 2);
+                }
+            }
+            MD.push(Math.sqrt(MDValues) / periodic);
+            UB.push(MB[i] + 2 * MD[i]);
+            LB.push(MB[i] - 2 * MD[i]);
+        }
+    }
+    return {
+        UB: UB,
+        MB: MB,
+        LB: LB
+    };
+};
+
 export const getMAData = (periodic, data) => {
     var result = [];
     for (var i = 0, len = data.length; i < len; i++) {

@@ -39,5 +39,8 @@
   "MACD": "MACD",
   "Volume": "成交量",
   "KDJ": "KDJ",
-  "OBV": "OBV"
+  "OBV": "OBV",
+  "DMI": "DMI",
+  "Boll": "Boll",
+  "TRIX": "TRIX"
 }
