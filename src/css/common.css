@@ -97,17 +97,17 @@
 }
 
 .icon-indicator-unselected {
-    font-size: 18px;
+    font-size: 16px;
     color: #b9cadd;
 }
 
 .icon-indicator-selected {
-    font-size: 18px;
+    font-size: 16px;
     color: #1bdafd;
 }
 
 .icon-indicator-selected:hover {
-    font-size: 18px;
+    font-size: 16px;
     color: #1bdafd;
 }
 
