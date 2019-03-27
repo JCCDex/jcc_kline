@@ -37,3 +37,11 @@
   content: "\e6cb";
 }
 
+.icon-indicator-unselected:before {
+  content: "\e6cb";
+}
+
+.icon-indicator-selected:before {
+  content: "\e6cb";
+}
+

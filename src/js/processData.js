@@ -129,9 +129,9 @@ export const handleDivisionData = (datas) => {
 
         EMA12 = getEMA12(index, EMA12, data[2]);
         EMA26 = getEMA26(index, EMA26, data[2]);
-        DIFF = (EMA12 - EMA26).toFixed(6);
+        DIFF = (EMA12 - EMA26).toFixed(8);
         DEA = getDEA(index, DIFF, DEA);
-        MACD =  (2 * (DIFF-DEA)).toFixed(6);
+        MACD =  (2 * (DIFF-DEA)).toFixed(8);
         MACDData.push([
             formatTime(data[3]),
             DIFF,

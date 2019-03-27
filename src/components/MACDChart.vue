@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="background:#2b2f33; height:0.02rem"></div>
+    <div style="background:#2b2f33; height:0.05rem"></div>
     <div
       :class="this.klineConfig.platform === 'pc' ? 'macd-tip-data' : 'mobile-macd-tip'"
       v-if="toolTipData"
@@ -15,6 +15,7 @@
     ></div>
   </div>
 </template>
+
 <script>
 import ChartController from '../js/Charts'
 import { getLanguage } from '../js/utils'
@@ -24,6 +25,9 @@ export default {
     return {
       coinType: '',
       chartType: 'MACD',
+      currentCycle: '',
+      refreshCycle: 0,
+      isRefresh: true,
       macdData:"",
       toolTipData: null,
       macd: '',
@@ -58,16 +62,35 @@ export default {
     toolTipIndex: {
       type: Number,
       default: null
+    },
+    cycle: {
+      type: String,
+      default: 'hour'
     }
   },
   
   watch: {
+    cycle () {
+      if (this.cycle !== this.currentCycle) {
+        this.clearChart();
+        this.macd.showMacdLoading()
+        this.isRefresh = true
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+    },
     resizeSize() {
       this.resize()
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
       if (this.macdData) {
+        let length = this.macdData.times.length;
+        if (this.cycle==="week" && length-1<index){
+          index = length-1;
+        }
+        if (this.cycle==="month" && length-1<index){
+          index = length-1;
+        }
         this.toolTipData = {
           macd: this.macdData.macds[index],
           diff: this.macdData.difs[index],
@@ -82,16 +105,17 @@ export default {
         if (data.MACDData && data.categoryData) {
           var macdData = this.splitData(data.MACDData);
           this.macdData = macdData;
-          if (this.macdData) {
-            let index = this.toolTipIndex;
-            this.$emit("listenToTipIndex", index);
-            this.toolTipData = {
-              macd: this.macdData.macds[index],
-              diff: this.macdData.difs[index],
-              dea: this.macdData.deas[index]
-            }
-          }
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
+          // if (this.macdData) {
+          //   let index = this.toolTipIndex;
+          //   this.$emit("listenToTipIndex", index);
+          //   this.toolTipData = {
+          //     macd: this.macdData.macds[index],
+          //     diff: this.macdData.difs[index],
+          //     dea: this.macdData.deas[index]
+          //   }
+          // }
+          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
+            this.isRefresh = false
             this.clearChart();
             this.refreshCycle = 0
             this.cycle = this.chartDataObj.cycle
@@ -108,16 +132,17 @@ export default {
         if (data.MACDData) {
           var macdData = this.splitData(data.MACDData);
           this.macdData = macdData;
-          if (this.macdData) {
-            let index = this.toolTipIndex;
-            this.$emit("listenToTipIndex", index);
-            this.toolTipData = {
-              macd: this.macdData.macds[index],
-              diff: this.macdData.difs[index],
-              dea: this.macdData.deas[index]
-            }
-          }
-          if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.chartDataObj.cycle !== this.cycle) {
+          // if (this.macdData) {
+          //   let index = this.toolTipIndex;
+          //   this.$emit("listenToTipIndex", index);
+          //   this.toolTipData = {
+          //     macd: this.macdData.macds[index],
+          //     diff: this.macdData.difs[index],
+          //     dea: this.macdData.deas[index]
+          //   }
+          // }
+          if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
+            this.isRefresh = false
             this.clearChart();
             this.cycle = this.chartDataObj.cycle
             this.macd.setMACDOption(macdData);

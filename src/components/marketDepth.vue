@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div v-show="isMobile" style="background:#2b2f33; height:0.1rem"></div>
     <div v-if="tipsData" class="mobile-kline-tip">
       <div v-if="tipsData.type === 'Buy'" style="color:#ee4b4b;">
         <font>{{message.buyPrice}}{{tipsData.price}}</font>
@@ -31,6 +32,7 @@ export default {
       chartType: "depth",
       message: null,
       tipsData: null,
+      isMobile: false,
       depthSize: {
         height: "",
         width: ""
@@ -112,6 +114,7 @@ export default {
     } else {
       this.depthSize.height = this.klineConfig.depthSize.height + "px";
       this.depthSize.width = this.klineConfig.depthSize.width + "px";
+      this.isMobile = true;
     }
     this.klineConfig.chartType = "depth";
     this.depth = new ChartController(this.klineConfig);

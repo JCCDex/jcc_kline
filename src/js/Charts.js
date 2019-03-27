@@ -178,6 +178,10 @@ class ChartController {
         return this.setMACDChart.getToolTipData();
     }
 
+    showMacdLoading () {
+        this.setMACDChart.showLoading();
+    }
+
 }
 
 export default ChartController;

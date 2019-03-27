@@ -33,7 +33,8 @@
               </div>
       </div>-->
       <div style="float:right; margin-right:0.2rem; margin-top:0.05rem" class="icon-indicator-div">
-        <i v-show = "true" @click = "openCloseMacd" class="icon iconfont icon-indicator">
+        <i v-show = "true" @click = "openCloseMacd" :class="this.isSelected ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'">
+        <!-- <i v-show = "isSelected" @click = "openCloseMacd" class="icon iconfont icon-indicator-selected"> -->
           <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
         </i>
       </div>
@@ -60,7 +61,8 @@ export default {
       currentCycle: 'hour',
       isRefresh: true,
       message: null,
-      intervals: null
+      intervals: null,
+      isSelected: false
     };
   },
   props: {
@@ -202,6 +204,7 @@ export default {
       this.kline.disposeMobileChart()
     },
     openCloseMacd() {
+      this.isSelected = !this.isSelected;
       this.$emit("listenMacdChartOpenClose", true)
     }
   }
