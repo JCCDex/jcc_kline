@@ -397,4 +397,13 @@ describe('test Chart', () => {
     macd.disposeMACDEChart()
     expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
   })
+
+  it('test showMacdLoading', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    macd.setMACDOption(macdData)
+    macd.showMacdLoading()
+    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
+  })
 })
