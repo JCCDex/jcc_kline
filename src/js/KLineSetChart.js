@@ -178,7 +178,6 @@ class KLineSetChartController {
                 data: data.MAData[i].data
             };
         }
-        console.log(data.BollData)
         if (data.indicatorType === 'Boll') {
             let MB = {
                 name: 'MB',
