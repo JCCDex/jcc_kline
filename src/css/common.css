@@ -96,6 +96,21 @@
     color: #1bdafd;
 }
 
+.icon-indicator-unselected {
+    font-size: 18px;
+    color: #b9cadd;
+}
+
+.icon-indicator-selected {
+    font-size: 18px;
+    color: #1bdafd;
+}
+
+.icon-indicator-selected:hover {
+    font-size: 18px;
+    color: #1bdafd;
+}
+
 .icon-indicator-div .icon-indicator-ch {
     visibility: hidden;
     width: 46px;
@@ -695,6 +710,7 @@
     -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
     z-index: 9;
+    margin-top: 0.1rem
 }
 
 .mobile-macd-tip {
@@ -702,4 +718,5 @@
     font-size: 0.16rem;
     margin-left: 0.2rem;
     z-index: 9;
+    margin-top: 0.1rem
 }

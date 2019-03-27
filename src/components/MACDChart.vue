@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="background:#2b2f33; height:0.02rem"></div>
+    <div style="background:#2b2f33; height:0.05rem"></div>
     <div
       :class="this.klineConfig.platform === 'pc' ? 'macd-tip-data' : 'mobile-macd-tip'"
       v-if="toolTipData"
