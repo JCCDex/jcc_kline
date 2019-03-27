@@ -3,11 +3,11 @@
     <div v-show="isMobile" style="background:#2b2f33; height:0.1rem"></div>
     <div v-if="tipsData" class="mobile-kline-tip">
       <div v-if="tipsData.type === 'Buy'" style="color:#ee4b4b;">
-        <font>{{message.buyPrice}}{{tipsData.price}}</font>
+        <font>{{message.buyPrice}}{{tipsData.price}}</font>&nbsp;&nbsp;
         <font>{{message.buyTotal}}{{tipsData.total}}</font>
       </div>
       <div v-if="tipsData.type === 'Sell'" style="color:#09e988;">
-        <font>{{message.sellPrice}}{{tipsData.price}}</font>
+        <font>{{message.sellPrice}}{{tipsData.price}}</font>&nbsp;&nbsp;
         <font>{{message.sellTotal}}{{tipsData.total}}</font>
       </div>
     </div>
