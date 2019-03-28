@@ -1,4 +1,4 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData, getRSIData, getTRIXData, getBollData } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData } from 'js/processData'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 import { getKDJData } from '../../../src/js/processData.js';
