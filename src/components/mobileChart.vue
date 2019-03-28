@@ -179,6 +179,7 @@ export default {
       this.timeSharingTipData = null
       this.cycle = cycle
       this.toolTipIndex = null
+      this.chartDataObj.candleData = null
       this.$emit("listenToChildEvent", cycle)
     },
     getCandleChart(candle) {
