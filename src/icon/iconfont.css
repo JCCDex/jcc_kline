@@ -1,8 +1,8 @@
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1553151109597'); /* IE9 */
-  src: url('iconfont.eot?t=1553151109597#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.ttf?t=1553151109597') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  url('iconfont.svg?t=1553151109597#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1553752994973'); /* IE9 */
+  src: url('iconfont.eot?t=1553752994973#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.ttf?t=1553752994973') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1553752994973#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -11,6 +11,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-drop-down:before {
+  content: "\e6ae";
 }
 
 .icon-kline-hide:before {
@@ -34,14 +38,6 @@
 }
 
 .icon-indicator:before {
-  content: "\e6cb";
-}
-
-.icon-indicator-unselected:before {
-  content: "\e6cb";
-}
-
-.icon-indicator-selected:before {
   content: "\e6cb";
 }
 
