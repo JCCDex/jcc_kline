@@ -91,6 +91,7 @@ export default {
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
     },
     chartDataObj() {
+      if (!this.chartDataObj) {return}
       if (this.isRefresh) {
         if (this.currentCycle !== "everyhour") {
           this.kline.setMobileOption(this.klineConfig.size);
