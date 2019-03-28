@@ -29,6 +29,7 @@
       <!-- <RSI ref = "indicator" v-show = "showIndicatorChart === 'RSI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></RSI>
       <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></DMI> -->
       <!-- <TRIX ref = "indicator" v-show = "showIndicatorChart === 'TRIX'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></TRIX> -->
+     <!-- <MTM ref = "indicator" v-show = "showIndicatorChart === 'MTM'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></MTM> -->
      <Depth ref="depth" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig"></Depth>
     </div>
 </template>
@@ -43,6 +44,7 @@ import MACD from './MACDChart.vue'
 // import OBV from './OBVChart.vue'
 // import RSI from './RSIChart.vue'
 // import TRIX from './TRIXChart.vue'
+// import MTM from './MTMChart.vue'
 import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume, linkageMacd } from '../js/linkageCharts';
@@ -53,7 +55,8 @@ export default {
     Depth,
     Volume,
     TimeSharing,
-    MACD
+    MACD,
+    // MTM,
     // KDJ,
     // DMI,
     // OBV,

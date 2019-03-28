@@ -163,4 +163,14 @@ describe('test processData', () => {
     expect(bollData).toBe(undefined)
   })
 
+  it('test getMTMData', () => {
+    let MTMData = getMTMData(testData.klineData)
+    expect(MTMData).not.toBeNull()
+  })
+
+  it('test getMTMData if data is null', () => {
+    let MTMData = getMTMData(null)
+    expect(MTMData).toBe(undefined)
+  })
+
 })

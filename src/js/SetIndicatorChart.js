@@ -266,6 +266,20 @@ class IndicatorChartController {
                     }
                 }
             ];
+        } else if (data.indicator === 'MTM' && data.indicatorData) {
+            series = [
+                {
+                    name: 'MTM',
+                    data: data.indicatorData,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                }
+            ];
         }
         return series;
     }
