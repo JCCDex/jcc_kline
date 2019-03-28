@@ -362,6 +362,15 @@ describe('test Chart', () => {
     expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
   })
 
+  it('test getMacdTipData', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element);
+    macd.setMACDOption(macdData);
+    let tipsData = macd.getMacdTipData()
+    expect(tipsData).not.toBeNull()
+  })
+
   it('test getMacdchart', () => {
     let macd = new ChartController(macdConfig)
     const element = document.createElement('div');
