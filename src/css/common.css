@@ -398,7 +398,7 @@
     width: auto;
     height: 0.26rem;
     cursor: pointer;
-    margin-left: 0.5rem;
+    margin-left: 0.35rem;
     margin-top: 0.08rem;
     text-align: center;
     color: #e6e6e6;
@@ -775,6 +775,11 @@
     float: left;
 }
 
+.kline-cycle-detail {
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
 .kline-cycle-detail:hover {
     color: #1bdafd;
 }
@@ -783,10 +788,27 @@
     margin-left: 10px;
 }
 
-.kline-padding-top10 {
-    padding-top: 8px;
+.mobile-kline-drop-down {
+    font-size: 0.24rem;
+    float: left;
+    margin-top: 0.07rem;
+    margin-left: 0.22rem;
 }
 
-.kline-padding-bottom10 {
-    padding-bottom: 8px;
+.mobile-kline-cycle-float {
+    width: 1.2rem;
+    z-index: 1000;
+    position: absolute;
+    top: 2.8rem;
+    background-color: #232732;
+    border: 0.02rem #37495c;
+    border-radius: 0.08rem;
+    -moz-border-radius: 0.08rem;
+    text-align: center;
+    font-size: 0.24rem;
+}
+
+.mobile-kline-cycle-detail {
+    padding-top: 0.16rem;
+    padding-bottom: 0.16rem;
 }

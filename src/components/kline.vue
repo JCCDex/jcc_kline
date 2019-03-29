@@ -17,19 +17,19 @@
           <div v-show="showMinCycle" class="kline-cycle-float">
             <div
               @click="chooseCycle('minute')"
-              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+              :class="this.currentCycle === 'minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
             >{{message.oneMin}}</div>
             <div
               @click="chooseCycle('5minute')"
-              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+              :class="this.currentCycle === '5minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
             >{{message.fiveMin}}</div>
             <div
               @click="chooseCycle('15minute')"
-              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+              :class="this.currentCycle === '15minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
             >{{message.fifteenMin}}</div>
             <div
               @click="chooseCycle('30minute')"
-              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+              :class="this.currentCycle === '30minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
             >{{message.thirtyMin}}</div>
           </div>
         </div>
@@ -47,11 +47,11 @@
           <div v-show="showHourCycle" class="kline-cycle-float kline-hour-cycle">
             <div
               @click="chooseCycle('hour')"
-              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+              :class="this.currentCycle === 'hour' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
             >{{message.oneHour}}</div>
             <div
               @click="chooseCycle('4hour')"
-              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+              :class="this.currentCycle === '4hour' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
             >{{message.fourHour}}</div>
           </div>
         </div>

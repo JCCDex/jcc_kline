@@ -2,10 +2,60 @@
   <div class="mobile-kline" style="background-color: #161b21;">
     <!-- Cycle按钮 -->
     <div calss="mobileCycle" style="height: 0.4rem; z-index: 9;">
-      <div
-        @click="chooseCycle('hour')"
-        :class="this.currentCycle === 'hour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
-      >{{message.hour}}</div>
+      <div class="kline-cycle-div">
+        <div @click="clickMinCycle()">
+          <div
+            :class="!this.showMinCycle ? 'mobile-kline-drop-down' : 'mobile-kline-drop-down kline-select-color'"
+          >
+            <font
+              :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+            >{{selectMin}}</font>
+            <i
+              :class="!this.showMinCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
+            ></i>
+          </div>
+          <div v-show="showMinCycle" class="mobile-kline-cycle-float">
+            <div
+              @click="chooseCycle('minute')"
+              :class="this.currentCycle === 'minute' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
+            >{{message.oneMin}}</div>
+            <div
+              @click="chooseCycle('5minute')"
+              :class="this.currentCycle === '5minute' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
+            >{{message.fiveMin}}</div>
+            <div
+              @click="chooseCycle('15minute')"
+              :class="this.currentCycle === '15minute' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
+            >{{message.fifteenMin}}</div>
+            <div
+              @click="chooseCycle('30minute')"
+              :class="this.currentCycle === '30minute' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
+            >{{message.thirtyMin}}</div>
+          </div>
+        </div>
+        <div @click="clickHourCycle()">
+          <div
+            :class="!this.showHourCycle ? 'mobile-kline-drop-down' : 'mobile-kline-drop-down kline-select-color'"
+          >
+            <font
+              :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+            >{{selectHour}}</font>
+            <i
+              :class="!this.showHourCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
+            ></i>
+          </div>
+          <div v-show="showHourCycle" class="mobile-kline-cycle-float kline-hour-cycle">
+            <div
+              @click="chooseCycle('hour')"
+              :class="this.currentCycle === 'hour' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
+            >{{message.oneHour}}</div>
+            <div
+              @click="chooseCycle('4hour')"
+              :class="this.currentCycle === '4hour' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
+            >{{message.fourHour}}</div>
+          </div>
+        </div>
+      </div>
       <div
         @click="chooseCycle('day')"
         :class="this.currentCycle === 'day' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
@@ -22,16 +72,6 @@
         @click="chooseCycle('everyhour')"
         :class="this.currentCycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.timeSharing}}</div>
-      <!-- <div v-for= "item in intervals"  :key = "item.id" :class="cycle === item.name ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'" @click = "chooseCycle(item.name)">
-            <div v-if = "item.values">
-                <select class = "cycle-select" v-model= "item.name"  @change= "chooseCycle($event)">
-                  <option v-for= "(value, index) in item.values" v-bind:value = "value.value">{{value.label}}</option>
-                </select>
-              </div>
-              <div v-else @click = "chooseCycle(item.name)">
-                {{item.name}}
-              </div>
-      </div>-->
       <div style="float:right; margin-right:0.2rem; margin-top:0.05rem" class="icon-indicator-div">
         <i v-show = "true" @click = "openCloseMacd" :class="this.isSelected ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'">
         <!-- <i v-show = "isSelected" @click = "openCloseMacd" class="icon iconfont icon-indicator-selected"> -->
@@ -61,8 +101,11 @@ export default {
       currentCycle: 'hour',
       isRefresh: true,
       message: null,
-      intervals: null,
-      isSelected: false
+      isSelected: false,
+      showMinCycle: false,
+      showHourCycle: false,
+      selectMin: "",
+      selectHour: ""
     };
   },
   props: {
@@ -91,6 +134,7 @@ export default {
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
     },
     chartDataObj() {
+      this.changeCycleLanguage(this.currentCycle);
       if (!this.chartDataObj) {return}
       if (this.isRefresh) {
         if (this.currentCycle !== "everyhour") {
@@ -139,28 +183,9 @@ export default {
   },
   created() {
     this.message = getLanguage();
+    this.selectMin = this.message.minute;
+    this.selectHour = this.message.hourPC;
     this.kline = new KLineController(this.platform, this.klineConfig);
-    // if (this.klineConfig.intervals) {
-    //   this.intervals = this.klineConfig.intervals
-    // } else {
-    //   this.intervals = [
-    //     {
-    //       name: 'hour'
-    //     },
-    //     {
-    //       name: 'day'
-    //     },
-    //     {
-    //       name: 'week'
-    //     },
-    //     {
-    //       name: 'month'
-    //     },
-    //     {
-    //       name: 'everyhour'
-    //     }
-    //   ]
-    // }
   },
   mounted() {
     this.init();
@@ -172,6 +197,44 @@ export default {
     init() {
       this.kline.initMobileChart(this.$refs.klineRef);
     },
+    clickMinCycle() {
+      this.showMinCycle = !this.showMinCycle;
+      if (this.showMinCycle) {
+        this.showHourCycle = false;
+      }
+    },
+    clickHourCycle() {
+      this.showHourCycle = !this.showHourCycle;
+      if (this.showHourCycle) {
+        this.showMinCycle = false;
+      }
+    },
+    changeCycleLanguage(selectCycle) {
+      this.message = getLanguage();
+      if (selectCycle === "minute") {
+        this.selectMin = this.message.oneMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "5minute") {
+        this.selectMin = this.message.fiveMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "15minute") {
+        this.selectMin = this.message.fifteenMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "30minute") {
+        this.selectMin = this.message.thirtyMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "hour") {
+        this.selectHour = this.message.oneHour;
+        this.selectMin = this.message.minute;
+        this.selectMin = this.message.minute;
+      } else if (selectCycle === "4hour") {
+        this.selectHour = this.message.fourHour;
+        this.selectMin = this.message.minute;
+      } else {
+        this.selectMin = this.message.minute;
+        this.selectHour = this.message.hourPC;
+      }
+    },
     chooseCycle(cycle) {
       let selectCycle = cycle;
       if (cycle instanceof Object) {
@@ -180,6 +243,7 @@ export default {
       if (this.currentCycle === cycle) {
         return;
       }
+      this.changeCycleLanguage(selectCycle);
       this.clearChart();
       this.kline.showMobileLoading();
       this.currentCycle = cycle;
