@@ -428,7 +428,7 @@ export const getMAData = (periodic, data) => {
             continue;
         }
         var sum = 0;
-        for (var j = 0; j < periodic - 1; j++) {
+        for (var j = 0; j < periodic; j++) {
             let item = parseFloat(data[i - j]);
             if (isNaN(item)) {
                 sum += 0;
