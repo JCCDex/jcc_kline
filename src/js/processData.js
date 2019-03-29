@@ -158,7 +158,7 @@ export const calculateMA = (dayCount, data) => {
             continue;
         }
         var sum = 0;
-        for (var j = 0; j < dayCount - 1; j++) {
+        for (var j = 0; j < dayCount; j++) {
             let item = parseFloat(data.values[i - j][1]);
             if (isNaN(item)) {
                 sum += 0;
