@@ -42,5 +42,12 @@
   "OBV": "OBV",
   "DMI": "DMI",
   "Boll": "Boll",
-  "TRIX": "TRIX"
+  "TRIX": "TRIX",
+  "minute": "m",
+  "oneMin": "1m",
+  "fiveMin": "5m",
+  "fifteenMin": "15m",
+  "thirtyMin": "30m",
+  "oneHour": "1H",
+  "fourHour": "4H"
 }

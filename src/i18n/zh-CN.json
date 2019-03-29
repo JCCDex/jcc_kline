@@ -42,5 +42,12 @@
   "OBV": "OBV",
   "DMI": "DMI",
   "Boll": "Boll",
-  "TRIX": "TRIX"
+  "TRIX": "TRIX",
+  "minute": "分",
+  "oneMin": "1分",
+  "fiveMin": "5分",
+  "fifteenMin": "15分",
+  "thirtyMin": "30分",
+  "oneHour": "1小时",
+  "fourHour": "4小时"
 }

@@ -1,6 +1,6 @@
 import ChartController from 'js/Charts.js'
 import klineController from 'js/KLine.js'
-import { linkageVolume, linkageMacd } from 'js/linkageCharts'
+import { linkageVolume, linkageMacd, bindAction } from 'js/linkageCharts'
 import testData from '../../testData/testData.json'
 
 let data = testData.candleData
@@ -49,14 +49,13 @@ describe('test linkageCharts', () => {
         kline.initChart(element)
         kline.setOption(data, 'hour')
         let klineChart = kline.getEchart()
-
         let volume = new ChartController(volumeConfig)
         volume.initVolumeChart(element)
         volume.setVolumeOption(data)
         let volumeChart = volume.getVolumeEchart()
-
         linkageVolume(klineChart, volumeChart)
-    })
+        expect(klineChart).not.toBeNull()
+      })
 
     it('test getVolumeEchart if volumeChart is null', () => {
       let kline = new klineController('pc', klineConfig)
@@ -66,7 +65,23 @@ describe('test linkageCharts', () => {
       let klineChart = kline.getEchart()
       let volumeChart = null
       linkageVolume(klineChart, volumeChart)
+      expect(klineChart).not.toBeNull()
+
   })
+
+  it('test bindAction', () => {
+    let kline = new klineController('pc', klineConfig)
+    const element = document.createElement('div');
+    kline.initChart(element)
+    kline.setOption(data, 'hour')
+    let klineChart = kline.getEchart()
+    let volume = new ChartController(volumeConfig)
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    let volumeChart = volume.getVolumeEchart()
+    bindAction(klineChart, volumeChart)
+    expect(klineChart).not.toBeNull()
+})
 
 
   it('test linkageMacd', () => {
