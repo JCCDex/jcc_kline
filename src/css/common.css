@@ -722,7 +722,6 @@
 }
 
 .kline-cycle-div {
-    width: 78px;
     color: #e6e6e6;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -731,6 +730,7 @@
 }
 
 .icon-drop-down {
+    line-height: 20px;
     margin-left: 6px;
     color: #b9cadd;
     z-index: 2;
@@ -739,11 +739,17 @@
     -webkit-transform: scale(0.84, 0.84);
 }
 
-.icon-select {
-    color: #1bdafd;
+.kline-uncheck-color {
+    color: #e6e6e6;
 }
 
-.kline-cycle-select {
+.kline-text-decoration {
+    /* text-decoration: underline; */
+    border-bottom: 1px solid #1bdafd;
+    padding-bottom: 3px;
+}
+
+.kline-select-color {
     color: #1bdafd;
 }
 
@@ -765,7 +771,6 @@
 }
 
 .kline-cycle-drop-down {
-    width: 34px;
     font-size: 12px;
     float: left;
 }

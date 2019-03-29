@@ -5,32 +5,54 @@
       <div class="kline-cycle-div">
         <div @click="clickMinCycle()">
           <div
-            :class="!this.showMinCycle ? 'kline-cycle-drop-down' : 'kline-cycle-drop-down kline-cycle-select'"
+            :class="!this.showMinCycle ? 'kline-cycle-drop-down' : 'kline-cycle-drop-down kline-select-color'"
           >
-            {{selectMin}}
+            <font
+              :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+            >{{selectMin}}</font>
             <i
-              :class="!this.showMinCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down icon-select'"
+              :class="!this.showMinCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
             ></i>
           </div>
           <div v-show="showMinCycle" class="kline-cycle-float">
-            <div @click="chooseCycle('minute')" class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10">{{message.oneMin}}</div>
-            <div @click="chooseCycle('5minute')" class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10">{{message.fiveMin}}</div>
-            <div @click="chooseCycle('15minute')" class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10">{{message.fifteenMin}}</div>
-            <div @click="chooseCycle('30minute')" class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10">{{message.thirtyMin}}</div>
+            <div
+              @click="chooseCycle('minute')"
+              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+            >{{message.oneMin}}</div>
+            <div
+              @click="chooseCycle('5minute')"
+              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+            >{{message.fiveMin}}</div>
+            <div
+              @click="chooseCycle('15minute')"
+              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+            >{{message.fifteenMin}}</div>
+            <div
+              @click="chooseCycle('30minute')"
+              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+            >{{message.thirtyMin}}</div>
           </div>
         </div>
         <div @click="clickHourCycle()">
           <div
-            :class="!this.showHourCycle ? 'kline-cycle-drop-down kline-margin-left10' : 'kline-cycle-drop-down kline-margin-left10 kline-cycle-select'"
+            :class="!this.showHourCycle ? 'kline-cycle-drop-down kline-margin-left10' : 'kline-cycle-drop-down kline-margin-left10 kline-select-color'"
           >
-            {{selectHour}}
+            <font
+              :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+            >{{selectHour}}</font>
             <i
-              :class="!this.showHourCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down icon-select'"
+              :class="!this.showHourCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
             ></i>
           </div>
           <div v-show="showHourCycle" class="kline-cycle-float kline-hour-cycle">
-            <div @click="chooseCycle('hour')" class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10">{{message.oneHour}}</div>
-            <div @click="chooseCycle('4hour')" class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10">{{message.fourHour}}</div>
+            <div
+              @click="chooseCycle('hour')"
+              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+            >{{message.oneHour}}</div>
+            <div
+              @click="chooseCycle('4hour')"
+              class="kline-cycle-detail kline-padding-top10 kline-padding-bottom10"
+            >{{message.fourHour}}</div>
           </div>
         </div>
       </div>
@@ -90,8 +112,8 @@ export default {
       coinType: "",
       showMinCycle: false,
       showHourCycle: false,
-      selectMin: '',
-      selectHour: ''
+      selectMin: "",
+      selectHour: ""
     };
   },
   props: {
@@ -127,8 +149,7 @@ export default {
     },
     chartDataObj() {
       this.message = getLanguage();
-      this.selectMin = this.message.minute
-      this.selectHour = this.message.hourPC
+      this.changeCycleLanguage(this.currentCycle);
       if (this.chartDataObj.candleData) {
         let data = this.chartDataObj.candleData;
         data.precision = this.chartDataObj.precision;
@@ -179,8 +200,8 @@ export default {
       };
     }
     this.message = getLanguage();
-    this.selectMin = this.message.minute
-    this.selectHour = this.message.hourPC
+    this.selectMin = this.message.minute;
+    this.selectHour = this.message.hourPC;
     this.kline = new KLineController(this.platform, this.klineConfig);
   },
   mounted() {
@@ -214,11 +235,38 @@ export default {
       if (this.currentCycle === cycle) {
         return;
       }
+      this.changeCycleLanguage(selectCycle);
       this.clearChart();
       this.kline.showLoading();
       this.currentCycle = selectCycle;
       this.isRefresh = true;
       this.$emit("listenToChildEvent", selectCycle);
+    },
+    changeCycleLanguage(selectCycle) {
+      this.message = getLanguage();
+      if (selectCycle === "minute") {
+        this.selectMin = this.message.oneMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "5minute") {
+        this.selectMin = this.message.fiveMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "15minute") {
+        this.selectMin = this.message.fifteenMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "30minute") {
+        this.selectMin = this.message.thirtyMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "hour") {
+        this.selectHour = this.message.oneHour;
+        this.selectMin = this.message.minute;
+        this.selectMin = this.message.minute;
+      } else if (selectCycle === "4hour") {
+        this.selectHour = this.message.fourHour;
+        this.selectMin = this.message.minute;
+      } else {
+        this.selectMin = this.message.minute;
+        this.selectHour = this.message.hourPC;
+      }
     },
     changeDataZoom(type) {
       this.kline.changeDataZoom(type);
