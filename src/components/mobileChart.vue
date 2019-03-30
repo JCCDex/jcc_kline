@@ -148,7 +148,7 @@ export default {
         }
       }
       if (this.klineDataObj.depthData) {
-        depthData = getDepthData(this.klineDataObj.depthData);
+        depthData = getDepthData(this.klineDataObj.depthData, precision);
       }
       if (this.klineDataObj.cycle === "everyhour" && this.klineDataObj.timeDivisionData) {
         timeDivisionData = this.klineDataObj.timeDivisionData

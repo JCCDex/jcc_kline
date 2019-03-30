@@ -2,7 +2,6 @@
   <div ref="volume" :style="{height: `${volumeSize.height}`, width: `${volumeSize.width}`}" @mousemove="getToolTipIndex()"></div>
 </template>
 <script>
-import { splitData, getDepthData } from '../js/processData'
 import ChartController from '../js/Charts'
 import { getLanguage } from '../js/utils'
 export default {

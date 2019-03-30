@@ -1,4 +1,4 @@
-import { formatTime } from './utils';
+import { formatTime, formatDecimal } from './utils';
 
 export const splitData = (data) => {
     if (!data) return;
@@ -36,7 +36,7 @@ export const splitData = (data) => {
         EMA26 = getEMA26(i, EMA26, values[i][1]);
         DIFF = (EMA12 - EMA26).toFixed(8);
         DEA = getDEA(i, DIFF, DEA);
-        MACD =  (2 * (DIFF-DEA)).toFixed(8);
+        MACD = (2 * (DIFF - DEA)).toFixed(8);
         MACDData.push([
             formatTime(data[i][0]),
             DIFF,
@@ -56,7 +56,7 @@ export const getEMA12 = (i, oldEMA12, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.153846154*closingPrice + 0.846153846*oldEMA12).toFixed(8);
+        return (0.153846154 * closingPrice + 0.846153846 * oldEMA12).toFixed(8);
     }
 };
 
@@ -64,7 +64,7 @@ export const getEMA26 = (i, oldEMA26, closingPrice) => {
     if (i === 0) {
         return closingPrice;
     } else {
-        return (0.074074074*closingPrice + 0.925925926*oldEMA26).toFixed(8);
+        return (0.074074074 * closingPrice + 0.925925926 * oldEMA26).toFixed(8);
     }
 };
 
@@ -76,18 +76,19 @@ export const getDEA = (i, DIFF, oldDEA) => {
     }
 };
 
-export const getDepthData = (data) => {
+export const getDepthData = (data, precision) => {
     if (!data) return;
+    let pricePrecision = !isNaN(precision.price) ? precision.price : 6;
     let buyData = []; //买入数据
     let sellData = []; //卖出数据
     let bids = data.bids;
     let asks = data.asks;
     if (Array.isArray(bids) && bids.length > 0) {
         for (let bid of bids) {
-            buyData.push([bid.price, bid.total]);
+            buyData.push([formatDecimal(bid.price, pricePrecision, false), bid.total]);
         }
         for (let ask of asks) {
-            sellData.push([ask.price, ask.total]);
+            sellData.push([formatDecimal(ask.price, pricePrecision, false), ask.total]);
         }
     }
     buyData = buyData.reverse();
@@ -131,7 +132,7 @@ export const handleDivisionData = (datas) => {
         EMA26 = getEMA26(index, EMA26, data[2]);
         DIFF = (EMA12 - EMA26).toFixed(8);
         DEA = getDEA(index, DIFF, DEA);
-        MACD =  (2 * (DIFF-DEA)).toFixed(8);
+        MACD = (2 * (DIFF - DEA)).toFixed(8);
         MACDData.push([
             formatTime(data[3]),
             DIFF,
@@ -428,7 +429,7 @@ export const getMAData = (periodic, data) => {
             continue;
         }
         var sum = 0;
-        for (var j = 0; j < periodic; j++) {
+        for (var j = 0; j < periodic - 1; j++) {
             let item = parseFloat(data[i - j]);
             if (isNaN(item)) {
                 sum += 0;

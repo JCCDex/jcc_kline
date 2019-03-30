@@ -20,7 +20,6 @@
   </div>
 </template>
 <script>
-import { getDepthData } from "../js/processData";
 import ChartController from "../js/Charts";
 import { getLanguage } from "../js/utils";
 export default {
