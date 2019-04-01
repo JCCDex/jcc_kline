@@ -43,7 +43,7 @@ describe('test processData', () => {
   })
 
   it('test getDepthData', () => {
-    let data = getDepthData(testData.depthData, testData.coinType, precision)
+    let data = getDepthData(testData.depthData, precision)
     expect(data).not.toBeNull()
     expect(data.maxAmount).not.toBeNull()
     expect(data.maxBuyPrice).not.toBeNull()
@@ -59,18 +59,7 @@ describe('test processData', () => {
   })
 
   it('test getDepthData, no data', () => {
-    let data = getDepthData(null, testData.coinType, precision)
-    expect(data).not.toBeUndefined
-  })
-
-  it('test getDepthData, no coinType', () => {
-    let data = getDepthData(testData.depthData, null, precision)
-    expect(data).not.toBeUndefined
-  })
-
-  it('test getDepthData, baseTitle is VCC', () => {
-    testData.coinType.baseTitle = 'VCC'
-    let data = getDepthData(testData.depthData, testData.coinType, precision)
+    let data = getDepthData(null, precision)
     expect(data).not.toBeUndefined
   })
 
