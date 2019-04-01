@@ -1,7 +1,7 @@
 <template>
   <div style="position:relative">
     <!-- Cycle按钮 -->
-    <div style="position: absolute;left:10px;top:20px;z-index:1;width: 310px;">
+    <div class="kline-cycle">
       <div class="kline-cycle-div">
         <div @click="clickMinCycle()">
           <div

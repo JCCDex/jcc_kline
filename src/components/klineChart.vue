@@ -87,7 +87,6 @@
           </i>
         </div>
 
-
         <div
           @click="changeChart('candle')"
           :class="this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'"
@@ -123,13 +122,28 @@
         </i>
       </div>
       <!-- 平移、刷新、缩放按钮 -->
-      <div class = "kline-levitation-div" v-show = "showChart === 'candle'" @mouseenter="enter()" @mouseleave="leave()">
-        <div class="kline-levitation-icon" v-show = "isShow">
-          <div class="kline-levitation-btn" @click = "changeDataZoom('leftShift')"> <i class="icon iconfont icon-left-shift"></i> </div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('narrow')"> <i class="icon iconfont icon-narrow"></i> </div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('refresh')"> <i class="icon iconfont icon-refresh"></i> </div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('enlarge')"><i class="icon iconfont icon-enlarge"></i></div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')"><i class="icon iconfont icon-right-shift"></i></div>
+      <div
+        class="kline-levitation-div"
+        v-show="showChart === 'candle'"
+        @mouseenter="enter()"
+        @mouseleave="leave()"
+      >
+        <div class="kline-levitation-icon" v-show="isShow">
+          <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')" >
+            <div class="left-shift-icon"></div>
+          </div>
+          <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
+            <i class="enlarge-icon"></i>
+          </div>
+          <div class="kline-levitation-btn" @click="changeDataZoom('refresh')">
+            <i class="refresh-icon"></i>
+          </div>
+          <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
+            <i class="narrow-icon"></i>
+          </div>
+          <div class="kline-levitation-btn" @click="changeDataZoom('rightShift')">
+            <i class="right-shift-icon"></i>
+          </div>
         </div>
       </div>
       <!-- 图表 -->
