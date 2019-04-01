@@ -11,7 +11,7 @@
               :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectMin}}</font>
             <i
-              :class="!this.showMinCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
+              :class="!this.showMinCycle ? 'drop-down-icon mobile-drop-down' : 'drop-down-select mobile-drop-down'"
             ></i>
           </div>
           <div v-show="showMinCycle" class="mobile-kline-cycle-float">
@@ -41,7 +41,7 @@
               :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectHour}}</font>
             <i
-              :class="!this.showHourCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
+              :class="!this.showHourCycle ? 'drop-down-icon mobile-drop-down' : 'drop-down-select mobile-drop-down'"
             ></i>
           </div>
           <div v-show="showHourCycle" class="mobile-kline-cycle-float kline-hour-cycle">

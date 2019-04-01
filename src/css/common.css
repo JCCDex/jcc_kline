@@ -735,14 +735,24 @@
     user-select: none;
 }
 
-.icon-drop-down {
-    line-height: 20px;
+.drop-down-icon {
+    content: url('../icon/images/dropDown.png');
     margin-left: 6px;
-    color: #b9cadd;
-    z-index: 2;
-    font-size: 10px !important;
-    -webkit-text-size-adjust: none;
-    -webkit-transform: scale(0.84, 0.84);
+    width: 10px;
+    height: 8px;
+}
+
+.drop-down-select {
+    content: url('../icon/images/dropDownSelect.png');
+    margin-left: 6px;
+    width: 10px;
+    height: 8px;
+}
+
+.mobile-drop-down {
+    margin-left: 0.08rem;
+    width: 0.2rem;
+    height: 0.16rem;
 }
 
 .kline-uncheck-color {
@@ -777,6 +787,7 @@
 }
 
 .kline-cycle-drop-down {
+    line-height: 20px;
     font-size: 12px;
     float: left;
 }
