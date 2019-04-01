@@ -122,15 +122,15 @@
         </i>
       </div>
       <!-- 平移、刷新、缩放按钮 -->
-      <!-- <div class = "kline-levitation-div" v-show = "showChart === 'candle'" @mouseenter="enter()" @mouseleave="leave()">
+      <div class = "kline-levitation-div" v-show = "showChart === 'candle'" @mouseenter="enter()" @mouseleave="leave()">
         <div class="kline-levitation-icon" v-show = "isShow">
-          <div class="kline-levitation-btn" @click = "changeDataZoom('leftShift')">左移</div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('narrow')">缩小</div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('refresh')">刷新</div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('enlarge')">放大</div>
-          <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')">右移</div>
+          <div class="kline-levitation-btn" @click = "changeDataZoom('leftShift')"> <i class="icon iconfont icon-left-shift"></i> </div>
+          <div class="kline-levitation-btn" @click = "changeDataZoom('narrow')"> <i class="icon iconfont icon-narrow"></i> </div>
+          <div class="kline-levitation-btn" @click = "changeDataZoom('refresh')"> <i class="icon iconfont icon-refresh"></i> </div>
+          <div class="kline-levitation-btn" @click = "changeDataZoom('enlarge')"><i class="icon iconfont icon-enlarge"></i></div>
+          <div class="kline-levitation-btn" @click = "changeDataZoom('rightShift')"><i class="icon iconfont icon-right-shift"></i></div>
         </div>
-      </div>-->
+      </div>
       <!-- 图表 -->
       <KLine
         ref="candle"

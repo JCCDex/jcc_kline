@@ -75,7 +75,7 @@ describe('test processData', () => {
 
   it('test calculateMA', () => {
     let splitdata = splitData(testData.klineData, 'pc')
-    let depthData = getDepthData(testData.depthData, testData.coinType, precision)
+    let depthData = getDepthData(testData.depthData, precision)
     let data = Object.assign({}, splitdata, depthData);
     let MA5 = calculateMA(5, data)
     expect(MA5).not.toBeNull()
@@ -85,7 +85,7 @@ describe('test processData', () => {
 
   it('test calculateMA if value is NaN', () => {
     let splitdata = splitData(testData.klineData, 'pc')
-    let depthData = getDepthData(testData.depthData, testData.coinType, precision)
+    let depthData = getDepthData(testData.depthData, precision)
     let data = Object.assign({}, splitdata, depthData);
     data.values.push([1, 'aaa', 123213])
     let MA5 = calculateMA(5, data)
