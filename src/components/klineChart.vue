@@ -87,6 +87,7 @@
           </i>
         </div>
 
+
         <div
           @click="changeChart('candle')"
           :class="this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'"
