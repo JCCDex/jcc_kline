@@ -1,8 +1,11 @@
-@font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1554168610470'); /* IE9 */
-  src: url('iconfont.eot?t=1554168610470#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.ttf?t=1554168610470') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
-  url('iconfont.svg?t=1554168610470#iconfont') format('svg'); /* iOS 4.1- */
+@font-face {
+  font-family: "iconfont";
+  src: url('iconfont.eot?t=1554176084473');
+  /* IE9 */
+  src: url('iconfont.eot?t=1554176084473#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.ttf?t=1554176084473') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+  url('iconfont.svg?t=1554176084473#iconfont') format('svg');
+  /* iOS 4.1- */
 }
 
 .iconfont {
@@ -30,14 +33,13 @@
 }
 
 .icon-indicator:before {
-  content: "\e6d6";
+  content: "\e6d7";
 }
 
 .icon-indicator-unselected:before {
-  content: "\e6d6";
+  content: "\e6d7";
 }
 
 .icon-indicator-selected:before {
-  content: "\e6d6";
+  content: "\e6d7";
 }
-

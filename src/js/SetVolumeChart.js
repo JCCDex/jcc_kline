@@ -71,7 +71,7 @@ class VolumeChart {
 
     /* 绘制VolumeChart开始 */
     setVolumeOption(data, cycle) {
-         oldVolumeData = {
+        oldVolumeData = {
             data: data,
             cycle: cycle
         };
