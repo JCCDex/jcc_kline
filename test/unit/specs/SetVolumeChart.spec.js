@@ -1,14 +1,11 @@
 import SetVolumeChart from 'js/SetVolumeChart'
 import { volumeOption } from 'js/VolumeChartOption'
-import { splitData, getDepthData } from 'js/processData'
-import testData from '../../testData/data.json'
+import testData from '../../testData/testData.json'
 
 volumeOption.platform = 'pc'
 volumeOption.chartType = 'volume'
 volumeOption.defaultSize = true
-let depthData = getDepthData(testData.depthData, testData.coinType)
-let pcData = splitData(testData.klineData)
-let data = Object.assign({}, pcData, depthData);
+let data = testData.candleData
 
 describe('test SetVolumeChart', () => {
 

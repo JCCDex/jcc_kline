@@ -80,7 +80,7 @@ describe('test SetStochasticChart', () => {
         const element = document.createElement('div');
         let stochastic = new SetStochasticChart(StochasticOption);
         stochastic.initStochasticECharts(element)
-        stochastic.setStochasticOption(KDJData, 'hour')
+        stochastic.setStochasticOption(KDJData, 'aa')
         stochastic.resizeECharts(null, false, size)
         expect(stochastic.stochastic.getOption()).not.toBeNull();
     })
@@ -89,7 +89,7 @@ describe('test SetStochasticChart', () => {
         const element = document.createElement('div');
         let stochastic = new SetStochasticChart(StochasticOption);
         stochastic.initStochasticECharts(element)
-        stochastic.setStochasticOption(KDJData, 'hour')
+        stochastic.setStochasticOption(KDJData, '5minute')
         stochastic.resizeECharts(element, true, size)
         expect(stochastic.stochastic.getOption()).not.toBeNull();
     })

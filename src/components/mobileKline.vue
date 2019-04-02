@@ -137,6 +137,7 @@ export default {
       this.changeCycleLanguage(this.currentCycle);
       if (!this.chartDataObj) {return}
       if (this.isRefresh) {
+        this.clearChart();
         if (this.currentCycle !== "everyhour") {
           this.kline.setMobileOption(this.klineConfig.size);
           this.isRefresh = false;

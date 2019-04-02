@@ -159,6 +159,7 @@ export default {
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType)
           ) {
+            this.clearChart();
             let toolTipIndex = this.kline.setOption(data, this.currentCycle);
             this.isRefresh = false;
             this.$emit("listenToTipIndex", toolTipIndex);

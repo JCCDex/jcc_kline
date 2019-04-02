@@ -47,7 +47,7 @@ class VolumeChart {
             this.volume.resize();
         }
         if (oldVolumeData) {
-            this.updateVolumeOption(oldVolumeData);
+            this.updateVolumeOption(oldVolumeData.data, oldVolumeData.cycle);
         }
     }
 
@@ -71,7 +71,10 @@ class VolumeChart {
 
     /* 绘制VolumeChart开始 */
     setVolumeOption(data, cycle) {
-        oldVolumeData = data;
+         oldVolumeData = {
+            data: data,
+            cycle: cycle
+        };
         if (data) {
             volumeOption = JSON.parse(JSON.stringify(this.volumeConfig));
             this.volume.hideLoading();
@@ -88,7 +91,10 @@ class VolumeChart {
     }
 
     updateVolumeOption(data, cycle) {
-        oldVolumeData = data;
+        oldVolumeData = {
+            data: data,
+            cycle: cycle
+        };
         if (this.volume.getOption()) {
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data, cycle),
@@ -118,7 +124,10 @@ class VolumeChart {
                 data: data.categoryData,
                 axisLabel: {
                     formatter(value) {
-                        if (cycle === 'hour') {
+                        if(cycle.indexOf('minute') !== -1) {
+                            return value.substring(5);
+                        }
+                        if (cycle.indexOf('hour') !== -1) {
                             return value.substring(5);
                         }
                         if (cycle === 'day') {

@@ -45,7 +45,7 @@ class StochasticChartController {
             this.stochastic.resize();
         }
         if (oldStochasticData) {
-            this.updateStochasticOption(oldStochasticData);
+            this.updateStochasticOption(oldStochasticData.data, oldStochasticData.cycle);
         }
     }
 
@@ -69,7 +69,10 @@ class StochasticChartController {
 
     /* 绘制StochasticChart开始 */
     setStochasticOption(data, cycle) {
-        oldStochasticData = data;
+        oldStochasticData = {
+            data: data,
+            cycle: cycle
+        };
         if (data) {
             stochasticOption = JSON.parse(JSON.stringify(this.stochasticConfig));
             this.stochastic.hideLoading();
@@ -84,7 +87,10 @@ class StochasticChartController {
     }
 
     updateStochasticOption(data, cycle) {
-        oldStochasticData = data;
+        oldStochasticData = {
+            data: data,
+            cycle: cycle
+        };
         if (this.stochastic.getOption()) {
             let stochasticConfig = {
                 xAxis: this.getStochasticXAxis(data, cycle),
@@ -111,7 +117,10 @@ class StochasticChartController {
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if (cycle === 'hour') {
+                    if (cycle.indexOf('minute') !== -1) {
+                        return value.substring(5);
+                    }
+                    if (cycle.indexOf('hour') !== -1) {
                         return value.substring(5);
                     }
                     if (cycle === 'day') {

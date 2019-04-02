@@ -149,7 +149,10 @@ class KLineSetChartController {
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if (cycle === 'hour') {
+                    if(cycle.indexOf('minute') !== -1) {
+                        return value.substring(5);
+                    }
+                    if (cycle.indexOf('hour') !== -1) {
                         return value.substring(5);
                     }
                     if (cycle === 'day') {

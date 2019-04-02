@@ -192,7 +192,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.updateMobileOption(mobileData)
+    mobileKline.updateMobileOption(mobileData, cycle)
     expect(mobileKline.setMobileKLineChart.kline.getOption()).not.toBeNull();
   })
 
@@ -237,7 +237,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.updateMobileOption(mobileData)
+    mobileKline.updateMobileOption(mobileData, cycle)
     let mobileTipIndex = mobileKline.getMobileToolTipIndex()
     expect(mobileTipIndex).not.toBeNull();
   })
@@ -247,7 +247,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.updateMobileOption(mobileData)
+    mobileKline.updateMobileOption(mobileData, cycle)
     mobileKline.changeMobileDataZoom('leftShift')
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(78);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(98);
@@ -270,7 +270,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.updateMobileOption(mobileData)
+    mobileKline.updateMobileOption(mobileData, cycle)
     mobileKline.disposeMobileChart()
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull();
   })
@@ -280,7 +280,7 @@ describe('test KLine', () => {
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.updateMobileOption(mobileData)
+    mobileKline.updateMobileOption(mobileData, cycle)
     mobileKline.clearMobileChart()
     expect(mobileKline.setMobileKLineChart.kline.getOption().series).toEqual(new Array);
   })

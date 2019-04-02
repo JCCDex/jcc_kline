@@ -144,8 +144,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData)
-    cycle = 'week'
-    mobileKline.updateOption(data, cycle)
+    mobileKline.updateOption(data, 'week')
     mobileKline.changeDataZoom('leftShift')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(78);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(98);
@@ -159,8 +158,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData)
-    cycle = 'month'
-    mobileKline.updateOption(data, cycle)
+    mobileKline.updateOption(data, '5minute')
     mobileKline.changeDataZoom('enlarge')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(85);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
@@ -180,13 +178,12 @@ describe('test KLineMobileSetChart', () => {
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
   })
 
-  it('test mobile changeDataZoom if type is refresh', () => {
+  it('test mobile changeDataZoom if type is refresh and cycle is error', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData)
-    cycle = 'day'
-    mobileKline.updateOption(data, cycle)
+    mobileKline.updateOption(data, 'aa')
     mobileKline.changeDataZoom('enlarge')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(85);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
@@ -200,7 +197,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData)
-    mobileKline.updateOption(data, cycle)
+    mobileKline.updateOption(data, 'day')
     expect(mobileKline.kline.getOption().series).not.toBeNull();
     mobileKline.clearMobileEcharts()
     expect(mobileKline.kline.getOption().series).toEqual(new Array);

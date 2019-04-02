@@ -97,7 +97,7 @@ describe('test KLineSetChart', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(null, 'hour')
+    klineChart.setOption(null, 'day')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
@@ -105,7 +105,7 @@ describe('test KLineSetChart', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
+    klineChart.setOption(klineData, '5minute')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
@@ -113,7 +113,7 @@ describe('test KLineSetChart', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
+    klineChart.setOption(klineData, 'day')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
@@ -121,7 +121,7 @@ describe('test KLineSetChart', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
+    klineChart.setOption(klineData, 'aa')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 

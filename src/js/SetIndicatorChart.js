@@ -45,7 +45,7 @@ class IndicatorChartController {
             this.indicator.resize();
         }
         if (oldIndicatorData) {
-            this.updateIndicatorOption(oldIndicatorData);
+            this.updateIndicatorOption(oldIndicatorData.data, oldIndicatorData.cycle);
         }
     }
 
@@ -69,7 +69,10 @@ class IndicatorChartController {
 
     /* 绘制IndicatorChart开始 */
     setIndicatorOption(data, cycle) {
-        oldIndicatorData = data;
+        oldIndicatorData = {
+            data: data,
+            cycle: cycle
+        };
         if (data) {
             indicatorOption = JSON.parse(JSON.stringify(this.indicatorConfig));
             this.indicator.hideLoading();
@@ -84,7 +87,10 @@ class IndicatorChartController {
     }
 
     updateIndicatorOption(data, cycle) {
-        oldIndicatorData = data;
+        oldIndicatorData = {
+            data: data,
+            cycle: cycle
+        };
         if (this.indicator.getOption()) {
             let indicatorConfig = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
@@ -113,7 +119,10 @@ class IndicatorChartController {
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if (cycle === 'hour') {
+                    if(cycle.indexOf('minute') !== -1) {
+                        return value.substring(5);
+                    }
+                    if (cycle.indexOf('hour') !== -1) {
                         return value.substring(5);
                     }
                     if (cycle === 'day') {
