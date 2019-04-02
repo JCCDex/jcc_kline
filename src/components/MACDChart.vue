@@ -9,7 +9,7 @@
       <font style="color: #fd1d57;">DIFF:{{toolTipData.diff}}&nbsp;</font>
       <font style="color: #ffd801;">DEA:{{toolTipData.dea}}&nbsp;</font>
     </div>
-      <i v-show = "isPC" @click = "closeMacd" style="position:absolute;right:70px;z-index:5;" class="icon iconfont icon-popover-close"></i>
+      <i v-show = "isPC" @click = "closeMacd" style="position:absolute;right:70px;z-index:5;margin-top:3px" class="close-icon"></i>
     <div ref="macd" :style="{height: `${macdSize.height}`, width: `${macdSize.width}`}"
     @mousemove="getToolTipData()"
     ></div>

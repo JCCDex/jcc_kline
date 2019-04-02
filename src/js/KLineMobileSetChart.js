@@ -12,6 +12,7 @@ var cycle;
 var config;
 var timeDivisionconfig;
 var toolTipIndex;
+var tipsLastLength = true;
 
 
 class KLineMobileSetChartController {
@@ -46,6 +47,7 @@ class KLineMobileSetChartController {
         let option = {
             grid: this.getGrid(size)
         };
+        toolTipIndex = null;
         merge(config, option);
         cycle = 'normal';
         this.kline.hideLoading();
@@ -54,6 +56,8 @@ class KLineMobileSetChartController {
 
     setTimeDivisionsOption(size) {
         timeDivisionconfig = JSON.parse(JSON.stringify(this.klineConfig));
+        toolTipIndex = null;
+        tipsLastLength = true;
         let option = {
             grid: this.getGrid(size),
             series: [
@@ -114,7 +118,7 @@ class KLineMobileSetChartController {
     updateTimeDivisionOption(data) {
         let { times, averages, prices } = data;
         let length = times.length - 1;
-        if (!toolTipIndex) {
+        if (tipsLastLength) {
             toolTipIndex = length;
         }
         let updateTimeOption = {
@@ -153,7 +157,10 @@ class KLineMobileSetChartController {
                 data: data.categoryData,
                 axisLabel: {
                     formatter(value) {
-                        if (cycle === 'hour') {
+                        if(cycle.indexOf('minute') !== -1) {
+                            return value.substring(5);
+                        }
+                        if (cycle.indexOf('hour') !== -1) {
                             return value.substring(5);
                         }
                         if (cycle === 'day') {
@@ -225,6 +232,7 @@ class KLineMobileSetChartController {
     }
 
     getToolTipIndex() {
+        tipsLastLength = false;
         return toolTipIndex;
     }
 

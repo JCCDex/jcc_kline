@@ -1,7 +1,7 @@
 <template>
   <div style="position:relative">
     <!-- Cycle按钮 -->
-    <div style="position: absolute;left:10px;top:20px;z-index:1;width: 310px;">
+    <div class="kline-cycle">
       <div class="kline-cycle-div">
         <div @click="clickMinCycle()">
           <div
@@ -11,7 +11,7 @@
               :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectMin}}</font>
             <i
-              :class="!this.showMinCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
+              :class="!this.showMinCycle ? 'drop-down-icon' : 'drop-down-select'"
             ></i>
           </div>
           <div v-show="showMinCycle" class="kline-cycle-float">
@@ -41,7 +41,7 @@
               :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectHour}}</font>
             <i
-              :class="!this.showHourCycle ? 'icon iconfont icon-drop-down' : 'icon iconfont icon-drop-down kline-select-color'"
+              :class="!this.showHourCycle ? 'drop-down-icon' : 'drop-down-select'"
             ></i>
           </div>
           <div v-show="showHourCycle" class="kline-cycle-float kline-hour-cycle">
@@ -159,6 +159,7 @@ export default {
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType)
           ) {
+            this.clearChart();
             let toolTipIndex = this.kline.setOption(data, this.currentCycle);
             this.isRefresh = false;
             this.$emit("listenToTipIndex", toolTipIndex);

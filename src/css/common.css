@@ -1,3 +1,15 @@
+.kline-cycle {
+    position: absolute;
+    left: 10px;
+    top: 20px;
+    z-index: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 185px;
+}
+
 .kline-cycle-btn {
     float: left;
     min-width: 20px;
@@ -20,7 +32,7 @@
 .tooltip-data-zh {
     font-size: 11px !important;
     position: absolute;
-    left: 16.7%;
+    left: 20%;
     top: 20px;
     z-index: 1;
     float: left;
@@ -32,7 +44,7 @@
 .tooltip-data-en {
     font-size: 11px !important;
     position: absolute;
-    left: 16.67%;
+    left: 20%;
     top: 23px;
     z-index: 1;
     float: left;
@@ -71,13 +83,8 @@
     line-height: 60px;
 }
 
-.kline-levitation-btn {
-    float: left;
-    margin-left: 20px;
-}
-
 .icon-full-screen {
-    font-size: 18px;
+    font-size: 16px !important;
     color: #b9cadd;
 }
 
@@ -87,7 +94,7 @@
 }
 
 .icon-indicator {
-    font-size: 18px;
+    font-size: 18px !important;
     color: #b9cadd;
 }
 
@@ -97,18 +104,24 @@
 }
 
 .icon-indicator-unselected {
-    font-size: 16px;
+    font-size: 12px !important;
     color: #b9cadd;
 }
 
 .icon-indicator-selected {
-    font-size: 16px;
+    font-size: 12px !important;
     color: #1bdafd;
 }
 
 .icon-indicator-selected:hover {
-    font-size: 16px;
+    font-size: 12px !important;
     color: #1bdafd;
+}
+
+.close-icon {
+    content: url('../icon/images/close.png');
+    margin: 0;
+    cursor: pointer;
 }
 
 .icon-indicator-div .icon-indicator-ch {
@@ -202,17 +215,17 @@
 }
 
 .icon-full-screen:hover {
-    font-size: 18px;
+    font-size: 16px !important;
     color: #1bdafd;
 }
 
 .icon-exit-full-screen {
-    font-size: 18px;
+    font-size: 16px !important;
     color: #b9cadd;
 }
 
 .icon-exit-full-screen:hover {
-    font-size: 18px;
+    font-size: 16px !important;
     color: #1bdafd;
 }
 
@@ -729,14 +742,24 @@
     user-select: none;
 }
 
-.icon-drop-down {
-    line-height: 20px;
+.drop-down-icon {
+    content: url('../icon/images/dropDown.png');
     margin-left: 6px;
-    color: #b9cadd;
-    z-index: 2;
-    font-size: 10px !important;
-    -webkit-text-size-adjust: none;
-    -webkit-transform: scale(0.84, 0.84);
+    width: 10px;
+    height: 8px;
+}
+
+.drop-down-select {
+    content: url('../icon/images/dropDownSelect.png');
+    margin-left: 6px;
+    width: 10px;
+    height: 8px;
+}
+
+.mobile-drop-down {
+    margin-left: 0.08rem;
+    width: 0.2rem;
+    height: 0.16rem;
 }
 
 .kline-uncheck-color {
@@ -771,6 +794,7 @@
 }
 
 .kline-cycle-drop-down {
+    line-height: 20px;
     font-size: 12px;
     float: left;
 }
@@ -811,4 +835,68 @@
 .mobile-kline-cycle-detail {
     padding-top: 0.16rem;
     padding-bottom: 0.16rem;
+}
+
+.kline-levitation-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #c1c2c6;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    float: left;
+    margin-left: 20px;
+    position: relative;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
+
+.kline-levitation-btn:hover {
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+}
+
+.left-shift-icon {
+    content: url('../icon/images/leftShift.png');
+    width: 10px;
+    height: 16px;
+    position: absolute;
+    left: 35%;
+    top: 25%;
+}
+
+.enlarge-icon {
+    content: url('../icon/images/enlarge.png');
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 25%;
+    top: 25%;
+}
+
+.refresh-icon {
+    content: url('../icon/images/refresh.png');
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 25%;
+    top: 25%;
+}
+
+.narrow-icon {
+    content: url('../icon/images/narrow.png');
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    left: 25%;
+    top: 25%;
+}
+
+.right-shift-icon {
+    content: url('../icon/images/rightShift.png');
+    width: 10px;
+    height: 16px;
+    position: absolute;
+    left: 35%;
+    top: 25%;
 }

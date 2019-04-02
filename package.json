@@ -1,6 +1,6 @@
 {
   "name": "jcc_kline",
-  "version": "0.1.25",
+  "version": "0.1.27",
   "description": "jccdex kline",
   "main": "index.js",
   "scripts": {
