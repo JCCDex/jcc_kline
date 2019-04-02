@@ -74,7 +74,7 @@
 
         <div
           v-show="showChart==='candle'"
-          style="position: absolute;right:154px;top:4px;z-index:5;"
+          style="position: absolute;right:154px;top:3px;z-index:5;"
           class="icon-indicator-div"
         >
           <i v-show="true" @click="showIndicatorChart('MACD')" class="icon iconfont icon-indicator">

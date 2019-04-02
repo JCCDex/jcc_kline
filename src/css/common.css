@@ -124,6 +124,19 @@
     cursor: pointer;
 }
 
+.indicator-select-div {
+    float: right;
+    margin-right: 0.2rem;
+    height: 0.45rem;
+}
+
+.indicator-select-div:before{
+    content: "";
+    display: inline-block;
+    height : 0.35rem;
+    width  : 0.3rem;
+}
+
 .icon-indicator-div .icon-indicator-ch {
     visibility: hidden;
     width: 46px;
