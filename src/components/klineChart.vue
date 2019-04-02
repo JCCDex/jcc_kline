@@ -199,7 +199,6 @@
 <script>
 import "../icon/iconfont.css";
 import "../css/common.css";
-import { Popover, Button } from "element-ui";
 import Fullscreen from "vue-fullscreen/src/component.vue";
 import KLine from "./kline.vue";
 import Depth from "./marketDepth.vue";

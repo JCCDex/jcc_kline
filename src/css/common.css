@@ -886,10 +886,10 @@
 .narrow-icon {
     content: url('../icon/images/narrow.png');
     width: 16px;
-    height: 16px;
+    height: 12px;
     position: absolute;
     left: 25%;
-    top: 25%;
+    top: 30%;
 }
 
 .right-shift-icon {

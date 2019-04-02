@@ -19,7 +19,6 @@
     "babel-plugin-transform-modules": "^0.1.1",
     "cssnano": "^4.1.7",
     "echarts": "^4.2.0-rc.2",
-    "element-ui": "^2.6.1",
     "lodash.merge": "^4.6.1",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
