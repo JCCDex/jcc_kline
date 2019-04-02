@@ -25,19 +25,27 @@ describe('test utils', () => {
   })
 
   it('test formatDecimal if not num', () => {
-    expect(formatDecimal('not num', 6, true)).toBe("not num")
+    expect(formatDecimal('not num', 6, true)).toBe("--")
   })
 
   it('test formatDecimal if sep is false', () => {
-    expect(formatDecimal(11232.2342, 6, false)).toBe("11232.234200")
+    expect(formatDecimal(11232.2342, 5)).toBe(11232.234200)
+  })
+
+  it('test formatDecimal if num is scientific notation', () => {
+    expect(formatDecimal('1.2345e6', 0, true)).toBe("1,234,500")
+  })
+
+  it('test formatDecimal if num is scientific notation', () => {
+    expect(formatDecimal('1.2345E6', 0, true)).toBe("1,234,500")
   })
 
   it('test formatDecimal if num is integer', () => {
     expect(formatDecimal('12345', 0, true)).toBe("12,345")
   })
 
-  it('test formatNumber if value is integer', () => {
-    expect(formatNumber('123.45', 0)).toBe("123")
+  it('test formatDecimal if decimal not number', () => {
+    expect(formatDecimal('12345', 'a', true)).toBe("12,345")
   })
 
   it('test getClientWidth', () => {

@@ -54,23 +54,64 @@ export const getDefaultChartSize = () => {
     return chartSize;
 };
 
-export const formatDecimal = function (f, n, sep) {
-    // var num = parseFloat(f);
-    n = parseInt(n);
-    if (isNaN(f)) {
-        return f;
+export const formatDecimal = (num, decimal, thousands = false) => {
+    if (!isNumber(num)) {
+        return '--';
     }
-    if ((sep || 0) === 0) {
-        return formatNumber(f, n);
+    num = parseFloat(num);
+    if (isNumber(decimal)) {
+        num = num.toFixed(decimal);
+        if (decimal > 2) {
+            num = parseFloat(num);
+        }
+    }
+    num = scientificToDecimal(num);
+    if (thousands) {
+        num = toThousands(num.toString(), decimal);
+    }
+    return num;
+};
+
+export const scientificToDecimal = (num) => {
+    // if the number is in scientific notation remove it
+    if (/\d+\.?\d*e[+-]*\d+/i.test(num)) {
+        var zero = '0';
+        var parts = String(num).toLowerCase().split('e'); // split into coeff and exponent
+        var e = parts.pop(); // store the exponential part
+        var l = Math.abs(e); // get the number of zeros
+        var sign = e / l;
+        var coeffArray = parts[0].split('.');
+        if (sign === -1) {
+            num = zero + '.' + new Array(l).join(zero) + coeffArray.join('');
+        } else {
+            var dec = coeffArray[1];
+            if (dec) l = l - dec.length;
+            num = coeffArray.join('') + new Array(l + 1).join(zero);
+        }
     }
 
-    var num = formatNumber(f, n);
-    var result = '';
+    return num;
+};
 
-    var split = num.split('.');
-    var fraction = split.length > 1 ? split[1] : '';
+export const toThousands = (n, decimal = 0) => {
+    let num = n;
+    if (!isNumber(num)) {
+        return n;
+    }
+    num = num.toString();
+    let result = '';
+    let split = num.split('.');
+    let fraction = split.length > 1 ? split[1] : '';
+    if (decimal !== 0) {
+        let length = 0;
+        if (fraction) {
+            length = fraction.length;
+        }
+        for (let i = 0; i < decimal - length; i++) {
+            fraction = fraction + '0';
+        }
+    }
     num = split[0];
-
     while (num.length > 3) {
         result = ',' + num.slice(-3) + result;
         num = num.slice(0, num.length - 3);
@@ -78,36 +119,10 @@ export const formatDecimal = function (f, n, sep) {
     if (num) {
         result = num + result;
     }
-
     if (fraction.length > 0) {
         result = result + '.' + fraction;
     }
     return result;
-};
-
-export const formatNumber = (value, num) => {
-    var a, b, c, i;
-    a = value.toString();
-    b = a.indexOf('.');
-    c = a.length;
-    if (num == 0) {
-        if (b != -1) {
-            a = a.substring(0, b);
-        }
-    } else {
-        if (b == -1) {
-            a = a + '.';
-            for (i = 1; i <= num; i++) {
-                a = a + '0';
-            }
-        } else {
-            a = a.substring(0, b + num + 1);
-            for (i = c; i <= b + num; i++) {
-                a = a + '0';
-            }
-        }
-    }
-    return a;
 };
 
 export const formatTime = (t) => {
