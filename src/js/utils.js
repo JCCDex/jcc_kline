@@ -138,7 +138,11 @@ export const formatTime = (t) => {
             ? unixTimestamp.getDate()
             : '0' + unixTimestamp.getDate();
     let H = unixTimestamp.getHours();
-    let toDay = Y + '-' + M + '-' + D + '  ' + H + ':00';
+    let mm = unixTimestamp.getMinutes();
+    if (mm < 10) {
+        mm = '0' + mm;
+    }
+    let toDay = Y + '-' + M + '-' + D + '  ' + H + ':' + mm;
     return toDay;
 };
 
