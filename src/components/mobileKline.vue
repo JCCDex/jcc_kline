@@ -72,8 +72,8 @@
         @click="chooseCycle('everyhour')"
         :class="this.currentCycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.timeSharing}}</div>
-      <div style="float:right; margin-right:0.2rem; margin-top:0.05rem" class="icon-indicator-div">
-        <i v-show = "true" @click = "openCloseMacd" :class="this.isSelected ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'">
+      <div @click = "openCloseMacd" class="indicator-select-div">
+        <i v-show = "true"  :class="this.isSelected ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'">
         <!-- <i v-show = "isSelected" @click = "openCloseMacd" class="icon iconfont icon-indicator-selected"> -->
           <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
         </i>

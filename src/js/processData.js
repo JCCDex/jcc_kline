@@ -467,3 +467,19 @@ export const getEMAData = (data, periodic) => {
     return EMA;
 };
 
+export const getMTMData = (data) => {
+    if (!data) {
+        return;
+    }
+    var MTM = [];
+    var MTMTmp = '';
+    for (var i=0; i<data.length; i++) {
+        if(i<6){
+            MTM.push('-');
+        } else {
+            MTMTmp = data[i][1] - data[i-6][1];
+            MTM.push(MTMTmp);
+        }
+    }
+    return MTM;
+};

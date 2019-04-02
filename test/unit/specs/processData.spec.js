@@ -1,4 +1,4 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData, getRSIData, getTRIXData, getBollData } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData } from 'js/processData'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 import { getKDJData } from '../../../src/js/processData.js';
@@ -150,6 +150,16 @@ describe('test processData', () => {
   it('test getBollData if data is null', () => {
     let bollData = getBollData(null, 20)
     expect(bollData).toBe(undefined)
+  })
+
+  it('test getMTMData', () => {
+    let MTMData = getMTMData(testData.klineData)
+    expect(MTMData).not.toBeNull()
+  })
+
+  it('test getMTMData if data is null', () => {
+    let MTMData = getMTMData(null)
+    expect(MTMData).toBe(undefined)
   })
 
 })

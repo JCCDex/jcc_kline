@@ -11,6 +11,13 @@ let indicatorsData = {
     categoryData: testData.candleData.categoryData,
     indicatorData: OBVData
 };
+
+// let MTMData = getMTMData(data.klineData)
+// let indidatorsData1 = {
+//     indicator: "MTM",
+//     categoryData: testData.candleData.categoryData,
+//     indicatorData: OBVData
+// }
 let size = {
     height: 1080,
     width: 1920
@@ -57,6 +64,15 @@ describe('test SetIndicatorChart', () => {
 
     it('test setIndicatorOption if indicatorsData is null', () => {
         indicatorsData.indicator = 'OBV'
+        const element = document.createElement('div');
+        let indicator = new SetIndicatorChart(StochasticOption);
+        indicator.initIndicatorECharts(element)
+        indicator.setIndicatorOption(null, 'hour')
+        expect(indicator.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test setIndicatorOption if indicatorsData is null', () => {
+        indicatorsData.indicator = 'MTM'
         const element = document.createElement('div');
         let indicator = new SetIndicatorChart(StochasticOption);
         indicator.initIndicatorECharts(element)
