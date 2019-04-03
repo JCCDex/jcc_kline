@@ -578,8 +578,10 @@ export default {
       this.showChart = type;
     },
     changeDataZoom(type) {
-      if (this.showChart === "candle") {
+      if (this.showChart !== "depth") {
         this.$refs.candle.changeDataZoom(type);
+        this.$refs.volume.changeDataZoom(type);
+        this.$refs.macd.changeDataZoom(type);
       }
     },
     fullScreenToggle() {
