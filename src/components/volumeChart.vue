@@ -142,6 +142,9 @@ export default {
     },
     dispose() {
       this.volume.disposeVolumeEcharts()
+    },
+    changeDataZoom(type) {
+      this.volume.changeDataZoom(type);
     }
   }
 }

@@ -301,6 +301,28 @@ describe('test Chart', () => {
     expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
   })
 
+  it('test changeDataZoom if platform is pc', () => {
+    let volume = new ChartController(volumeConfig)
+    const element = document.createElement('div');
+    volume.initVolumeChart(element)
+    volume.setVolumeOption(data)
+    volume.changeDataZoom('leftShift')
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(58);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(98);
+    volume.changeDataZoom('rightShift')
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(60);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
+    volume.changeDataZoom('enlarge')
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(65);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
+    volume.changeDataZoom('refresh')
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(60);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
+    volume.changeDataZoom('narrow')
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(55);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
+  })
+
 
   // MACD指标测试
   let macdConfig = {
@@ -387,5 +409,27 @@ describe('test Chart', () => {
     macd.setMACDOption(macdData)
     macd.showMacdLoading()
     expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
+  })
+
+  it('test changeMacdDataZoom if platform is pc', () => {
+    let macd = new ChartController(macdConfig)
+    const element = document.createElement('div');
+    macd.initMACDECharts(element)
+    macd.setMACDOption(macdData)
+    macd.changeMacdDataZoom('leftShift')
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(58);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(98);
+    macd.changeMacdDataZoom('rightShift')
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(60);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
+    macd.changeMacdDataZoom('enlarge')
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(65);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
+    macd.changeMacdDataZoom('refresh')
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(60);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
+    macd.changeMacdDataZoom('narrow')
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(55);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
   })
 })

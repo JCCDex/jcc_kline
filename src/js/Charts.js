@@ -138,6 +138,10 @@ class ChartController {
         this.setVolumeChart.disposeVolumeEChart();
     }
 
+    changeDataZoom(type) {
+        this.setVolumeChart.changeDataZoom(type);
+    }
+
     /* 绘制AMCD指标 */
     initMACDECharts(DOM) {
         this.setMACDChart.initMACD(DOM);
@@ -169,6 +173,10 @@ class ChartController {
 
     showMacdLoading () {
         this.setMACDChart.showLoading();
+    }
+
+    changeMacdDataZoom(type) {
+        this.setMACDChart.changeDataZoom(type);
     }
 
 }

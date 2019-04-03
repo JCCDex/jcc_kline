@@ -133,4 +133,26 @@ describe('test SetVolumeChart', () => {
         expect(volumeChart).not.toBeNull();
     })
 
+    it('test changeDataZoom', () => {
+        const element = document.createElement('div');
+        let volumeChart = new SetVolumeChart(volumeOption);
+        volumeChart.initVolumeECharts(element)
+        volumeChart.setVolumeOption(data, 'hour')
+        volumeChart.changeDataZoom('leftShift')
+        expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(58)
+        expect(volumeChart.volume.getOption().dataZoom[0].end).toBe(98)
+        volumeChart.changeDataZoom('enlarge')
+        expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(63)
+        expect(volumeChart.volume.getOption().dataZoom[0].end).toBe(98)
+        volumeChart.changeDataZoom('rightShift')
+        expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(65)
+        expect(volumeChart.volume.getOption().dataZoom[0].end).toBe(100)
+        volumeChart.changeDataZoom('refresh')
+        expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(60)
+        expect(volumeChart.volume.getOption().dataZoom[0].end).toBe(100)
+        volumeChart.changeDataZoom('narrow')
+        expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(55)
+        expect(volumeChart.volume.getOption().dataZoom[0].end).toBe(100)
+      })
+
 })
