@@ -241,6 +241,9 @@ export default {
     },
     closeMacd() {
       this.$emit("listenMacdChartClose", true)
+    },
+    changeDataZoom(type) {
+      this.macd.changeMacdDataZoom(type);
     }
   }
 }
