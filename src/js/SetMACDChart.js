@@ -53,10 +53,6 @@ class MACDChart {
         }
     }
 
-    getMacdchart() {
-        return this.macd;
-    }
-
     initMACD(DOM) {
         this.macd = echarts.init(DOM);
         this.showLoading();

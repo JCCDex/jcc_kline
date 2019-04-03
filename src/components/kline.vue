@@ -134,16 +134,9 @@ export default {
       default: () => {
         return {};
       }
-    },
-    cycle: {
-      type: String,
-      default: "hour"
     }
   },
   watch: {
-    cycle() {
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
-    },
     resizeSize() {
       this.resize();
     },

@@ -129,10 +129,6 @@ class KLineSetChartController {
         return toolTipIndex;
     }
 
-    getEchart() {
-        return this.kline;
-    }
-
     getToolTip() {
         return {
             formatter: function (param) {

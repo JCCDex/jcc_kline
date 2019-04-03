@@ -32,46 +32,8 @@
           </font>
         </div>
       </div>
-      <!-- timeDivision tootip 数据显示 -->
-      <div
-        :class="this.message.language === 'en' ? 'time-sharing-en-pc' : 'time-sharing-zh-pc'"
-        v-if="timeSharingTipData && showChart === 'timeSharing'"
-      >
-        <font
-          :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'"
-        >{{this.timeSharingTipData.time}}</font>
-        <font class="mobile-tooltip-name">{{message.volumeMobile}}</font>
-        <font
-          :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'"
-        >{{this.timeSharingTipData.volume}}</font> &nbsp;
-        <font class="mobile-tooltip-name">{{message.price}}</font>
-        <font
-          :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'"
-        >{{this.timeSharingTipData.price}}</font> &nbsp;
-        <font class="mobile-tooltip-name">{{message.averagePrice}}</font>
-        <font
-          :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'"
-        >{{this.timeSharingTipData.averagePrice}}</font> &nbsp;
-        <br>
-      </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
-        <!-- <div style="position: absolute;right:150px;top:4px;z-index:5;" class="icon-indicator-div">
-            <el-popover placement="bottom" width="60" trigger="click">
-              <div class="indicatorOpt">
-                <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
-                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">{{message.DMI}}</div><br>
-                <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
-                <div @click = "showIndicatorChart('Boll')" class = "chart-indicator-div">{{message.Boll}}</div><br>
-                <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">{{message.TRIX}}</div><br>
-                <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
-              </div>
-              <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
-                <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
-              </i>
-            </el-popover>
-        </div>-->
-
         <div
           v-show="showChart==='candle'"
           style="position: absolute;right:154px;top:3px;z-index:5;"
@@ -96,7 +58,6 @@
           :class="this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'"
           style="margin-left: 10px;margin-right: 20px;"
         >{{message.depth}}</div>
-        <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
       </div>
       <!-- 全屏按钮 -->
       <div style="position: absolute;right:30px;top:23px;z-index:5;" class="full-screen-div">
@@ -129,7 +90,7 @@
         @mouseleave="leave()"
       >
         <div class="kline-levitation-icon" v-show="isShow">
-          <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')" >
+          <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')">
             <div class="left-shift-icon"></div>
           </div>
           <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
@@ -164,7 +125,6 @@
         :kline-config="klineConfig"
         :resize-size="resizeSize"
       ></Depth>
-      <!-- <time-sharing ref="timeSharing" v-if= "showChart === 'timeSharing'" :chart-data-obj = "chartDataObj" :kline-config = "klineConfig" v-on:listenToTipIndex = "getTipDataIndex" v-on:listenTimeSharingChart = "getTimeSharingChart"></time-sharing> -->
       <Volume
         ref="volume"
         v-show="showChart !== 'depth'"
@@ -185,12 +145,6 @@
         :resize-size="resizeSize"
         :cycle="cycle"
       ></MACD>
-      <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></KDJ>
-      <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></DMI>
-      <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></OBV>
-      <RSI ref = "indicator" v-show = "showIndicator === 'RSI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></RSI>
-      <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></TRIX>
-      <MTM ref = "indicator" v-show = "showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></MTM>    -->
     </fullscreen>
   </div>
 </template>
@@ -201,21 +155,13 @@ import Fullscreen from "vue-fullscreen/src/component.vue";
 import KLine from "./kline.vue";
 import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
-// import TimeSharing from './timeSharing.vue'
 import MACD from "./MACDChart.vue";
-// import KDJ from './KDJChart.vue'
-// import DMI from './DMIChart.vue'
-// import OBV from './OBVChart.vue'
-// import RSI from './RSIChart.vue'
-// import TRIX from './TRIXChart.vue'
-// import MTM from './MTMChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
   splitData,
   getDepthData,
   calculateMA,
-  handleDivisionData,
-  getBollData
+  handleDivisionData
 } from "../js/processData";
 import { linkageVolume } from "../js/linkageCharts";
 export default {
@@ -225,14 +171,7 @@ export default {
     Depth,
     Volume,
     Fullscreen,
-    MACD,
-    // KDJ,
-    // DMI,
-    // RSI,
-    // OBV,
-    // TRIX,
-    // MTM,
-    // TimeSharing
+    MACD
   },
   data() {
     return {
@@ -247,17 +186,13 @@ export default {
       stochastic: null,
       macd: null,
       indicator: null,
-      pricePrecision: 6,
-      amountsPrecision: 2,
       chartDataObj: {},
       toolTipIndex: null,
       toolTipData: null,
-      timeSharingTipData: null,
       outspreadMA: true,
       resizeSize: {},
       isFullScreen: false,
-      showIndicator: null,
-      relevanceIndicator: "MA",
+      showIndicator: "",
       isClose: true
     };
   },
@@ -371,11 +306,6 @@ export default {
             candleData
           );
         }
-        if (this.relevanceIndicator === "Boll") {
-          let BollData = getBollData(candleData, 20);
-          candleData.BollData = BollData;
-        }
-        candleData.indicatorType = this.relevanceIndicator;
         candleData.MAData = MAData;
         candleData.precision = precision;
       }
@@ -386,9 +316,6 @@ export default {
         timeDivisionData = data.timeDivisionData;
         divisionData = handleDivisionData(timeDivisionData);
         this.divisionTime = divisionData.divisionTime;
-      }
-      if (this.showChart === "timeSharing") {
-        cycle = "everyhour";
       }
       this.chartDataObj = {
         platform: "pc",
@@ -412,13 +339,7 @@ export default {
       }
     },
     showIndicatorChart(indicator) {
-      if (indicator === "Boll") {
-        if (indicator === this.relevanceIndicator) {
-          this.relevanceIndicator = "";
-        } else {
-          this.relevanceIndicator = "Boll";
-        }
-      } else if (indicator === this.showIndicator) {
+      if (indicator === this.showIndicator) {
         this.showIndicator = null;
         this.isClose = true;
       } else {
@@ -434,126 +355,66 @@ export default {
       this.toolTipIndex = null;
       this.$emit("listenToChildEvent", cycle);
     },
-    getCandleChart(candle) {
-      this.candle = candle;
-      if (this.volume) {
-        linkageVolume(this.candle, this.volume);
-      }
-    },
-    getTimeSharingChart(timeSharing) {
-      this.timeSharing = timeSharing;
-      if (this.volume) {
-        linkageVolume(this.timeSharing, this.volume);
-      }
-    },
-    getVolumeChart(volume) {
-      this.volume = volume;
-      if (this.candle) {
-        linkageVolume(this.candle, this.volume);
-      }
-      if (this.timeSharing) {
-        linkageVolume(this.timeSharing, this.volume);
-      }
-    },
-    getKDJChart(KDJ) {
-      this.stochastic = KDJ;
-      if (this.candle) {
-        linkageVolume(this.candle, this.stochastic);
-      }
-      if (this.timeSharing) {
-        linkageVolume(this.timeSharing, this.stochastic);
-      }
-    },
-    getMacdchart(macd) {
-      this.macd = macd;
-      if (this.candle) {
-        linkageVolume(this.candle, this.macd);
-      }
-      if (this.timeSharing) {
-        linkageVolume(this.timeSharing, this.macd);
-      }
-    },
-    getIndicatorChart(indicator) {
-      this.indicator = indicator;
-      if (this.candle) {
-        linkageVolume(this.candle, this.indicator);
-      }
-      if (this.timeSharing) {
-        linkageVolume(this.timeSharing, this.indicator);
-      }
-    },
     getTipDataIndex(index) {
       if (!isNaN(index)) {
         this.toolTipIndex = index;
         if (this.chartDataObj.precision) {
-          let precision = this.chartDataObj.precision;
-          let pricePrecision = !isNaN(precision.price)
-            ? precision.price
-            : this.pricePrecision;
-          let amountsPrecision = !isNaN(precision.amount)
-            ? precision.amount
-            : this.amountsPrecision;
-          if (
-            this.chartDataObj.candleData &&
-            this.showChart !== "timeSharing"
-          ) {
-            let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData));
-            if (data.values[index] && data.categoryData[index]) {
+          let pricePrecision = !isNaN(this.chartDataObj.precision.price)
+            ? this.chartDataObj.precision.price
+            : 6;
+          let amountsPrecision = !isNaN(this.chartDataObj.precision.amount)
+            ? this.chartDataObj.precision.amount
+            : 2;
+          if (this.chartDataObj.candleData) {
+            if (
+              this.chartDataObj.candleData.values[index] &&
+              this.chartDataObj.candleData.categoryData[index]
+            ) {
               this.toolTipData = {
-                time: data.categoryData[index],
+                time: this.chartDataObj.candleData.categoryData[index],
                 volume: formatDecimal(
-                  data.values[index][5],
+                  this.chartDataObj.candleData.values[index][5],
                   amountsPrecision,
                   true
                 ),
                 opening: formatDecimal(
-                  data.values[index][0],
+                  this.chartDataObj.candleData.values[index][0],
                   pricePrecision,
                   true
                 ),
                 closing: formatDecimal(
-                  data.values[index][1],
+                  this.chartDataObj.candleData.values[index][1],
                   pricePrecision,
                   true
                 ),
-                max: formatDecimal(data.values[index][3], pricePrecision, true),
-                min: formatDecimal(data.values[index][2], pricePrecision, true),
+                max: formatDecimal(
+                  this.chartDataObj.candleData.values[index][3],
+                  pricePrecision,
+                  true
+                ),
+                min: formatDecimal(
+                  this.chartDataObj.candleData.values[index][2],
+                  pricePrecision,
+                  true
+                ),
                 MAData: [],
-                color: data.volumes[index][2]
+                color: this.chartDataObj.candleData.volumes[index][2]
               };
-              for (var i = 0; i < data.MAData.length; i++) {
+              for (
+                var i = 0;
+                i < this.chartDataObj.candleData.MAData.length;
+                i++
+              ) {
                 this.toolTipData.MAData[i] = {
-                  name: data.MAData[i].name,
+                  name: this.chartDataObj.candleData.MAData[i].name,
                   data: formatDecimal(
-                    data.MAData[i].data[index],
+                    this.chartDataObj.candleData.MAData[i].data[index],
                     pricePrecision,
                     true
                   )
                 };
               }
             }
-          } else if (
-            this.chartDataObj.divisionData &&
-            this.showChart === "timeSharing"
-          ) {
-            let data = JSON.parse(
-              JSON.stringify(this.chartDataObj.divisionData)
-            );
-            this.timeSharingTipData = {
-              time: data.times[index],
-              volume: formatDecimal(
-                data.volumes[index][1],
-                amountsPrecision,
-                true
-              ),
-              price: formatDecimal(data.prices[index], pricePrecision, true),
-              averagePrice: formatDecimal(
-                data.averages[index],
-                pricePrecision,
-                true
-              ),
-              color: data.volumes[index][2]
-            };
           }
         }
       }

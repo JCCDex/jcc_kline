@@ -132,15 +132,6 @@ describe('test Chart', () => {
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
-  it('test getTimeSharingChart', () => {
-    let timeSharing = new ChartController(klineConfig)
-    const element = document.createElement('div');
-    timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
-    let EChart = timeSharing.getTimeSharingChart()
-    expect(EChart).not.toBeNull()
-  })
-
   it('test getTimeSharingTipIndex', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
@@ -283,15 +274,6 @@ describe('test Chart', () => {
     expect(tipIndex).not.toBeNull()
   })
 
-  it('test getVolumeEchart', () => {
-    let volume = new ChartController(volumeConfig)
-    const element = document.createElement('div');
-    volume.initVolumeChart(element)
-    volume.setVolumeOption(data)
-    let volumeChart = volume.getVolumeEchart()
-    expect(volumeChart).not.toBeNull()
-  })
-
   it('test updateVolumeOption', () => {
     let volume = new ChartController(volumeConfig)
     const element = document.createElement('div');
@@ -369,15 +351,6 @@ describe('test Chart', () => {
     macd.setMACDOption(macdData);
     let tipsData = macd.getMacdTipData()
     expect(tipsData).not.toBeNull()
-  })
-
-  it('test getMacdchart', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.setMACDOption(macdData)
-    let macdChart = macd.getMacdchart()
-    expect(macdChart).not.toBeNull()
   })
 
   it('test updateMACDOption', () => {

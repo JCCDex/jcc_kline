@@ -88,7 +88,6 @@ class VolumeChart {
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
             saveVolume(this.volume);
-            return toolTipIndex;
         }
     }
 
@@ -112,10 +111,6 @@ class VolumeChart {
 
     getToolTipIndex() {
         return toolTipIndex;
-    }
-
-    getVolumeEchart() {
-        return this.volume;
     }
 
     getVolumeXAxis(data, cycle) {

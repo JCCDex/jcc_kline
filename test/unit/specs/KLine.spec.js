@@ -87,14 +87,6 @@ describe('test KLine', () => {
     kline.setOption(klineData, 'hour')
     expect(kline.setKLineChart.kline.getOption()).not.toBeNull()
   })
-  it('test getEchart if platform is pc', () => {
-    let kline = new klineController('pc', klineConfig)
-    const element = document.createElement('div');
-    kline.initChart(element)
-    kline.setOption(klineData, 'hour')
-    let klineChart = kline.getEchart()
-    expect(klineChart).not.toBeNull()
-  })
 
   it('test updateOption if platform is pc', () => {
     let kline = new klineController('pc', klineConfig)

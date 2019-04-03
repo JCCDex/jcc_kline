@@ -91,10 +91,6 @@ class ChartController {
         this.setTimeSharing.updateTimeSharingOption(divisionData);
     }
 
-    getTimeSharingChart() {
-        return this.setTimeSharing.getTimeSharingEchart();
-    }
-
     getTimeSharingTipIndex() {
         return this.setTimeSharing.getTimeSharingTipIndex();
     }
@@ -118,7 +114,7 @@ class ChartController {
     }
 
     setVolumeOption(data, cycle) {
-        return this.setVolumeChart.setVolumeOption(data, cycle);
+        this.setVolumeChart.setVolumeOption(data, cycle);
     }
 
     showLoading () {
@@ -129,9 +125,6 @@ class ChartController {
         return this.setVolumeChart.getToolTipIndex();
     }
 
-    getVolumeEchart() {
-        return this.setVolumeChart.getVolumeEchart();
-    }
 
     updateVolumeOption(data, cycle) {
         this.setVolumeChart.updateVolumeOption(data, cycle);
@@ -168,10 +161,6 @@ class ChartController {
 
     disposeMACDEChart() {
         this.setMACDChart.disposeMACDEChart();
-    }
-
-    getMacdchart() {
-        return this.setMACDChart.getMacdchart();
     }
 
     getMacdTipData() {

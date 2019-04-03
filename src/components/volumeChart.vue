@@ -64,9 +64,8 @@ export default {
         data.precision = this.chartDataObj.precision
         if (data.values && data.volumes && data.categoryData) {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
-            let toolTipIndex = this.volume.setVolumeOption(data, this.currentCycle)
+            this.volume.setVolumeOption(data, this.currentCycle)
             this.isRefresh = false
-            this.$emit("listenToTipIndex", toolTipIndex)
             this.coinType = this.chartDataObj.coinType
           }else {
             this.volume.updateVolumeOption(data, this.currentCycle)
@@ -77,9 +76,8 @@ export default {
         let timeDivisionData = this.chartDataObj.timeDivisionData
         let divisionData = this.chartDataObj.divisionData
         if (this.isRefresh && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-          let toolTipIndex = this.volume.setVolumeOption(divisionData, this.currentCycle)
+          this.volume.setVolumeOption(divisionData, this.currentCycle)
           this.isRefresh = false
-          this.$emit("listenToTipIndex", toolTipIndex)
         } else {
            this.volume.updateVolumeOption(divisionData, this.currentCycle)
         }
