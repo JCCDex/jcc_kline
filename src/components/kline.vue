@@ -163,7 +163,6 @@ export default {
             let toolTipIndex = this.kline.setOption(data, this.currentCycle);
             this.isRefresh = false;
             this.$emit("listenToTipIndex", toolTipIndex);
-            this.$emit("listenCandleChartEvent", this.kline.getEchart());
             this.coinType = this.chartDataObj.coinType;
           } else {
             this.kline.updateOption(data, this.currentCycle);

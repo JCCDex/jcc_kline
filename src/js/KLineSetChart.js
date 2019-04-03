@@ -5,6 +5,7 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
+import { saveCandle } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var config;
@@ -101,6 +102,7 @@ class KLineSetChartController {
             };
             merge(config, klineOption);
             this.kline.setOption(config, true);
+            saveCandle(this.kline);
             return toolTipIndex;
         }
     }
@@ -149,7 +151,7 @@ class KLineSetChartController {
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if(cycle.indexOf('minute') !== -1) {
+                    if (cycle.indexOf('minute') !== -1) {
                         return value.substring(5);
                     }
                     if (cycle.indexOf('hour') !== -1) {

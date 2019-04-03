@@ -67,7 +67,6 @@ export default {
             let toolTipIndex = this.volume.setVolumeOption(data, this.currentCycle)
             this.isRefresh = false
             this.$emit("listenToTipIndex", toolTipIndex)
-            this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
             this.coinType = this.chartDataObj.coinType
           }else {
             this.volume.updateVolumeOption(data, this.currentCycle)
@@ -81,7 +80,6 @@ export default {
           let toolTipIndex = this.volume.setVolumeOption(divisionData, this.currentCycle)
           this.isRefresh = false
           this.$emit("listenToTipIndex", toolTipIndex)
-          this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
         } else {
            this.volume.updateVolumeOption(divisionData, this.currentCycle)
         }

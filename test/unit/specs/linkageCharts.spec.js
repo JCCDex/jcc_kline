@@ -83,19 +83,4 @@ describe('test linkageCharts', () => {
     expect(klineChart).not.toBeNull()
 })
 
-
-  it('test linkageMacd', () => {
-    let kline = new klineController('pc', klineConfig)
-    const element = document.createElement('div');
-    kline.initChart(element)
-    kline.setOption(data, 'hour')
-    let klineChart = kline.getEchart()
-
-    let macd = new ChartController(macdConfig)
-    macd.initMACDECharts(element)
-    macd.setMACDOption(data)
-
-    linkageMacd(klineChart, macd)
-})
-
 })

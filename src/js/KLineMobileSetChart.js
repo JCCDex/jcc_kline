@@ -4,6 +4,7 @@ import 'echarts/lib/chart/candlestick';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
+import { saveCandle } from './linkageCharts';
 import merge from 'lodash.merge';
 import { getLanguage } from './utils';
 import { calculateMA } from './processData';
@@ -52,6 +53,7 @@ class KLineMobileSetChartController {
         cycle = 'normal';
         this.kline.hideLoading();
         this.kline.setOption(config, true);
+        saveCandle(this.kline);
     }
 
     setTimeDivisionsOption(size) {

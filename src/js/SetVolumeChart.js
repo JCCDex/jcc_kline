@@ -4,6 +4,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
+import { saveVolume } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var volumeOption;
@@ -86,6 +87,7 @@ class VolumeChart {
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
+            saveVolume(this.volume);
             return toolTipIndex;
         }
     }

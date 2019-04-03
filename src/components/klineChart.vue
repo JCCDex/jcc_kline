@@ -150,7 +150,6 @@
       <KLine
         ref="candle"
         v-show="showChart === 'candle'"
-        v-on:listenCandleChartEvent="getCandleChart"
         v-on:listenToTipIndex="getTipDataIndex"
         v-on:listenToChildEvent="changeCycle"
         :kline-config="klineConfig"
@@ -169,7 +168,6 @@
       <Volume
         ref="volume"
         v-show="showChart !== 'depth'"
-        v-on:listenVolumeChartEvent="getVolumeChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :kline-config="klineConfig"
         :chart-data-obj="chartDataObj"
@@ -179,7 +177,6 @@
       <MACD
         ref="macd"
         v-show="showIndicator === 'MACD' && showChart !== 'depth'"
-        v-on:listenMacdChartEvent="getMacdchart"
         v-on:listenMacdChartClose="getMacdClose"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"

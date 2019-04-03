@@ -4,6 +4,8 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
+import { saveMacd } from './linkageCharts';
+
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var MACDOption;
@@ -87,6 +89,7 @@ class MACDChart {
             };
             merge(MACDOption, option);
             this.macd.setOption(MACDOption, true);
+            saveMacd(this.macd);
         }
     }
 

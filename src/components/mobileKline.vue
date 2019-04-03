@@ -158,7 +158,6 @@ export default {
             candleData,
             this.currentCycle
           );
-          this.$emit("listenCandleChartEvent", this.kline.getMobileEchart());
           this.$emit("listenTipIndex", toolTipIndex);
         }
       }

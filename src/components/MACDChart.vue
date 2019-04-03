@@ -121,7 +121,6 @@ export default {
             this.cycle = this.chartDataObj.cycle
             this.macd.setMACDOption(macdData);
             this.coinType = this.chartDataObj.coinType
-            this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
           } else {
             this.macd.updateMACDOption(macdData);
           }
@@ -132,22 +131,12 @@ export default {
         if (data.MACDData) {
           var macdData = this.splitData(data.MACDData);
           this.macdData = macdData;
-          // if (this.macdData) {
-          //   let index = this.toolTipIndex;
-          //   this.$emit("listenToTipIndex", index);
-          //   this.toolTipData = {
-          //     macd: this.macdData.macds[index],
-          //     diff: this.macdData.difs[index],
-          //     dea: this.macdData.deas[index]
-          //   }
-          // }
           if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
             this.isRefresh = false
             this.clearChart();
             this.cycle = this.chartDataObj.cycle
             this.macd.setMACDOption(macdData);
             this.coinType = this.chartDataObj.coinType
-            this.$emit("listenMacdChartEvent", this.macd.getMacdchart())
           } else {
             this.macd.updateMACDOption(macdData);
           }
