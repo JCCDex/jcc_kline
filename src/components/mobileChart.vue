@@ -79,12 +79,6 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></MACD>
-    <!-- <KDJ ref = "stochastic" v-show = "showChart === 'candle'" v-on:listenStochasticChartEvent = 'getKDJChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></KDJ> -->
-    <!-- <OBV ref = "indicator" v-show = "showIndicatorChart === 'OBV'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></OBV> -->
-    <!-- <RSI ref = "indicator" v-show = "showIndicatorChart === 'RSI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></RSI>
-    <DMI ref = "indicator" v-show = "showIndicatorChart === 'DMI'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></DMI>-->
-    <!-- <TRIX ref = "indicator" v-show = "showIndicatorChart === 'TRIX'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></TRIX> -->
-    <!-- <MTM ref = "indicator" v-show = "showIndicatorChart === 'MTM'" @listenIndicatorChartEvent = "getIndicatorChart" @listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :cycle = "cycle"></MTM> -->
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -94,12 +88,6 @@ import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import MACD from "./MACDChart.vue";
-// import KDJ from './KDJChart.vue'
-// import DMI from './DMIChart.vue'
-// import OBV from './OBVChart.vue'
-// import RSI from './RSIChart.vue'
-// import TRIX from './TRIXChart.vue'
-// import MTM from './MTMChart.vue'
 import {
   splitData,
   handleDivisionData,
@@ -116,12 +104,6 @@ export default {
     Volume,
     TimeSharing,
     MACD
-    // MTM,
-    // KDJ,
-    // DMI,
-    // OBV,
-    // RSI,
-    // TRIX
   },
   data() {
     return {
@@ -304,10 +286,10 @@ export default {
           );
           var pricePrecision = !isNaN(precision.price)
             ? precision.price
-            : this.pricePrecision;
+            : 6;
           var amountsPrecision = !isNaN(precision.amount)
             ? precision.amount
-            : this.amountsPrecision;
+            : 2;
           if (
             this.chartDataObj.candleData &&
             this.chartDataObj.cycle !== "everyhour"
