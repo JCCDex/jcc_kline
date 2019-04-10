@@ -59,6 +59,7 @@
     font-size: 11px !important;
     -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
+    cursor:pointer;
 }
 
 .icon-kline-hide {
@@ -67,6 +68,7 @@
     font-size: 11px !important;
     -webkit-text-size-adjust: none;
     -webkit-transform: scale(0.92, 0.92);
+    cursor:pointer;
 }
 
 .kline-levitation-div {
@@ -86,11 +88,13 @@
 .icon-full-screen {
     font-size: 16px !important;
     color: #b9cadd;
+    cursor:pointer;
 }
 
 .icon-indicator-div {
     position: relative;
     display: inline-block;
+    cursor:pointer;
 }
 
 .icon-indicator {
@@ -230,11 +234,13 @@
 .icon-full-screen:hover {
     font-size: 16px !important;
     color: #1bdafd;
+    cursor:pointer;
 }
 
 .icon-exit-full-screen {
     font-size: 16px !important;
     color: #b9cadd;
+    cursor:pointer;
 }
 
 .icon-exit-full-screen:hover {
@@ -810,11 +816,13 @@
     line-height: 20px;
     font-size: 12px;
     float: left;
+    cursor:pointer;
 }
 
 .kline-cycle-detail {
     padding-top: 8px;
     padding-bottom: 8px;
+    cursor:pointer;
 }
 
 .kline-cycle-detail:hover {
@@ -862,9 +870,11 @@
     position: relative;
     opacity: 0.6;
     filter: alpha(opacity=60);
+    cursor:pointer;
 }
 
 .kline-levitation-btn:hover {
+    cursor:pointer;
     opacity: 0.9;
     filter: alpha(opacity=90);
 }
