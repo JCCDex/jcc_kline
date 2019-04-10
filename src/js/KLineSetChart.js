@@ -53,9 +53,14 @@ class KLineSetChartController {
         }
     }
 
-    initECharts(DOM) {
-        this.kline = echarts.init(DOM);
-        this.showLoading();
+    initECharts(DOM, clear) {
+        if (this.kline && clear) {
+            this.kline.dispose();
+        }
+        if (!this.kline || this.kline.isDisposed()) {
+            this.kline = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {

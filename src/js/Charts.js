@@ -105,8 +105,8 @@ class ChartController {
 
     /* 绘制交易量柱状图 */
 
-    initVolumeChart(DOM) {
-        this.setVolumeChart.initVolumeECharts(DOM);
+    initVolumeChart(DOM, clear) {
+        this.setVolumeChart.initVolumeECharts(DOM, clear);
     }
 
     resizeVolumeChart(DOM, isFullScreen, isCloseIndicator, size) {
@@ -143,8 +143,8 @@ class ChartController {
     }
 
     /* 绘制AMCD指标 */
-    initMACDECharts(DOM) {
-        this.setMACDChart.initMACD(DOM);
+    initMACDECharts(DOM, clear) {
+        this.setMACDChart.initMACD(DOM, clear);
     }
 
     resizeMACDChart(DOM, isFullScreen, size) {

@@ -21,11 +21,14 @@ class KLineMobileSetChartController {
         this.klineConfig = configs;
     }
 
-    initMobileECharts(DOM) {
-        toolTipIndex = null;
-        timeDivisionconfig = null;
-        this.kline = echarts.init(DOM);
-        this.showLoading();
+    initMobileECharts(DOM, clear) {
+        if (this.kline && clear) {
+            this.kline.dispose();
+        }
+        if (!this.kline || this.kline.isDisposed()) {
+            this.kline = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {

@@ -18,7 +18,7 @@ class VolumeChart {
 
     resizeECharts(DOM, isFullScreen, isCloseIndicator, resizeSize) {
         let size = getDefaultChartSize();
-        let csale = isCloseIndicator===false ? 0.2 : 0.3;
+        let csale = isCloseIndicator === false ? 0.2 : 0.3;
         if (!isFullScreen) {
             if (!this.volumeConfig.defaultSize) {
                 let resizeContainer = () => {
@@ -52,9 +52,14 @@ class VolumeChart {
         }
     }
 
-    initVolumeECharts(DOM) {
-        this.volume = echarts.init(DOM);
-        this.showLoading();
+    initVolumeECharts(DOM, clear) {
+        if (this.volume && clear) {
+            this.volume.dispose();
+        }
+        if (!this.volume || this.volume.isDisposed()) {
+            this.volume = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -121,7 +126,7 @@ class VolumeChart {
                 data: data.categoryData,
                 axisLabel: {
                     formatter(value) {
-                        if(cycle.indexOf('minute') !== -1) {
+                        if (cycle.indexOf('minute') !== -1) {
                             return value.substring(5);
                         }
                         if (cycle.indexOf('hour') !== -1) {

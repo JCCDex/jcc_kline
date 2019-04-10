@@ -19,8 +19,8 @@ class KLineController {
         }
     }
 
-    initChart(DOM) {
-        this.setKLineChart.initECharts(DOM);
+    initChart(DOM, clear) {
+        this.setKLineChart.initECharts(DOM, clear);
     }
 
     showLoading() {
@@ -59,8 +59,8 @@ class KLineController {
         this.setKLineChart.disposeEChart();
     }
 
-    initMobileChart(DOM) {
-        this.setMobileKLineChart.initMobileECharts(DOM);
+    initMobileChart(DOM, clear) {
+        this.setMobileKLineChart.initMobileECharts(DOM, clear);
     }
 
     showMobileLoading() {

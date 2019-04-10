@@ -53,9 +53,14 @@ class MACDChart {
         }
     }
 
-    initMACD(DOM) {
-        this.macd = echarts.init(DOM);
-        this.showLoading();
+    initMACD(DOM, clear) {
+        if (this.macd && clear) {
+            this.macd.dispose();
+        }
+        if (!this.macd || this.macd.isDisposed()) {
+            this.macd = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -137,7 +142,7 @@ class MACDChart {
                 data: data.macds,
                 itemStyle: {
                     normal: {
-                        color: function(params) {
+                        color: function (params) {
                             var colorList;
                             if (params.data >= 0) {
                                 colorList = '#ee4b4b';
@@ -148,9 +153,9 @@ class MACDChart {
                         },
                     }
                 }
-            },{
+            }, {
                 data: data.difs
-            },{
+            }, {
                 data: data.deas
             }
         ];

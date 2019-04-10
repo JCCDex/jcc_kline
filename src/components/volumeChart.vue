@@ -49,8 +49,7 @@ export default {
   watch: {
     cycle () {
       if (this.cycle !== this.currentCycle) {
-        this.clearChart();
-        this.volume.showLoading()
+        this.init(true)
         this.isRefresh = true
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
@@ -124,8 +123,8 @@ export default {
     this.dispose()
   },
   methods: {
-    init() {
-      this.volume.initVolumeChart(this.$refs.volume);
+    init(clear) {
+      this.volume.initVolumeChart(this.$refs.volume, clear);
       this.resize();
     },
     getToolTipIndex () {
@@ -136,9 +135,6 @@ export default {
       if (this.klineConfig.platform === 'pc') {
         this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen,　this.resizeSize.isCloseIndicator, this.klineConfig.size);
       }
-    },
-    clearChart() {
-      this.volume.clearVolumeEcharts();
     },
     dispose() {
       this.volume.disposeVolumeEcharts()

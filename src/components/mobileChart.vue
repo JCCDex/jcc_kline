@@ -60,7 +60,6 @@
       v-on:listenMacdChartOpenClose="getMacdOpenClose"
       :kline-config="klineConfig"
       :chart-data-obj="chartDataObj"
-      :cycle="cycle"
     ></KLine>
     <Volume
       ref="volume"

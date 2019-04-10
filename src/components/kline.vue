@@ -10,9 +10,7 @@
             <font
               :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectMin}}</font>
-            <i
-              :class="!this.showMinCycle ? 'drop-down-icon' : 'drop-down-select'"
-            ></i>
+            <i :class="!this.showMinCycle ? 'drop-down-icon' : 'drop-down-select'"></i>
           </div>
           <div v-show="showMinCycle" class="kline-cycle-float">
             <div
@@ -40,9 +38,7 @@
             <font
               :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectHour}}</font>
-            <i
-              :class="!this.showHourCycle ? 'drop-down-icon' : 'drop-down-select'"
-            ></i>
+            <i :class="!this.showHourCycle ? 'drop-down-icon' : 'drop-down-select'"></i>
           </div>
           <div v-show="showHourCycle" class="kline-cycle-float kline-hour-cycle">
             <div
@@ -152,7 +148,7 @@ export default {
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType)
           ) {
-            this.clearChart();
+            this.init(true)
             let toolTipIndex = this.kline.setOption(data, this.currentCycle);
             this.isRefresh = false;
             this.$emit("listenToTipIndex", toolTipIndex);
@@ -204,8 +200,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.kline.initChart(this.$refs.klineRef);
+    init(clear) {
+      this.kline.initChart(this.$refs.klineRef, clear);
       this.resize();
     },
     clickMinCycle() {
@@ -229,8 +225,7 @@ export default {
         return;
       }
       this.changeCycleLanguage(selectCycle);
-      this.clearChart();
-      this.kline.showLoading();
+      this.init(true)
       this.currentCycle = selectCycle;
       this.isRefresh = true;
       this.$emit("listenToChildEvent", selectCycle);
@@ -275,9 +270,6 @@ export default {
         this.resizeSize.isCloseIndicator,
         this.klineConfig.size
       );
-    },
-    clearChart() {
-      this.kline.clearChart();
     },
     dispose() {
       this.kline.disposeChart();
