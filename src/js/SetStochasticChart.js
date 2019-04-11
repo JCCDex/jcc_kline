@@ -49,9 +49,15 @@ class StochasticChartController {
         }
     }
 
-    initStochasticECharts(DOM) {
-        this.stochastic = echarts.init(DOM);
-        this.showLoading();
+    initStochasticECharts(DOM, clear) {
+        if (this.stochasti && clear) {
+            oldStochasticData = null;
+            this.stochastic.dispose()
+        }
+        if (!this.stochastic || this.stochastic.isDisposed()) {
+            this.stochastic = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {

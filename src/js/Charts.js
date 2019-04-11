@@ -45,8 +45,8 @@ class ChartController {
         }
     }
     /* 绘制深度图 */
-    initDepth(DOM) {
-        this.setDepthChart.initDepthECharts(DOM);
+    initDepth(DOM, clear) {
+        this.setDepthChart.initDepthECharts(DOM, clear);
     }
 
     resizeDepthChart(DOM, isFullScreen, size) {
@@ -75,8 +75,8 @@ class ChartController {
 
     /* 绘制分时图 */
 
-    initTimeSharingChart(DOM) {
-        this.setTimeSharing.initTimeSharingECharts(DOM);
+    initTimeSharingChart(DOM, clear) {
+        this.setTimeSharing.initTimeSharingECharts(DOM, clear);
     }
 
     resizeTimeSharingChart(DOM, isFullScreen, size) {
@@ -142,7 +142,7 @@ class ChartController {
         this.setVolumeChart.changeDataZoom(type);
     }
 
-    /* 绘制AMCD指标 */
+    /* 绘制MACD指标 */
     initMACDECharts(DOM, clear) {
         this.setMACDChart.initMACD(DOM, clear);
     }

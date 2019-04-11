@@ -55,6 +55,8 @@ class KLineSetChartController {
 
     initECharts(DOM, clear) {
         if (this.kline && clear) {
+            toolTipIndex = 0;
+            oldKlineData = null;
             this.kline.dispose();
         }
         if (!this.kline || this.kline.isDisposed()) {

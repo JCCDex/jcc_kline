@@ -32,7 +32,7 @@ export default {
       indicatorData: null,
       TRIXData: null,
       coinType: "",
-      currentCycle: '',
+      currentCycle: "",
       isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
@@ -67,17 +67,16 @@ export default {
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-    cycle () {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.TRIX.clearIndicatorEcharts();
-        this.TRIX.showLoading()
-        this.isRefresh = true
+        this.init(true);
+        this.isRefresh = true;
       }
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
     resizeSize() {
       this.resize();
@@ -99,16 +98,19 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.TRIX.clearIndicatorEcharts();
+          this.init(true);
           this.TRIX.setIndicatorOption(this.indicatorsData, this.currentCycle);
-          this.isRefresh = false
+          this.isRefresh = false;
           this.$emit(
             "listenIndicatorChartEvent",
             this.TRIX.getIndicatorEchart()
           );
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.TRIX.updateIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.TRIX.updateIndicatorOption(
+            this.indicatorsData,
+            this.currentCycle
+          );
         }
       }
     },
@@ -170,8 +172,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.TRIX.initIndicatorChart(this.$refs.TRIX);
+    init(clear) {
+      this.TRIX.initIndicatorChart(this.$refs.TRIX, clear);
       this.resize();
     },
     getToolTipIndex() {
@@ -179,7 +181,7 @@ export default {
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

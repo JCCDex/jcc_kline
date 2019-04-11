@@ -64,9 +64,15 @@ class DepthChart {
         }
     }
 
-    initDepthECharts(DOM) {
-        this.depth = echarts.init(DOM);
-        this.showLoading();
+    initDepthECharts(DOM, clear) {
+        if (this.depth && clear) {
+            oldDepthData = null;
+            this.depth.dispose()
+        }
+        if (!this.depth || this.depth.isDisposed()) {
+            this.depth = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {

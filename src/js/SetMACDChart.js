@@ -55,6 +55,7 @@ class MACDChart {
 
     initMACD(DOM, clear) {
         if (this.macd && clear) {
+            oldMACDData = null;
             this.macd.dispose();
         }
         if (!this.macd || this.macd.isDisposed()) {

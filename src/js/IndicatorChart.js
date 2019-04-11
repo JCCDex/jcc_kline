@@ -24,8 +24,8 @@ class IndicatorChartController {
     }
 
     /* 绘制随机指标（KDJ） */
-    initStochasticChart(DOM) {
-        this.setStochasticChart.initStochasticECharts(DOM);
+    initStochasticChart(DOM, clear) {
+        this.setStochasticChart.initStochasticECharts(DOM, clear);
     }
 
     resizeStochasticChart(DOM, isFullScreen, size) {
@@ -62,8 +62,8 @@ class IndicatorChartController {
 
     /* 绘制指标线 */
 
-    initIndicatorChart(DOM) {
-        this.setIndicatorChart.initIndicatorECharts(DOM);
+    initIndicatorChart(DOM, clear) {
+        this.setIndicatorChart.initIndicatorECharts(DOM, clear);
     }
 
     resizeIndicatorChart(DOM, isFullScreen, size) {

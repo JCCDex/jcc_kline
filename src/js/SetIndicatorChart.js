@@ -49,9 +49,15 @@ class IndicatorChartController {
         }
     }
 
-    initIndicatorECharts(DOM) {
-        this.indicator = echarts.init(DOM);
-        this.showLoading();
+    initIndicatorECharts(DOM, clear) {
+        if (this.indicator && clear) {
+            oldIndicatorData = null;
+            this.indicator.dispose()
+        }
+        if (!this.indicator || this.indicator.isDisposed()) {
+            this.indicator = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {

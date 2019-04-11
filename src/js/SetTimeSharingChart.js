@@ -53,12 +53,19 @@ class TimeSharingChart {
         }
     }
 
-    initTimeSharingECharts(DOM) {
-        toolTipIndex = null;
-        timeSharingOption = null;
-        oldTimeSharingData = null;
-        this.timeSharing = echarts.init(DOM);
-        this.showLoading();
+    initTimeSharingECharts(DOM, clear) {
+        if (this.timeSharing && clear) {
+            toolTipIndex = null;
+            oldTimeSharingData = null;
+            this.timeSharing.dispose()
+        }
+        if (!this.timeSharing || this.timeSharing.isDisposed()) {
+            toolTipIndex = null;
+            timeSharingOption = null;
+            oldTimeSharingData = null;
+            this.timeSharing = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {

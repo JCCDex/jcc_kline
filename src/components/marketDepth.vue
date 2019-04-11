@@ -68,7 +68,7 @@ export default {
             JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType)
           ) {
-            this.clearChart();
+            this.init(true)
             this.depth.setDepthOption(data);
             this.coinType = this.chartDataObj.coinType;
           } else {
@@ -125,8 +125,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.depth.initDepth(this.$refs.depth);
+    init(clear) {
+      this.depth.initDepth(this.$refs.depth, clear);
       this.resize();
     },
     resize() {

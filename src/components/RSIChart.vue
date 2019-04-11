@@ -74,8 +74,7 @@ export default {
   watch: {
     cycle () {
       if (this.cycle !== this.currentCycle) {
-        this.RSI.clearIndicatorEcharts();
-        this.RSI.showLoading()
+        this.init(true)
         this.isRefresh = true
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
@@ -110,7 +109,7 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.RSI.clearIndicatorEcharts();
+          this.init(true)
           this.RSI.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
           this.$emit(
@@ -189,8 +188,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.RSI.initIndicatorChart(this.$refs.RSI);
+    init(clear) {
+      this.RSI.initIndicatorChart(this.$refs.RSI, clear);
       this.resize();
     },
     getToolTipIndex() {

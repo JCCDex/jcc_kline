@@ -71,8 +71,7 @@ export default {
   watch: {
     cycle () {
       if (this.cycle !== this.currentCycle) {
-        this.MTM.clearIndicatorEcharts();
-        this.MTM.showLoading()
+        this.init(true)
         this.toolTipData = null
         this.isRefresh = true
       }
@@ -101,6 +100,7 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
+          this.init(true)
           this.MTM.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
           this.$emit(
@@ -170,8 +170,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.MTM.initIndicatorChart(this.$refs.MTM);
+    init(clear) {
+      this.MTM.initIndicatorChart(this.$refs.MTM, clear);
       this.resize();
     },
     getToolTipIndex() {
