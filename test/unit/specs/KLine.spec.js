@@ -72,14 +72,6 @@ describe('test KLine', () => {
     expect(kline).not.toBeNull()
   })
 
-  it('test showLoading', () => {
-    let kline = new klineController('pc', klineConfig)
-    const element = document.createElement('div');
-    kline.initChart(element)
-    kline.showLoading()
-    expect(kline).not.toBeNull()
-  })
-
   it('test setOption if platform is pc', () => {
     let kline = new klineController('pc', klineConfig)
     const element = document.createElement('div');
@@ -146,15 +138,6 @@ describe('test KLine', () => {
     expect(kline.setKLineChart.kline.getOption()).not.toBeNull()
   })
 
-  it('test clearChart if platform is pc', () => {
-    let kline = new klineController('pc', klineConfig)
-    const element = document.createElement('div');
-    kline.initChart(element)
-    kline.setOption(klineData, 'hour')
-    kline.clearChart()
-    expect(kline.setKLineChart.kline.getOption().series).toEqual(new Array)
-  })
-
   it('test initChart if platform is mobile', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
@@ -168,15 +151,6 @@ describe('test KLine', () => {
     mobileKline.initMobileChart(element)
     mobileKline.setMobileOption(moboleSize, cycle)
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
-  })
-
-  it('test getMobileEchart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', klineConfig)
-    const element = document.createElement('div');
-    mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
-    let chart = mobileKline.getMobileEchart()
-    expect(chart).not.toBeNull()
   })
 
   it('test updateMobileOption if platform is mobile', () => {
@@ -203,25 +177,6 @@ describe('test KLine', () => {
     mobileKline.setTimeDivisionsOption(size)
     mobileKline.updateTimeDivisionOption(divisionData, precision)
     expect(mobileKline.setMobileKLineChart.kline.getOption()).not.toBeNull()
-  })
-
-  it('test showMobileLoading if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', klineConfig)
-    const element = document.createElement('div');
-    mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.showMobileLoading()
-    expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
-  })
-
-  it('test hideMobileLoading if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', klineConfig)
-    const element = document.createElement('div');
-    mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.showMobileLoading()
-    mobileKline.hideMobileLoading()
-    expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
   })
 
   it('test getMobileToolTipIndex if platform is mobile', () => {
@@ -267,13 +222,4 @@ describe('test KLine', () => {
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull();
   })
 
-  it('test clearMobileChart if platform is mobile', () => {
-    let mobileKline = new klineController('mobile', klineConfig)
-    const element = document.createElement('div');
-    mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
-    mobileKline.updateMobileOption(mobileData, cycle)
-    mobileKline.clearMobileChart()
-    expect(mobileKline.setMobileKLineChart.kline.getOption().series).toEqual(new Array);
-  })
 })

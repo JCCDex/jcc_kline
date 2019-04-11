@@ -33,6 +33,7 @@ describe('test SetIndicatorChart', () => {
         const element = document.createElement('div');
         let indicator = new SetIndicatorChart(StochasticOption);
         indicator.initIndicatorECharts(element)
+        indicator.initIndicatorECharts(element, true)
         expect(indicator).not.toBeNull();
     })
 
@@ -98,29 +99,11 @@ describe('test SetIndicatorChart', () => {
         expect(tipData).not.toBeNull();
     })
 
-    it('test getIndicatorEchart', () => {
-        const element = document.createElement('div');
-        let indicator = new SetIndicatorChart(StochasticOption);
-        indicator.initIndicatorECharts(element)
-        indicator.setIndicatorOption(indicatorsData, 'day')
-        let indicatorEchart = indicator.getIndicatorEchart()
-        expect(indicatorEchart).not.toBeNull();
-    })
-
     it('test resizeECharts', () => {
         const element = document.createElement('div');
         let indicator = new SetIndicatorChart(StochasticOption);
         indicator.initIndicatorECharts(element)
         indicator.setIndicatorOption(indicatorsData, 'hour')
-        indicator.resizeECharts(element, false, size)
-        expect(indicator.indicator.getOption()).not.toBeNull();
-    })
-
-    it('test resizeECharts if oldIndicatorData is null', () => {
-        const element = document.createElement('div');
-        let indicator = new SetIndicatorChart(StochasticOption);
-        indicator.initIndicatorECharts(element)
-        indicator.clearIndicatorEcharts()
         indicator.resizeECharts(element, false, size)
         expect(indicator.indicator.getOption()).not.toBeNull();
     })
@@ -141,15 +124,6 @@ describe('test SetIndicatorChart', () => {
         indicator.setIndicatorOption(indicatorsData, 'hour')
         indicator.resizeECharts(element, true, size)
         expect(indicator.indicator.getOption()).not.toBeNull();
-    })
-
-    it('test clearIndicatorEcharts', () => {
-        const element = document.createElement('div');
-        let indicator = new SetIndicatorChart(StochasticOption);
-        indicator.initIndicatorECharts(element)
-        indicator.setIndicatorOption(indicatorsData, 'month')
-        indicator.clearIndicatorEcharts()
-        expect(indicator.indicator.getOption().series).toEqual(new Array);
     })
 
     it('test disposeIndicatorEChart', () => {

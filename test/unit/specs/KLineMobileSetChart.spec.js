@@ -54,6 +54,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
+    mobileKline.initMobileECharts(element, true)
     expect(mobileKline.kline).not.toBeNull();
   })
 
@@ -151,6 +152,8 @@ describe('test KLineMobileSetChart', () => {
     mobileKline.changeDataZoom('rightShift')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
+    mobileKline.changeDataZoom('error')
+    expect(mobileKline.kline.getOption()).not.toBeNull()
   })
 
   it('test mobile changeDataZoom if type is enlarge or narrow', () => {
@@ -190,17 +193,6 @@ describe('test KLineMobileSetChart', () => {
     mobileKline.changeDataZoom('refresh')
     expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
-  })
-
-  it('test clearMobileEcharts', () => {
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData)
-    mobileKline.updateOption(data, 'day')
-    expect(mobileKline.kline.getOption().series).not.toBeNull();
-    mobileKline.clearMobileEcharts()
-    expect(mobileKline.kline.getOption().series).toEqual(new Array);
   })
 
   it('test disposeMobileEChart', () => {
