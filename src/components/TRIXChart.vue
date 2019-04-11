@@ -101,10 +101,6 @@ export default {
           this.init(true);
           this.TRIX.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.TRIX.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.TRIX.updateIndicatorOption(

@@ -120,10 +120,6 @@ export default {
             this.init(true)
             this.stochastic.setStochasticOption(this.KDJData, this.currentCycle);
             this.isRefresh = false
-            this.$emit(
-              "listenStochasticChartEvent",
-              this.stochastic.getStochasticEchart()
-            );
             this.coinType = this.chartDataObj.coinType;
           } else {
             this.stochastic.updateStochasticOption(this.KDJData, this.currentCycle);

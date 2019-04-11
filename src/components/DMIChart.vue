@@ -74,7 +74,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true)
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -118,13 +118,9 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true)
+          this.init(true);
           this.DMI.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.DMI.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.DMI.updateIndicatorOption(
@@ -187,7 +183,7 @@ export default {
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

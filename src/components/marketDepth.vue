@@ -144,9 +144,6 @@ export default {
         this.tipsData = this.depth.getMobileTipsData();
       }
     },
-    clearChart() {
-      this.depth.clearDepthEcharts();
-    },
     dispose() {
       this.depth.disposeDepthEChart();
     }

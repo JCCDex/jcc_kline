@@ -251,9 +251,6 @@ export default {
     changeDataZoom(type) {
       this.kline.changeMobileDataZoom(type);
     },
-    clearChart() {
-      this.kline.clearMobileChart();
-    },
     dispose() {
       this.kline.disposeMobileChart()
     },

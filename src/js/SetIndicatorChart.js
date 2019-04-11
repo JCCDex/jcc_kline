@@ -52,7 +52,7 @@ class IndicatorChartController {
     initIndicatorECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
-            this.indicator.dispose()
+            this.indicator.dispose();
         }
         if (!this.indicator || this.indicator.isDisposed()) {
             this.indicator = echarts.init(DOM);
@@ -100,7 +100,6 @@ class IndicatorChartController {
         if (this.indicator.getOption()) {
             let indicatorConfig = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
-                tooltip: this.getIndicatorToolTip(),
                 series: this.getIndicatorSeries(data)
             };
             let option = JSON.parse(JSON.stringify(indicatorConfig));
@@ -113,10 +112,6 @@ class IndicatorChartController {
 
     getToolTipData() {
         return toolTipIndex;
-    }
-
-    getIndicatorEchart() {
-        return this.indicator;
     }
 
     getIndicatorXAxis(data, cycle) {
@@ -297,11 +292,6 @@ class IndicatorChartController {
             ];
         }
         return series;
-    }
-
-    clearIndicatorEcharts() {
-        oldIndicatorData = null;
-        this.indicator.clear();
     }
 
     disposeIndicatorEChart() {

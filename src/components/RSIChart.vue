@@ -112,10 +112,6 @@ export default {
           this.init(true)
           this.RSI.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.RSI.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.RSI.updateIndicatorOption(this.indicatorsData, this.currentCycle);

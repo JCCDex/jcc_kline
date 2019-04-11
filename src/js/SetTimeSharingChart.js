@@ -57,7 +57,7 @@ class TimeSharingChart {
         if (this.timeSharing && clear) {
             toolTipIndex = null;
             oldTimeSharingData = null;
-            this.timeSharing.dispose()
+            this.timeSharing.dispose();
         }
         if (!this.timeSharing || this.timeSharing.isDisposed()) {
             toolTipIndex = null;
@@ -79,12 +79,6 @@ class TimeSharingChart {
                 zlevel: 1
             }
         );
-    }
-
-    clearTimeSharingEcharts() {
-        toolTipIndex = null;
-        oldTimeSharingData = null;
-        this.timeSharing.clear();
     }
 
     disposeTimeSharingEChart() {
@@ -115,7 +109,6 @@ class TimeSharingChart {
         let { times, averages, prices, volumes } = data;
         let option = {
             xAxis: this.getTimeSharingXAxis(times),
-            tooltip: this.getTimeSharingToolTip(),
             series: this.getTimeSharingSeries(prices, averages, volumes)
         };
         merge(timeSharingOption, option);

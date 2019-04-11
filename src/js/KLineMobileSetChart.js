@@ -101,23 +101,18 @@ class KLineMobileSetChartController {
 
     updateOption(data, cycle) {
         let length = data.values.length - 1;
-        let MAConfig = this.klineConfig.MA;
         if (!toolTipIndex) {
             toolTipIndex = length;
         }
         let updateOption = {
             xAxis: this.getXAxis(data, cycle),
-            tooltip: this.getToolTip(data, MAConfig),
+            tooltip: this.getToolTip(),
             series: this.getSeries(data)
         };
         merge(config, updateOption);
         config.dataZoom = this.kline.getOption().dataZoom;
         this.kline.setOption(config);
         return toolTipIndex;
-    }
-
-    getMobileEchart() {
-        return this.kline;
     }
 
     updateTimeDivisionOption(data) {
@@ -244,12 +239,6 @@ class KLineMobileSetChartController {
     disposeMobileEChart() {
         this.kline.dispose();
     }
-
-    clearMobileEcharts() {
-        toolTipIndex = null;
-        this.kline.clear();
-    }
-
 
     getGrid(size) {
         let g = [{

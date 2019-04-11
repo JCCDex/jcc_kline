@@ -65,10 +65,6 @@ class ChartController {
         return this.setDepthChart.getMobileTipsData();
     }
 
-    clearDepthEcharts() {
-        this.setDepthChart.clearDepthEcharts();
-    }
-
     disposeDepthEChart() {
         this.setDepthChart.disposeDepthEChart();
     }
@@ -95,10 +91,6 @@ class ChartController {
         return this.setTimeSharing.getTimeSharingTipIndex();
     }
 
-    clearTimeSharingEcharts() {
-        this.setTimeSharing.clearTimeSharingEcharts();
-    }
-
     disposeTimeSharingEChart() {
         this.setTimeSharing.disposeTimeSharingEChart();
     }
@@ -117,21 +109,12 @@ class ChartController {
         this.setVolumeChart.setVolumeOption(data, cycle);
     }
 
-    showLoading () {
-        this.setVolumeChart.showLoading();
-    }
-
     getToolTipIndex() {
         return this.setVolumeChart.getToolTipIndex();
     }
 
-
     updateVolumeOption(data, cycle) {
         this.setVolumeChart.updateVolumeOption(data, cycle);
-    }
-
-    clearVolumeEcharts() {
-        this.setVolumeChart.clearVolumeEcharts();
     }
 
     disposeVolumeEcharts() {
@@ -159,20 +142,12 @@ class ChartController {
         this.setMACDChart.updateMACDOption(data);
     }
 
-    clearMACDEcharts() {
-        this.setMACDChart.clearMACDEcharts();
-    }
-
     disposeMACDEChart() {
         this.setMACDChart.disposeMACDEChart();
     }
 
     getMacdTipData() {
         return this.setMACDChart.getToolTipData();
-    }
-
-    showMacdLoading () {
-        this.setMACDChart.showLoading();
     }
 
     changeMacdDataZoom(type) {

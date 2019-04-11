@@ -100,8 +100,6 @@ class MACDChart {
         if (this.macd.getOption()) {
             let macdConfig = {
                 xAxis: this.getMACDXAxis(data),
-                yAxis: this.getMACDYAxis(),
-                tooltip: this.getMACDToolTip(),
                 series: this.getMACDSeries(data)
             };
             merge(MACDOption, macdConfig);
@@ -117,7 +115,6 @@ class MACDChart {
     }
 
     getMACDYAxis() {
-        // if (this.macdConfig.platform === 'pc') {
         return [
             {
                 gridIndex: 0,
@@ -160,11 +157,6 @@ class MACDChart {
                 data: data.deas
             }
         ];
-    }
-
-    clearMACDEcharts() {
-        oldMACDData = null;
-        this.macd.clear();
     }
 
     disposeMACDEChart() {

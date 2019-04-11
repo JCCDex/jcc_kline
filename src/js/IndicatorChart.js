@@ -32,10 +32,6 @@ class IndicatorChartController {
         this.setStochasticChart.resizeECharts(DOM, isFullScreen, size);
     }
 
-    getStochasticEchart() {
-        return this.setStochasticChart.getStochasticEchart();
-    }
-
     getStochasticTipData() {
         return this.setStochasticChart.getToolTipData();
     }
@@ -44,16 +40,8 @@ class IndicatorChartController {
         this.setStochasticChart.setStochasticOption(data, cycle);
     }
 
-    showStochasticLoading() {
-        this.setStochasticChart.showLoading();
-    }
-
     updateStochasticOption(data, cycle) {
         this.setStochasticChart.updateStochasticOption(data, cycle);
-    }
-
-    clearStochasticEcharts() {
-        this.setStochasticChart.clearStochasticEcharts();
     }
 
     disposeStochasticEChart() {
@@ -70,14 +58,6 @@ class IndicatorChartController {
         this.setIndicatorChart.resizeECharts(DOM, isFullScreen, size);
     }
 
-    getIndicatorEchart() {
-        return this.setIndicatorChart.getIndicatorEchart();
-    }
-
-    showLoading() {
-        this.setIndicatorChart.showLoading();
-    }
-
     getIndicatorTipData() {
         return this.setIndicatorChart.getToolTipData();
     }
@@ -88,10 +68,6 @@ class IndicatorChartController {
 
     updateIndicatorOption(data, cycle) {
         this.setIndicatorChart.updateIndicatorOption(data, cycle);
-    }
-
-    clearIndicatorEcharts() {
-        this.setIndicatorChart.clearIndicatorEcharts();
     }
 
     disposeIndicatorEChart() {

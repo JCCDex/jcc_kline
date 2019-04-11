@@ -78,12 +78,6 @@ class KLineSetChartController {
         );
     }
 
-    clearEcharts() {
-        toolTipIndex = 0;
-        oldKlineData = null;
-        this.kline.clear();
-    }
-
     disposeEChart() {
         if (this.kline) {
             this.kline.dispose();
@@ -103,7 +97,7 @@ class KLineSetChartController {
             toolTipIndex = length;
             this.kline.hideLoading();
             let klineOption = {
-                tooltip: this.getToolTip(data),
+                tooltip: this.getToolTip(),
                 xAxis: this.getXAxis(data, cycle),
                 series: this.getSeries(data)
             };
@@ -119,10 +113,8 @@ class KLineSetChartController {
             oldData: data,
             oldCycle: cycle
         };
-        let MAConfig = this.klineConfig.MA;
         if (this.kline.getOption()) {
             let klineOption = {
-                tooltip: this.getToolTip(data, MAConfig),
                 xAxis: this.getXAxis(data, cycle),
                 series: this.getSeries(data)
             };

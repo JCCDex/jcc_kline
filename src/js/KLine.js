@@ -23,10 +23,6 @@ class KLineController {
         this.setKLineChart.initECharts(DOM, clear);
     }
 
-    showLoading() {
-        this.setKLineChart.showLoading();
-    }
-
     resizeChart(DOM, isFullScreen, isCloseIndicator, size) {
         this.setKLineChart.resizeECharts(DOM, isFullScreen, isCloseIndicator, size);
     }
@@ -39,10 +35,6 @@ class KLineController {
         this.setKLineChart.updateOption(data, cycle);
     }
 
-    getEchart() {
-        return this.setKLineChart.getEchart();
-    }
-
     getToolTipIndex() {
         return this.setKLineChart.getToolTipIndex();
     }
@@ -51,24 +43,12 @@ class KLineController {
         this.setKLineChart.changeDataZoom(type);
     }
 
-    clearChart() {
-        this.setKLineChart.clearEcharts();
-    }
-
     disposeChart() {
         this.setKLineChart.disposeEChart();
     }
 
     initMobileChart(DOM, clear) {
         this.setMobileKLineChart.initMobileECharts(DOM, clear);
-    }
-
-    showMobileLoading() {
-        this.setMobileKLineChart.showLoading();
-    }
-
-    hideMobileLoading() {
-        this.setMobileKLineChart.hideLoading();
     }
 
     getMobileToolTipIndex() {
@@ -87,10 +67,6 @@ class KLineController {
         return this.setMobileKLineChart.updateOption(data, cycle);
     }
 
-    getMobileEchart() {
-        return this.setMobileKLineChart.getMobileEchart();
-    }
-
     updateTimeDivisionOption(divisionData, precision) {
         return this.setMobileKLineChart.updateTimeDivisionOption(divisionData, precision);
     }
@@ -101,10 +77,6 @@ class KLineController {
 
     disposeMobileChart() {
         this.setMobileKLineChart.disposeMobileEChart();
-    }
-
-    clearMobileChart() {
-        this.setMobileKLineChart.clearMobileEcharts();
     }
 }
 

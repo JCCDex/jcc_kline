@@ -103,10 +103,6 @@ export default {
           this.init(true)
           this.MTM.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.MTM.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.MTM.updateIndicatorOption(this.indicatorsData, this.currentCycle);

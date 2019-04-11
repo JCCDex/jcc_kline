@@ -52,7 +52,7 @@ class StochasticChartController {
     initStochasticECharts(DOM, clear) {
         if (this.stochasti && clear) {
             oldStochasticData = null;
-            this.stochastic.dispose()
+            this.stochastic.dispose();
         }
         if (!this.stochastic || this.stochastic.isDisposed()) {
             this.stochastic = echarts.init(DOM);
@@ -100,7 +100,6 @@ class StochasticChartController {
         if (this.stochastic.getOption()) {
             let stochasticConfig = {
                 xAxis: this.getStochasticXAxis(data, cycle),
-                tooltip: this.getStochasticToolTip(),
                 series: this.getStochasticSeries(data)
             };
             merge(stochasticOption, stochasticConfig);
@@ -111,10 +110,6 @@ class StochasticChartController {
 
     getToolTipData() {
         return toolTipIndex;
-    }
-
-    getStochasticEchart() {
-        return this.stochastic;
     }
 
     getStochasticXAxis(data, cycle) {
@@ -195,11 +190,6 @@ class StochasticChartController {
                 }
             }
         ];
-    }
-
-    clearStochasticEcharts() {
-        oldStochasticData = null;
-        this.stochastic.clear();
     }
 
     disposeStochasticEChart() {

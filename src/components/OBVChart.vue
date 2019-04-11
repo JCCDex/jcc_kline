@@ -104,10 +104,6 @@ export default {
           this.init(true)
           this.OBV.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.OBV.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.OBV.updateIndicatorOption(this.indicatorsData, this.currentCycle);

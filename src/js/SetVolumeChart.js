@@ -104,8 +104,6 @@ class VolumeChart {
         if (this.volume.getOption()) {
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data, cycle),
-                yAxis: this.getVolumeYAxis(),
-                tooltip: this.getVolumeToolTip(),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, volumeConfig);
@@ -199,11 +197,6 @@ class VolumeChart {
                 }
             }
         ];
-    }
-
-    clearVolumeEcharts() {
-        oldVolumeData = null;
-        this.volume.clear();
     }
 
     disposeVolumeEChart() {

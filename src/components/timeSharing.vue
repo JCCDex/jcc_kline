@@ -139,9 +139,6 @@ export default {
         );
       }
     },
-    clearChart() {
-      this.timeSharing.clearTimeSharingEcharts();
-    },
     getTimeSharingTipData() {
       let toolTipIndex = this.timeSharing.getTimeSharingTipIndex();
       this.$emit("listenToTipIndex", toolTipIndex);
