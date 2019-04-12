@@ -123,7 +123,6 @@
 }
 
 .close-icon {
-    content: url('../icon/images/close.png');
     margin: 0;
     cursor: pointer;
 }
@@ -762,14 +761,12 @@
 }
 
 .drop-down-icon {
-    content: url('../icon/images/dropDown.png');
     margin-left: 6px;
     width: 10px;
     height: 8px;
 }
 
 .drop-down-select {
-    content: url('../icon/images/dropDownSelect.png');
     margin-left: 6px;
     width: 10px;
     height: 8px;
@@ -880,7 +877,6 @@
 }
 
 .left-shift-icon {
-    content: url('../icon/images/leftShift.png');
     width: 10px;
     height: 16px;
     position: absolute;
@@ -889,7 +885,6 @@
 }
 
 .enlarge-icon {
-    content: url('../icon/images/enlarge.png');
     width: 16px;
     height: 16px;
     position: absolute;
@@ -898,7 +893,6 @@
 }
 
 .refresh-icon {
-    content: url('../icon/images/refresh.png');
     width: 16px;
     height: 16px;
     position: absolute;
@@ -907,7 +901,6 @@
 }
 
 .narrow-icon {
-    content: url('../icon/images/narrow.png');
     width: 16px;
     height: 12px;
     position: absolute;
@@ -916,7 +909,6 @@
 }
 
 .right-shift-icon {
-    content: url('../icon/images/rightShift.png');
     width: 10px;
     height: 16px;
     position: absolute;
