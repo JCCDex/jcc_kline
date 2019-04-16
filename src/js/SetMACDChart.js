@@ -87,7 +87,8 @@ class MACDChart {
                 xAxis: this.getMACDXAxis(data),
                 yAxis: this.getMACDYAxis(),
                 tooltip: this.getMACDToolTip(),
-                series: this.getMACDSeries(data)
+                series: this.getMACDSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(MACDOption, option);
             this.macd.setOption(MACDOption, true);
@@ -131,7 +132,6 @@ class MACDChart {
                 }
             }
         ];
-        // }
     }
 
     getMACDSeries(data) {
@@ -157,6 +157,43 @@ class MACDChart {
                 data: data.deas
             }
         ];
+    }
+
+    getDataZoom(data) {
+        let start = 0;
+        if (this.macdConfig.platform === 'mobile') {
+            if (data.macds.length > 40) {
+                start = 60;
+            }
+            if (data.macds.length > 100) {
+                start = 80;
+            }
+        } else {
+            if (data.macds.length > 80) {
+                start = 20;
+            }
+            if (data.macds.length > 120) {
+                start = 30;
+            }
+            if (data.macds.length > 160) {
+                start = 50;
+            }
+            if (data.macds.length > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.macdConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     disposeMACDEChart() {

@@ -270,19 +270,19 @@ describe('test Chart', () => {
     volume.initVolumeChart(element)
     volume.setVolumeOption(data)
     volume.changeDataZoom('leftShift')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(58);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(28);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(98);
     volume.changeDataZoom('rightShift')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(60);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(30);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('enlarge')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(65);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(35);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('refresh')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(60);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(30);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('narrow')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(55);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(25);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
   })
 

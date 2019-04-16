@@ -46,10 +46,11 @@ class KLineMobileSetChartController {
         this.kline.hideLoading();
     }
 
-    setOption(size) {
+    setOption(size, data) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
-            grid: this.getGrid(size)
+            grid: this.getGrid(size),
+            dataZoom: this.getDataZoom(data)
         };
         toolTipIndex = null;
         merge(config, option);
@@ -157,7 +158,7 @@ class KLineMobileSetChartController {
                 data: data.categoryData,
                 axisLabel: {
                     formatter(value) {
-                        if(cycle.indexOf('minute') !== -1) {
+                        if (cycle.indexOf('minute') !== -1) {
                             return value.substring(5);
                         }
                         if (cycle.indexOf('hour') !== -1) {
@@ -245,6 +246,30 @@ class KLineMobileSetChartController {
             height: `${size.height * 0.6}px`
         }];
         return g;
+    }
+
+    getDataZoom(data) {
+        if (!data) { return; }
+        let start = 0;
+        if (data.values.length > 40) {
+            start = 60;
+        }
+        if (data.values.length > 100) {
+            start = 80;
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+
+        this.klineConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     changeDataZoom(type) {

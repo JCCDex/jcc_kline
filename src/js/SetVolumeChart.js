@@ -88,7 +88,8 @@ class VolumeChart {
                 xAxis: this.getVolumeXAxis(data, cycle),
                 yAxis: this.getVolumeYAxis(),
                 tooltip: this.getVolumeToolTip(),
-                series: this.getVolumeSeries(data)
+                series: this.getVolumeSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
@@ -197,6 +198,43 @@ class VolumeChart {
                 }
             }
         ];
+    }
+
+    getDataZoom(data) {
+        let start = 0;
+        if (this.volumeConfig.platform === 'mobile') {
+            if (data.volumes.length > 40) {
+                start = 60;
+            }
+            if (data.volumes.length > 100) {
+                start = 80;
+            }
+        } else {
+            if (data.volumes.length > 80) {
+                start = 20;
+            }
+            if (data.volumes.length > 120) {
+                start = 30;
+            }
+            if (data.volumes.length > 160) {
+                start = 50;
+            }
+            if (data.volumes.length > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.volumeConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     disposeVolumeEChart() {

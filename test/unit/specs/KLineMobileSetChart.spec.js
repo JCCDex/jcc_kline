@@ -62,34 +62,7 @@ describe('test KLineMobileSetChart', () => {
     const element = document.createElement('div');
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData)
-    expect(mobileKline.kline).not.toBeNull();
-  })
-
-  it('test mobile setOption if cycle is day', () => {
-    cycle = "day"
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData, cycle)
-    expect(mobileKline.kline).not.toBeNull();
-  })
-
-  it('test mobile setOption if cycle is week', () => {
-    cycle = "week"
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData, cycle)
-    expect(mobileKline.kline).not.toBeNull();
-  })
-
-  it('test mobile setOption if cycle is month', () => {
-    cycle = "month"
-    const element = document.createElement('div');
-    let mobileKline = new klineMobileSetChart(mobileOption);
-    mobileKline.initMobileECharts(element)
-    mobileKline.setOption(mobileData, cycle)
+    mobileKline.setOption(mobileData, data)
     expect(mobileKline.kline).not.toBeNull();
   })
 

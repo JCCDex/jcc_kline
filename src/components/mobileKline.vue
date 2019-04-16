@@ -129,7 +129,7 @@ export default {
       if (this.isRefresh) {
         this.init(true);
         if (this.currentCycle !== "everyhour") {
-          this.kline.setMobileOption(this.klineConfig.size);
+          this.kline.setMobileOption(this.klineConfig.size, this.chartDataObj.candleData);
           this.isRefresh = false;
         } else {
           this.kline.setTimeDivisionsOption(this.klineConfig.size);

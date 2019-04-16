@@ -56,7 +56,7 @@ describe('test KLineSetChart', () => {
 
   it('test getDataZoom', () => {
     let kline = new klineSetChart(option);
-    expect(kline.getDataZoom()).not.toBeNull()
+    expect(kline.getDataZoom(klineData)).not.toBeNull()
   })
 
   it('test initECharts', () => {

@@ -149,7 +149,7 @@ describe('test KLine', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
+    mobileKline.setMobileOption(moboleSize, mobileData)
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull()
   })
 
@@ -157,7 +157,7 @@ describe('test KLine', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
+    mobileKline.setMobileOption(moboleSize, mobileData)
     mobileKline.updateMobileOption(mobileData, cycle)
     expect(mobileKline.setMobileKLineChart.kline.getOption()).not.toBeNull();
   })
@@ -183,7 +183,7 @@ describe('test KLine', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
+    mobileKline.setMobileOption(moboleSize, mobileData)
     mobileKline.updateMobileOption(mobileData, cycle)
     let mobileTipIndex = mobileKline.getMobileToolTipIndex()
     expect(mobileTipIndex).not.toBeNull();
@@ -193,7 +193,7 @@ describe('test KLine', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
+    mobileKline.setMobileOption(moboleSize, mobileData)
     mobileKline.updateMobileOption(mobileData, cycle)
     mobileKline.changeMobileDataZoom('leftShift')
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(78);
@@ -216,7 +216,7 @@ describe('test KLine', () => {
     let mobileKline = new klineController('mobile', klineConfig)
     const element = document.createElement('div');
     mobileKline.initMobileChart(element)
-    mobileKline.setMobileOption(moboleSize, cycle)
+    mobileKline.setMobileOption(moboleSize, mobileData)
     mobileKline.updateMobileOption(mobileData, cycle)
     mobileKline.disposeMobileChart()
     expect(mobileKline.setMobileKLineChart.kline).not.toBeNull();

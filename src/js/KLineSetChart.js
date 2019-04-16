@@ -99,7 +99,8 @@ class KLineSetChartController {
             let klineOption = {
                 tooltip: this.getToolTip(),
                 xAxis: this.getXAxis(data, cycle),
-                series: this.getSeries(data)
+                series: this.getSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(config, klineOption);
             this.kline.setOption(config, true);
@@ -231,17 +232,32 @@ class KLineSetChartController {
         return s;
     }
 
-    getDataZoom() {
-        return [
+    getDataZoom(data) {
+        let start = 0;
+        if (data.values.length > 80) {
+            start = 20;
+        }
+        if (data.values.length > 120) {
+            start = 30;
+        }
+        if (data.values.length > 160) {
+            start = 50;
+        }
+        if (data.values.length > 200) {
+            start = 60;
+        }
+        var dataZoom = [
             {
                 id: 'dataZoomX',
                 type: 'inside',
                 filterMode: 'filter',
-                start: 60,
+                start: start,
                 end: 100,
                 minSpan: 5
             }
         ];
+        this.klineConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     changeDataZoom(type) {

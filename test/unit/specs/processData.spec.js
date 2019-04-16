@@ -1,6 +1,5 @@
-import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData, calculateMA, getOBVData } from 'js/processData'
 import testData from '../../testData/data.json'
-import data from '../../testData/testData.json'
 import { getKDJData } from '../../../src/js/processData.js';
 
 let precision = {
@@ -110,56 +109,6 @@ describe('test processData', () => {
   it('test getOBVData if data is null', () => {
     let OBVData = getOBVData(null)
     expect(OBVData).toBe(undefined)
-  })
-
-  it('test getDMIData', () => {
-    let DMIData = getDMIData(data.candleData.values)
-    expect(DMIData).not.toBeNull()
-  })
-
-  it('test getDMIData if data is null', () => {
-    let DMIData = getDMIData(null)
-    expect(DMIData).toBe(undefined)
-  })
-
-  it('test getTRIXData', () => {
-    let TRIXData = getTRIXData(data.candleData.values)
-    expect(TRIXData).not.toBeNull()
-  })
-
-  it('test getTRIXData if data is null', () => {
-    let TRIXData = getTRIXData(null)
-    expect(TRIXData).toBe(undefined)
-  })
-
-  it('test getRSIData', () => {
-    let RSIData = getRSIData(data.candleData.values, 6)
-    expect(RSIData).not.toBeNull()
-  })
-
-  it('test getRSIData if data is null', () => {
-    let RSIData = getRSIData(null)
-    expect(RSIData).toBe(undefined)
-  })
-
-  it('test getBollData', () => {
-    let bollData = getBollData(data.candleData, 20)
-    expect(bollData).not.toBeNull()
-  })
-
-  it('test getBollData if data is null', () => {
-    let bollData = getBollData(null, 20)
-    expect(bollData).toBe(undefined)
-  })
-
-  it('test getMTMData', () => {
-    let MTMData = getMTMData(testData.klineData)
-    expect(MTMData).not.toBeNull()
-  })
-
-  it('test getMTMData if data is null', () => {
-    let MTMData = getMTMData(null)
-    expect(MTMData).toBe(undefined)
   })
 
 })
