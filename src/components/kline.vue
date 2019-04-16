@@ -8,7 +8,7 @@
             :class="!this.showMinCycle ? 'kline-cycle-drop-down' : 'kline-cycle-drop-down kline-select-color'"
           >
             <font
-              :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+              :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectMin}}</font>
             <i :class="!this.showMinCycle ? 'drop-down-icon' : 'drop-down-select'"></i>
           </div>
@@ -36,7 +36,7 @@
             :class="!this.showHourCycle ? 'kline-cycle-drop-down kline-margin-left10' : 'kline-cycle-drop-down kline-margin-left10 kline-select-color'"
           >
             <font
-              :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+              :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color' : 'kline-uncheck-color' : 'kline-uncheck-color'"
             >{{selectHour}}</font>
             <i :class="!this.showHourCycle ? 'drop-down-icon' : 'drop-down-select'"></i>
           </div>
