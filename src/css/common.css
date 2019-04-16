@@ -762,14 +762,14 @@
 
 .drop-down-icon {
     content: url('../icon/images/dropDown.png');
-    margin-left: 4px;
+    margin-left: 2px;
     width: 8px;
     height: 6px;
 }
 
 .drop-down-select {
     content: url('../icon/images/dropDownSelect.png');
-    margin-left: 4px;
+    margin-left: 2px;
     width: 8px;
     height: 6px;
 }
