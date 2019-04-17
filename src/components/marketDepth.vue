@@ -126,6 +126,10 @@ export default {
   },
   methods: {
     init() {
+      if (this.klineConfig.platform === "mobile") {
+        let touch = document.getElementById("depth");
+        touch.addEventListener("touchmove", this.getMobileTipDataByTouchMove);
+      }
       this.depth.initDepth(this.$refs.depth);
       this.resize();
     },
@@ -143,6 +147,10 @@ export default {
         this.message = getLanguage();
         this.tipsData = this.depth.getMobileTipsData();
       }
+    },
+    getMobileTipDataByTouchMove() {
+      this.message = getLanguage();
+      this.tipsData = this.depth.getMobileTipsData();
     },
     clearChart() {
       this.depth.clearDepthEcharts();
