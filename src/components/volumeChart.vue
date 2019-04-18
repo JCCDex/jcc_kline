@@ -49,8 +49,7 @@ export default {
   watch: {
     cycle () {
       if (this.cycle !== this.currentCycle) {
-        this.clearChart();
-        this.volume.showLoading()
+        this.init(true)
         this.isRefresh = true
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
@@ -64,10 +63,8 @@ export default {
         data.precision = this.chartDataObj.precision
         if (data.values && data.volumes && data.categoryData) {
           if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
-            let toolTipIndex = this.volume.setVolumeOption(data, this.currentCycle)
+            this.volume.setVolumeOption(data, this.currentCycle)
             this.isRefresh = false
-            this.$emit("listenToTipIndex", toolTipIndex)
-            this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
             this.coinType = this.chartDataObj.coinType
           }else {
             this.volume.updateVolumeOption(data, this.currentCycle)
@@ -78,10 +75,8 @@ export default {
         let timeDivisionData = this.chartDataObj.timeDivisionData
         let divisionData = this.chartDataObj.divisionData
         if (this.isRefresh && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-          let toolTipIndex = this.volume.setVolumeOption(divisionData, this.currentCycle)
+          this.volume.setVolumeOption(divisionData, this.currentCycle)
           this.isRefresh = false
-          this.$emit("listenToTipIndex", toolTipIndex)
-          this.$emit("listenVolumeChartEvent", this.volume.getVolumeEchart())
         } else {
            this.volume.updateVolumeOption(divisionData, this.currentCycle)
         }
@@ -128,8 +123,8 @@ export default {
     this.dispose()
   },
   methods: {
-    init() {
-      this.volume.initVolumeChart(this.$refs.volume);
+    init(clear) {
+      this.volume.initVolumeChart(this.$refs.volume, clear);
       this.resize();
     },
     getToolTipIndex () {
@@ -140,9 +135,6 @@ export default {
       if (this.klineConfig.platform === 'pc') {
         this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen,　this.resizeSize.isCloseIndicator, this.klineConfig.size);
       }
-    },
-    clearChart() {
-      this.volume.clearVolumeEcharts();
     },
     dispose() {
       this.volume.disposeVolumeEcharts()

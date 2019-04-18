@@ -64,9 +64,15 @@ class DepthChart {
         }
     }
 
-    initDepthECharts(DOM) {
-        this.depth = echarts.init(DOM);
-        this.showLoading();
+    initDepthECharts(DOM, clear) {
+        if (this.depth && clear) {
+            oldDepthData = null;
+            this.depth.dispose();
+        }
+        if (!this.depth || this.depth.isDisposed()) {
+            this.depth = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -80,10 +86,6 @@ class DepthChart {
                 zlevel: 1
             }
         );
-    }
-
-    clearDepthEcharts() {
-        this.depth.clear();
     }
 
     disposeDepthEChart() {
@@ -142,7 +144,6 @@ class DepthChart {
                         ]
                     }
                 ],
-                yAxis: this.getDepthYAxis(),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
             };

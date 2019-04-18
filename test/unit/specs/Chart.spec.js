@@ -91,16 +91,6 @@ describe('test Chart', () => {
     expect(depth.setDepthChart.depth.getOption()).not.toBeNull()
   })
 
-  it('test clearDepthChart if platform is pc and chartType is depth', () => {
-    let depth = new ChartController(klineConfig)
-    const element = document.createElement('div');
-    depth.initDepth(element)
-    depth.setDepthOption(depthData)
-    depth.clearDepthEcharts()
-    expect(depth.setDepthChart.depth.getOption().series).toEqual(new Array)
-  })
-
-
   it('test ChartController if platform is pc and chartType is timeSharing', () => {
     klineConfig.chartType = 'timeSharing'
     let timeSharing = new ChartController(klineConfig)
@@ -130,15 +120,6 @@ describe('test Chart', () => {
     timeSharing.setTimeSharingOption(timeSharingData.divisionData)
     timeSharing.updateTimeSharingOption(timeSharingData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
-  })
-
-  it('test getTimeSharingChart', () => {
-    let timeSharing = new ChartController(klineConfig)
-    const element = document.createElement('div');
-    timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
-    let EChart = timeSharing.getTimeSharingChart()
-    expect(EChart).not.toBeNull()
   })
 
   it('test getTimeSharingTipIndex', () => {
@@ -185,15 +166,6 @@ describe('test Chart', () => {
     timeSharing.setTimeSharingOption(timeSharingData.divisionData)
     timeSharing.disposeTimeSharingEChart()
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
-  })
-
-  it('test clearTimeSharingEcharts if platform is pc and chartType is timeSharing', () => {
-    let timeSharing = new ChartController(klineConfig)
-    const element = document.createElement('div');
-    timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
-    timeSharing.clearTimeSharingEcharts()
-    expect(timeSharing.setTimeSharing.timeSharing.getOption().series).toEqual(new Array)
   })
 
   it('test initDepthChart if platform is mobile and chartType is timeSharing', () => {
@@ -265,15 +237,6 @@ describe('test Chart', () => {
     expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
   })
 
-  it('test showLoading', () => {
-    let volume = new ChartController(volumeConfig)
-    const element = document.createElement('div');
-    volume.initVolumeChart(element)
-    volume.setVolumeOption(data)
-    volume.showLoading()
-    expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
-  })
-
   it('test getToolTipIndex', () => {
     let volume = new ChartController(volumeConfig)
     const element = document.createElement('div');
@@ -283,15 +246,6 @@ describe('test Chart', () => {
     expect(tipIndex).not.toBeNull()
   })
 
-  it('test getVolumeEchart', () => {
-    let volume = new ChartController(volumeConfig)
-    const element = document.createElement('div');
-    volume.initVolumeChart(element)
-    volume.setVolumeOption(data)
-    let volumeChart = volume.getVolumeEchart()
-    expect(volumeChart).not.toBeNull()
-  })
-
   it('test updateVolumeOption', () => {
     let volume = new ChartController(volumeConfig)
     const element = document.createElement('div');
@@ -299,15 +253,6 @@ describe('test Chart', () => {
     volume.setVolumeOption(data)
     volume.updateVolumeOption(data)
     expect(volume.setVolumeChart.volume.getOption()).not.toBeNull()
-  })
-
-  it('test clearVolumeEcharts', () => {
-    let volume = new ChartController(volumeConfig)
-    const element = document.createElement('div');
-    volume.initVolumeChart(element)
-    volume.setVolumeOption(data)
-    volume.clearVolumeEcharts()
-    expect(volume.setVolumeChart.volume.getOption().series).not.toBeNull()
   })
 
   it('test disposeVolumeEcharts', () => {
@@ -325,19 +270,19 @@ describe('test Chart', () => {
     volume.initVolumeChart(element)
     volume.setVolumeOption(data)
     volume.changeDataZoom('leftShift')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(58);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(28);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(98);
     volume.changeDataZoom('rightShift')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(60);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(30);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('enlarge')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(65);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(35);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('refresh')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(60);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(30);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('narrow')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(55);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(25);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
   })
 
@@ -393,15 +338,6 @@ describe('test Chart', () => {
     expect(tipsData).not.toBeNull()
   })
 
-  it('test getMacdchart', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.setMACDOption(macdData)
-    let macdChart = macd.getMacdchart()
-    expect(macdChart).not.toBeNull()
-  })
-
   it('test updateMACDOption', () => {
     let macd = new ChartController(macdConfig)
     const element = document.createElement('div');
@@ -411,30 +347,12 @@ describe('test Chart', () => {
     expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
   })
 
-  it('test clearMACDEcharts', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.setMACDOption(macdData)
-    macd.clearMACDEcharts()
-    expect(macd.setMACDChart.macd.getOption().series).not.toBeNull()
-  })
-
   it('test disposeMACDEChart', () => {
     let macd = new ChartController(macdConfig)
     const element = document.createElement('div');
     macd.initMACDECharts(element)
     macd.setMACDOption(macdData)
     macd.disposeMACDEChart()
-    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
-  })
-
-  it('test showMacdLoading', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.setMACDOption(macdData)
-    macd.showMacdLoading()
     expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
   })
 

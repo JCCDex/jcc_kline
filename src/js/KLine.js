@@ -19,12 +19,8 @@ class KLineController {
         }
     }
 
-    initChart(DOM) {
-        this.setKLineChart.initECharts(DOM);
-    }
-
-    showLoading() {
-        this.setKLineChart.showLoading();
+    initChart(DOM, clear) {
+        this.setKLineChart.initECharts(DOM, clear);
     }
 
     resizeChart(DOM, isFullScreen, isCloseIndicator, size) {
@@ -39,10 +35,6 @@ class KLineController {
         this.setKLineChart.updateOption(data, cycle);
     }
 
-    getEchart() {
-        return this.setKLineChart.getEchart();
-    }
-
     getToolTipIndex() {
         return this.setKLineChart.getToolTipIndex();
     }
@@ -51,32 +43,20 @@ class KLineController {
         this.setKLineChart.changeDataZoom(type);
     }
 
-    clearChart() {
-        this.setKLineChart.clearEcharts();
-    }
-
     disposeChart() {
         this.setKLineChart.disposeEChart();
     }
 
-    initMobileChart(DOM) {
-        this.setMobileKLineChart.initMobileECharts(DOM);
-    }
-
-    showMobileLoading() {
-        this.setMobileKLineChart.showLoading();
-    }
-
-    hideMobileLoading() {
-        this.setMobileKLineChart.hideLoading();
+    initMobileChart(DOM, clear) {
+        this.setMobileKLineChart.initMobileECharts(DOM, clear);
     }
 
     getMobileToolTipIndex() {
         return this.setMobileKLineChart.getToolTipIndex();
     }
 
-    setMobileOption(size) {
-        this.setMobileKLineChart.setOption(size);
+    setMobileOption(size, data) {
+        this.setMobileKLineChart.setOption(size, data);
     }
 
     setTimeDivisionsOption(size) {
@@ -85,10 +65,6 @@ class KLineController {
 
     updateMobileOption(data, cycle) {
         return this.setMobileKLineChart.updateOption(data, cycle);
-    }
-
-    getMobileEchart() {
-        return this.setMobileKLineChart.getMobileEchart();
     }
 
     updateTimeDivisionOption(divisionData, precision) {
@@ -101,10 +77,6 @@ class KLineController {
 
     disposeMobileChart() {
         this.setMobileKLineChart.disposeMobileEChart();
-    }
-
-    clearMobileChart() {
-        this.setMobileKLineChart.clearMobileEcharts();
     }
 }
 

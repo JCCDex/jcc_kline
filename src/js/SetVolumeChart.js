@@ -4,6 +4,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
+import { saveVolume } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var volumeOption;
@@ -17,7 +18,7 @@ class VolumeChart {
 
     resizeECharts(DOM, isFullScreen, isCloseIndicator, resizeSize) {
         let size = getDefaultChartSize();
-        let csale = isCloseIndicator===false ? 0.2 : 0.3;
+        let csale = isCloseIndicator === false ? 0.2 : 0.3;
         if (!isFullScreen) {
             if (!this.volumeConfig.defaultSize) {
                 let resizeContainer = () => {
@@ -51,9 +52,14 @@ class VolumeChart {
         }
     }
 
-    initVolumeECharts(DOM) {
-        this.volume = echarts.init(DOM);
-        this.showLoading();
+    initVolumeECharts(DOM, clear) {
+        if (this.volume && clear) {
+            this.volume.dispose();
+        }
+        if (!this.volume || this.volume.isDisposed()) {
+            this.volume = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -82,11 +88,12 @@ class VolumeChart {
                 xAxis: this.getVolumeXAxis(data, cycle),
                 yAxis: this.getVolumeYAxis(),
                 tooltip: this.getVolumeToolTip(),
-                series: this.getVolumeSeries(data)
+                series: this.getVolumeSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
-            return toolTipIndex;
+            saveVolume(this.volume);
         }
     }
 
@@ -98,8 +105,6 @@ class VolumeChart {
         if (this.volume.getOption()) {
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data, cycle),
-                yAxis: this.getVolumeYAxis(),
-                tooltip: this.getVolumeToolTip(),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, volumeConfig);
@@ -112,10 +117,6 @@ class VolumeChart {
         return toolTipIndex;
     }
 
-    getVolumeEchart() {
-        return this.volume;
-    }
-
     getVolumeXAxis(data, cycle) {
         var x;
         if (cycle !== 'everyhour') {
@@ -124,7 +125,7 @@ class VolumeChart {
                 data: data.categoryData,
                 axisLabel: {
                     formatter(value) {
-                        if(cycle.indexOf('minute') !== -1) {
+                        if (cycle.indexOf('minute') !== -1) {
                             return value.substring(5);
                         }
                         if (cycle.indexOf('hour') !== -1) {
@@ -199,9 +200,41 @@ class VolumeChart {
         ];
     }
 
-    clearVolumeEcharts() {
-        oldVolumeData = null;
-        this.volume.clear();
+    getDataZoom(data) {
+        let start = 0;
+        if (this.volumeConfig.platform === 'mobile') {
+            if (data.volumes.length > 40) {
+                start = 60;
+            }
+            if (data.volumes.length > 100) {
+                start = 80;
+            }
+        } else {
+            if (data.volumes.length > 80) {
+                start = 20;
+            }
+            if (data.volumes.length > 120) {
+                start = 30;
+            }
+            if (data.volumes.length > 160) {
+                start = 50;
+            }
+            if (data.volumes.length > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.volumeConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     disposeVolumeEChart() {

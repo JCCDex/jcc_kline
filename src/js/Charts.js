@@ -45,8 +45,8 @@ class ChartController {
         }
     }
     /* 绘制深度图 */
-    initDepth(DOM) {
-        this.setDepthChart.initDepthECharts(DOM);
+    initDepth(DOM, clear) {
+        this.setDepthChart.initDepthECharts(DOM, clear);
     }
 
     resizeDepthChart(DOM, isFullScreen, size) {
@@ -65,18 +65,14 @@ class ChartController {
         return this.setDepthChart.getMobileTipsData();
     }
 
-    clearDepthEcharts() {
-        this.setDepthChart.clearDepthEcharts();
-    }
-
     disposeDepthEChart() {
         this.setDepthChart.disposeDepthEChart();
     }
 
     /* 绘制分时图 */
 
-    initTimeSharingChart(DOM) {
-        this.setTimeSharing.initTimeSharingECharts(DOM);
+    initTimeSharingChart(DOM, clear) {
+        this.setTimeSharing.initTimeSharingECharts(DOM, clear);
     }
 
     resizeTimeSharingChart(DOM, isFullScreen, size) {
@@ -91,16 +87,8 @@ class ChartController {
         this.setTimeSharing.updateTimeSharingOption(divisionData);
     }
 
-    getTimeSharingChart() {
-        return this.setTimeSharing.getTimeSharingEchart();
-    }
-
     getTimeSharingTipIndex() {
         return this.setTimeSharing.getTimeSharingTipIndex();
-    }
-
-    clearTimeSharingEcharts() {
-        this.setTimeSharing.clearTimeSharingEcharts();
     }
 
     disposeTimeSharingEChart() {
@@ -109,8 +97,8 @@ class ChartController {
 
     /* 绘制交易量柱状图 */
 
-    initVolumeChart(DOM) {
-        this.setVolumeChart.initVolumeECharts(DOM);
+    initVolumeChart(DOM, clear) {
+        this.setVolumeChart.initVolumeECharts(DOM, clear);
     }
 
     resizeVolumeChart(DOM, isFullScreen, isCloseIndicator, size) {
@@ -118,27 +106,15 @@ class ChartController {
     }
 
     setVolumeOption(data, cycle) {
-        return this.setVolumeChart.setVolumeOption(data, cycle);
-    }
-
-    showLoading () {
-        this.setVolumeChart.showLoading();
+        this.setVolumeChart.setVolumeOption(data, cycle);
     }
 
     getToolTipIndex() {
         return this.setVolumeChart.getToolTipIndex();
     }
 
-    getVolumeEchart() {
-        return this.setVolumeChart.getVolumeEchart();
-    }
-
     updateVolumeOption(data, cycle) {
         this.setVolumeChart.updateVolumeOption(data, cycle);
-    }
-
-    clearVolumeEcharts() {
-        this.setVolumeChart.clearVolumeEcharts();
     }
 
     disposeVolumeEcharts() {
@@ -149,9 +125,9 @@ class ChartController {
         this.setVolumeChart.changeDataZoom(type);
     }
 
-    /* 绘制AMCD指标 */
-    initMACDECharts(DOM) {
-        this.setMACDChart.initMACD(DOM);
+    /* 绘制MACD指标 */
+    initMACDECharts(DOM, clear) {
+        this.setMACDChart.initMACD(DOM, clear);
     }
 
     resizeMACDChart(DOM, isFullScreen, size) {
@@ -166,24 +142,12 @@ class ChartController {
         this.setMACDChart.updateMACDOption(data);
     }
 
-    clearMACDEcharts() {
-        this.setMACDChart.clearMACDEcharts();
-    }
-
     disposeMACDEChart() {
         this.setMACDChart.disposeMACDEChart();
     }
 
-    getMacdchart() {
-        return this.setMACDChart.getMacdchart();
-    }
-
     getMacdTipData() {
         return this.setMACDChart.getToolTipData();
-    }
-
-    showMacdLoading () {
-        this.setMACDChart.showLoading();
     }
 
     changeMacdDataZoom(type) {

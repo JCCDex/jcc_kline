@@ -1,6 +1,5 @@
 import { splitData, getDepthData, handleDivisionData } from 'js/processData'
 import testData from '../../testData/data.json'
-import data from '../../testData/testData.json'
 import { getKDJData } from '../../../src/js/processData.js';
 
 let precision = {
@@ -72,5 +71,4 @@ describe('test processData', () => {
     expect(data.times).not.toBeNull()
     expect(data.volumes).not.toBeNull()
   })
-
 })

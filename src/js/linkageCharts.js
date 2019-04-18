@@ -4,6 +4,25 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/dataZoom';
 
+let candleChart;
+let volumeChart;
+let macdChart;
+
+export const saveCandle = (candle) => {
+    candleChart = candle;
+    linkageVolume(candle, volumeChart);
+};
+
+export const saveVolume = (volume) => {
+    volumeChart =  volume;
+    linkageVolume(candleChart, volume);
+};
+
+export const saveMacd = (macd) => {
+    macdChart = macd;
+    linkageVolume(candleChart, macdChart);
+};
+
 export const linkageVolume = (candle, volume) => {
     if (candle && volume) {
         echarts.connect([candle, volume]);
@@ -11,9 +30,6 @@ export const linkageVolume = (candle, volume) => {
     }
 };
 
-export const linkageMacd = (candle, macd) => {
-    echarts.connect([candle, macd]);
-};
 export const bindAction = (chartList) => { //echart多图联动后，axisPoiner显示label的问题(会出现跳线的现象)
     echarts.util.each(chartList, function (fromChart) {
         echarts.util.each(chartList, function (toChart) {

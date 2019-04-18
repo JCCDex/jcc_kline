@@ -33,6 +33,7 @@ describe('test SetDepthChart', () => {
     const element = document.createElement('div');
     let depth = new SetDepthChart(depthOption);
     depth.initDepthECharts(element)
+    depth.initDepthECharts(element, true)
     expect(depth).not.toBeNull();
   })
 
@@ -156,15 +157,6 @@ describe('test SetDepthChart', () => {
     depthChart.setDepthOption(depthData)
     depthChart.resizeECharts(null, false)
     expect(depthChart.depth.getOption()).not.toBeNull();
-  })
-
-  it('test clearDepthEcharts', () => {
-    const element = document.createElement('div');
-    let depthChart = new SetDepthChart(depthOption);
-    depthChart.initDepthECharts(element)
-    depthChart.setDepthOption(depthData)
-    depthChart.clearDepthEcharts()
-    expect(depthChart.depth.getOption().series).toEqual(new Array);
   })
 
   it('test disposeDepthEChart', () => {

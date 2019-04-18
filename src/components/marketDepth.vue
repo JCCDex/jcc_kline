@@ -68,7 +68,7 @@ export default {
             JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType)
           ) {
-            this.clearChart();
+            this.init(true);
             this.depth.setDepthOption(data);
             this.coinType = this.chartDataObj.coinType;
           } else {
@@ -125,12 +125,12 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
+    init(clear) {
       if (this.klineConfig.platform === "mobile") {
         let touch = document.getElementById("depth");
         touch.addEventListener("touchmove", this.getMobileTipDataByTouchMove);
       }
-      this.depth.initDepth(this.$refs.depth);
+      this.depth.initDepth(this.$refs.depth, clear);
       this.resize();
     },
     resize() {
@@ -151,9 +151,6 @@ export default {
     getMobileTipDataByTouchMove() {
       this.message = getLanguage();
       this.tipsData = this.depth.getMobileTipsData();
-    },
-    clearChart() {
-      this.depth.clearDepthEcharts();
     },
     dispose() {
       this.depth.disposeDepthEChart();

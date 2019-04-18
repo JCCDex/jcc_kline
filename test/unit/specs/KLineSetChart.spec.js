@@ -56,7 +56,7 @@ describe('test KLineSetChart', () => {
 
   it('test getDataZoom', () => {
     let kline = new klineSetChart(option);
-    expect(kline.getDataZoom()).not.toBeNull()
+    expect(kline.getDataZoom(klineData)).not.toBeNull()
   })
 
   it('test initECharts', () => {
@@ -222,15 +222,6 @@ describe('test KLineSetChart', () => {
     klineChart.changeDataZoom('narrow')
     expect(klineChart.kline.getOption().dataZoom[0].start).toBe(55)
     expect(klineChart.kline.getOption().dataZoom[0].end).toBe(100)
-  })
-
-  it('test clearEcharts', () => {
-    const element = document.createElement('div');
-    let klineChart = new klineSetChart(option);
-    klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
-    klineChart.clearEcharts()
-    expect(klineChart.kline.getOption().series).toEqual(new Array);
   })
 
   it('test disposeEChart', () => {

@@ -40,6 +40,7 @@ describe('test setTimeSharingChart', () => {
     const element = document.createElement('div');
     let TimeSharing = new TimeSharingChart(timeSharingOption);
     TimeSharing.initTimeSharingECharts(element)
+    TimeSharing.initTimeSharingECharts(element, true)
     expect(TimeSharing).not.toBeNull();
   })
 
@@ -218,15 +219,6 @@ describe('test setTimeSharingChart', () => {
     TimeSharing.setTimeSharingOption(timeSharingData.divisionData)
     TimeSharing.resizeECharts(element, false)
     expect(TimeSharing.timeSharing.getOption()).not.toBeNull();
-  })
-
-  it('test clearTimeSharingEcharts', () => {
-    const element = document.createElement('div');
-    let TimeSharing = new TimeSharingChart(timeSharingOption);
-    TimeSharing.initTimeSharingECharts(element)
-    TimeSharing.setTimeSharingOption(timeSharingData.divisionData)
-    TimeSharing.clearTimeSharingEcharts()
-    expect(TimeSharing.timeSharing.getOption().series).toEqual(new Array);
   })
 
   it('test disposeTimeSharingEChart', () => {

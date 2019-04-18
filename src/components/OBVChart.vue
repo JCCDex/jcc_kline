@@ -72,8 +72,7 @@ export default {
   watch: {
     cycle () {
       if (this.cycle !== this.currentCycle) {
-        this.OBV.clearIndicatorEcharts();
-        this.OBV.showLoading()
+        this.init(true)
         this.toolTipData = null
         this.isRefresh = true
       }
@@ -102,12 +101,9 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
+          this.init(true)
           this.OBV.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.OBV.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.OBV.updateIndicatorOption(this.indicatorsData, this.currentCycle);
@@ -171,8 +167,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.OBV.initIndicatorChart(this.$refs.OBV);
+    init(clear) {
+      this.OBV.initIndicatorChart(this.$refs.OBV, clear);
       this.resize();
     },
     getToolTipIndex() {

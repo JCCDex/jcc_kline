@@ -1,20 +1,25 @@
 <template>
-    <div id = "timeSharing" ref = "timeSharing" :style="{height: `${timeSharingSize.height}`, width: `${timeSharingSize.width}`}" @mousemove="getTimeSharingTipData"></div>
+  <div
+    id="timeSharing"
+    ref="timeSharing"
+    :style="{height: `${timeSharingSize.height}`, width: `${timeSharingSize.width}`}"
+    @mousemove="getTimeSharingTipData"
+  ></div>
 </template>
 <script>
-import '../css/common.css'
-import { splitData, handleDivisionData } from '../js/processData'
-import ChartController from '../js/Charts'
-import { getLanguage } from '../js/utils'
+import "../css/common.css";
+import { splitData, handleDivisionData } from "../js/processData";
+import ChartController from "../js/Charts";
+import { getLanguage } from "../js/utils";
 export default {
   data() {
     return {
       kline: null,
-      platform: '',
-      chartType: 'timeSharing',
+      platform: "",
+      chartType: "timeSharing",
       timeSharingSize: {
-        height: '',
-        width: ''
+        height: "",
+        width: ""
       },
       coinType: null,
       message: null,
@@ -25,48 +30,61 @@ export default {
     chartDataObj: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       }
     },
     klineConfig: {
       type: Object,
       default: () => {
         return {
-          chartType: 'timeSharing'
-        }
+          chartType: "timeSharing"
+        };
       }
     }
   },
   watch: {
     chartDataObj() {
       this.message = getLanguage();
-      let precision = this.chartDataObj.precision
+      let precision = this.chartDataObj.precision;
       if (this.chartDataObj.divisionData) {
-          let divisionData = this.chartDataObj.divisionData
-          divisionData.precision = precision
-        if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType)) {
-           this.clearChart()
-          let tipIndex = this.timeSharing.setTimeSharingOption(divisionData)
-          this.$emit("listenToTipIndex", tipIndex)
-          this.$emit("listenTimeSharingChart", this.timeSharing.getTimeSharingChart())
-          this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, false, this.klineConfig.size)
-          this.coinType = this.chartDataObj.coinType
+        let divisionData = this.chartDataObj.divisionData;
+        divisionData.precision = precision;
+        if (
+          JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType)
+        ) {
+          this.init(true);
+          let tipIndex = this.timeSharing.setTimeSharingOption(divisionData);
+          this.$emit("listenToTipIndex", tipIndex);
+          this.$emit(
+            "listenTimeSharingChart",
+            this.timeSharing.getTimeSharingChart()
+          );
+          this.timeSharing.resizeTimeSharingChart(
+            this.$refs.timeSharing,
+            false,
+            this.klineConfig.size
+          );
+          this.coinType = this.chartDataObj.coinType;
         } else {
           this.timeSharing.updateTimeSharingOption(divisionData);
         }
       }
     },
     klineConfig() {
-      if (this.klineConfig.platform === 'pc') {
+      if (this.klineConfig.platform === "pc") {
         let size = {
-          width: this.klineConfig.size.width + 'px',
-          height: this.klineConfig.size.height + 'px'
-        }
-        if (JSON.stringify(size) !== JSON.stringify(this.timeSharingSize) && this.klineConfig.defaultSize === false) {
+          width: this.klineConfig.size.width + "px",
+          height: this.klineConfig.size.height + "px"
+        };
+        if (
+          JSON.stringify(size) !== JSON.stringify(this.timeSharingSize) &&
+          this.klineConfig.defaultSize === false
+        ) {
           this.timeSharingSize = {
-            height: '572px',
-            width: '100%'
-          }
+            height: "572px",
+            width: "100%"
+          };
           this.resizeSize();
         }
       }
@@ -74,22 +92,24 @@ export default {
   },
   created() {
     this.message = getLanguage();
-    if (this.klineConfig.platform === 'pc') {
+    if (this.klineConfig.platform === "pc") {
       if (!this.klineConfig.defaultSize) {
-        this.timeSharingSize.height = this.klineConfig.size.height + 'px'
-        this.timeSharingSize.width = this.klineConfig.size.width + 'px'
+        this.timeSharingSize.height = this.klineConfig.size.height + "px";
+        this.timeSharingSize.width = this.klineConfig.size.width + "px";
       } else {
         this.timeSharingSize = {
-          height: '572px',
-          width: '100%'
-        }
+          height: "572px",
+          width: "100%"
+        };
       }
     } else {
-      this.timeSharingSize.height = this.klineConfig.timeSharingSize.height + 'px'
-      this.timeSharingSize.width = this.klineConfig.timeSharingSize.width + 'px'
+      this.timeSharingSize.height =
+        this.klineConfig.timeSharingSize.height + "px";
+      this.timeSharingSize.width =
+        this.klineConfig.timeSharingSize.width + "px";
     }
-    this.platform = this.klineConfig.platform
-    this.klineConfig.chartType = 'timeSharing'
+    this.platform = this.klineConfig.platform;
+    this.klineConfig.chartType = "timeSharing";
     this.timeSharing = new ChartController(this.klineConfig);
   },
   mounted() {
@@ -102,29 +122,30 @@ export default {
     if (this.klineConfig.defaultSize === true) {
       window.removeEventListener("resize", this.resizeSize);
     }
-    this.dispose()
+    this.dispose();
   },
   methods: {
-    init() {
-      this.timeSharing.initTimeSharingChart(this.$refs.timeSharing);
-      this.resizeSize(this.klineConfig.size)
+    init(clear) {
+      this.timeSharing.initTimeSharingChart(this.$refs.timeSharing, clear);
+      this.resizeSize(this.klineConfig.size);
     },
     resizeSize() {
-      if (this.klineConfig.platform === 'pc') {
+      if (this.klineConfig.platform === "pc") {
         let isFullScreen = this.$parent.getState();
-        this.timeSharing.resizeTimeSharingChart(this.$refs.timeSharing, isFullScreen, this.klineConfig.size)
+        this.timeSharing.resizeTimeSharingChart(
+          this.$refs.timeSharing,
+          isFullScreen,
+          this.klineConfig.size
+        );
       }
     },
-    clearChart() {
-      this.timeSharing.clearTimeSharingEcharts();
-    },
     getTimeSharingTipData() {
-      let toolTipIndex = this.timeSharing.getTimeSharingTipIndex()
-      this.$emit("listenToTipIndex", toolTipIndex)
+      let toolTipIndex = this.timeSharing.getTimeSharingTipIndex();
+      this.$emit("listenToTipIndex", toolTipIndex);
     },
     dispose() {
-      this.timeSharing.disposeTimeSharingEChart()
+      this.timeSharing.disposeTimeSharingEChart();
     }
   }
-}
+};
 </script>

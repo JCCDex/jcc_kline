@@ -38,15 +38,6 @@ describe('test IndicatorChart', () => {
         expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
     })
 
-    it('test showStochasticLoading', () => {
-        const element = document.createElement('div');
-        let indicator = new IndicatorChart(Config);
-        indicator.initStochasticChart(element)
-        indicator.setStochasticOption(KDJData, 'hour')
-        indicator.showStochasticLoading()
-        expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
-    })
-
     it('test setStochasticOption if platform is mobile', () => {
         const element = document.createElement('div');
         Config.platform = 'mobile'
@@ -75,30 +66,12 @@ describe('test IndicatorChart', () => {
         expect(tipData).not.toBeNull();
     })
 
-    it('test getStochasticEchart', () => {
-        const element = document.createElement('div');
-        let indicator = new IndicatorChart(Config);
-        indicator.initStochasticChart(element)
-        indicator.setStochasticOption(KDJData, 'day')
-        let IindicatorEchart = indicator.getStochasticEchart()
-        expect(IindicatorEchart).not.toBeNull();
-    })
-
     it('test resizeECharts', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initStochasticChart(element)
         indicator.setStochasticOption(KDJData, 'hour')
         indicator.resizeStochasticChart(element, false, size)
-        expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
-    })
-
-    it('test clearStochasticEcharts', () => {
-        const element = document.createElement('div');
-        let indicator = new IndicatorChart(Config);
-        indicator.initStochasticChart(element)
-        indicator.setStochasticOption(KDJData, 'hour')
-        indicator.clearStochasticEcharts()
         expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
     })
 
@@ -126,14 +99,6 @@ describe('test IndicatorChart', () => {
         let indicator = new IndicatorChart(Config);
         indicator.initIndicatorChart(element)
         indicator.setIndicatorOption(KDJData, 'hour')
-        expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
-    })
-
-    it('test showLoading', () => {
-        const element = document.createElement('div');
-        let indicator = new IndicatorChart(Config);
-        indicator.initIndicatorChart(element)
-        indicator.showLoading(KDJData, 'hour')
         expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
     })
 
@@ -165,15 +130,6 @@ describe('test IndicatorChart', () => {
         expect(tipData).not.toBeNull();
     })
 
-    it('test getIndicatorEchart', () => {
-        const element = document.createElement('div');
-        let indicator = new IndicatorChart(Config);
-        indicator.initIndicatorChart(element)
-        indicator.setIndicatorOption(KDJData, 'day')
-        let IindicatorEchart = indicator.getIndicatorEchart()
-        expect(IindicatorEchart).not.toBeNull();
-    })
-
     it('test resizeIndicatorChart', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
@@ -189,15 +145,6 @@ describe('test IndicatorChart', () => {
         indicator.initIndicatorChart(element)
         indicator.setIndicatorOption(KDJData, 'hour')
         indicator.resizeIndicatorChart(null, false, size)
-        expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
-    })
-
-    it('test clearIndicatorEcharts', () => {
-        const element = document.createElement('div');
-        let indicator = new IndicatorChart(Config);
-        indicator.initIndicatorChart(element)
-        indicator.setIndicatorOption(KDJData, 'hour')
-        indicator.clearIndicatorEcharts()
         expect(indicator.setIndicatorChart.indicator.getOption()).not.toBeNull();
     })
 

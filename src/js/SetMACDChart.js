@@ -4,6 +4,8 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import 'echarts/lib/component/legend';
 import merge from 'lodash.merge';
+import { saveMacd } from './linkageCharts';
+
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var MACDOption;
@@ -51,13 +53,15 @@ class MACDChart {
         }
     }
 
-    getMacdchart() {
-        return this.macd;
-    }
-
-    initMACD(DOM) {
-        this.macd = echarts.init(DOM);
-        this.showLoading();
+    initMACD(DOM, clear) {
+        if (this.macd && clear) {
+            oldMACDData = null;
+            this.macd.dispose();
+        }
+        if (!this.macd || this.macd.isDisposed()) {
+            this.macd = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -83,10 +87,12 @@ class MACDChart {
                 xAxis: this.getMACDXAxis(data),
                 yAxis: this.getMACDYAxis(),
                 tooltip: this.getMACDToolTip(),
-                series: this.getMACDSeries(data)
+                series: this.getMACDSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(MACDOption, option);
             this.macd.setOption(MACDOption, true);
+            saveMacd(this.macd);
         }
     }
 
@@ -95,8 +101,6 @@ class MACDChart {
         if (this.macd.getOption()) {
             let macdConfig = {
                 xAxis: this.getMACDXAxis(data),
-                yAxis: this.getMACDYAxis(),
-                tooltip: this.getMACDToolTip(),
                 series: this.getMACDSeries(data)
             };
             merge(MACDOption, macdConfig);
@@ -112,7 +116,6 @@ class MACDChart {
     }
 
     getMACDYAxis() {
-        // if (this.macdConfig.platform === 'pc') {
         return [
             {
                 gridIndex: 0,
@@ -129,7 +132,6 @@ class MACDChart {
                 }
             }
         ];
-        // }
     }
 
     getMACDSeries(data) {
@@ -138,7 +140,7 @@ class MACDChart {
                 data: data.macds,
                 itemStyle: {
                     normal: {
-                        color: function(params) {
+                        color: function (params) {
                             var colorList;
                             if (params.data >= 0) {
                                 colorList = '#ee4b4b';
@@ -149,17 +151,49 @@ class MACDChart {
                         },
                     }
                 }
-            },{
+            }, {
                 data: data.difs
-            },{
+            }, {
                 data: data.deas
             }
         ];
     }
 
-    clearMACDEcharts() {
-        oldMACDData = null;
-        this.macd.clear();
+    getDataZoom(data) {
+        let start = 0;
+        if (this.macdConfig.platform === 'mobile') {
+            if (data.macds.length > 40) {
+                start = 60;
+            }
+            if (data.macds.length > 100) {
+                start = 80;
+            }
+        } else {
+            if (data.macds.length > 80) {
+                start = 20;
+            }
+            if (data.macds.length > 120) {
+                start = 30;
+            }
+            if (data.macds.length > 160) {
+                start = 50;
+            }
+            if (data.macds.length > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.macdConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     disposeMACDEChart() {
