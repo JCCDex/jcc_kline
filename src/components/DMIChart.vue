@@ -23,7 +23,7 @@
   </div>
 </template>
 <script>
-import { getDMIData } from "../js/processData";
+import { getDMIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {

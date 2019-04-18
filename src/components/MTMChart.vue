@@ -19,7 +19,7 @@
   </div>
 </template>
 <script>
-import { getMTMData } from "../js/processData";
+import { getMTMData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {

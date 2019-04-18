@@ -45,7 +45,8 @@ import MACD from './MACDChart.vue'
 // import RSI from './RSIChart.vue'
 // import TRIX from './TRIXChart.vue'
 // import MTM from './MTMChart.vue'
-import { splitData, handleDivisionData, getDepthData, calculateMA } from '../js/processData'
+import { splitData, handleDivisionData, getDepthData } from '../js/processData'
+import { calculateMA } from '../js/CalculateIndicator'
 import { formatDecimal, getLanguage, formatTime } from '../js/utils';
 import { linkageVolume, linkageMacd } from '../js/linkageCharts';
 export default {

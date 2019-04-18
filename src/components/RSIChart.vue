@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { getRSIData } from "../js/processData";
+import { getRSIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {

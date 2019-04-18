@@ -1,5 +1,5 @@
 import SetIndicatorChart from 'js/SetIndicatorChart'
-import { getOBVData } from 'js/processData'
+import { getOBVData } from 'js/CalculateIndicator'
 import { StochasticOption } from 'js/IndicatorsLineOption'
 import data from '../../testData/data.json'
 import testData from '../../testData/testData.json'

@@ -1,5 +1,5 @@
 import IndicatorChart from 'js/IndicatorChart'
-import { getKDJData } from 'js/processData'
+import { getKDJData } from 'js/CalculateIndicator'
 import testData from '../../testData/testData.json'
 
 let KDJData = getKDJData(9, testData.candleData.values)

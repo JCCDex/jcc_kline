@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-import { getOBVData } from "../js/processData";
+import { getOBVData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {

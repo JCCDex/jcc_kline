@@ -21,7 +21,7 @@
   </div>
 </template>
 <script>
-import { getTRIXData } from "../js/processData";
+import { getTRIXData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {

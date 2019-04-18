@@ -129,7 +129,7 @@
         @mouseleave="leave()"
       >
         <div class="kline-levitation-icon" v-show="isShow">
-          <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')" >
+          <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')">
             <div class="left-shift-icon"></div>
           </div>
           <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
@@ -193,7 +193,7 @@
       <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></OBV>
       <RSI ref = "indicator" v-show = "showIndicator === 'RSI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></RSI>
       <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></TRIX>
-      <MTM ref = "indicator" v-show = "showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></MTM>    -->
+      <MTM ref = "indicator" v-show = "showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></MTM>-->
     </fullscreen>
   </div>
 </template>
@@ -213,13 +213,8 @@ import MACD from "./MACDChart.vue";
 // import TRIX from './TRIXChart.vue'
 // import MTM from './MTMChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
-import {
-  splitData,
-  getDepthData,
-  calculateMA,
-  handleDivisionData,
-  getBollData
-} from "../js/processData";
+import { splitData, getDepthData, handleDivisionData } from "../js/processData";
+import { calculateMA, getBollData } from "../js/CalculateIndicator";
 import { linkageVolume } from "../js/linkageCharts";
 export default {
   name: "klineChart",
@@ -228,7 +223,7 @@ export default {
     Depth,
     Volume,
     Fullscreen,
-    MACD,
+    MACD
     // KDJ,
     // DMI,
     // RSI,

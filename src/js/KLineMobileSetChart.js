@@ -6,7 +6,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
 import { getLanguage } from './utils';
-import { calculateMA } from './processData';
+import { calculateMA } from './CalculateIndicator';
 
 var cycle;
 var config;
