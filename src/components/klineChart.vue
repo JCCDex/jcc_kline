@@ -72,21 +72,15 @@
             </el-popover>
         </div>-->
 
-        <div
-          v-show="showChart==='candle'"
+        <div v-show="showChart==='candle'"
           style="position: absolute;right:154px;top:3px;z-index:5;"
-          class="icon-indicator-div"
-        >
-          <i v-show="true" @click="showIndicatorChart('MACD')" class="icon iconfont icon-indicator">
-            <span
-              v-show="true"
-              :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"
-            >
-              <font style="font-size:14px;line-height:22px;">{{message.MACD}}</font>
+          class="icon-indicator-div">
+          <i v-show="true" @click="showIndicatorOptions" :class="this.showIndicatorOpt ? 'icon iconfont icon-indicator-ed' : 'icon iconfont icon-indicator'">
+            <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'">
+              <font style="font-size:14px;line-height:22px;">{{message.indicator}}</font>
             </span>
           </i>
         </div>
-
         <div
           @click="changeChart('candle')"
           :class="this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'"
@@ -96,6 +90,34 @@
           :class="this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'"
           style="margin-left: 10px;margin-right: 20px;"
         >{{message.depth}}</div>
+
+        <div v-show="showIndicatorOpt" style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;">
+          <div class="indicatorOpt">
+            <div style="margin-left:10px">
+              <font>{{message.indicator}}</font>
+            </div>
+            <div @click="showIndicatorOptions" style="margin-right: 10px; float:right; margin-top: -14px;" class="close-background-icon">
+            </div>
+            <div style="height: 0.05rem; background-color:#2b3944; margin-top:5px"></div>
+            <div @click = "showIndicatorChart('MACD')" :class = "this.showIndicator ==='MACD' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.MACD}}</div>
+            </div>
+            <div @click = "showIndicatorChart('OBV')" :class = "this.showIndicator ==='OBV' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.OBV}}</div>
+            </div>
+            <div @click = "showIndicatorChart('DMI')" :class = "this.showIndicator ==='DMI' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.DMI}}</div>
+            </div>
+            <div @click = "showIndicatorChart('Boll')" :class = "this.showIndicator ==='Boll' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.Boll}}</div>
+            </div>
+            <div @click = "showIndicatorChart('TRIX')" :class = "this.showIndicator ==='TRIX' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.TRIX}}</div>
+            </div>
+          </div>
+        </div>
+        
+
         <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
       </div>
       <!-- 全屏按钮 -->
@@ -261,7 +283,8 @@ export default {
       isFullScreen: false,
       showIndicator: null,
       relevanceIndicator: "MA",
-      isClose: true
+      isClose: true,
+      showIndicatorOpt: false
     };
   },
   props: {
@@ -602,6 +625,9 @@ export default {
       this.showIndicator = null;
       this.isClose = isClose;
       this.resize();
+    },
+    showIndicatorOptions() {
+      this.showIndicatorOpt = !this.showIndicatorOpt;
     }
   }
 };

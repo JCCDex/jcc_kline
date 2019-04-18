@@ -36,6 +36,10 @@
   content: "\e6d7";
 }
 
+.icon-indicator-ed:before {
+  content: "\e6d7";
+}
+
 .icon-indicator-unselected:before {
   content: "\e6d7";
 }

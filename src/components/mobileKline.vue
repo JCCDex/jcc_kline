@@ -72,11 +72,33 @@
         @click="chooseCycle('everyhour')"
         :class="this.currentCycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.timeSharing}}</div>
-      <div @click = "openCloseMacd" class="indicator-select-div">
-        <i v-show = "true"  :class="this.isSelected ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'">
+      <div @click = "openCloseIndicator" class="indicator-select-div">
+        <i v-show = "true"  :class="this.showIndicatorDiv ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'">
         <!-- <i v-show = "isSelected" @click = "openCloseMacd" class="icon iconfont icon-indicator-selected"> -->
           <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
         </i>
+      </div>
+    </div>
+    <div v-show="showIndicatorDiv" class="indicatorConfigure">
+      <div class="mobile-indicator">
+            <div style="margin-left:10px;float:left; font-size: 0.24rem; color: #e6e6e6; margin-top: 0.1rem; margin-left: 0.2rem;"><font>{{message.indicator}}</font></div>
+            <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
+            <div @click = "showIndicatorChart('MACD')" :class = "this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
+              <div class = "indicator-mobile-line">{{message.MACD}}</div>
+            </div>
+            <div @click = "showIndicatorChart('OBV')" :class = "this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
+              <div class = "indicator-mobile-line">{{message.OBV}}</div>
+            </div>
+            <div @click = "showIndicatorChart('DMI')" :class = "this.showIndicator ==='DMI' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
+              <div class = "indicator-mobile-line">{{message.DMI}}</div>
+            </div>
+            <div @click = "showIndicatorChart('Boll')" :class = "this.showIndicator ==='Boll' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
+              <div class = "indicator-mobile-line">{{message.Boll}}</div>
+            </div>
+            <div @click = "showIndicatorChart('TRIX')" :class = "this.showIndicator ==='TRIX' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
+              <div class = "indicator-mobile-line">{{message.TRIX}}</div>
+            </div>
+            <div @click = "openCloseEyes" style="position:absolute;right:70px;z-index:5;margin-top: 0.22rem;margin-right: -0.4rem;" :class="this.showIndicator === null ? 'close-eye-icon' : 'open-eye-icon'"></div>
       </div>
     </div>
     <div
@@ -105,7 +127,9 @@ export default {
       showMinCycle: false,
       showHourCycle: false,
       selectMin: "",
-      selectHour: ""
+      selectHour: "",
+      showIndicatorDiv: false,
+      showIndicator: null
     };
   },
   props: {
@@ -272,6 +296,24 @@ export default {
     openCloseMacd() {
       this.isSelected = !this.isSelected;
       this.$emit("listenMacdChartOpenClose", true)
+    },
+
+    openCloseIndicator() {
+      this.showIndicatorDiv = !this.showIndicatorDiv;
+    },
+    showIndicatorChart(indicator) {
+      if (indicator === 'MACD') {
+        this.$emit("listenMacdChartOpenClose", true);
+        this.showIndicator = this.showIndicator === "MACD" ? null : "MACD";
+      }
+    },
+    openCloseEyes() {
+      debugger
+      if (this.showIndicator === null) {
+        this.showIndicatorDiv = !this.showIndicatorDiv;
+      } else {
+        this.showIndicatorChart(this.showIndicator);
+      }
     }
   }
 };

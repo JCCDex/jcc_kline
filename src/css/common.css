@@ -98,6 +98,11 @@
     color: #b9cadd;
 }
 
+.icon-indicator-ed {
+    font-size: 18px !important;
+    color: #1bdafd;
+}
+
 .icon-indicator:hover {
     font-size: 18px;
     color: #1bdafd;
@@ -124,6 +129,26 @@
     cursor: pointer;
 }
 
+.close-eye-icon {
+    content: url('../icon/images/closeEye.png');
+    margin: 0;
+    cursor: pointer;
+}
+
+.open-eye-icon {
+    content: url('../icon/images/openEye.png');
+    margin: 0;
+    cursor: pointer;
+}
+
+.close-background-icon {
+    content: url('../icon/images/closenoBackground.png');
+    margin: 0;
+    cursor: pointer;
+    width: 10px;
+    height: 10px;
+}
+
 .indicator-select-div {
     float: right;
     margin-right: 0.2rem;
@@ -135,6 +160,35 @@
     display: inline-block;
     height : 0.35rem;
     width  : 0.3rem;
+}
+
+.indicatorConfigure {
+    background-color:#1b2026;
+    height:2rem;
+    position: absolute;
+    z-index: 10;
+    width: -webkit-fill-available;
+    margin-top: 0.15rem;
+}
+
+.mobile-indicator-div {
+    font-family: "Microsoft YaHei";
+    color: #e6e6e6;
+    font-size: 0.24rem;
+    float: left;
+    margin-left: 0.3rem;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
+}
+
+.mobile-indicator-div-active {
+    font-family: "Microsoft YaHei";
+    color: #1bdafd;
+    font-size: 0.24rem;
+    float: left;
+    margin-left: 0.3rem;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
 }
 
 .icon-indicator-div .icon-indicator-ch {
@@ -210,6 +264,7 @@
     background-color: #1e262c;
     font-size: 14px;
     font-family: "Microsoft YaHei";
+    margin-top: 10px;
 }
 
 .full-screen-div:hover .icon-fullscreen-tooltip {
@@ -396,12 +451,18 @@
 }
 
 .chart-div {
+    margin-left: 124px;
     float: left;
     width: 56px;
     height: 26px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+}
+
+.indicator-line {
+    text-align: center;
+    margin-top: 4px;
 }
 
 .chart-btn {
@@ -665,6 +726,24 @@
     float: left;
     cursor: pointer;
     font-size: 14px;
+    margin-left: 16px;
+    background-color: #28343e;
+    width: 50px;
+    height: 23px;
+    margin-top: 10px;
+    border-radius:4px;
+}
+
+.chart-indicator-div-active {
+    float: left;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 16px;
+    background-color: #1bdefd;
+    width: 50px;
+    height: 23px;
+    margin-top: 10px;
+    border-radius:4px;
 }
 
 .chart-indicator-btn {
