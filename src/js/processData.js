@@ -151,6 +151,7 @@ export const handleDivisionData = (datas) => {
     };
 };
 
+// MA（移动平均线）数据计算
 export const calculateMA = (dayCount, data) => {
     var result = [];
     for (var i = 0, len = data.values.length; i < len; i++) {

@@ -1,24 +1,4 @@
-// MA（移动平均线）数据计算
-export const calculateMA = (dayCount, data) => {
-    var result = [];
-    for (var i = 0, len = data.values.length; i < len; i++) {
-        if (i < dayCount - 1) {
-            result.push('-');
-            continue;
-        }
-        var sum = 0;
-        for (var j = 0; j < dayCount; j++) {
-            let item = parseFloat(data.values[i - j][1]);
-            if (isNaN(item)) {
-                sum += 0;
-            } else {
-                sum += item;
-            }
-        }
-        result.push(+(sum / dayCount));
-    }
-    return result;
-};
+import { calculateMA } from './processData';
 
 // KDJ（随机指标）数据计算
 export const getKDJData = (dayCount, data) => {

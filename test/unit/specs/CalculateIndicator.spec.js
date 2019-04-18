@@ -1,5 +1,5 @@
-import { splitData, getDepthData } from 'js/processData'
-import { calculateMA, getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData } from 'js/CalculateIndicator'
+import { splitData, getDepthData, calculateMA } from 'js/processData'
+import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData } from 'js/CalculateIndicator'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 
