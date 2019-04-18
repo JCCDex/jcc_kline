@@ -213,8 +213,7 @@ import MACD from "./MACDChart.vue";
 // import TRIX from './TRIXChart.vue'
 // import MTM from './MTMChart.vue'
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
-import { splitData, getDepthData, handleDivisionData } from "../js/processData";
-import { calculateMA, getBollData } from "../js/CalculateIndicator";
+import { splitData, getDepthData, handleDivisionData, calculateMA } from "../js/processData";
 import { linkageVolume } from "../js/linkageCharts";
 export default {
   name: "klineChart",
@@ -368,10 +367,6 @@ export default {
             this.klineConfig.MA[i].name.substring(2) * 1,
             candleData
           );
-        }
-        if (this.relevanceIndicator === "Boll") {
-          let BollData = getBollData(candleData, 20);
-          candleData.BollData = BollData;
         }
         candleData.indicatorType = this.relevanceIndicator;
         candleData.MAData = MAData;
