@@ -62,34 +62,56 @@ describe('test KLineSetChart', () => {
   it('test initECharts', () => {
     const element = document.createElement('div');
     let kline = new klineSetChart(option);
-    kline.initECharts(element)
+    kline.initECharts(element, false)
     expect(kline).not.toBeNull();
   })
 
-  it('test setOption if cycle is hour', () => {
+  it('test setOption if cycle is hour and data length less than 80', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'hour')
+    let testKlineData = {
+      categoryData: klineData.categoryData.slice(0, 60),
+      values: klineData.values.slice(0, 60),
+      volumes: klineData.volumes.slice(0, 60),
+      MAData: klineData.MAData.slice(0, 60),
+      precision: klineData.precision
+    }
+    klineChart.setOption(testKlineData, 'hour')
+    klineChart.initECharts(element, true)
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test setOption if cycle is week', () => {
+  it('test setOption if cycle is week and data length less than 120', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
     klineData.precision.price = 5
     klineData.precision.amount = 1
-    klineChart.setOption(klineData, 'week')
+    let testKlineData = {
+      categoryData: klineData.categoryData.slice(0, 100),
+      values: klineData.values.slice(0, 100),
+      volumes: klineData.volumes.slice(0, 100),
+      MAData: klineData.MAData.slice(0, 100),
+      precision: klineData.precision
+    }
+    klineChart.setOption(testKlineData, 'week')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test setOption if cycle is month', () => {
+  it('test setOption if cycle is month and data length less than 160', () => {
     klineData.indicatorType = ""
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'month')
+    let testKlineData = {
+      categoryData: klineData.categoryData.slice(0, 130),
+      values: klineData.values.slice(0, 130),
+      volumes: klineData.volumes.slice(0, 130),
+      MAData: klineData.MAData.slice(0, 130),
+      precision: klineData.precision
+    }
+    klineChart.setOption(testKlineData, 'month')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
@@ -101,19 +123,33 @@ describe('test KLineSetChart', () => {
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test setOption if showIndicator not MarketDepth', () => {
+  it('test setOption if showIndicator not MarketDepth and data length less than 200', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(klineData, '5minute')
+    let testKlineData = {
+      categoryData: klineData.categoryData.slice(0, 180),
+      values: klineData.values.slice(0, 180),
+      volumes: klineData.volumes.slice(0, 180),
+      MAData: klineData.MAData.slice(0, 180),
+      precision: klineData.precision
+    }
+    klineChart.setOption(testKlineData, '5minute')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 
-  it('test setOption if showIndicator not MarketDepth, Volume', () => {
+  it('test setOption if showIndicator not MarketDepth, Volume and data length more than 200', () => {
     const element = document.createElement('div');
     let klineChart = new klineSetChart(option);
     klineChart.initECharts(element)
-    klineChart.setOption(klineData, 'day')
+    let testKlineData = {
+      categoryData: klineData.categoryData.slice(0, 210),
+      values: klineData.values.slice(0, 210),
+      volumes: klineData.volumes.slice(0, 210),
+      MAData: klineData.MAData.slice(0, 210),
+      precision: klineData.precision
+    }
+    klineChart.setOption(testKlineData, 'day')
     expect(klineChart.kline.getOption()).not.toBeNull();
   })
 

@@ -1,5 +1,5 @@
 import { splitData, getDepthData, calculateMA } from 'js/processData'
-import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData } from 'js/CalculateIndicator'
+import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData } from 'js/CalculateIndicator'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 
@@ -96,6 +96,16 @@ describe('test CalculateIndicator', () => {
   it('test getMTMData if data is null', () => {
     let MTMData = getMTMData(null)
     expect(MTMData).toBe(undefined)
+  })
+
+  it('test getBRARData', () => {
+    let BRARData = getBRARData(data.candleData.values, 24)
+    expect(BRARData).not.toBeNull()
+  })
+
+  it('test getBRARData if data is null', () => {
+    let BRARData = getBRARData(null, 24)
+    expect(BRARData).toBe(undefined)
   })
 
 })

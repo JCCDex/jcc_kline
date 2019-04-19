@@ -173,7 +173,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData)
-    mobileKline.updateOption(data, cycle)
+    mobileKline.updateOption(data, 'day')
     expect(mobileKline.kline.getOption().series).not.toBeNull();
     mobileKline.disposeMobileEChart()
     expect(mobileKline.kline).not.toBeNull();
@@ -184,7 +184,7 @@ describe('test KLineMobileSetChart', () => {
     let mobileKline = new klineMobileSetChart(mobileOption);
     mobileKline.initMobileECharts(element)
     mobileKline.setOption(mobileData)
-    mobileKline.updateOption(data, cycle)
+    mobileKline.updateOption(data, 'month')
     let tipIndex = mobileKline.getToolTipIndex();
     expect(tipIndex).not.toBeNull();
   })
