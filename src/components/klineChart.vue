@@ -39,7 +39,7 @@
           style="position: absolute;right:154px;top:3px;z-index:5;"
           class="icon-indicator-div"
         >
-          <i v-show="true" @click="showIndicatorChart('MACD')" class="icon iconfont icon-indicator">
+          <i v-show="true" @click="showIndicatorChart('BRAR')" class="icon iconfont icon-indicator">
             <span
               v-show="true"
               :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"
@@ -151,6 +151,7 @@
       <RSI ref = "indicator" v-show = "showIndicator === 'RSI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></RSI>
       <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></TRIX>
       <MTM ref = "indicator" v-show = "showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></MTM>-->
+       <BRAR ref = "indicator" v-show = "showIndicator === 'BRAR' && showChart !== 'depth'" @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></BRAR>
     </fullscreen>
   </div>
 </template>
@@ -162,9 +163,9 @@ import KLine from "./kline.vue";
 import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
 import MACD from "./MACDChart.vue";
+import BRAR from "./BRARChart.vue"
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import { splitData, getDepthData, handleDivisionData, calculateMA } from "../js/processData";
-import { linkageVolume } from "../js/linkageCharts";
 export default {
   name: "klineChart",
   components: {
@@ -172,7 +173,8 @@ export default {
     Depth,
     Volume,
     Fullscreen,
-    MACD
+    MACD,
+    BRAR
     // KDJ,
     // DMI,
     // RSI,

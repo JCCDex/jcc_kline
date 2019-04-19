@@ -120,7 +120,7 @@ class IndicatorChartController {
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if(cycle.indexOf('minute') !== -1) {
+                    if (cycle.indexOf('minute') !== -1) {
                         return value.substring(5);
                     }
                     if (cycle.indexOf('hour') !== -1) {
@@ -286,6 +286,31 @@ class IndicatorChartController {
                     itemStyle: {
                         normal: {
                             color: '#67ff7c'
+                        }
+                    }
+                }
+            ];
+        } else if (data.indicator === 'BRAR' && data.indicatorData) {
+            series = [
+                {
+                    name: 'BR',
+                    data: data.indicatorData.BR,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                },
+                {
+                    name: 'AR',
+                    data: data.indicatorData.AR,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e03bfa'
                         }
                     }
                 }
