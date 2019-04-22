@@ -165,6 +165,7 @@ export default {
         };
       }
     } else {
+      this.platform = "mobile";
       this.stochasticSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.stochasticSize.width = this.klineConfig.size.width + "px";
     }

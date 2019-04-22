@@ -90,7 +90,7 @@ class StochasticChartController {
             };
             merge(stochasticOption, option);
             this.stochastic.setOption(stochasticOption, true);
-            saveStochastic(this.stochastic)
+            saveStochastic(this.stochastic);
         }
     }
 

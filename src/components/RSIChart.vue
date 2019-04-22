@@ -173,6 +173,7 @@ export default {
         };
       }
     } else {
+      this.platform = "mobile";
       this.RSISize.height = this.klineConfig.size.height * 0.4 + "px";
       this.RSISize.width = this.klineConfig.size.width + "px";
     }

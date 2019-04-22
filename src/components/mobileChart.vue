@@ -78,6 +78,24 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></MACD>
+    <KDJ
+      ref="kdj"
+      v-show="showIndicatorChart === 'KDJ'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></KDJ>
+    <RSI
+      ref="rsi"
+      v-show="showIndicatorChart === 'RSI'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></RSI>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -87,6 +105,8 @@ import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import MACD from "./MACDChart.vue";
+import KDJ from "./KDJChart.vue";
+import RSI from "./RSIChart";
 import {
   splitData,
   handleDivisionData,
@@ -102,7 +122,9 @@ export default {
     Depth,
     Volume,
     TimeSharing,
-    MACD
+    MACD,
+    KDJ,
+    RSI
   },
   data() {
     return {
@@ -272,9 +294,9 @@ export default {
         }
       }
     },
-    getMacdOpenClose() {
-      this.showIndicatorChart =
-        this.showIndicatorChart === "MACD" ? null : "MACD";
+    getMacdOpenClose(indicator) {
+      this.showIndicatorChart = indicator;
+      // this.showIndicatorChart === "MACD" ? null : "MACD";
     },
     getTipDataIndex(index) {
       if (index) {
@@ -283,9 +305,7 @@ export default {
           var precision = JSON.parse(
             JSON.stringify(this.chartDataObj.precision)
           );
-          var pricePrecision = !isNaN(precision.price)
-            ? precision.price
-            : 6;
+          var pricePrecision = !isNaN(precision.price) ? precision.price : 6;
           var amountsPrecision = !isNaN(precision.amount)
             ? precision.amount
             : 2;

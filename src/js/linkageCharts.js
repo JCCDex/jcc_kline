@@ -13,7 +13,7 @@ let stochasticChart;
 export const saveCandle = (candle) => {
     candleChart = candle;
     linkageChart(candle, volumeChart);
-    linkageChart(candle, indicatorChart)
+    linkageChart(candle, indicatorChart);
 };
 
 export const saveVolume = (volume) => {
@@ -29,12 +29,12 @@ export const saveMacd = (macd) => {
 export const saveIndicator = (indicator) => {
     indicatorChart = indicator;
     linkageChart(candleChart, indicator);
-}
+};
 
 export const saveStochastic = (stochastic) => {
     stochasticChart = stochastic;
-    linkageChart(candleChart, stochastic)
-}
+    linkageChart(candleChart, stochasticChart);
+};
 
 export const linkageChart = (chart1, chart2) => {
     if (chart1 && chart2) {

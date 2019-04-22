@@ -1,6 +1,6 @@
 import ChartController from 'js/Charts.js'
 import klineController from 'js/KLine.js'
-import { linkageVolume, bindAction } from 'js/linkageCharts'
+import { linkageChart, bindAction } from 'js/linkageCharts'
 import testData from '../../testData/testData.json'
 
 let data = testData.candleData
@@ -46,7 +46,7 @@ describe('test linkageCharts', () => {
     let volume = new ChartController(volumeConfig)
     volume.initVolumeChart(element)
     volume.setVolumeOption(data)
-    linkageVolume(kline.setKLineChart.kline, volume.setVolumeChart.volume)
+    linkageChart(kline.setKLineChart.kline, volume.setVolumeChart.volume)
     expect(kline).not.toBeNull()
   })
 
@@ -56,7 +56,7 @@ describe('test linkageCharts', () => {
     kline.initChart(element)
     kline.setOption(data, 'hour')
     let volumeChart = null
-    linkageVolume(kline.setKLineChart.kline, volumeChart)
+    linkageChart(kline.setKLineChart.kline, volumeChart)
     expect(kline).not.toBeNull()
 
   })

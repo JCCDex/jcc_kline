@@ -90,7 +90,7 @@ class IndicatorChartController {
             };
             merge(indicatorOption, option);
             this.indicator.setOption(indicatorOption, true);
-            saveIndicator(this.indicator)
+            saveIndicator(this.indicator);
         }
     }
 
