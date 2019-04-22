@@ -3,6 +3,7 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
+import { saveStochastic } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var toolTipIndex;
@@ -89,6 +90,7 @@ class StochasticChartController {
             };
             merge(stochasticOption, option);
             this.stochastic.setOption(stochasticOption, true);
+            saveStochastic(this.stochastic)
         }
     }
 

@@ -9,10 +9,10 @@
       <font style="color: #e03bfa;">RSI24:&nbsp;{{toolTipData.RSI24}}</font>
     </div>
     <i
-      v-if
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="RSI"
@@ -24,7 +24,7 @@
 <script>
 import { getRSIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "RSI",
   data() {
@@ -32,8 +32,9 @@ export default {
       indicator: null,
       indicatorsData: null,
       RSIData: null,
+      platform: "",
       coinType: "",
-      currentCycle: '',
+      currentCycle: "",
       isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
@@ -68,16 +69,16 @@ export default {
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-    cycle () {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true)
-        this.isRefresh = true
+        this.init(true);
+        this.isRefresh = true;
       }
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
     resizeSize() {
       this.resize();
@@ -95,26 +96,26 @@ export default {
           RSI6: RSI6,
           RSI12: RSI12,
           RSI24: RSI24
-        }
+        };
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.RSIData;
       }
-      if (
-        this.indicatorsData &&
-        this.indicatorsData.indicatorData
-      ) {
+      if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true)
+          this.init(true);
           this.RSI.setIndicatorOption(this.indicatorsData, this.currentCycle);
-          this.isRefresh = false
+          this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.RSI.updateIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.RSI.updateIndicatorOption(
+            this.indicatorsData,
+            this.currentCycle
+          );
         }
       }
     },
@@ -147,13 +148,13 @@ export default {
             RSI6: RSI6,
             RSI12: RSI12,
             RSI24: RSI24
-          }
+          };
         }
         if (this.RSIData) {
           this.toolTipData = {
-            RSI6: parseFloat(this.RSIData.RSI6[index]).toFixed(2),
-            RSI12: parseFloat(this.RSIData.RSI12[index]).toFixed(2),
-            RSI24: parseFloat(this.RSIData.RSI24[index]).toFixed(2)
+            RSI6: formatDecimal(this.RSIData.RSI6[index], 2, true),
+            RSI12: formatDecimal(this.RSIData.RSI12[index], 2, true),
+            RSI24: formatDecimal(this.RSIData.RSI24[index], 2, true)
           };
         }
       }
@@ -161,6 +162,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.RSISize.height = this.klineConfig.size.height * 0.25 + "px";
         this.RSISize.width = this.klineConfig.size.width + "px";
@@ -193,7 +195,7 @@ export default {
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

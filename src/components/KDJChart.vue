@@ -9,10 +9,10 @@
       <font style="color: #f6d026;">J:&nbsp;{{toolTipData.J}}&nbsp;</font>
     </div>
     <i
-      v-if
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="stochastic"
@@ -24,7 +24,7 @@
 <script>
 import { getKDJData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "stochastic",
   data() {
@@ -32,7 +32,7 @@ export default {
       stochastic: null,
       KDJData: null,
       coinType: "",
-      currentCycle: '',
+      currentCycle: "",
       isRefresh: true,
       chartType: "stochastic",
       toolTipData: null,
@@ -67,16 +67,16 @@ export default {
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-    cycle () {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true)
-        this.isRefresh = true
+        this.init(true);
+        this.isRefresh = true;
       }
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
     toolTipIndex() {
       let index = this.toolTipIndex;
@@ -89,9 +89,9 @@ export default {
         }
         if (this.KDJData) {
           this.toolTipData = {
-            K: parseFloat(this.KDJData.K[index]).toFixed(4),
-            D: parseFloat(this.KDJData.D[index]).toFixed(4),
-            J: parseFloat(this.KDJData.J[index]).toFixed(4)
+            K: formatDecimal(this.KDJData.K[index], 2, true),
+            D: formatDecimal(this.KDJData.D[index], 2, true),
+            J: formatDecimal(this.KDJData.J[index], 2, true)
           };
         }
       }
@@ -117,12 +117,18 @@ export default {
               JSON.stringify(this.chartDataObj.coinType) ||
             this.isRefresh
           ) {
-            this.init(true)
-            this.stochastic.setStochasticOption(this.KDJData, this.currentCycle);
-            this.isRefresh = false
+            this.init(true);
+            this.stochastic.setStochasticOption(
+              this.KDJData,
+              this.currentCycle
+            );
+            this.isRefresh = false;
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.stochastic.updateStochasticOption(this.KDJData, this.currentCycle);
+            this.stochastic.updateStochasticOption(
+              this.KDJData,
+              this.currentCycle
+            );
           }
         }
       }
@@ -148,6 +154,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.stochasticSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.stochasticSize.width = this.klineConfig.size.width + "px";
@@ -180,7 +187,7 @@ export default {
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

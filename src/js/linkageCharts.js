@@ -7,25 +7,38 @@ import 'echarts/lib/component/dataZoom';
 let candleChart;
 let volumeChart;
 let macdChart;
+let indicatorChart;
+let stochasticChart;
 
 export const saveCandle = (candle) => {
     candleChart = candle;
-    linkageVolume(candle, volumeChart);
+    linkageChart(candle, volumeChart);
+    linkageChart(candle, indicatorChart)
 };
 
 export const saveVolume = (volume) => {
-    volumeChart =  volume;
-    linkageVolume(candleChart, volume);
+    volumeChart = volume;
+    linkageChart(candleChart, volume);
 };
 
 export const saveMacd = (macd) => {
     macdChart = macd;
-    linkageVolume(candleChart, macdChart);
+    linkageChart(candleChart, macdChart);
 };
 
-export const linkageVolume = (candle, volume) => {
-    if (candle && volume) {
-        echarts.connect([candle, volume]);
+export const saveIndicator = (indicator) => {
+    indicatorChart = indicator;
+    linkageChart(candleChart, indicator);
+}
+
+export const saveStochastic = (stochastic) => {
+    stochasticChart = stochastic;
+    linkageChart(candleChart, stochastic)
+}
+
+export const linkageChart = (chart1, chart2) => {
+    if (chart1 && chart2) {
+        echarts.connect([chart1, chart2]);
         // bindAction([candle, volume]);
     }
 };
@@ -38,7 +51,7 @@ export const bindAction = (chartList) => { //echart多图联动后，axisPoiner�
             }
             // fromChart.on('updateAxisPointer', function (params) {
             //     var payload = toChart.makeActionFromEvent(params);
-                
+
             //     // Remove y info from payload.axesInfo.
             //     var axesInfo = payload.axesInfo || [];
             //     for (var i = axesInfo.length - 1; i >= 0; i--) {
@@ -46,7 +59,7 @@ export const bindAction = (chartList) => { //echart多图联动后，axisPoiner�
             //             axesInfo.splice(i, 1);
             //         }
             //     }
-                
+
             //     toChart.dispatchAction(payload, true);
             // });
 

@@ -80,11 +80,11 @@
             <div @click = "showIndicatorChart('MACD')" :class = "this.showIndicator ==='MACD' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
               <div class = "indicator-line">{{message.MACD}}</div>
             </div>
-            <div @click = "showIndicatorChart('PSY')" :class = "this.showIndicator ==='PSY' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
-              <div class = "indicator-line">{{message.PSY}}</div>
+            <div @click = "showIndicatorChart('KDJ')" :class = "this.showIndicator ==='KDJ' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.KDJ}}</div>
             </div>
-            <div @click = "showIndicatorChart('ROC')" :class = "this.showIndicator ==='ROC' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
-              <div class = "indicator-line">{{message.ROC}}</div>
+            <div @click = "showIndicatorChart('RSI')" :class = "this.showIndicator ==='RSI' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.RSI}}</div>
             </div>
           </div>
         </div>
@@ -178,7 +178,27 @@
         :resize-size="resizeSize"
         :cycle="cycle"
       ></MACD>
-      <PSY ref = "indicator" 
+      <KDJ ref = "indicator" 
+        v-show="showIndicator === 'KDJ' && showChart !== 'depth'"
+        @listenIndicatorChartClose = 'closeIndicatorChart' 
+        v-on:listenToTipIndex = "getTipDataIndex" 
+        :toolTipIndex = "toolTipIndex" 
+        :kline-config = "klineConfig" 
+        :chart-data-obj = "chartDataObj" 
+        :resize-size = "resizeSize" 
+        :cycle = "cycle"
+      ></KDJ>
+      <RSI ref = "indicator" 
+        v-show="showIndicator === 'RSI' && showChart !== 'depth'"
+        @listenIndicatorChartClose = 'closeIndicatorChart' 
+        v-on:listenToTipIndex = "getTipDataIndex" 
+        :toolTipIndex = "toolTipIndex" 
+        :kline-config = "klineConfig" 
+        :chart-data-obj = "chartDataObj" 
+        :resize-size = "resizeSize" 
+        :cycle = "cycle"
+      ></RSI>
+      <!-- <PSY ref = "indicator" 
         v-show="showIndicator === 'PSY' && showChart !== 'depth'"
         @listenIndicatorChartClose = 'closeIndicatorChart' 
         v-on:listenToTipIndex = "getTipDataIndex" 
@@ -207,15 +227,8 @@
         :chart-data-obj = "chartDataObj"
         :resize-size = "resizeSize"
         :cycle = "cycle"
-      ></VR>
-      <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></KDJ>
-      <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></DMI>
-      <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></OBV>
-      <RSI ref = "indicator" v-show = "showIndicator === 'RSI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></RSI>
-      <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></TRIX>
-      <MTM ref = "indicator" v-show = "showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></MTM>-->
-       <BRAR ref = "indicator" v-show = "showIndicator === 'BRAR' && showChart !== 'depth'" @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></BRAR>
-      
+      ></VR> -->
+       <!-- <BRAR ref = "indicator" v-show = "showIndicator === 'BRAR' && showChart !== 'depth'" @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></BRAR> -->
     </fullscreen>
   </div>
 </template>
@@ -227,10 +240,12 @@ import KLine from "./kline.vue";
 import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
 import MACD from "./MACDChart.vue";
-import BRAR from "./BRARChart.vue";
-import PSY from "./PSYChart.vue";
-import ROC from "./ROCChart.vue";
-import VR from "./VRChart.vue";
+import KDJ  from "./KDJChart.vue";
+import RSI from "./RSIChart.vue"
+// import BRAR from "./BRARChart.vue";
+// import PSY from "./PSYChart.vue";
+// import ROC from "./ROCChart.vue";
+// import VR from "./VRChart.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import { splitData, getDepthData, handleDivisionData, calculateMA } from "../js/processData";
 export default {
@@ -241,13 +256,13 @@ export default {
     Volume,
     Fullscreen,
     MACD,
-    BRAR,
-    PSY,
-    ROC,
-    VR,
-    // KDJ,
+    KDJ,
+    RSI
+    // BRAR,
+    // PSY,
+    // ROC,
+    // VR,
     // DMI,
-    // RSI,
     // OBV,
     // TRIX,
     // MTM,
