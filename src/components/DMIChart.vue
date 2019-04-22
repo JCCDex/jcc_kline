@@ -10,7 +10,6 @@
       <font style="color: #67ff7c;">ADXR:{{this.toolTipData.ADXR}}</font>
     </div>
     <i
-      v-if
       @click="closeChart"
       style="position:absolute;right:70px;z-index:5;"
       class="icon iconfont icon-popover-close"
@@ -23,7 +22,7 @@
   </div>
 </template>
 <script>
-import { getDMIData } from "../js/processData";
+import { getDMIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {
@@ -75,8 +74,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.DMI.clearIndicatorEcharts();
-        this.DMI.showLoading();
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -120,13 +118,9 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.DMI.clearIndicatorEcharts();
+          this.init(true);
           this.DMI.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.DMI.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.DMI.updateIndicatorOption(
@@ -180,8 +174,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.DMI.initIndicatorChart(this.$refs.DMI);
+    init(clear) {
+      this.DMI.initIndicatorChart(this.$refs.DMI, clear);
       this.resize();
     },
     getToolTipIndex() {
@@ -189,7 +183,7 @@ export default {
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {

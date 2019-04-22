@@ -30,6 +30,7 @@ describe('test SetMACDChart', () => {
         const element = document.createElement('div');
         let macd = new SetMACDChart(macdOption);
         macd.initMACD(element)
+        macd.initMACD(element, true)
         expect(macd).not.toBeNull();
     })
 

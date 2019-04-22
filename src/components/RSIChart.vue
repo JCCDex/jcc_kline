@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import { getRSIData } from "../js/processData";
+import { getRSIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {
@@ -74,8 +74,7 @@ export default {
   watch: {
     cycle () {
       if (this.cycle !== this.currentCycle) {
-        this.RSI.clearIndicatorEcharts();
-        this.RSI.showLoading()
+        this.init(true)
         this.isRefresh = true
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
@@ -110,13 +109,9 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.RSI.clearIndicatorEcharts();
+          this.init(true)
           this.RSI.setIndicatorOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
-          this.$emit(
-            "listenIndicatorChartEvent",
-            this.RSI.getIndicatorEchart()
-          );
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.RSI.updateIndicatorOption(this.indicatorsData, this.currentCycle);
@@ -189,8 +184,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.RSI.initIndicatorChart(this.$refs.RSI);
+    init(clear) {
+      this.RSI.initIndicatorChart(this.$refs.RSI, clear);
       this.resize();
     },
     getToolTipIndex() {

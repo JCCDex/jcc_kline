@@ -24,16 +24,12 @@ class IndicatorChartController {
     }
 
     /* 绘制随机指标（KDJ） */
-    initStochasticChart(DOM) {
-        this.setStochasticChart.initStochasticECharts(DOM);
+    initStochasticChart(DOM, clear) {
+        this.setStochasticChart.initStochasticECharts(DOM, clear);
     }
 
     resizeStochasticChart(DOM, isFullScreen, size) {
         this.setStochasticChart.resizeECharts(DOM, isFullScreen, size);
-    }
-
-    getStochasticEchart() {
-        return this.setStochasticChart.getStochasticEchart();
     }
 
     getStochasticTipData() {
@@ -44,16 +40,8 @@ class IndicatorChartController {
         this.setStochasticChart.setStochasticOption(data, cycle);
     }
 
-    showStochasticLoading() {
-        this.setStochasticChart.showLoading();
-    }
-
     updateStochasticOption(data, cycle) {
         this.setStochasticChart.updateStochasticOption(data, cycle);
-    }
-
-    clearStochasticEcharts() {
-        this.setStochasticChart.clearStochasticEcharts();
     }
 
     disposeStochasticEChart() {
@@ -62,20 +50,12 @@ class IndicatorChartController {
 
     /* 绘制指标线 */
 
-    initIndicatorChart(DOM) {
-        this.setIndicatorChart.initIndicatorECharts(DOM);
+    initIndicatorChart(DOM, clear) {
+        this.setIndicatorChart.initIndicatorECharts(DOM, clear);
     }
 
     resizeIndicatorChart(DOM, isFullScreen, size) {
         this.setIndicatorChart.resizeECharts(DOM, isFullScreen, size);
-    }
-
-    getIndicatorEchart() {
-        return this.setIndicatorChart.getIndicatorEchart();
-    }
-
-    showLoading() {
-        this.setIndicatorChart.showLoading();
     }
 
     getIndicatorTipData() {
@@ -88,10 +68,6 @@ class IndicatorChartController {
 
     updateIndicatorOption(data, cycle) {
         this.setIndicatorChart.updateIndicatorOption(data, cycle);
-    }
-
-    clearIndicatorEcharts() {
-        this.setIndicatorChart.clearIndicatorEcharts();
     }
 
     disposeIndicatorEChart() {

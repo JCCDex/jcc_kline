@@ -49,9 +49,15 @@ class IndicatorChartController {
         }
     }
 
-    initIndicatorECharts(DOM) {
-        this.indicator = echarts.init(DOM);
-        this.showLoading();
+    initIndicatorECharts(DOM, clear) {
+        if (this.indicator && clear) {
+            oldIndicatorData = null;
+            this.indicator.dispose();
+        }
+        if (!this.indicator || this.indicator.isDisposed()) {
+            this.indicator = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -94,7 +100,6 @@ class IndicatorChartController {
         if (this.indicator.getOption()) {
             let indicatorConfig = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
-                tooltip: this.getIndicatorToolTip(),
                 series: this.getIndicatorSeries(data)
             };
             let option = JSON.parse(JSON.stringify(indicatorConfig));
@@ -109,17 +114,13 @@ class IndicatorChartController {
         return toolTipIndex;
     }
 
-    getIndicatorEchart() {
-        return this.indicator;
-    }
-
     getIndicatorXAxis(data, cycle) {
         var x = [{
             gridIndex: 0,
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if(cycle.indexOf('minute') !== -1) {
+                    if (cycle.indexOf('minute') !== -1) {
                         return value.substring(5);
                     }
                     if (cycle.indexOf('hour') !== -1) {
@@ -289,13 +290,33 @@ class IndicatorChartController {
                     }
                 }
             ];
+        } else if (data.indicator === 'BRAR' && data.indicatorData) {
+            series = [
+                {
+                    name: 'BR',
+                    data: data.indicatorData.BR,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                },
+                {
+                    name: 'AR',
+                    data: data.indicatorData.AR,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e03bfa'
+                        }
+                    }
+                }
+            ];
         }
         return series;
-    }
-
-    clearIndicatorEcharts() {
-        oldIndicatorData = null;
-        this.indicator.clear();
     }
 
     disposeIndicatorEChart() {

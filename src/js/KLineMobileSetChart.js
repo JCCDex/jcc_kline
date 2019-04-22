@@ -4,6 +4,7 @@ import 'echarts/lib/chart/candlestick';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
+import { saveCandle } from './linkageCharts';
 import merge from 'lodash.merge';
 import { getLanguage } from './utils';
 import { calculateMA } from './processData';
@@ -20,11 +21,14 @@ class KLineMobileSetChartController {
         this.klineConfig = configs;
     }
 
-    initMobileECharts(DOM) {
-        toolTipIndex = null;
-        timeDivisionconfig = null;
-        this.kline = echarts.init(DOM);
-        this.showLoading();
+    initMobileECharts(DOM, clear) {
+        if (this.kline && clear) {
+            this.kline.dispose();
+        }
+        if (!this.kline || this.kline.isDisposed()) {
+            this.kline = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -42,16 +46,18 @@ class KLineMobileSetChartController {
         this.kline.hideLoading();
     }
 
-    setOption(size) {
+    setOption(size, data) {
         config = JSON.parse(JSON.stringify(this.klineConfig));
         let option = {
-            grid: this.getGrid(size)
+            grid: this.getGrid(size),
+            dataZoom: this.getDataZoom(data)
         };
         toolTipIndex = null;
         merge(config, option);
         cycle = 'normal';
         this.kline.hideLoading();
         this.kline.setOption(config, true);
+        saveCandle(this.kline);
     }
 
     setTimeDivisionsOption(size) {
@@ -96,23 +102,18 @@ class KLineMobileSetChartController {
 
     updateOption(data, cycle) {
         let length = data.values.length - 1;
-        let MAConfig = this.klineConfig.MA;
         if (!toolTipIndex) {
             toolTipIndex = length;
         }
         let updateOption = {
             xAxis: this.getXAxis(data, cycle),
-            tooltip: this.getToolTip(data, MAConfig),
+            tooltip: this.getToolTip(),
             series: this.getSeries(data)
         };
         merge(config, updateOption);
         config.dataZoom = this.kline.getOption().dataZoom;
         this.kline.setOption(config);
         return toolTipIndex;
-    }
-
-    getMobileEchart() {
-        return this.kline;
     }
 
     updateTimeDivisionOption(data) {
@@ -157,7 +158,7 @@ class KLineMobileSetChartController {
                 data: data.categoryData,
                 axisLabel: {
                     formatter(value) {
-                        if(cycle.indexOf('minute') !== -1) {
+                        if (cycle.indexOf('minute') !== -1) {
                             return value.substring(5);
                         }
                         if (cycle.indexOf('hour') !== -1) {
@@ -240,17 +241,35 @@ class KLineMobileSetChartController {
         this.kline.dispose();
     }
 
-    clearMobileEcharts() {
-        toolTipIndex = null;
-        this.kline.clear();
-    }
-
-
     getGrid(size) {
         let g = [{
             height: `${size.height * 0.6}px`
         }];
         return g;
+    }
+
+    getDataZoom(data) {
+        if (!data) { return; }
+        let start = 0;
+        if (data.values.length > 40) {
+            start = 60;
+        }
+        if (data.values.length > 100) {
+            start = 80;
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+
+        this.klineConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     changeDataZoom(type) {

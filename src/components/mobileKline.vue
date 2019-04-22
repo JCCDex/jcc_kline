@@ -145,25 +145,15 @@ export default {
         return {};
       }
     },
-    cycle: {
-      type: String,
-      default: 'hour'  
-    }
   },
   watch: {
-    cycle () {
-      if (this.cycle !== this.currentCycle) {
-        this.isRefresh = true
-      }
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
-    },
     chartDataObj() {
       this.changeCycleLanguage(this.currentCycle);
       if (!this.chartDataObj) {return}
       if (this.isRefresh) {
-        this.clearChart();
+        this.init(true);
         if (this.currentCycle !== "everyhour") {
-          this.kline.setMobileOption(this.klineConfig.size);
+          this.kline.setMobileOption(this.klineConfig.size, this.chartDataObj.candleData);
           this.isRefresh = false;
         } else {
           this.kline.setTimeDivisionsOption(this.klineConfig.size);
@@ -182,7 +172,6 @@ export default {
             candleData,
             this.currentCycle
           );
-          this.$emit("listenCandleChartEvent", this.kline.getMobileEchart());
           this.$emit("listenTipIndex", toolTipIndex);
         }
       }
@@ -219,8 +208,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.kline.initMobileChart(this.$refs.klineRef);
+    init(clear) {
+      this.kline.initMobileChart(this.$refs.klineRef, clear);
     },
     clickMinCycle() {
       this.showMinCycle = !this.showMinCycle;
@@ -269,8 +258,7 @@ export default {
         return;
       }
       this.changeCycleLanguage(selectCycle);
-      this.clearChart();
-      this.kline.showMobileLoading();
+      this.init(true);
       this.currentCycle = cycle;
       this.isRefresh = true;
       this.$emit("listenToChildEvent", selectCycle);
@@ -286,9 +274,6 @@ export default {
     },
     changeDataZoom(type) {
       this.kline.changeMobileDataZoom(type);
-    },
-    clearChart() {
-      this.kline.clearMobileChart();
     },
     dispose() {
       this.kline.disposeMobileChart()

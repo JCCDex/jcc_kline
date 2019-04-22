@@ -5,6 +5,7 @@ import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
+import { saveCandle } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var config;
@@ -52,9 +53,16 @@ class KLineSetChartController {
         }
     }
 
-    initECharts(DOM) {
-        this.kline = echarts.init(DOM);
-        this.showLoading();
+    initECharts(DOM, clear) {
+        if (this.kline && clear) {
+            toolTipIndex = 0;
+            oldKlineData = null;
+            this.kline.dispose();
+        }
+        if (!this.kline || this.kline.isDisposed()) {
+            this.kline = echarts.init(DOM);
+            this.showLoading();
+        }
     }
 
     showLoading() {
@@ -68,12 +76,6 @@ class KLineSetChartController {
                 zlevel: 1
             }
         );
-    }
-
-    clearEcharts() {
-        toolTipIndex = 0;
-        oldKlineData = null;
-        this.kline.clear();
     }
 
     disposeEChart() {
@@ -95,12 +97,14 @@ class KLineSetChartController {
             toolTipIndex = length;
             this.kline.hideLoading();
             let klineOption = {
-                tooltip: this.getToolTip(data),
+                tooltip: this.getToolTip(),
                 xAxis: this.getXAxis(data, cycle),
-                series: this.getSeries(data)
+                series: this.getSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(config, klineOption);
             this.kline.setOption(config, true);
+            saveCandle(this.kline);
             return toolTipIndex;
         }
     }
@@ -110,10 +114,8 @@ class KLineSetChartController {
             oldData: data,
             oldCycle: cycle
         };
-        let MAConfig = this.klineConfig.MA;
         if (this.kline.getOption()) {
             let klineOption = {
-                tooltip: this.getToolTip(data, MAConfig),
                 xAxis: this.getXAxis(data, cycle),
                 series: this.getSeries(data)
             };
@@ -125,10 +127,6 @@ class KLineSetChartController {
 
     getToolTipIndex() {
         return toolTipIndex;
-    }
-
-    getEchart() {
-        return this.kline;
     }
 
     getToolTip() {
@@ -149,7 +147,7 @@ class KLineSetChartController {
             data: data.categoryData,
             axisLabel: {
                 formatter(value) {
-                    if(cycle.indexOf('minute') !== -1) {
+                    if (cycle.indexOf('minute') !== -1) {
                         return value.substring(5);
                     }
                     if (cycle.indexOf('hour') !== -1) {
@@ -234,17 +232,32 @@ class KLineSetChartController {
         return s;
     }
 
-    getDataZoom() {
-        return [
+    getDataZoom(data) {
+        let start = 0;
+        if (data.values.length > 80) {
+            start = 20;
+        }
+        if (data.values.length > 120) {
+            start = 30;
+        }
+        if (data.values.length > 160) {
+            start = 50;
+        }
+        if (data.values.length > 200) {
+            start = 60;
+        }
+        var dataZoom = [
             {
                 id: 'dataZoomX',
                 type: 'inside',
                 filterMode: 'filter',
-                start: 60,
+                start: start,
                 end: 100,
                 minSpan: 5
             }
         ];
+        this.klineConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     changeDataZoom(type) {

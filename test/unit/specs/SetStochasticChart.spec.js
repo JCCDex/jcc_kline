@@ -1,5 +1,5 @@
 import SetStochasticChart from 'js/SetStochasticChart'
-import { getKDJData } from 'js/processData'
+import { getKDJData } from 'js/CalculateIndicator'
 import { StochasticOption } from 'js/IndicatorsLineOption'
 import testData from '../../testData/testData.json'
 
@@ -21,6 +21,7 @@ describe('test SetStochasticChart', () => {
         const element = document.createElement('div');
         let stochastic = new SetStochasticChart(StochasticOption);
         stochastic.initStochasticECharts(element)
+        stochastic.initStochasticECharts(element, true)
         expect(stochastic).not.toBeNull();
     })
 
@@ -58,15 +59,6 @@ describe('test SetStochasticChart', () => {
         expect(tipData).not.toBeNull();
     })
 
-    it('test getStochasticEchart', () => {
-        const element = document.createElement('div');
-        let stochastic = new SetStochasticChart(StochasticOption);
-        stochastic.initStochasticECharts(element)
-        stochastic.setStochasticOption(KDJData, 'day')
-        let stochasticEchart = stochastic.getStochasticEchart()
-        expect(stochasticEchart).not.toBeNull();
-    })
-
     it('test resizeECharts', () => {
         const element = document.createElement('div');
         let stochastic = new SetStochasticChart(StochasticOption);
@@ -92,15 +84,6 @@ describe('test SetStochasticChart', () => {
         stochastic.setStochasticOption(KDJData, '5minute')
         stochastic.resizeECharts(element, true, size)
         expect(stochastic.stochastic.getOption()).not.toBeNull();
-    })
-
-    it('test clearStochasticEcharts', () => {
-        const element = document.createElement('div');
-        let stochastic = new SetStochasticChart(StochasticOption);
-        stochastic.initStochasticECharts(element)
-        stochastic.setStochasticOption(KDJData, 'month')
-        stochastic.clearStochasticEcharts()
-        expect(stochastic.stochastic.getOption().series).toEqual(new Array);
     })
 
     it('test disposeStochasticEChart', () => {
