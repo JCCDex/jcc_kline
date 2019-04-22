@@ -34,21 +34,31 @@
       </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
-        <div
-          v-show="showChart==='candle'"
+        <!-- <div style="position: absolute;right:150px;top:4px;z-index:5;" class="icon-indicator-div">
+            <el-popover placement="bottom" width="60" trigger="click">
+              <div class="indicatorOpt">
+                <div @click = "showIndicatorChart('OBV')" class = "chart-indicator-div">{{message.OBV}}</div><br>
+                <div @click = "showIndicatorChart('DMI')" class = "chart-indicator-div">{{message.DMI}}</div><br>
+                <div @click = "showIndicatorChart('MACD')" class = "chart-indicator-div">{{message.MACD}}</div><br>
+                <div @click = "showIndicatorChart('Boll')" class = "chart-indicator-div">{{message.Boll}}</div><br>
+                <div @click = "showIndicatorChart('TRIX')" class = "chart-indicator-div">{{message.TRIX}}</div><br>
+                <div @click = "showIndicatorChart('Stochastic')" class = "chart-indicator-div">{{message.KDJ}}</div><br>
+              </div>
+              <i v-show = "true" slot="reference" class="icon iconfont icon-indicator">
+                <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.indicator}}</font></span>
+              </i>
+            </el-popover>
+        </div>-->
+
+        <div v-show="showChart==='candle'"
           style="position: absolute;right:154px;top:3px;z-index:5;"
-          class="icon-indicator-div"
-        >
-          <i v-show="true" @click="showIndicatorChart('BRAR')" class="icon iconfont icon-indicator">
-            <span
-              v-show="true"
-              :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"
-            >
-              <font style="font-size:14px;line-height:22px;">{{message.MACD}}</font>
+          class="icon-indicator-div">
+          <i v-show="true" @click="showIndicatorOptions" :class="this.showIndicatorOpt ? 'icon iconfont icon-indicator-ed' : 'icon iconfont icon-indicator'">
+            <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'">
+              <font style="font-size:14px;line-height:22px;">{{message.indicator}}</font>
             </span>
           </i>
         </div>
-
         <div
           @click="changeChart('candle')"
           :class="this.showChart === 'candle' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'"
@@ -58,6 +68,29 @@
           :class="this.showChart === 'depth' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'"
           style="margin-left: 10px;margin-right: 20px;"
         >{{message.depth}}</div>
+
+        <div v-show="showIndicatorOpt" style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;">
+          <div class="indicatorOpt">
+            <div style="margin-left:10px">
+              <font>{{message.indicator}}</font>
+            </div>
+            <div @click="showIndicatorOptions" style="margin-right: 10px; float:right; margin-top: -14px;" class="close-background-icon">
+            </div>
+            <div style="height: 0.05rem; background-color:#2b3944; margin-top:5px"></div>
+            <div @click = "showIndicatorChart('MACD')" :class = "this.showIndicator ==='MACD' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.MACD}}</div>
+            </div>
+            <div @click = "showIndicatorChart('PSY')" :class = "this.showIndicator ==='PSY' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.PSY}}</div>
+            </div>
+            <div @click = "showIndicatorChart('ROC')" :class = "this.showIndicator ==='ROC' ? 'chart-indicator-div-active' : 'chart-indicator-div'">
+              <div class = "indicator-line">{{message.ROC}}</div>
+            </div>
+          </div>
+        </div>
+        
+
+        <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
       </div>
       <!-- 全屏按钮 -->
       <div style="position: absolute;right:30px;top:23px;z-index:5;" class="full-screen-div">
@@ -135,7 +168,7 @@
         :cycle="cycle"
       ></Volume>
       <MACD
-        ref="macd"
+        ref="macd"  
         v-show="showIndicator === 'MACD' && showChart !== 'depth'"
         v-on:listenMacdChartClose="getMacdClose"
         v-on:listenToTipIndex="getTipDataIndex"
@@ -145,6 +178,36 @@
         :resize-size="resizeSize"
         :cycle="cycle"
       ></MACD>
+      <PSY ref = "indicator" 
+        v-show="showIndicator === 'PSY' && showChart !== 'depth'"
+        @listenIndicatorChartClose = 'closeIndicatorChart' 
+        v-on:listenToTipIndex = "getTipDataIndex" 
+        :toolTipIndex = "toolTipIndex" 
+        :kline-config = "klineConfig" 
+        :chart-data-obj = "chartDataObj" 
+        :resize-size = "resizeSize" 
+        :cycle = "cycle"
+      ></PSY>
+      <ROC ref = "indicator"
+        v-show="showIndicator === 'ROC' && showChart !== 'depth'"
+        @listenIndicatorChartClose = 'closeIndicatorChart'
+        v-on:listenToTipIndex = "getTipDataIndex"
+        :toolTipIndex = "toolTipIndex"
+        :kline-config = "klineConfig"
+        :chart-data-obj = "chartDataObj"
+        :resize-size = "resizeSize"
+        :cycle = "cycle"
+      ></ROC>
+      <VR ref = "indicator"
+        v-show="showIndicator === 'VR' && showChart !== 'depth'"
+        @listenIndicatorChartClose = 'closeIndicatorChart'
+        v-on:listenToTipIndex = "getTipDataIndex"
+        :toolTipIndex = "toolTipIndex"
+        :kline-config = "klineConfig"
+        :chart-data-obj = "chartDataObj"
+        :resize-size = "resizeSize"
+        :cycle = "cycle"
+      ></VR>
       <!-- <KDJ ref = "stochastic" v-show = "showIndicator === 'Stochastic' && showChart !== 'depth'" v-on:listenStochasticChartEvent = 'getKDJChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></KDJ>
       <DMI ref = "indicator" v-show = "showIndicator === 'DMI' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></DMI>
       <OBV ref = "indicator" v-show = "showIndicator === 'OBV' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></OBV>
@@ -152,6 +215,7 @@
       <TRIX ref = "indicator" v-show = "showIndicator === 'TRIX' && showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></TRIX>
       <MTM ref = "indicator" v-show = "showChart !== 'depth'" v-on:listenIndicatorChartEvent = 'getIndicatorChart' @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></MTM>-->
        <BRAR ref = "indicator" v-show = "showIndicator === 'BRAR' && showChart !== 'depth'" @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></BRAR>
+      
     </fullscreen>
   </div>
 </template>
@@ -163,7 +227,10 @@ import KLine from "./kline.vue";
 import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
 import MACD from "./MACDChart.vue";
-import BRAR from "./BRARChart.vue"
+import BRAR from "./BRARChart.vue";
+import PSY from "./PSYChart.vue";
+import ROC from "./ROCChart.vue";
+import VR from "./VRChart.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import { splitData, getDepthData, handleDivisionData, calculateMA } from "../js/processData";
 export default {
@@ -174,7 +241,10 @@ export default {
     Volume,
     Fullscreen,
     MACD,
-    BRAR
+    BRAR,
+    PSY,
+    ROC,
+    VR,
     // KDJ,
     // DMI,
     // RSI,
@@ -202,6 +272,10 @@ export default {
       outspreadMA: true,
       resizeSize: {},
       isFullScreen: false,
+      showIndicator: null,
+      relevanceIndicator: "MA",
+      isClose: true,
+      showIndicatorOpt: false,
       showIndicator: "",
       isClose: true
     };
@@ -470,6 +544,9 @@ export default {
       this.showIndicator = null;
       this.isClose = isClose;
       this.resize();
+    },
+    showIndicatorOptions() {
+      this.showIndicatorOpt = !this.showIndicatorOpt;
     }
   }
 };

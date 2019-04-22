@@ -315,6 +315,48 @@ class IndicatorChartController {
                     }
                 }
             ];
+        } else if (data.indicator === 'PSY' && data.indicatorData) {
+            series = [
+                {
+                    name: 'PSY',
+                    data: data.indicatorData,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                }
+            ];
+        } else if (data.indicator === 'ROC' && data.indicatorData) {
+            series = [
+                {
+                    name: 'ROC',
+                    data: data.indicatorData,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                }
+            ];
+        } else if (data.indicator === 'VR' && data.indicatorData) {
+            series = [
+                {
+                    name: 'VR',
+                    data: data.indicatorData,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
+                        }
+                    }
+                }
+            ];
         }
         return series;
     }
