@@ -1,5 +1,5 @@
 import { splitData, getDepthData, calculateMA } from 'js/processData'
-import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData } from 'js/CalculateIndicator'
+import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData, getPSYData, getROCData, getVRData } from 'js/CalculateIndicator'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 
@@ -106,6 +106,37 @@ describe('test CalculateIndicator', () => {
   it('test getBRARData if data is null', () => {
     let BRARData = getBRARData(null, 24)
     expect(BRARData).toBe(undefined)
+  })
+
+  it('test getPSYData', () => {
+    let PSYData = getPSYData(testData.klineData)
+    expect(PSYData).not.toBeNull()
+  })
+
+  it('test getPSYData if data is null', () => {
+    let PSYData = getPSYData(null)
+    expect(PSYData).toBe(undefined)
+  })
+
+  it('test getROCData', () => {
+    let ROCData = getROCData(testData.klineData)
+    expect(ROCData).not.toBeNull()
+  })
+
+  it('test getROCData if data is null', () => {
+    let ROCData = getROCData(null)
+    expect(ROCData).toBe(undefined)
+  })
+
+
+  it('test getVRData', () => {
+    let VRData = getVRData(testData.klineData)
+    expect(VRData).not.toBeNull()
+  })
+
+  it('test getVRData if data is null', () => {
+    let VRData = getVRData(null)
+    expect(VRData).toBe(undefined)
   })
 
 })
