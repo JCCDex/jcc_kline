@@ -128,29 +128,29 @@ export default {
           }
         }
       }
-      if (
-        this.chartDataObj.divisionData &&
-        this.chartDataObj.cycle === "everyhour"
-      ) {
-        let data = this.chartDataObj.divisionData;
-        if (data.MACDData) {
-          var macdData = this.splitData(data.MACDData);
-          this.macdData = macdData;
-          if (
-            JSON.stringify(this.coinType) !==
-              JSON.stringify(this.chartDataObj.coinType) ||
-            this.isRefresh
-          ) {
-            this.isRefresh = false;
-            this.init(true);
-            this.cycle = this.chartDataObj.cycle;
-            this.macd.setMACDOption(macdData);
-            this.coinType = this.chartDataObj.coinType;
-          } else {
-            this.macd.updateMACDOption(macdData);
-          }
-        }
-      }
+      // if (
+      //   this.chartDataObj.divisionData &&
+      //   this.chartDataObj.cycle === "everyhour"
+      // ) {
+      //   let data = this.chartDataObj.divisionData;
+      //   if (data.MACDData) {
+      //     var macdData = this.splitData(data.MACDData);
+      //     this.macdData = macdData;
+      //     if (
+      //       JSON.stringify(this.coinType) !==
+      //         JSON.stringify(this.chartDataObj.coinType) ||
+      //       this.isRefresh
+      //     ) {
+      //       this.isRefresh = false;
+      //       this.init(true);
+      //       this.cycle = this.chartDataObj.cycle;
+      //       this.macd.setMACDOption(macdData);
+      //       this.coinType = this.chartDataObj.coinType;
+      //     } else {
+      //       this.macd.updateMACDOption(macdData);
+      //     }
+      //   }
+      // }
     },
     klineConfig() {
       if (this.klineConfig.platform === "pc") {

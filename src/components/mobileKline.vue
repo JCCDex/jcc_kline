@@ -74,15 +74,12 @@
       >{{message.timeSharing}}</div>
       <div @click="openCloseIndicator" class="indicator-select-div">
         <i
-          v-show="true"
+          v-show="showIndicatorBtn"
           :class="this.showIndicatorDiv ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'"
-        >
-          <!-- <i v-show = "isSelected" @click = "openCloseMacd" class="icon iconfont icon-indicator-selected"> -->
-          <!-- <span v-show="true" :class=" message.language === 'zh' ? 'icon-indicator-ch' : 'icon-indicator-en'"><font style="font-size:14px;line-height:22px;">{{message.MACD}}</font></span> -->
-        </i>
+        ></i>
       </div>
     </div>
-    <div v-show="showIndicatorDiv" class="indicatorConfigure">
+    <div v-show="showIndicatorDiv && currentCycle !== 'everyhour'" class="indicatorConfigure">
       <div class="mobile-indicator">
         <div
           style="margin-left:10px;float:left; font-size: 0.24rem; color: #e6e6e6; margin-top: 0.1rem; margin-left: 0.2rem;"
@@ -154,6 +151,7 @@ export default {
       showHourCycle: false,
       selectMin: "",
       selectHour: "",
+      showIndicatorBtn: true,
       showIndicatorDiv: false,
       showIndicator: null
     };
@@ -278,6 +276,11 @@ export default {
       }
     },
     chooseCycle(cycle) {
+      if (cycle === "everyhour") {
+        this.showIndicatorBtn = false;
+      } else {
+        this.showIndicatorBtn = true;
+      }
       let selectCycle = cycle;
       if (cycle instanceof Object) {
         selectCycle = cycle.target.value;
@@ -306,24 +309,18 @@ export default {
     dispose() {
       this.kline.disposeMobileChart();
     },
-    openCloseMacd() {
-      this.isSelected = !this.isSelected;
-      this.$emit("listenMacdChartOpenClose", true);
-    },
-
     openCloseIndicator() {
       this.showIndicatorDiv = !this.showIndicatorDiv;
     },
     showIndicatorChart(indicator) {
       this.$emit("listenMacdChartOpenClose", indicator);
+      this.showIndicatorDiv = false;
       this.showIndicator = indicator;
     },
     openCloseEyes() {
-      if (this.showIndicator === null) {
-        this.showIndicatorDiv = !this.showIndicatorDiv;
-      } else {
-        this.showIndicatorChart(this.showIndicator);
-      }
+      this.showIndicator = null;
+      this.showIndicatorDiv = false;
+      this.showIndicatorChart(this.showIndicator);
     }
   }
 };

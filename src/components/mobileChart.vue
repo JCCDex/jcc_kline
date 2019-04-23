@@ -71,7 +71,7 @@
     ></Volume>
     <MACD
       ref="macd"
-      v-show="showIndicatorChart === 'MACD'"
+      v-show="showIndicatorChart === 'MACD' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -80,7 +80,7 @@
     ></MACD>
     <KDJ
       ref="kdj"
-      v-show="showIndicatorChart === 'KDJ'"
+      v-show="showIndicatorChart === 'KDJ' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -89,7 +89,7 @@
     ></KDJ>
     <RSI
       ref="rsi"
-      v-show="showIndicatorChart === 'RSI'"
+      v-show="showIndicatorChart === 'RSI' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
