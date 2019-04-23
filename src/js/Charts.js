@@ -126,8 +126,8 @@ class ChartController {
     }
 
     /* 绘制MACD指标 */
-    initMACDECharts(DOM, clear) {
-        this.setMACDChart.initMACD(DOM, clear);
+    initMACDECharts(DOM, clear, type) {
+        this.setMACDChart.initMACD(DOM, clear, type);
     }
 
     resizeMACDChart(DOM, isFullScreen, size) {

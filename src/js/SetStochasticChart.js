@@ -9,6 +9,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var toolTipIndex;
 var oldStochasticData;
 var stochasticOption;
+var oldDataZoom;
 
 class StochasticChartController {
     constructor(configs) {
@@ -50,7 +51,10 @@ class StochasticChartController {
         }
     }
 
-    initStochasticECharts(DOM, clear) {
+    initStochasticECharts(DOM, clear, type) {
+        if (type === 'update') {
+            oldDataZoom = this.stochastic.getOption().dataZoom;
+        }
         if (this.stochastic && clear) {
             oldStochasticData = null;
             this.stochastic.dispose();
@@ -83,6 +87,7 @@ class StochasticChartController {
         };
         if (data) {
             stochasticOption = JSON.parse(JSON.stringify(this.stochasticConfig));
+            oldDataZoom = null;
             this.stochastic.hideLoading();
             let option = {
                 xAxis: this.getStochasticXAxis(data, cycle),
@@ -101,14 +106,16 @@ class StochasticChartController {
             data: data,
             cycle: cycle
         };
-        if (this.stochastic.getOption()) {
+        if (data) {
+            this.stochastic.hideLoading();
             let stochasticConfig = {
                 xAxis: this.getStochasticXAxis(data, cycle),
                 series: this.getStochasticSeries(data)
             };
             merge(stochasticOption, stochasticConfig);
-            stochasticOption.dataZoom = this.stochastic.getOption().dataZoom;
+            stochasticOption.dataZoom = oldDataZoom;
             this.stochastic.setOption(stochasticOption);
+            saveStochastic(this.stochastic);
         }
     }
 

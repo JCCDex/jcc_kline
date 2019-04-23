@@ -77,7 +77,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true);
+        this.init(true, 'init');
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -118,39 +118,17 @@ export default {
             this.isRefresh
           ) {
             this.isRefresh = false;
-            this.init(true);
+            this.init(true, 'init');
             this.refreshCycle = 0;
             this.cycle = this.chartDataObj.cycle;
             this.macd.setMACDOption(macdData);
             this.coinType = this.chartDataObj.coinType;
           } else {
+            this.init(true, 'update');
             this.macd.updateMACDOption(macdData);
           }
         }
       }
-      // if (
-      //   this.chartDataObj.divisionData &&
-      //   this.chartDataObj.cycle === "everyhour"
-      // ) {
-      //   let data = this.chartDataObj.divisionData;
-      //   if (data.MACDData) {
-      //     var macdData = this.splitData(data.MACDData);
-      //     this.macdData = macdData;
-      //     if (
-      //       JSON.stringify(this.coinType) !==
-      //         JSON.stringify(this.chartDataObj.coinType) ||
-      //       this.isRefresh
-      //     ) {
-      //       this.isRefresh = false;
-      //       this.init(true);
-      //       this.cycle = this.chartDataObj.cycle;
-      //       this.macd.setMACDOption(macdData);
-      //       this.coinType = this.chartDataObj.coinType;
-      //     } else {
-      //       this.macd.updateMACDOption(macdData);
-      //     }
-      //   }
-      // }
     },
     klineConfig() {
       if (this.klineConfig.platform === "pc") {
@@ -204,8 +182,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear) {
-      this.macd.initMACDECharts(this.$refs.macd, clear);
+    init(clear, type) {
+      this.macd.initMACDECharts(this.$refs.macd, clear, type);
       this.resize();
     },
     getToolTipData() {
