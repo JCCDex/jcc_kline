@@ -67,7 +67,7 @@ class IndicatorChartController {
     }
 
     changeIndicatorDataZoom(type) {
-        this.setIndicatorChart.changeDataZoom(type)
+        this.setIndicatorChart.changeDataZoom(type);
     }
 
     setIndicatorOption(data, cycle) {

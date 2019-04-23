@@ -86,7 +86,8 @@ class IndicatorChartController {
             let option = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
                 tooltip: this.getIndicatorToolTip(),
-                series: this.getIndicatorSeries(data)
+                series: this.getIndicatorSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(indicatorOption, option);
             this.indicator.setOption(indicatorOption, true);
@@ -361,6 +362,49 @@ class IndicatorChartController {
             ];
         }
         return series;
+    }
+
+    getDataZoom(data) {
+        let start = 0;
+        let len = 0;
+        if (data.indicator === 'RSI') {
+            len = data.indicatorData.RSI6.length;
+        } else if (data.indicator === 'DMI') {
+            len = data.indicatorData.length;
+        }
+        if (this.indicatorConfig.platform === 'mobile') {
+            if (len > 40) {
+                start = 60;
+            }
+            if (len > 100) {
+                start = 80;
+            }
+        } else {
+            if (len > 80) {
+                start = 20;
+            }
+            if (len > 120) {
+                start = 30;
+            }
+            if (len > 160) {
+                start = 50;
+            }
+            if (len > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.indicatorConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     disposeIndicatorEChart() {

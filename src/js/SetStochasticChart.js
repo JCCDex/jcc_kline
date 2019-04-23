@@ -51,9 +51,10 @@ class StochasticChartController {
     }
 
     initStochasticECharts(DOM, clear) {
-        if (this.stochasti && clear) {
+        if (this.stochastic && clear) {
             oldStochasticData = null;
             this.stochastic.dispose();
+
         }
         if (!this.stochastic || this.stochastic.isDisposed()) {
             this.stochastic = echarts.init(DOM);
@@ -86,7 +87,8 @@ class StochasticChartController {
             let option = {
                 xAxis: this.getStochasticXAxis(data, cycle),
                 tooltip: this.getStochasticToolTip(),
-                series: this.getStochasticSeries(data)
+                series: this.getStochasticSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(stochasticOption, option);
             this.stochastic.setOption(stochasticOption, true);
@@ -192,6 +194,44 @@ class StochasticChartController {
                 }
             }
         ];
+    }
+
+    getDataZoom(data) {
+        let start = 0;
+        let len = data.K.length;
+        if (this.stochasticConfig.platform === 'mobile') {
+            if (len > 40) {
+                start = 60;
+            }
+            if (len > 100) {
+                start = 80;
+            }
+        } else {
+            if (len > 80) {
+                start = 20;
+            }
+            if (len > 120) {
+                start = 30;
+            }
+            if (len > 160) {
+                start = 50;
+            }
+            if (len > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.stochasticConfig.dataZoom = dataZoom;
+        return dataZoom;
     }
 
     disposeStochasticEChart() {

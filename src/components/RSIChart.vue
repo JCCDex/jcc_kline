@@ -86,7 +86,7 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: this.chartDataObj.indicators,
+          indicator: 'RSI',
           categoryData: this.chartDataObj.candleData.categoryData
         };
         let RSI6 = getRSIData(this.chartDataObj.candleData.values, 6);
