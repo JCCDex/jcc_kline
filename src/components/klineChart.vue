@@ -178,7 +178,7 @@
         :resize-size="resizeSize"
         :cycle="cycle"
       ></MACD>
-      <KDJ ref = "indicator" 
+      <KDJ ref = "stochastic" 
         v-show="showIndicator === 'KDJ' && showChart !== 'depth'"
         @listenIndicatorChartClose = 'closeIndicatorChart' 
         v-on:listenToTipIndex = "getTipDataIndex" 
@@ -188,7 +188,7 @@
         :resize-size = "resizeSize" 
         :cycle = "cycle"
       ></KDJ>
-      <RSI ref = "indicator" 
+      <RSI ref = "rsi" 
         v-show="showIndicator === 'RSI' && showChart !== 'depth'"
         @listenIndicatorChartClose = 'closeIndicatorChart' 
         v-on:listenToTipIndex = "getTipDataIndex" 
@@ -539,6 +539,8 @@ export default {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);
         this.$refs.macd.changeDataZoom(type);
+        this.$refs.stochastic.changeDataZoom(type);
+        this.$refs.rsi.changeDataZoom(type);
       }
     },
     fullScreenToggle() {

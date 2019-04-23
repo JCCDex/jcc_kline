@@ -198,6 +198,9 @@ export default {
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
+    changeDataZoom(type) {
+      this.RSI.changeIndicatorDataZoom(type);
+    },
     resize() {
       if (this.klineConfig.platform === "pc") {
         this.RSI.resizeIndicatorChart(

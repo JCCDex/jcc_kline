@@ -190,6 +190,9 @@ export default {
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
+    changeDataZoom(type) {
+      this.stochastic.changeStochasticDataZoom(type);
+    },
     resize() {
       if (this.klineConfig.platform === "pc") {
         this.stochastic.resizeStochasticChart(

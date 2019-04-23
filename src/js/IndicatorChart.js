@@ -36,6 +36,10 @@ class IndicatorChartController {
         return this.setStochasticChart.getToolTipData();
     }
 
+    changeStochasticDataZoom(type) {
+        this.setStochasticChart.changeDataZoom(type);
+    }
+
     setStochasticOption(data, cycle) {
         this.setStochasticChart.setStochasticOption(data, cycle);
     }
@@ -60,6 +64,10 @@ class IndicatorChartController {
 
     getIndicatorTipData() {
         return this.setIndicatorChart.getToolTipData();
+    }
+
+    changeIndicatorDataZoom(type) {
+        this.setIndicatorChart.changeDataZoom(type)
     }
 
     setIndicatorOption(data, cycle) {

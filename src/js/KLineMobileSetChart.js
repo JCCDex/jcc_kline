@@ -98,6 +98,7 @@ class KLineMobileSetChartController {
         merge(timeDivisionconfig, option);
         cycle = 'everyhour';
         this.kline.setOption(timeDivisionconfig, true);
+        saveCandle(this.kline);
     }
 
     updateOption(data, cycle) {
