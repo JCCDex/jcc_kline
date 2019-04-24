@@ -97,8 +97,8 @@ class ChartController {
 
     /* 绘制交易量柱状图 */
 
-    initVolumeChart(DOM, clear) {
-        this.setVolumeChart.initVolumeECharts(DOM, clear);
+    initVolumeChart(DOM, clear, type) {
+        this.setVolumeChart.initVolumeECharts(DOM, clear, type);
     }
 
     resizeVolumeChart(DOM, isFullScreen, isCloseIndicator, size) {

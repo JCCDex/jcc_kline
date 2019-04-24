@@ -10,6 +10,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var volumeOption;
 var oldVolumeData;
 var toolTipIndex;
+var oldDataZoom;
 
 class VolumeChart {
     constructor(configs) {
@@ -52,7 +53,10 @@ class VolumeChart {
         }
     }
 
-    initVolumeECharts(DOM, clear) {
+    initVolumeECharts(DOM, clear, type) {
+        if (type === 'update') {
+            oldDataZoom = this.volume.getOption().dataZoom;
+        }
         if (this.volume && clear) {
             this.volume.dispose();
         }
@@ -82,6 +86,7 @@ class VolumeChart {
             cycle: cycle
         };
         if (data) {
+            oldDataZoom = null;
             volumeOption = JSON.parse(JSON.stringify(this.volumeConfig));
             this.volume.hideLoading();
             let option = {
@@ -102,14 +107,16 @@ class VolumeChart {
             data: data,
             cycle: cycle
         };
-        if (this.volume.getOption()) {
+        if (data) {
+            this.volume.hideLoading();
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data, cycle),
                 series: this.getVolumeSeries(data)
             };
             merge(volumeOption, volumeConfig);
-            volumeOption.dataZoom = this.volume.getOption().dataZoom;
+            volumeOption.dataZoom = oldDataZoom;
             this.volume.setOption(volumeOption);
+            saveVolume(this.volume);
         }
     }
 
