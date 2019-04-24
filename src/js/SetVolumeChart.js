@@ -58,6 +58,7 @@ class VolumeChart {
             oldDataZoom = this.volume.getOption().dataZoom;
         }
         if (this.volume && clear) {
+            oldVolumeData = null;
             this.volume.dispose();
         }
         if (!this.volume || this.volume.isDisposed()) {
