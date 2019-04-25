@@ -106,7 +106,7 @@ import Volume from "./volumeChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import MACD from "./MACDChart.vue";
 import KDJ from "./KDJChart.vue";
-import RSI from "./RSIChart";
+import RSI from "./RSIChart.vue";
 import {
   splitData,
   handleDivisionData,
