@@ -84,6 +84,16 @@
     line-height: 60px;
 }
 
+.kline-levitation-mobile-div {
+    width: 6rem;
+    height: 1.2rem;
+    position: absolute;
+    color: #fff;
+    left: 14%;
+    top: 7.2rem;
+    z-index: 10;    
+}
+
 .icon-full-screen {
     font-size: 16px !important;
     color: #b9cadd;

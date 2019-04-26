@@ -51,6 +51,26 @@
       >{{this.timeSharingTipData.averagePrice}}</font> &nbsp;
       <br>
     </div>
+          <!-- 平移、刷新、缩放按钮 -->
+    <!-- <div class="kline-levitation-mobile-div">
+      <div class="kline-levitation-icon" >
+        <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')">
+          <div class="left-shift-icon"></div>
+        </div>
+        <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
+          <i class="enlarge-icon"></i>
+        </div>
+        <div class="kline-levitation-btn" @click="changeDataZoom('refresh')">
+          <i class="refresh-icon"></i>
+        </div>
+        <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
+          <i class="narrow-icon"></i>
+        </div>
+        <div class="kline-levitation-btn" @click="changeDataZoom('rightShift')">
+          <i class="right-shift-icon"></i>
+        </div>
+      </div>
+    </div> -->
     <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
     <KLine
       ref="candle"
@@ -363,7 +383,14 @@ export default {
           }
         }
       }
-    }
+    },
+    changeDataZoom(type) {
+      if (this.showChart !== "depth") {
+        this.$refs.candle.changeDataZoom(type);
+        this.$refs.volume.changeDataZoom(type);
+        this.$refs.macd.changeDataZoom(type);
+      }
+    },
   }
 };
 </script>
