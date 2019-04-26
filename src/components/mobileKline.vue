@@ -81,7 +81,7 @@
     </div>
     <div v-show="showIndicatorDiv" class="indicatorConfigure">
       <div class="mobile-indicator">
-            <div style="margin-left:10px;float:left; font-size: 0.24rem; color: #e6e6e6; margin-top: 0.1rem; margin-left: 0.2rem;"><font>{{message.indicator}}</font></div>
+            <div class="indicator-font"><font>{{message.indicator}}</font></div>
             <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
             <div @click = "showIndicatorChart('MACD')" :class = "this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
               <div class = "indicator-mobile-line">{{message.MACD}}</div>
@@ -293,7 +293,6 @@ export default {
       }
     },
     openCloseEyes() {
-      debugger
       if (this.showIndicator === null) {
         this.showIndicatorDiv = !this.showIndicatorDiv;
       } else {

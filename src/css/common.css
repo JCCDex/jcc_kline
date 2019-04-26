@@ -184,13 +184,25 @@
     margin-top: 0.15rem;
 }
 
+.indicator-font {
+    margin-left: 10px;
+    float: left;
+    font-size: 0.24rem;
+    color: #e6e6e6;
+    margin-top: 0.1rem;
+    margin-left: 0.2rem;
+    width: 0.7rem;
+    border: 1px solid #1b2026;
+    border-right: 1px solid #e6e6e6;
+}
+
 .mobile-indicator-div {
     font-family: "Microsoft YaHei";
     color: #e6e6e6;
     font-size: 0.24rem;
     float: left;
     margin-left: 0.3rem;
-    margin-left: 0.5rem;
+    margin-right: 0.2rem;
     margin-top: 0.2rem;
 }
 
@@ -200,7 +212,7 @@
     font-size: 0.24rem;
     float: left;
     margin-left: 0.3rem;
-    margin-left: 0.5rem;
+    margin-right: 0.2rem;
     margin-top: 0.2rem;
 }
 
