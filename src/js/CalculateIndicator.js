@@ -32,6 +32,9 @@ export const getKDJData = (dayCount, data) => {
             });
             let highestPrice = bigToSmallHighestPriceData[0];
             let RSVData = (data[i][1] - lowestPrice) / (highestPrice - lowestPrice) * 100;
+            if (isNaN(RSVData)) {
+                RSVData = 0;
+            }
             RSV.push(RSVData);
             let KBeforeData;
             if (!isNaN(KData[i - 1])) {

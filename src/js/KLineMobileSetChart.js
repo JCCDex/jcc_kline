@@ -93,11 +93,22 @@ class KLineMobileSetChartController {
                         }
                     }
                 }
+            ],
+            dataZoom: [
+                {
+                    id: 'dataZoomX',
+                    type: 'inside',
+                    filterMode: 'filter',
+                    start: 80,
+                    end: 100,
+                    minSpan: 5
+                }
             ]
         };
         merge(timeDivisionconfig, option);
         cycle = 'everyhour';
         this.kline.setOption(timeDivisionconfig, true);
+        saveCandle(this.kline);
     }
 
     updateOption(data, cycle) {

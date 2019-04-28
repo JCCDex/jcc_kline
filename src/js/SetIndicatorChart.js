@@ -3,11 +3,13 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
+import { saveIndicator } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
+var oldDataZoom;
 
 class IndicatorChartController {
     constructor(configs) {
@@ -49,7 +51,10 @@ class IndicatorChartController {
         }
     }
 
-    initIndicatorECharts(DOM, clear) {
+    initIndicatorECharts(DOM, clear, type) {
+        if (type === 'update') {
+            oldDataZoom = this.indicator.getOption().dataZoom;
+        }
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -81,14 +86,17 @@ class IndicatorChartController {
         };
         if (data) {
             indicatorOption = JSON.parse(JSON.stringify(this.indicatorConfig));
+            oldDataZoom = null;
             this.indicator.hideLoading();
             let option = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
                 tooltip: this.getIndicatorToolTip(),
-                series: this.getIndicatorSeries(data)
+                series: this.getIndicatorSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(indicatorOption, option);
             this.indicator.setOption(indicatorOption, true);
+            saveIndicator(this.indicator);
         }
     }
 
@@ -97,16 +105,19 @@ class IndicatorChartController {
             data: data,
             cycle: cycle
         };
-        if (this.indicator.getOption()) {
+        if (data) {
+            this.indicator.hideLoading();
             let indicatorConfig = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
-                series: this.getIndicatorSeries(data)
+                tooltip: this.getIndicatorToolTip(),
+                series: this.getIndicatorSeries(data),
             };
             let option = JSON.parse(JSON.stringify(indicatorConfig));
             merge(indicatorOption, indicatorConfig);
             indicatorOption.series = JSON.parse(JSON.stringify(option.series));
-            indicatorOption.dataZoom = this.indicator.getOption().dataZoom;
+            indicatorOption.dataZoom = oldDataZoom;
             this.indicator.setOption(indicatorOption);
+            saveIndicator(this.indicator);
         }
     }
 
@@ -361,10 +372,73 @@ class IndicatorChartController {
         return series;
     }
 
+    getDataZoom(data) {
+        let start = 0;
+        let len = 0;
+        if (data.indicator === 'RSI') {
+            len = data.indicatorData.RSI6.length;
+        } else if (data.indicator === 'DMI') {
+            len = data.indicatorData.length;
+        }
+        if (this.indicatorConfig.platform === 'mobile') {
+            if (len > 40) {
+                start = 60;
+            }
+            if (len > 100) {
+                start = 80;
+            }
+        } else {
+            if (len > 80) {
+                start = 20;
+            }
+            if (len > 120) {
+                start = 30;
+            }
+            if (len > 160) {
+                start = 50;
+            }
+            if (len > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.indicatorConfig.dataZoom = dataZoom;
+        return dataZoom;
+    }
+
     disposeIndicatorEChart() {
         if (this.indicator) {
             this.indicator.dispose();
         }
+    }
+
+    changeDataZoom(type) {
+        let dataZoom = JSON.parse(JSON.stringify(this.indicator.getOption().dataZoom));
+        if (type === 'leftShift' && dataZoom[0].start >= 2) {
+            dataZoom[0].start = dataZoom[0].start - 2;
+            dataZoom[0].end = dataZoom[0].end - 2;
+        } else if (type === 'enlarge' && dataZoom[0].start < 95) {
+            dataZoom[0].start = dataZoom[0].start + 5;
+        } else if (type === 'refresh') {
+            dataZoom[0].start = this.indicatorConfig.dataZoom[0].start;
+            dataZoom[0].end = this.indicatorConfig.dataZoom[0].end;
+        } else if (type === 'narrow' && dataZoom[0].start >= 5) {
+            dataZoom[0].start = dataZoom[0].start - 5;
+        } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
+            dataZoom[0].start = dataZoom[0].start + 2;
+            dataZoom[0].end = dataZoom[0].end + 2;
+        }
+        indicatorOption.dataZoom = dataZoom;
+        this.indicator.setOption(indicatorOption);
     }
 
 }

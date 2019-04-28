@@ -16,10 +16,12 @@ export const splitData = (data) => {
         values.push(JSON.parse(JSON.stringify(data[i])));
         values[i].splice(0, 1);
         let status;
-        if (data[i][1] > data[i][2]) {
+        if (parseFloat(data[i][1]) > parseFloat(data[i][2])) {
             status = 1;
-        } else if (data[i][1] === data[i][2] && i !== 0) {
-            if (data[i][1] >= data[i - 1][2]) {
+        } else if (parseFloat(data[i][1]) < parseFloat(data[i][2])) {
+            status = -1;
+        } else if (parseFloat(data[i][1]) === parseFloat(data[i][2]) && i !== 0) {
+            if (parseFloat(data[i][1]) >= parseFloat(data[i - 1][2])) {
                 status = -1;
             } else {
                 status = 1;

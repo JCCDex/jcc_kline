@@ -148,12 +148,13 @@ export default {
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType)
           ) {
-            this.init(true)
+            this.init(true, 'init')
             let toolTipIndex = this.kline.setOption(data, this.currentCycle);
             this.isRefresh = false;
             this.$emit("listenToTipIndex", toolTipIndex);
             this.coinType = this.chartDataObj.coinType;
           } else {
+            this.init(true, 'update')
             this.kline.updateOption(data, this.currentCycle);
           }
         }
@@ -200,8 +201,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear) {
-      this.kline.initChart(this.$refs.klineRef, clear);
+    init(clear, type) {
+      this.kline.initChart(this.$refs.klineRef, clear, type);
       this.resize();
     },
     clickMinCycle() {

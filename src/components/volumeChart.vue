@@ -1,22 +1,26 @@
 <template>
-  <div ref="volume" :style="{height: `${volumeSize.height}`, width: `${volumeSize.width}`}" @mousemove="getToolTipIndex()"></div>
+  <div
+    ref="volume"
+    :style="{height: `${volumeSize.height}`, width: `${volumeSize.width}`}"
+    @mousemove="getToolTipIndex()"
+  ></div>
 </template>
 <script>
-import ChartController from '../js/Charts'
-import { getLanguage } from '../js/utils'
+import ChartController from "../js/Charts";
+import { getLanguage } from "../js/utils";
 export default {
   name: "volume",
   data() {
     return {
       volume: null,
-      coinType: '',
-      currentCycle: '',
+      coinType: "",
+      currentCycle: "",
       refreshCycle: 0,
       isRefresh: true,
-      chartType: 'volume',
+      chartType: "volume",
       volumeSize: {
-        height: '',
-        width: ''
+        height: "",
+        width: ""
       }
     };
   },
@@ -24,124 +28,147 @@ export default {
     chartDataObj: {
       type: Object,
       default: () => {
-        return {}
+        return {};
       }
     },
     klineConfig: {
       type: Object,
       default: () => {
-        return {
-        }
+        return {};
       }
     },
     resizeSize: {
       type: Object,
       default: () => {
-        return {
-        }
+        return {};
       }
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-    cycle () {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true)
-        this.isRefresh = true
+        this.init(true, "init");
+        this.isRefresh = true;
       }
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
     resizeSize() {
-      this.resize()
+      this.resize();
     },
     chartDataObj() {
-      if (this.chartDataObj.candleData && this.currentCycle !== 'everyhour') {
-        let data = this.chartDataObj.candleData
-        data.precision = this.chartDataObj.precision
+      if (this.chartDataObj.candleData && this.currentCycle !== "everyhour") {
+        let data = this.chartDataObj.candleData;
+        data.precision = this.chartDataObj.precision;
         if (data.values && data.volumes && data.categoryData) {
-          if(JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
-            this.volume.setVolumeOption(data, this.currentCycle)
-            this.isRefresh = false
-            this.coinType = this.chartDataObj.coinType
-          }else {
-            this.volume.updateVolumeOption(data, this.currentCycle)
+          if (
+            JSON.stringify(this.coinType) !==
+              JSON.stringify(this.chartDataObj.coinType) ||
+            this.isRefresh
+          ) {
+            this.init(true, "init");
+            this.volume.setVolumeOption(data, this.currentCycle);
+            this.isRefresh = false;
+            this.coinType = this.chartDataObj.coinType;
+          } else {
+            this.init(true, "update");
+            this.volume.updateVolumeOption(data, this.currentCycle);
           }
         }
       }
-      if (this.currentCycle === "everyhour" && this.chartDataObj.timeDivisionData) {
-        let timeDivisionData = this.chartDataObj.timeDivisionData
-        let divisionData = this.chartDataObj.divisionData
-        if (this.isRefresh && divisionData.times !== null && divisionData.averages !== null && divisionData.prices !== null && divisionData.volumes !== null) {
-          this.volume.setVolumeOption(divisionData, this.currentCycle)
-          this.isRefresh = false
+      if (
+        this.currentCycle === "everyhour" &&
+        this.chartDataObj.timeDivisionData
+      ) {
+        let timeDivisionData = this.chartDataObj.timeDivisionData;
+        let divisionData = this.chartDataObj.divisionData;
+        if (
+          this.isRefresh &&
+          divisionData.times !== null &&
+          divisionData.averages !== null &&
+          divisionData.prices !== null &&
+          divisionData.volumes !== null
+        ) {
+          this.init(true, "init");
+          this.volume.setVolumeOption(divisionData, this.currentCycle);
+          this.isRefresh = false;
         } else {
-           this.volume.updateVolumeOption(divisionData, this.currentCycle)
+          this.init(true, "update");
+          this.volume.updateVolumeOption(divisionData, this.currentCycle);
         }
       }
     },
     klineConfig() {
-      if (this.klineConfig.platform === 'pc') {
+      if (this.klineConfig.platform === "pc") {
         let size = {
-          width: this.klineConfig.size.width + 'px',
-          height: this.klineConfig.size.height + 'px'
-        }
-        if (JSON.stringify(size) !== JSON.stringify(this.volumeSize) && this.klineConfig.defaultSize === false) {
+          width: this.klineConfig.size.width + "px",
+          height: this.klineConfig.size.height + "px"
+        };
+        if (
+          JSON.stringify(size) !== JSON.stringify(this.volumeSize) &&
+          this.klineConfig.defaultSize === false
+        ) {
           this.volumeSize = {
-            width: this.klineConfig.size.width + 'px',
-            height: this.klineConfig.size.height * 0.25 + 'px'
-          }
+            width: this.klineConfig.size.width + "px",
+            height: this.klineConfig.size.height * 0.25 + "px"
+          };
           this.resize();
         }
       }
     }
   },
   created() {
-    if (this.klineConfig.platform === 'pc') {
+    if (this.klineConfig.platform === "pc") {
       if (!this.klineConfig.defaultSize) {
-        this.volumeSize.height = this.klineConfig.size.height * 0.25 + 'px'
-        this.volumeSize.width = this.klineConfig.size.width + 'px'
+        this.volumeSize.height = this.klineConfig.size.height * 0.25 + "px";
+        this.volumeSize.width = this.klineConfig.size.width + "px";
       } else {
         this.volumeSize = {
-          height: '300px',
-          width: '100%'
-        }
+          height: "300px",
+          width: "100%"
+        };
       }
     } else {
-      this.volumeSize.height = this.klineConfig.size.height * 0.3 + 'px'
-      this.volumeSize.width = this.klineConfig.size.width + 'px'
+      this.volumeSize.height = this.klineConfig.size.height * 0.3 + "px";
+      this.volumeSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = 'volume';
+    this.klineConfig.chartType = "volume";
     this.volume = new ChartController(this.klineConfig);
   },
   mounted() {
     this.init();
   },
   beforeDestroy() {
-    this.dispose()
+    this.dispose();
   },
   methods: {
-    init(clear) {
-      this.volume.initVolumeChart(this.$refs.volume, clear);
+    init(clear, type) {
+      this.volume.initVolumeChart(this.$refs.volume, clear, type);
       this.resize();
     },
-    getToolTipIndex () {
-      let toolTipIndex = this.volume.getToolTipIndex()
-      this.$emit("listenToTipIndex", toolTipIndex)
+    getToolTipIndex() {
+      let toolTipIndex = this.volume.getToolTipIndex();
+      this.$emit("listenToTipIndex", toolTipIndex);
     },
     resize() {
-      if (this.klineConfig.platform === 'pc') {
-        this.volume.resizeVolumeChart(this.$refs.volume, this.resizeSize.isFullScreen,　this.resizeSize.isCloseIndicator, this.klineConfig.size);
+      if (this.klineConfig.platform === "pc") {
+        this.volume.resizeVolumeChart(
+          this.$refs.volume,
+          this.resizeSize.isFullScreen,
+          this.resizeSize.isCloseIndicator,
+          this.klineConfig.size
+        );
       }
     },
     dispose() {
-      this.volume.disposeVolumeEcharts()
+      this.volume.disposeVolumeEcharts();
     },
     changeDataZoom(type) {
       this.volume.changeDataZoom(type);
     }
   }
-}
+};
 </script>

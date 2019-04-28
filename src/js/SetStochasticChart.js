@@ -3,11 +3,13 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
+import { saveStochastic } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var toolTipIndex;
 var oldStochasticData;
 var stochasticOption;
+var oldDataZoom;
 
 class StochasticChartController {
     constructor(configs) {
@@ -49,10 +51,14 @@ class StochasticChartController {
         }
     }
 
-    initStochasticECharts(DOM, clear) {
-        if (this.stochasti && clear) {
+    initStochasticECharts(DOM, clear, type) {
+        if (type === 'update') {
+            oldDataZoom = this.stochastic.getOption().dataZoom;
+        }
+        if (this.stochastic && clear) {
             oldStochasticData = null;
             this.stochastic.dispose();
+
         }
         if (!this.stochastic || this.stochastic.isDisposed()) {
             this.stochastic = echarts.init(DOM);
@@ -81,14 +87,17 @@ class StochasticChartController {
         };
         if (data) {
             stochasticOption = JSON.parse(JSON.stringify(this.stochasticConfig));
+            oldDataZoom = null;
             this.stochastic.hideLoading();
             let option = {
                 xAxis: this.getStochasticXAxis(data, cycle),
                 tooltip: this.getStochasticToolTip(),
-                series: this.getStochasticSeries(data)
+                series: this.getStochasticSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(stochasticOption, option);
             this.stochastic.setOption(stochasticOption, true);
+            saveStochastic(this.stochastic);
         }
     }
 
@@ -97,14 +106,16 @@ class StochasticChartController {
             data: data,
             cycle: cycle
         };
-        if (this.stochastic.getOption()) {
+        if (data) {
+            this.stochastic.hideLoading();
             let stochasticConfig = {
                 xAxis: this.getStochasticXAxis(data, cycle),
                 series: this.getStochasticSeries(data)
             };
             merge(stochasticOption, stochasticConfig);
-            stochasticOption.dataZoom = this.stochastic.getOption().dataZoom;
+            stochasticOption.dataZoom = oldDataZoom;
             this.stochastic.setOption(stochasticOption);
+            saveStochastic(this.stochastic);
         }
     }
 
@@ -192,10 +203,68 @@ class StochasticChartController {
         ];
     }
 
+    getDataZoom(data) {
+        let start = 0;
+        let len = data.K.length;
+        if (this.stochasticConfig.platform === 'mobile') {
+            if (len > 40) {
+                start = 60;
+            }
+            if (len > 100) {
+                start = 80;
+            }
+        } else {
+            if (len > 80) {
+                start = 20;
+            }
+            if (len > 120) {
+                start = 30;
+            }
+            if (len > 160) {
+                start = 50;
+            }
+            if (len > 200) {
+                start = 60;
+            }
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ];
+        this.stochasticConfig.dataZoom = dataZoom;
+        return dataZoom;
+    }
+
     disposeStochasticEChart() {
         if (this.stochastic) {
             this.stochastic.dispose();
         }
+    }
+
+    changeDataZoom(type) {
+        let dataZoom = JSON.parse(JSON.stringify(this.stochastic.getOption().dataZoom));
+        if (type === 'leftShift' && dataZoom[0].start >= 2) {
+            dataZoom[0].start = dataZoom[0].start - 2;
+            dataZoom[0].end = dataZoom[0].end - 2;
+        } else if (type === 'enlarge' && dataZoom[0].start < 95) {
+            dataZoom[0].start = dataZoom[0].start + 5;
+        } else if (type === 'refresh') {
+            dataZoom[0].start = this.stochasticConfig.dataZoom[0].start;
+            dataZoom[0].end = this.stochasticConfig.dataZoom[0].end;
+        } else if (type === 'narrow' && dataZoom[0].start >= 5) {
+            dataZoom[0].start = dataZoom[0].start - 5;
+        } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
+            dataZoom[0].start = dataZoom[0].start + 2;
+            dataZoom[0].end = dataZoom[0].end + 2;
+        }
+        stochasticOption.dataZoom = dataZoom;
+        this.stochastic.setOption(stochasticOption);
     }
 
 }
