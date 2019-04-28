@@ -56,10 +56,6 @@ export default {
           this.init(true);
           let tipIndex = this.timeSharing.setTimeSharingOption(divisionData);
           this.$emit("listenToTipIndex", tipIndex);
-          this.$emit(
-            "listenTimeSharingChart",
-            this.timeSharing.getTimeSharingChart()
-          );
           this.timeSharing.resizeTimeSharingChart(
             this.$refs.timeSharing,
             false,
