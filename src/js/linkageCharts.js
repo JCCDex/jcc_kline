@@ -5,6 +5,7 @@ import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/dataZoom';
 
 let candleChart;
+let TimeSharingChart;
 let volumeChart;
 let macdChart;
 let indicatorChart;
@@ -16,9 +17,15 @@ export const saveCandle = (candle) => {
     linkageChart(candle, indicatorChart);
 };
 
+export const saveTimeSharing = (timeSharing) => {
+    TimeSharingChart = timeSharing;
+    linkageChart(timeSharing, volumeChart);
+};
+
 export const saveVolume = (volume) => {
     volumeChart = volume;
     linkageChart(candleChart, volume);
+    linkageChart(TimeSharingChart, volume);
 };
 
 export const saveMacd = (macd) => {

@@ -83,6 +83,10 @@ class ChartController {
         return this.setTimeSharing.setTimeSharingOption(divisionData);
     }
 
+    changeTimeSharingDataZoom(type) {
+        this.setTimeSharing.changeDataZoom(type);        
+    }
+
     updateTimeSharingOption(divisionData) {
         this.setTimeSharing.updateTimeSharingOption(divisionData);
     }

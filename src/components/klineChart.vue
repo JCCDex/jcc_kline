@@ -303,7 +303,7 @@ import Volume from "./volumeChart.vue";
 import MACD from "./MACDChart.vue";
 import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
-import TimeSharing from "./timeSharing.vue"
+import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
   splitData,
@@ -453,7 +453,7 @@ export default {
     },
     chooseCycle(cycle) {
       if (cycle === this.cycle) {
-        return
+        return;
       }
       // if (cycle === 'everyhour') {
       //   this.showChart = 'timeSharing'
@@ -566,7 +566,7 @@ export default {
       this.resize();
       this.changeChartDataObj(this.klineDataObj);
     },
-    
+
     getTipDataIndex(index) {
       if (!isNaN(index)) {
         this.toolTipIndex = index;
@@ -659,12 +659,16 @@ export default {
       if (type) {
         this.changeDataZoomType = type;
       }
-      if (this.showChart !== "depth") {
+      if (this.showChart !== "depth" && this.cycle !== "everyhour") {
         this.$refs.candle.changeDataZoom(this.changeDataZoomType);
         this.$refs.volume.changeDataZoom(this.changeDataZoomType);
         this.$refs.macd.changeDataZoom(this.changeDataZoomType);
         this.$refs.stochastic.changeDataZoom(this.changeDataZoomType);
         this.$refs.rsi.changeDataZoom(this.changeDataZoomType);
+      }
+      if (this.cycle === "everyhour") {
+        this.$refs.timeSharing.changeDataZoom(this.changeDataZoomType);
+        this.$refs.volume.changeDataZoom(this.changeDataZoomType);
       }
     },
     fullScreenToggle() {

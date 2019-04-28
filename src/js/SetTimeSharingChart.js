@@ -5,6 +5,7 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
+import { saveTimeSharing } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var timeSharingOption;
@@ -102,6 +103,7 @@ class TimeSharingChart {
         merge(timeSharingOption, option);
         this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption, true);
+        saveTimeSharing(this.timeSharing);
         return toolTipIndex;
     }
 
@@ -165,6 +167,26 @@ class TimeSharingChart {
                 minSpan: 5
             }
         ];
+    }
+
+    changeDataZoom(type) {
+        let dataZoom = JSON.parse(JSON.stringify(this.timeSharing.getOption().dataZoom));
+        if (type === 'leftShift' && dataZoom[0].start >= 2) {
+            dataZoom[0].start = dataZoom[0].start - 2;
+            dataZoom[0].end = dataZoom[0].end - 2;
+        } else if (type === 'enlarge' && dataZoom[0].start < 95) {
+            dataZoom[0].start = dataZoom[0].start + 5;
+        } else if (type === 'refresh') {
+            dataZoom[0].start = this.timeSharingConfig.dataZoom[0].start;
+            dataZoom[0].end = this.timeSharingConfig.dataZoom[0].end;
+        } else if (type === 'narrow' && dataZoom[0].start >= 5) {
+            dataZoom[0].start = dataZoom[0].start - 5;
+        } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
+            dataZoom[0].start = dataZoom[0].start + 2;
+            dataZoom[0].end = dataZoom[0].end + 2;
+        }
+        timeSharingOption.dataZoom = dataZoom;
+        this.timeSharing.setOption(timeSharingOption);
     }
 }
 

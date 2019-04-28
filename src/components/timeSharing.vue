@@ -125,6 +125,9 @@ export default {
       this.timeSharing.initTimeSharingChart(this.$refs.timeSharing, clear);
       this.resizeSize(this.klineConfig.size);
     },
+    changeDataZoom(type) {
+      this.timeSharing.changeDataZoom(type);
+    },
     resizeSize() {
       if (this.klineConfig.platform === "pc") {
         let isFullScreen = this.$parent.getState();
