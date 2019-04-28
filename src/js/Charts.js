@@ -71,8 +71,8 @@ class ChartController {
 
     /* 绘制分时图 */
 
-    initTimeSharingChart(DOM, clear) {
-        this.setTimeSharing.initTimeSharingECharts(DOM, clear);
+    initTimeSharingChart(DOM, clear, type) {
+        this.setTimeSharing.initTimeSharingECharts(DOM, clear, type);
     }
 
     resizeTimeSharingChart(DOM, isFullScreen, size) {

@@ -23,7 +23,9 @@ export default {
       },
       coinType: null,
       message: null,
-      timeSharingData: null
+      timeSharingData: null,
+      currentCycle: "",
+      isRefresh: true
     };
   },
   props: {
@@ -40,9 +42,20 @@ export default {
           chartType: "timeSharing"
         };
       }
+    },
+    cycle: {
+      type: String,
+      default: ""
     }
   },
   watch: {
+    cycle() {
+      if (this.cycle !== this.currentCycle) {
+        this.init(true, "init");
+        this.isRefresh = true;
+      }
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
+    },
     chartDataObj() {
       this.message = getLanguage();
       let precision = this.chartDataObj.precision;
@@ -51,9 +64,10 @@ export default {
         divisionData.precision = precision;
         if (
           JSON.stringify(this.coinType) !==
-          JSON.stringify(this.chartDataObj.coinType)
+            JSON.stringify(this.chartDataObj.coinType) ||
+          this.isRefresh
         ) {
-          this.init(true);
+          this.init(true, "init");
           let tipIndex = this.timeSharing.setTimeSharingOption(divisionData);
           this.$emit("listenToTipIndex", tipIndex);
           this.timeSharing.resizeTimeSharingChart(
@@ -61,8 +75,10 @@ export default {
             false,
             this.klineConfig.size
           );
+          this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
+          this.init(true, "update");
           this.timeSharing.updateTimeSharingOption(divisionData);
         }
       }
@@ -121,8 +137,12 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear) {
-      this.timeSharing.initTimeSharingChart(this.$refs.timeSharing, clear);
+    init(clear, type) {
+      this.timeSharing.initTimeSharingChart(
+        this.$refs.timeSharing,
+        clear,
+        type
+      );
       this.resizeSize(this.klineConfig.size);
     },
     changeDataZoom(type) {

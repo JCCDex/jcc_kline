@@ -240,6 +240,7 @@
         :chart-data-obj="chartDataObj"
         :kline-config="klineConfig"
         :resize-size="resizeSize"
+        :cycle="cycle"
       ></TimeSharing>
       <Depth
         ref="depth"
@@ -455,11 +456,6 @@ export default {
       if (cycle === this.cycle) {
         return;
       }
-      // if (cycle === 'everyhour') {
-      //   this.showChart = 'timeSharing'
-      // } else {
-      //   this.showChart = 'candle'
-      // }
       this.toolTipData = null;
       this.cycle = cycle;
       this.toolTipIndex = null;

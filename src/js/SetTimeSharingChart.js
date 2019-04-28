@@ -11,6 +11,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var timeSharingOption;
 var oldTimeSharingData;
 var toolTipIndex;
+var oldDataZoom;
 
 class TimeSharingChart {
     constructor(configs) {
@@ -33,7 +34,7 @@ class TimeSharingChart {
                 } else {
                     let resizeContainer = () => {
                         if (DOM) {
-                            DOM.style.height = size.height * 0.75 + 'px';
+                            DOM.style.height = size.height * 0.7 + 'px';
                             DOM.style.width = size.width + 'px';
                         }
                     };
@@ -42,7 +43,7 @@ class TimeSharingChart {
                 }
             } else {
                 let resizeContainer = () => {
-                    DOM.style.height = size.clientHeight * 0.75 + 'px';
+                    DOM.style.height = size.clientHeight * 0.7 + 'px';
                     DOM.style.width = size.clientWidth + 'px';
                 };
                 resizeContainer(this);
@@ -54,7 +55,10 @@ class TimeSharingChart {
         }
     }
 
-    initTimeSharingECharts(DOM, clear) {
+    initTimeSharingECharts(DOM, clear, type) {
+        if (type === 'update') {
+            oldDataZoom = this.timeSharing.getOption().dataZoom;
+        }
         if (this.timeSharing && clear) {
             toolTipIndex = null;
             oldTimeSharingData = null;
@@ -62,8 +66,6 @@ class TimeSharingChart {
         }
         if (!this.timeSharing || this.timeSharing.isDisposed()) {
             toolTipIndex = null;
-            timeSharingOption = null;
-            oldTimeSharingData = null;
             this.timeSharing = echarts.init(DOM);
             this.showLoading();
         }
@@ -93,6 +95,7 @@ class TimeSharingChart {
         oldTimeSharingData = data;
         let { times, averages, prices, volumes } = data;
         let length = averages.length - 1;
+        oldDataZoom = null;
         toolTipIndex = length;
         let option = {
             xAxis: this.getTimeSharingXAxis(times),
@@ -114,8 +117,10 @@ class TimeSharingChart {
             series: this.getTimeSharingSeries(prices, averages, volumes)
         };
         merge(timeSharingOption, option);
-        timeSharingOption.dataZoom = this.timeSharing.getOption().dataZoom;
+        timeSharingOption.dataZoom = oldDataZoom;
+        this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption);
+        saveTimeSharing(this.timeSharing);
     }
 
     getTimeSharingEchart() {
