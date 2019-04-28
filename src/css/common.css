@@ -7,7 +7,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: 185px;
+    width: 210px;
 }
 
 .kline-cycle-btn {
@@ -16,7 +16,7 @@
     width: auto;
     height: 20px;
     cursor: pointer;
-    margin-left: 10px;
+    margin-left: 8px;
     text-align: center;
     color: #e6e6e6;
     line-height: 20px;
@@ -31,7 +31,7 @@
 .tooltip-data-zh {
     font-size: 11px !important;
     position: absolute;
-    left: 20%;
+    left: 24%;
     top: 20px;
     z-index: 1;
     float: left;
@@ -43,7 +43,7 @@
 .tooltip-data-en {
     font-size: 11px !important;
     position: absolute;
-    left: 20%;
+    left: 24%;
     top: 23px;
     z-index: 1;
     float: left;
