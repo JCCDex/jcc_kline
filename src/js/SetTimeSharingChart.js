@@ -60,12 +60,10 @@ class TimeSharingChart {
             oldDataZoom = this.timeSharing.getOption().dataZoom;
         }
         if (this.timeSharing && clear) {
-            toolTipIndex = null;
             oldTimeSharingData = null;
             this.timeSharing.dispose();
         }
         if (!this.timeSharing || this.timeSharing.isDisposed()) {
-            toolTipIndex = null;
             this.timeSharing = echarts.init(DOM);
             this.showLoading();
         }
@@ -99,7 +97,7 @@ class TimeSharingChart {
         toolTipIndex = length;
         let option = {
             xAxis: this.getTimeSharingXAxis(times),
-            tooltip: this.getTimeSharingToolTip(),
+            tooltip: this.getTimeSharingToolTip(data),
             series: this.getTimeSharingSeries(prices, averages, volumes),
             dataZoom: this.getTimeSharingDataZoom()
         };
@@ -114,7 +112,9 @@ class TimeSharingChart {
         let { times, averages, prices, volumes } = data;
         let option = {
             xAxis: this.getTimeSharingXAxis(times),
-            series: this.getTimeSharingSeries(prices, averages, volumes)
+            tooltip: this.getTimeSharingToolTip(data),
+            series: this.getTimeSharingSeries(prices, averages, volumes),
+            dataZoom: this.getTimeSharingDataZoom()
         };
         merge(timeSharingOption, option);
         timeSharingOption.dataZoom = oldDataZoom;

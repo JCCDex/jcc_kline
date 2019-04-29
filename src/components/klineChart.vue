@@ -76,7 +76,7 @@
       <!-- tooltip数据显示 -->
       <div
         :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'"
-        v-if="showChart === 'candle' && toolTipData"
+        v-if="showChart === 'candle' && toolTipData && this.cycle !== 'everyhour'"
       >
         <div style="margin-right: 180px;">
           <i
@@ -100,6 +100,15 @@
             <font>:&nbsp;{{ getMAData(MAitem.name) }}</font>
           </font>
         </div>
+      </div>
+      <!-- 分时线tips数据显示 -->
+      <div
+        :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'"
+        v-if="cycle==='everyhour' && toolTipData"
+      >
+        <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font>
+        <font class="tooltip-data-name">{{message.price}}{{this.toolTipData.price}}</font>
+        <font class="tooltip-data-name">{{message.averagePrice}}{{this.toolTipData.averagePrice}}</font>
       </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
@@ -165,8 +174,6 @@
             </div>
           </div>
         </div>
-
-        <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
       </div>
       <!-- 全屏按钮 -->
       <div style="position: absolute;right:30px;top:23px;z-index:5;" class="full-screen-div">
@@ -237,6 +244,7 @@
       <TimeSharing
         ref="timeSharing"
         v-show="cycle === 'everyhour'"
+        v-on:listenToTipIndex="getTipDataIndex"
         :chart-data-obj="chartDataObj"
         :kline-config="klineConfig"
         :resize-size="resizeSize"
@@ -565,7 +573,6 @@ export default {
 
     getTipDataIndex(index) {
       if (!isNaN(index)) {
-        this.toolTipIndex = index;
         if (this.chartDataObj.precision) {
           let pricePrecision = !isNaN(this.chartDataObj.precision.price)
             ? this.chartDataObj.precision.price
@@ -573,7 +580,8 @@ export default {
           let amountsPrecision = !isNaN(this.chartDataObj.precision.amount)
             ? this.chartDataObj.precision.amount
             : 2;
-          if (this.chartDataObj.candleData) {
+          if (this.chartDataObj.candleData && this.cycle !== "everyhour") {
+            this.toolTipIndex = index;
             if (
               this.chartDataObj.candleData.values[index] &&
               this.chartDataObj.candleData.categoryData[index]
@@ -623,6 +631,26 @@ export default {
                 };
               }
             }
+          }
+          if (this.cycle === "everyhour") {
+            let tipsData = this.chartDataObj.divisionData;
+            this.toolTipData = {
+              volume: formatDecimal(
+                tipsData.volumes[index][1],
+                amountsPrecision,
+                true
+              ),
+              price: formatDecimal(
+                tipsData.prices[index],
+                pricePrecision,
+                true
+              ),
+              averagePrice: formatDecimal(
+                tipsData.averages[index],
+                pricePrecision,
+                true
+              )
+            };
           }
         }
       }
