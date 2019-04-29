@@ -146,7 +146,7 @@ export default {
       this.resizeSize(this.klineConfig.size);
     },
     changeDataZoom(type) {
-      this.timeSharing.changeDataZoom(type);
+      this.timeSharing.changeTimeSharingDataZoom(type);
     },
     resizeSize() {
       if (this.klineConfig.platform === "pc") {
