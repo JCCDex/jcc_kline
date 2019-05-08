@@ -98,6 +98,24 @@
         >
           <div class="indicator-mobile-line">{{message.RSI}}</div>
         </div>
+        <div
+          @click="showIndicatorChart('MTM')"
+          :class="this.showIndicator ==='MTM' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.MTM}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('WR')"
+          :class="this.showIndicator ==='WR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.WR}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('VR')"
+          :class="this.showIndicator ==='VR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.VR}}</div>
+        </div>
         <!-- <div @click = "showIndicatorChart('OBV')" :class = "this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
               <div class = "indicator-mobile-line">{{message.OBV}}</div>
             </div>

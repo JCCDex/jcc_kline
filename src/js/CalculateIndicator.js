@@ -272,7 +272,11 @@ export const getMTMData = (data) => {
             MTM.push(MTMTmp);
         }
     }
-    return MTM;
+    var MAMTM = getMADataByDetailData(10, MTM);
+    return {
+        MTM: MTM,
+        MAMTM: MAMTM
+    };
 };
 
 export const getBRARData = (data, periodic) => {
@@ -409,6 +413,42 @@ export const getROCData = (data) => {
     return ROC;
 };
 
+export const getWRData = (data) => {
+    if (!data) {
+        return;
+    }
+    var WR1 = []; // 
+    var WR2 = []; // 
+    for (var i=0; i<data.length; i++) {
+        if (i < 9) {
+            WR1[i] = "-";
+        } else {
+            var HIGH1 = data[i][4];
+            var LOW1 = data[i][3];
+            for (var j=i; j>i-10; j--) {
+                HIGH1 = data[j][4] > HIGH1 ? data[j][4] : HIGH1;
+                LOW1 = data[j][3] > LOW1 ? LOW1 : data[j][3];
+            }
+            WR1[i] = 100 * [ HIGH1- data[i][2] ] / [ HIGH1-LOW1 ];
+        }
+        if (i < 5) {
+            WR2[i] = "-";
+        } else {
+            var HIGH2 = data[i][4];
+            var LOW2 = data[i][3];
+            for (var j=i; j>i-6; j--) {
+                HIGH2 = data[j][4] > HIGH2 ? data[j][4] : HIGH2;
+                LOW2 = data[j][3] > LOW2 ? LOW2 : data[j][3];
+            }
+            WR2[i] = 100 * [ HIGH2- data[i][2] ] / [ HIGH2 - LOW2 ];
+        }
+    }
+    return {
+        WR1 : WR1,
+        WR2 : WR2
+    }
+};
+
 export const getVRData = (data) => {
     if (!data) {
         return;
@@ -448,7 +488,11 @@ export const getVRData = (data) => {
             VR.push(VRTmp);
         }
     }
-    return VR;
+    var MAVR = getMADataByDetailData(10, VR);
+    return {
+        VR: VR,
+        MAVR: MAVR 
+    };
 };
 
 

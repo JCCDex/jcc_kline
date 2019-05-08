@@ -291,12 +291,23 @@ class IndicatorChartController {
             series = [
                 {
                     name: 'MTM',
-                    data: data.indicatorData,
+                    data: data.indicatorData.MTM,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
                             color: '#67ff7c'
+                        }
+                    }
+                },
+                {
+                    name: 'MAMTM',
+                    data: data.indicatorData.MAMTM,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#f6d026'
                         }
                     }
                 }
@@ -358,12 +369,48 @@ class IndicatorChartController {
             series = [
                 {
                     name: 'VR',
-                    data: data.indicatorData,
+                    data: data.indicatorData.VR,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
                             color: '#67ff7c'
+                        }
+                    }
+                },
+                {
+                    name: 'MAVR',
+                    data: data.indicatorData.MAVR,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#f6d026'
+                        }
+                    }
+                }
+            ];
+        }  else if (data.indicator === 'WR' && data.indicatorData) {
+            series = [
+                {
+                    name: 'WR1',
+                    data: data.indicatorData.WR1,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e6e6e6'
+                        }
+                    }
+                },
+                {
+                    name: 'WR2',
+                    data: data.indicatorData.WR2,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#f6d026'
                         }
                     }
                 }
@@ -373,12 +420,19 @@ class IndicatorChartController {
     }
 
     getDataZoom(data) {
+        debugger
         let start = 0;
         let len = 0;
         if (data.indicator === 'RSI') {
             len = data.indicatorData.RSI6.length;
         } else if (data.indicator === 'DMI') {
             len = data.indicatorData.length;
+        } else if (data.indicator === 'MTM') {
+            len = data.indicatorData.MTM.length;
+        } else if (data.indicator === 'WR') {
+            len = data.indicatorData.WR1.length;
+        } else if (data.indicator === 'VR') {
+            len = data.indicatorData.VR.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -440,7 +494,6 @@ class IndicatorChartController {
         indicatorOption.dataZoom = dataZoom;
         this.indicator.setOption(indicatorOption);
     }
-
 }
 
 export default IndicatorChartController;

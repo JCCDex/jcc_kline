@@ -89,8 +89,8 @@
     height: 1.2rem;
     position: absolute;
     color: #fff;
-    left: 14%;
-    top: 7.2rem;
+    left: 34%;
+    top: 5.5rem;
     z-index: 10;    
 }
 
@@ -285,7 +285,7 @@
 }
 
 .indicatorOpt {
-    color: #e6e6e6;
+    color: #ffffff;
     background-color: #1e262c;
     font-size: 14px;
     font-family: "Microsoft YaHei";
@@ -766,7 +766,7 @@
     cursor: pointer;
     font-size: 14px;
     margin-left: 16px;
-    background-color: #1bdefd;
+    background-color: #00accc;
     width: 50px;
     height: 23px;
     margin-top: 10px;

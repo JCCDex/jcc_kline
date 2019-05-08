@@ -5,11 +5,13 @@
       v-if="toolTipData"
     >
       <font style="color: #67ff7c;">VR:&nbsp;{{toolTipData.VR}}</font>
+      <font style="color: #f6d026;">MAVR:&nbsp;{{toolTipData.MAVR}}</font>
     </div>
     <i
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="VR"
@@ -21,7 +23,7 @@
 <script>
 import { getVRData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "VR",
   data() {
@@ -29,8 +31,9 @@ export default {
       indicator: null,
       indicatorsData: null,
       VRData: null,
+      platform: "",
       coinType: "",
-      currentCycle: '',
+      currentCycle: "",
       isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
@@ -65,13 +68,13 @@ export default {
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-     cycle() {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true);
+        this.init(true, 'init');
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -91,12 +94,21 @@ export default {
         this.indicatorsData.indicatorData = this.VRData;
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
-        if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
+        if (
+          JSON.stringify(this.coinType) !==
+            JSON.stringify(this.chartDataObj.coinType) ||
+          this.isRefresh
+        ) {
+          this.init(true, 'init');
           this.VR.setIndicatorOption(this.indicatorsData, this.currentCycle);
-          this.isRefresh = false
+          this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.VR.updateIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.init(true, 'update');
+          this.VR.updateIndicatorOption(
+            this.indicatorsData,
+            this.currentCycle
+          );
         }
       }
     },
@@ -126,7 +138,8 @@ export default {
         }
         if (this.VRData) {
           this.toolTipData = {
-            VR: parseFloat(this.VRData[index]).toFixed(7)
+            VR: parseFloat(this.VRData.VR[index]).toFixed(7),
+            MAVR: parseFloat(this.VRData.MAVR[index]).toFixed(7)
           };
         }
       }
@@ -134,6 +147,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.VRSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.VRSize.width = this.klineConfig.size.width + "px";
@@ -144,6 +158,7 @@ export default {
         };
       }
     } else {
+      this.platform = "mobile";
       this.VRSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.VRSize.width = this.klineConfig.size.width + "px";
     }
@@ -157,8 +172,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.VR.initIndicatorChart(this.$refs.VR);
+    init(clear, type) {
+      this.VR.initIndicatorChart(this.$refs.VR, clear, type);
       this.resize();
     },
     getToolTipIndex() {
@@ -166,7 +181,10 @@ export default {
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
+    },
+    changeDataZoom(type) {
+      this.VR.changeIndicatorDataZoom(type);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
