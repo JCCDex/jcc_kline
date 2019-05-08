@@ -155,10 +155,14 @@ export default {
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
+        let isCloseIndicator = this.resizeSize.isCloseIndicator;
+        if (this.cycle === "everyhour") {
+          isCloseIndicator = true;
+        }
         this.volume.resizeVolumeChart(
           this.$refs.volume,
           this.resizeSize.isFullScreen,
-          this.resizeSize.isCloseIndicator,
+          isCloseIndicator,
           this.klineConfig.size
         );
       }

@@ -5,7 +5,7 @@
         <div class="exit-full-screen-btn" @click="fullScreenToggle">Exit Full Screen(Esc)</div>
       </div>
       <!-- Cycle按钮 -->
-      <div class="kline-cycle">
+      <div class="kline-cycle" v-show="showChart !== 'depth'">
         <div class="kline-cycle-div">
           <div @click="clickMinCycle()">
             <div
@@ -104,7 +104,7 @@
       <!-- 分时线tips数据显示 -->
       <div
         :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'"
-        v-if="cycle==='everyhour' && toolTipData"
+        v-if="cycle==='everyhour' && toolTipData && showChart !== 'depth'"
       >
         <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font>
         <font class="tooltip-data-name">{{message.price}}{{this.toolTipData.price}}</font>
@@ -113,7 +113,7 @@
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
         <div
-          v-show="showChart==='candle'"
+          v-show="showChart==='candle' && cycle !== 'everyhour'"
           style="position: absolute;right:154px;top:3px;z-index:5;"
           class="icon-indicator-div"
         >
@@ -243,7 +243,7 @@
       ></KLine>
       <TimeSharing
         ref="timeSharing"
-        v-show="cycle === 'everyhour'"
+        v-show="cycle === 'everyhour' && showChart !== 'depth'"
         v-on:listenToTipIndex="getTipDataIndex"
         :chart-data-obj="chartDataObj"
         :kline-config="klineConfig"
@@ -268,7 +268,7 @@
       ></Volume>
       <MACD
         ref="macd"
-        v-show="showIndicator === 'MACD' && showChart !== 'depth'"
+        v-show="showIndicator === 'MACD' && showChart !== 'depth' && cycle !== 'everyhour'"
         v-on:listenMacdChartClose="getMacdClose"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -279,7 +279,7 @@
       ></MACD>
       <KDJ
         ref="stochastic"
-        v-show="showIndicator === 'KDJ' && showChart !== 'depth'"
+        v-show="showIndicator === 'KDJ' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -290,7 +290,7 @@
       ></KDJ>
       <RSI
         ref="rsi"
-        v-show="showIndicator === 'RSI' && showChart !== 'depth'"
+        v-show="showIndicator === 'RSI' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
