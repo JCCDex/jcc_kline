@@ -1,6 +1,6 @@
 var depthOption = {
     backgroundColor: '#161b21', // 背景色
-    animation: true, // 是否开启动画
+    animation: false, // 是否开启动画
     color: [ // 调色盘颜色列表,如果系列没有设置颜色，则会依次循环从该列表中取颜色作为系列颜色。
         '#ee4b4b',
         '#09e988'
@@ -134,7 +134,7 @@ var depthOption = {
 };
 var mobileDepthOption = {
     backgroundColor: '#161b21', // 背景色
-    animation: true, // 是否开启动画
+    animation: false, // 是否开启动画
     color: [ // 调色盘颜色列表,如果系列没有设置颜色，则会依次循环从该列表中取颜色作为系列颜色。
         '#ee4b4b',
         '#09e988'

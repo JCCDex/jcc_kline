@@ -26,7 +26,7 @@ var timeSharingOption = {
     },
     grid: [ // 直角坐标系内绘图网格
         { // 第一个grid网格
-            left: 10, // grid 组件离容器左侧的距离
+            left: 5, // grid 组件离容器左侧的距离
             top: 60, // grid 组件离容器上侧的距离
             right: 65, // grid 组件离容器右侧的距离
             bottom: 20

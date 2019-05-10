@@ -5,11 +5,13 @@ import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
+import { saveTimeSharing } from './linkageCharts';
 import { getLanguage, getDefaultChartSize } from './utils';
 
 var timeSharingOption;
 var oldTimeSharingData;
 var toolTipIndex;
+var oldDataZoom;
 
 class TimeSharingChart {
     constructor(configs) {
@@ -32,7 +34,7 @@ class TimeSharingChart {
                 } else {
                     let resizeContainer = () => {
                         if (DOM) {
-                            DOM.style.height = size.height * 0.75 + 'px';
+                            DOM.style.height = size.height * 0.7 + 'px';
                             DOM.style.width = size.width + 'px';
                         }
                     };
@@ -41,7 +43,7 @@ class TimeSharingChart {
                 }
             } else {
                 let resizeContainer = () => {
-                    DOM.style.height = size.clientHeight * 0.75 + 'px';
+                    DOM.style.height = size.clientHeight * 0.7 + 'px';
                     DOM.style.width = size.clientWidth + 'px';
                 };
                 resizeContainer(this);
@@ -53,16 +55,15 @@ class TimeSharingChart {
         }
     }
 
-    initTimeSharingECharts(DOM, clear) {
+    initTimeSharingECharts(DOM, clear, type) {
+        if (type === 'update') {
+            oldDataZoom = this.timeSharing.getOption().dataZoom;
+        }
         if (this.timeSharing && clear) {
-            toolTipIndex = null;
             oldTimeSharingData = null;
             this.timeSharing.dispose();
         }
         if (!this.timeSharing || this.timeSharing.isDisposed()) {
-            toolTipIndex = null;
-            timeSharingOption = null;
-            oldTimeSharingData = null;
             this.timeSharing = echarts.init(DOM);
             this.showLoading();
         }
@@ -92,16 +93,18 @@ class TimeSharingChart {
         oldTimeSharingData = data;
         let { times, averages, prices, volumes } = data;
         let length = averages.length - 1;
+        oldDataZoom = null;
         toolTipIndex = length;
         let option = {
             xAxis: this.getTimeSharingXAxis(times),
-            tooltip: this.getTimeSharingToolTip(),
+            tooltip: this.getTimeSharingToolTip(data),
             series: this.getTimeSharingSeries(prices, averages, volumes),
             dataZoom: this.getTimeSharingDataZoom()
         };
         merge(timeSharingOption, option);
         this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption, true);
+        saveTimeSharing(this.timeSharing);
         return toolTipIndex;
     }
 
@@ -109,11 +112,15 @@ class TimeSharingChart {
         let { times, averages, prices, volumes } = data;
         let option = {
             xAxis: this.getTimeSharingXAxis(times),
-            series: this.getTimeSharingSeries(prices, averages, volumes)
+            tooltip: this.getTimeSharingToolTip(data),
+            series: this.getTimeSharingSeries(prices, averages, volumes),
+            dataZoom: this.getTimeSharingDataZoom()
         };
         merge(timeSharingOption, option);
-        timeSharingOption.dataZoom = this.timeSharing.getOption().dataZoom;
+        timeSharingOption.dataZoom = oldDataZoom;
+        this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption);
+        saveTimeSharing(this.timeSharing);
     }
 
     getTimeSharingEchart() {
@@ -165,6 +172,26 @@ class TimeSharingChart {
                 minSpan: 5
             }
         ];
+    }
+
+    changeDataZoom(type) {
+        let dataZoom = JSON.parse(JSON.stringify(this.timeSharing.getOption().dataZoom));
+        if (type === 'leftShift' && dataZoom[0].start >= 2) {
+            dataZoom[0].start = dataZoom[0].start - 2;
+            dataZoom[0].end = dataZoom[0].end - 2;
+        } else if (type === 'enlarge' && dataZoom[0].start < 95) {
+            dataZoom[0].start = dataZoom[0].start + 5;
+        } else if (type === 'refresh') {
+            dataZoom[0].start = this.timeSharingConfig.dataZoom[0].start;
+            dataZoom[0].end = this.timeSharingConfig.dataZoom[0].end;
+        } else if (type === 'narrow' && dataZoom[0].start >= 5) {
+            dataZoom[0].start = dataZoom[0].start - 5;
+        } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
+            dataZoom[0].start = dataZoom[0].start + 2;
+            dataZoom[0].end = dataZoom[0].end + 2;
+        }
+        timeSharingOption.dataZoom = dataZoom;
+        this.timeSharing.setOption(timeSharingOption);
     }
 }
 

@@ -4,10 +4,79 @@
       <div v-show="showExitFullScreen" class="exit-full-screen">
         <div class="exit-full-screen-btn" @click="fullScreenToggle">Exit Full Screen(Esc)</div>
       </div>
+      <!-- Cycle按钮 -->
+      <div class="kline-cycle" v-show="showChart !== 'depth'">
+        <div class="kline-cycle-div">
+          <div @click="clickMinCycle()">
+            <div
+              :class="!this.showMinCycle ? 'kline-cycle-drop-down' : 'kline-cycle-drop-down kline-select-color'"
+            >
+              <font
+                :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+              >{{selectMin}}</font>
+              <i :class="!this.showMinCycle ? 'drop-down-icon' : 'drop-down-select'"></i>
+            </div>
+            <div v-show="showMinCycle" class="kline-cycle-float">
+              <div
+                @click="chooseCycle('minute')"
+                :class="this.cycle === 'minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
+              >{{message.oneMin}}</div>
+              <div
+                @click="chooseCycle('5minute')"
+                :class="this.cycle === '5minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
+              >{{message.fiveMin}}</div>
+              <div
+                @click="chooseCycle('15minute')"
+                :class="this.cycle === '15minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
+              >{{message.fifteenMin}}</div>
+              <div
+                @click="chooseCycle('30minute')"
+                :class="this.cycle === '30minute' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
+              >{{message.thirtyMin}}</div>
+            </div>
+          </div>
+          <div @click="clickHourCycle()">
+            <div
+              :class="!this.showHourCycle ? 'kline-cycle-drop-down kline-margin-left10' : 'kline-cycle-drop-down kline-margin-left10 kline-select-color'"
+            >
+              <font
+                :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color' : 'kline-uncheck-color' : 'kline-uncheck-color'"
+              >{{selectHour}}</font>
+              <i :class="!this.showHourCycle ? 'drop-down-icon' : 'drop-down-select'"></i>
+            </div>
+            <div v-show="showHourCycle" class="kline-cycle-float kline-hour-cycle">
+              <div
+                @click="chooseCycle('hour')"
+                :class="this.cycle === 'hour' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
+              >{{message.oneHour}}</div>
+              <div
+                @click="chooseCycle('4hour')"
+                :class="this.cycle === '4hour' ? 'kline-cycle-detail kline-select-color' : 'kline-cycle-detail kline-uncheck-color'"
+              >{{message.fourHour}}</div>
+            </div>
+          </div>
+        </div>
+        <div
+          @click="chooseCycle('day')"
+          :class="this.cycle === 'day' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'"
+        >{{message.dayPC}}</div>
+        <div
+          @click="chooseCycle('week')"
+          :class="this.cycle === 'week' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'"
+        >{{message.weekPC}}</div>
+        <div
+          @click="chooseCycle('month')"
+          :class="this.cycle === 'month' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'"
+        >{{message.monthPC}}</div>
+        <div
+          @click="chooseCycle('everyhour')"
+          :class="this.cycle === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'"
+        >{{message.timeSharing}}</div>
+      </div>
       <!-- tooltip数据显示 -->
       <div
         :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'"
-        v-if="showChart === 'candle' && toolTipData"
+        v-if="showChart === 'candle' && toolTipData && this.cycle !== 'everyhour'"
       >
         <div style="margin-right: 180px;">
           <i
@@ -32,10 +101,19 @@
           </font>
         </div>
       </div>
+      <!-- 分时线tips数据显示 -->
+      <div
+        :class="this.message.language === 'en' ? 'tooltip-data-en' : 'tooltip-data-zh'"
+        v-if="cycle==='everyhour' && toolTipData && showChart !== 'depth'"
+      >
+        <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font>
+        <font class="tooltip-data-name">{{message.price}}{{this.toolTipData.price}}</font>
+        <font class="tooltip-data-name">{{message.averagePrice}}{{this.toolTipData.averagePrice}}</font>
+      </div>
       <!-- 技术指标 -->
       <div style="position: absolute;right:50px;top:20px;z-index:5;font-size: 13px;">
         <div
-          v-show="showChart==='candle'"
+          v-show="showChart==='candle' && cycle !== 'everyhour'"
           style="position: absolute;right:154px;top:3px;z-index:5;"
           class="icon-indicator-div"
         >
@@ -112,8 +190,6 @@
             </div> -->
           </div>
         </div>
-
-        <!-- <span @click = "changeChart('timeSharing')" :class = "this.showChart === 'timeSharing' ? 'chart-div chart-btn-active' : 'chart-div chart-btn'">timeSharing</span> -->
       </div>
       <!-- 全屏按钮 -->
       <div style="position: absolute;right:30px;top:23px;z-index:5;" class="full-screen-div">
@@ -174,14 +250,22 @@
       <!-- 图表 -->
       <KLine
         ref="candle"
-        v-show="showChart === 'candle'"
+        v-show="showChart === 'candle' && cycle !== 'everyhour'"
         v-on:listenToTipIndex="getTipDataIndex"
-        v-on:listenToChildEvent="changeCycle"
         :kline-config="klineConfig"
         :chart-data-obj="chartDataObj"
         :resize-size="resizeSize"
         :cycle="cycle"
       ></KLine>
+      <TimeSharing
+        ref="timeSharing"
+        v-show="cycle === 'everyhour' && showChart !== 'depth'"
+        v-on:listenToTipIndex="getTipDataIndex"
+        :chart-data-obj="chartDataObj"
+        :kline-config="klineConfig"
+        :resize-size="resizeSize"
+        :cycle="cycle"
+      ></TimeSharing>
       <Depth
         ref="depth"
         v-show="showChart === 'depth'"
@@ -200,7 +284,7 @@
       ></Volume>
       <MACD
         ref="macd"
-        v-show="showIndicator === 'MACD' && showChart !== 'depth'"
+        v-show="showIndicator === 'MACD' && showChart !== 'depth' && cycle !== 'everyhour'"
         v-on:listenMacdChartClose="getMacdClose"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -211,7 +295,7 @@
       ></MACD>
       <KDJ
         ref="stochastic"
-        v-show="showIndicator === 'KDJ' && showChart !== 'depth'"
+        v-show="showIndicator === 'KDJ' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -222,7 +306,7 @@
       ></KDJ>
       <RSI
         ref="rsi"
-        v-show="showIndicator === 'RSI' && showChart !== 'depth'"
+        v-show="showIndicator === 'RSI' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -264,27 +348,6 @@
         :resize-size="resizeSize"
         :cycle="cycle"  
       ></VR>
-      <!-- <PSY ref = "indicator" 
-        v-show="showIndicator === 'PSY' && showChart !== 'depth'"
-        @listenIndicatorChartClose = 'closeIndicatorChart' 
-        v-on:listenToTipIndex = "getTipDataIndex" 
-        :toolTipIndex = "toolTipIndex" 
-        :kline-config = "klineConfig" 
-        :chart-data-obj = "chartDataObj" 
-        :resize-size = "resizeSize" 
-        :cycle = "cycle"
-      ></PSY>
-      <ROC ref = "indicator"
-        v-show="showIndicator === 'ROC' && showChart !== 'depth'"
-        @listenIndicatorChartClose = 'closeIndicatorChart'
-        v-on:listenToTipIndex = "getTipDataIndex"
-        :toolTipIndex = "toolTipIndex"
-        :kline-config = "klineConfig"
-        :chart-data-obj = "chartDataObj"
-        :resize-size = "resizeSize"
-        :cycle = "cycle"
-      ></ROC>-->
-      <!-- <BRAR ref = "indicator" v-show = "showIndicator === 'BRAR' && showChart !== 'depth'" @listenIndicatorChartClose = 'closeIndicatorChart' v-on:listenToTipIndex = "getTipDataIndex" :toolTipIndex = "toolTipIndex" :kline-config = "klineConfig" :chart-data-obj = "chartDataObj" :resize-size = "resizeSize" :cycle = "cycle"></BRAR> -->
     </fullscreen>
   </div>
 </template>
@@ -305,6 +368,7 @@ import VR from "./VRChart.vue";
 // import PSY from "./PSYChart.vue";
 // import ROC from "./ROCChart.vue";
 // import VR from "./VRChart.vue";
+import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
   splitData,
@@ -334,6 +398,7 @@ export default {
     // TRIX,
     // MTM,
     // TimeSharing
+    TimeSharing
   },
   data() {
     return {
@@ -361,7 +426,11 @@ export default {
       showIndicator: "",
       isClose: true,
       interval: null,
-      changeDataZoomType: ""
+      changeDataZoomType: "",
+      showMinCycle: false,
+      showHourCycle: false,
+      selectMin: "",
+      selectHour: ""
     };
   },
   props: {
@@ -411,7 +480,10 @@ export default {
     if (this.klineConfig.defaultSize !== false) {
       this.klineConfig.size = getDefaultChartSize();
     }
+    this.cycle = this.klineConfig.cycle;
     this.message = getLanguage();
+    this.selectMin = this.message.minute;
+    this.selectHour = this.message.hourPC;
   },
   mounted() {
     if (this.klineConfig.defaultSize === true) {
@@ -427,6 +499,7 @@ export default {
     },
     klineDataObj() {
       this.cycle = this.klineDataObj.cycle;
+      this.changeCycleLanguage(this.cycle);
       this.changeChartDataObj(this.klineDataObj);
     },
     fullscreen() {
@@ -443,6 +516,54 @@ export default {
     }
   },
   methods: {
+    clickMinCycle() {
+      this.showMinCycle = !this.showMinCycle;
+      if (this.showMinCycle) {
+        this.showHourCycle = false;
+      }
+    },
+    clickHourCycle() {
+      this.showHourCycle = !this.showHourCycle;
+      if (this.showHourCycle) {
+        this.showMinCycle = false;
+      }
+    },
+    chooseCycle(cycle) {
+      if (cycle === this.cycle) {
+        return;
+      }
+      this.toolTipData = null;
+      this.cycle = cycle;
+      this.toolTipIndex = null;
+      this.$emit("listenToChildEvent", cycle);
+      this.changeCycleLanguage(cycle);
+    },
+    changeCycleLanguage(selectCycle) {
+      this.message = getLanguage();
+      if (selectCycle === "minute") {
+        this.selectMin = this.message.oneMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "5minute") {
+        this.selectMin = this.message.fiveMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "15minute") {
+        this.selectMin = this.message.fifteenMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "30minute") {
+        this.selectMin = this.message.thirtyMin;
+        this.selectHour = this.message.hourPC;
+      } else if (selectCycle === "hour") {
+        this.selectHour = this.message.oneHour;
+        this.selectMin = this.message.minute;
+        this.selectMin = this.message.minute;
+      } else if (selectCycle === "4hour") {
+        this.selectHour = this.message.fourHour;
+        this.selectMin = this.message.minute;
+      } else {
+        this.selectMin = this.message.minute;
+        this.selectHour = this.message.hourPC;
+      }
+    },
     getMAData(name) {
       if (this.toolTipData) {
         for (let tipData of this.toolTipData.MAData) {
@@ -517,15 +638,9 @@ export default {
       this.resize();
       this.changeChartDataObj(this.klineDataObj);
     },
-    changeCycle(cycle) {
-      this.toolTipData = null;
-      this.cycle = cycle;
-      this.toolTipIndex = null;
-      this.$emit("listenToChildEvent", cycle);
-    },
+
     getTipDataIndex(index) {
       if (!isNaN(index)) {
-        this.toolTipIndex = index;
         if (this.chartDataObj.precision) {
           let pricePrecision = !isNaN(this.chartDataObj.precision.price)
             ? this.chartDataObj.precision.price
@@ -533,7 +648,8 @@ export default {
           let amountsPrecision = !isNaN(this.chartDataObj.precision.amount)
             ? this.chartDataObj.precision.amount
             : 2;
-          if (this.chartDataObj.candleData) {
+          if (this.chartDataObj.candleData && this.cycle !== "everyhour") {
+            this.toolTipIndex = index;
             if (
               this.chartDataObj.candleData.values[index] &&
               this.chartDataObj.candleData.categoryData[index]
@@ -584,6 +700,26 @@ export default {
               }
             }
           }
+          if (this.cycle === "everyhour") {
+            let tipsData = this.chartDataObj.divisionData;
+            this.toolTipData = {
+              volume: formatDecimal(
+                tipsData.volumes[index][1],
+                amountsPrecision,
+                true
+              ),
+              price: formatDecimal(
+                tipsData.prices[index],
+                pricePrecision,
+                true
+              ),
+              averagePrice: formatDecimal(
+                tipsData.averages[index],
+                pricePrecision,
+                true
+              )
+            };
+          }
         }
       }
     },
@@ -618,7 +754,7 @@ export default {
       if (type) {
         this.changeDataZoomType = type;
       }
-      if (this.showChart !== "depth") {
+      if (this.showChart !== "depth" && this.cycle !== "everyhour") {
         this.$refs.candle.changeDataZoom(this.changeDataZoomType);
         this.$refs.volume.changeDataZoom(this.changeDataZoomType);
         this.$refs.macd.changeDataZoom(this.changeDataZoomType);
@@ -627,6 +763,10 @@ export default {
         this.$refs.mtm.changeDataZoom(this.changeDataZoomType);
         this.$refs.wr.changeDataZoom(this.changeDataZoomType);
         this.$refs.vr.changeDataZoom(this.changeDataZoomType);
+      }
+      if (this.cycle === "everyhour") {
+        this.$refs.timeSharing.changeDataZoom(this.changeDataZoomType);
+        this.$refs.volume.changeDataZoom(this.changeDataZoomType);
       }
     },
     fullScreenToggle() {
