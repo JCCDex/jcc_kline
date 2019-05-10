@@ -140,12 +140,10 @@
           style="margin-left: 10px;margin-right: 20px;"
         >{{message.depth}}</div>
 
-        <div
-          v-show="showIndicatorOpt"
-          style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;"
-        >
+        <div v-show="showIndicatorOpt"
+          style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;">
           <div class="indicatorOpt">
-            <div style="margin-left:10px">
+            <div style="margin-left:10px; padding-top:1px;">
               <font>{{message.indicator}}</font>
             </div>
             <div
@@ -153,7 +151,7 @@
               style="margin-right: 10px; float:right; margin-top: -14px;"
               class="close-background-icon"
             ></div>
-            <div style="height: 0.05rem; background-color:#2b3944; margin-top:5px"></div>
+            <div style="height: 0.05rem; background-color:#2b3944; margin-top:3px"></div>
             <div
               @click="showIndicatorChart('MACD')"
               :class="this.showIndicator ==='MACD' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
@@ -172,6 +170,24 @@
             >
               <div class="indicator-line">{{message.RSI}}</div>
             </div>
+            <div
+              @click="showIndicatorChart('MTM')"
+              :class="this.showIndicator ==='MTM' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+              >
+              <div class="indicator-line">{{message.MTM}}</div>
+            </div>
+            <div
+              @click="showIndicatorChart('WR')"
+              :class="this.showIndicator ==='WR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+              >
+              <div class="indicator-line">{{message.WR}}</div>
+            </div>
+            <!-- <div
+              @click="showIndicatorChart('VR')"
+              :class="this.showIndicator ==='VR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+              >
+              <div class="indicator-line">{{message.VR}}</div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -205,7 +221,7 @@
         @mouseenter="enter()"
         @mouseleave="leave()"
       >
-        <div class="kline-levitation-icon" v-show="isShow">
+        <div class="kline-levitation-icon" >
           <div
             class="kline-levitation-btn"
             @mousedown="changeDataZoomByMouseDown('leftShift')"
@@ -213,14 +229,14 @@
           >
             <div class="left-shift-icon"></div>
           </div>
-          <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
-            <i class="enlarge-icon"></i>
+          <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
+            <i class="narrow-icon"></i>
           </div>
           <div class="kline-levitation-btn" @click="changeDataZoom('refresh')">
             <i class="refresh-icon"></i>
           </div>
-          <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
-            <i class="narrow-icon"></i>
+          <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
+            <i class="enlarge-icon"></i>
           </div>
           <div
             class="kline-levitation-btn"
@@ -299,6 +315,39 @@
         :resize-size="resizeSize"
         :cycle="cycle"
       ></RSI>
+      <MTM
+        ref="mtm"
+        v-show="showIndicator === 'MTM' && showChart !== 'depth'"
+        @listenIndicatorChartClose="closeIndicatorChart"
+        v-on:listenToTipIndex="getTipDataIndex"
+        :toolTipIndex="toolTipIndex"
+        :kline-config="klineConfig"
+        :chart-data-obj="chartDataObj"
+        :resize-size="resizeSize"
+        :cycle="cycle"
+      ></MTM>
+      <WR
+        ref="wr"
+        v-show="showIndicator === 'WR' && showChart !== 'depth'"
+        @listenIndicatorChartClose="closeIndicatorChart"
+        v-on:listenToTipIndex="getTipDataIndex"
+        :toolTipIndex="toolTipIndex"
+        :kline-config="klineConfig"
+        :chart-data-obj="chartDataObj"
+        :resize-size="resizeSize"
+        :cycle="cycle"  
+      ></WR>
+      <VR
+        ref="vr"
+        v-show="showIndicator === 'VR' && showChart !== 'depth'"
+        @listenIndicatorChartClose="closeIndicatorChart"
+        v-on:listenToTipIndex="getTipDataIndex"
+        :toolTipIndex="toolTipIndex"
+        :kline-config="klineConfig"
+        :chart-data-obj="chartDataObj"
+        :resize-size="resizeSize"
+        :cycle="cycle"  
+      ></VR>
     </fullscreen>
   </div>
 </template>
@@ -312,6 +361,13 @@ import Volume from "./volumeChart.vue";
 import MACD from "./MACDChart.vue";
 import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
+import MTM from "./MTMChart.vue";
+import WR from "./WRChart.vue";
+import VR from "./VRChart.vue";
+// import BRAR from "./BRARChart.vue";
+// import PSY from "./PSYChart.vue";
+// import ROC from "./ROCChart.vue";
+// import VR from "./VRChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -330,6 +386,18 @@ export default {
     MACD,
     KDJ,
     RSI,
+    MTM,
+    WR,
+    VR,
+    // BRAR,
+    // PSY,
+    // ROC,
+    // VR,
+    // DMI,
+    // OBV,
+    // TRIX,
+    // MTM,
+    // TimeSharing
     TimeSharing
   },
   data() {
@@ -666,6 +734,9 @@ export default {
       };
     },
     changeChart(type) {
+      if (type === "depth") {
+        this.showIndicatorOpt = false;
+      }
       if (this.showChart === type) {
         return;
       }
@@ -689,6 +760,9 @@ export default {
         this.$refs.macd.changeDataZoom(this.changeDataZoomType);
         this.$refs.stochastic.changeDataZoom(this.changeDataZoomType);
         this.$refs.rsi.changeDataZoom(this.changeDataZoomType);
+        this.$refs.mtm.changeDataZoom(this.changeDataZoomType);
+        this.$refs.wr.changeDataZoom(this.changeDataZoomType);
+        this.$refs.vr.changeDataZoom(this.changeDataZoomType);
       }
       if (this.cycle === "everyhour") {
         this.$refs.timeSharing.changeDataZoom(this.changeDataZoomType);

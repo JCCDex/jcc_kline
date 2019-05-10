@@ -81,18 +81,12 @@
     </div>
     <div v-show="showIndicatorDiv && currentCycle !== 'everyhour'" class="indicatorConfigure">
       <div class="mobile-indicator">
-        <div
-          style="margin-left:10px;float:left; font-size: 0.24rem; color: #e6e6e6; margin-top: 0.1rem; margin-left: 0.2rem;"
-        >
-          <font>{{message.indicator}}</font>
-        </div>
-        <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
-        <div
-          @click="showIndicatorChart('MACD')"
-          :class="this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
-        >
-          <div class="indicator-mobile-line">{{message.MACD}}</div>
-        </div>
+        <div class="indicator-font"><font>{{message.indicator}}</font></div>
+            <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
+        <div @click = "showIndicatorChart('MACD')" 
+          :class = "this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
+              <div class = "indicator-mobile-line">{{message.MACD}}</div>
+            </div>
         <div
           @click="showIndicatorChart('KDJ')"
           :class="this.showIndicator ==='KDJ' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
@@ -105,6 +99,24 @@
         >
           <div class="indicator-mobile-line">{{message.RSI}}</div>
         </div>
+        <div
+          @click="showIndicatorChart('MTM')"
+          :class="this.showIndicator ==='MTM' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.MTM}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('WR')"
+          :class="this.showIndicator ==='WR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.WR}}</div>
+        </div>
+        <!-- <div
+          @click="showIndicatorChart('VR')"
+          :class="this.showIndicator ==='VR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.VR}}</div>
+        </div> -->
         <!-- <div @click = "showIndicatorChart('OBV')" :class = "this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
               <div class = "indicator-mobile-line">{{message.OBV}}</div>
             </div>
@@ -318,9 +330,11 @@ export default {
       this.showIndicator = indicator;
     },
     openCloseEyes() {
-      this.showIndicator = null;
-      this.showIndicatorDiv = false;
-      this.showIndicatorChart(this.showIndicator);
+      if (this.showIndicator === null) {
+        this.showIndicatorDiv = !this.showIndicatorDiv;
+      } else {
+        this.showIndicatorChart(this.showIndicator);
+      }
     }
   }
 };

@@ -51,6 +51,26 @@
       >{{this.timeSharingTipData.averagePrice}}</font> &nbsp;
       <br>
     </div>
+          <!-- 平移、刷新、缩放按钮 -->
+    <div class="kline-levitation-mobile-div">
+      <div class="kline-levitation-icon" >
+        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')">
+          <div class="left-shift-icon"></div>
+        </div> -->
+        <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
+          <i class="narrow-icon"></i>
+        </div>
+        <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
+          <i class="enlarge-icon"></i>
+        </div>
+        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('refresh')">
+          <i class="refresh-icon"></i>
+        </div> -->
+        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('rightShift')">
+          <i class="right-shift-icon"></i>
+        </div> -->
+      </div>
+    </div>
     <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
     <KLine
       ref="candle"
@@ -96,6 +116,33 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></RSI>
+    <MTM
+      ref="mtm"
+      v-show="showIndicatorChart === 'MTM' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></MTM>
+    <WR
+      ref="wr"
+      v-show="showIndicatorChart === 'WR' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></WR>
+    <VR
+      ref="vr"
+      v-show="showIndicatorChart === 'VR' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></VR>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -107,6 +154,9 @@ import TimeSharing from "./timeSharing.vue";
 import MACD from "./MACDChart.vue";
 import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
+import MTM from "./MTMChart.vue";
+import WR from "./WRChart.vue";
+import VR from "./VRChart.vue";
 import {
   splitData,
   handleDivisionData,
@@ -124,7 +174,10 @@ export default {
     TimeSharing,
     MACD,
     KDJ,
-    RSI
+    RSI,
+    MTM,
+    WR,
+    VR
   },
   data() {
     return {
@@ -375,7 +428,18 @@ export default {
           }
         }
       }
-    }
+    },
+    changeDataZoom(type) {
+      if (this.showChart !== "depth") {
+        this.$refs.candle.changeDataZoom(type);
+        this.$refs.volume.changeDataZoom(type);
+        this.$refs.macd.changeDataZoom(type);
+        this.$refs.kdj.changeDataZoom(type);
+        this.$refs.rsi.changeDataZoom(type);
+        this.$refs.mtm.changeDataZoom(type);
+        this.$refs.wr.changeDataZoom(type);
+      }
+    },
   }
 };
 </script>

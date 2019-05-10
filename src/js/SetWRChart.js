@@ -166,25 +166,11 @@ class IndicatorChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'OBV' && data.indicatorData.OBV) {
+        if (data.indicator === 'WR' && data.indicatorData) {
             series = [
                 {
-                    name: 'OBV',
-                    data: data.indicatorData.OBV,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'DMI' && data.indicatorData.PDI) {
-            series = [
-                {
-                    name: 'PDI',
-                    data: data.indicatorData.PDI,
+                    name: 'WR1',
+                    data: data.indicatorData.WR1,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -194,176 +180,13 @@ class IndicatorChartController {
                     }
                 },
                 {
-                    name: 'MDI',
-                    data: data.indicatorData.MDI,
+                    name: 'WR2',
+                    data: data.indicatorData.WR2,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
                             color: '#f6d026'
-                        }
-                    }
-                },
-                {
-                    name: 'ADX',
-                    data: data.indicatorData.ADX,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#e03bfa'
-                        }
-                    }
-                }, {
-                    name: 'ADXR',
-                    data: data.indicatorData.ADXR,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'TRIX' && data.indicatorData.TRIX) {
-            series = [
-                {
-                    name: 'TRIX',
-                    data: data.indicatorData.TRIX,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#e6e6e6'
-                        }
-                    }
-                },
-                {
-                    name: 'MATRIX',
-                    data: data.indicatorData.MATRIX,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#f6d026'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'RSI' && data.indicatorData.RSI6) {
-            series = [
-                {
-                    name: 'RSI6',
-                    data: data.indicatorData.RSI6,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
-                        }
-                    }
-                },
-                {
-                    name: 'RSI12',
-                    data: data.indicatorData.RSI12,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#16c5ff'
-                        }
-                    }
-                },
-                {
-                    name: 'RSI24',
-                    data: data.indicatorData.RSI24,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#e03bfa'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'MTM' && data.indicatorData) {
-            series = [
-                {
-                    name: 'MTM',
-                    data: data.indicatorData,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'BRAR' && data.indicatorData) {
-            series = [
-                {
-                    name: 'BR',
-                    data: data.indicatorData.BR,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
-                        }
-                    }
-                },
-                {
-                    name: 'AR',
-                    data: data.indicatorData.AR,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#e03bfa'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'PSY' && data.indicatorData) {
-            series = [
-                {
-                    name: 'PSY',
-                    data: data.indicatorData,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'ROC' && data.indicatorData) {
-            series = [
-                {
-                    name: 'ROC',
-                    data: data.indicatorData,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
-                        }
-                    }
-                }
-            ];
-        } else if (data.indicator === 'VR' && data.indicatorData) {
-            series = [
-                {
-                    name: 'VR',
-                    data: data.indicatorData,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
                         }
                     }
                 }
@@ -375,10 +198,8 @@ class IndicatorChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
-        if (data.indicator === 'RSI') {
-            len = data.indicatorData.RSI6.length;
-        } else if (data.indicator === 'DMI') {
-            len = data.indicatorData.length;
+        if (data.indicator === 'WR') {
+            len = data.indicatorData.WR1.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -440,7 +261,6 @@ class IndicatorChartController {
         indicatorOption.dataZoom = dataZoom;
         this.indicator.setOption(indicatorOption);
     }
-
 }
 
 export default IndicatorChartController;

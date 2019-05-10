@@ -36,7 +36,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
-      chartType: "indicator",
+      chartType: "rsi",
       toolTipData: null,
       RSISize: {
         height: "",
@@ -108,12 +108,12 @@ export default {
           this.isRefresh
         ) {
           this.init(true, 'init');
-          this.RSI.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.RSI.setRSIOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.init(true, 'update');
-          this.RSI.updateIndicatorOption(
+          this.RSI.updateRSIOption(
             this.indicatorsData,
             this.currentCycle
           );
@@ -178,7 +178,7 @@ export default {
       this.RSISize.height = this.klineConfig.size.height * 0.4 + "px";
       this.RSISize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "rsi";
     this.RSI = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -189,22 +189,22 @@ export default {
   },
   methods: {
     init(clear, type) {
-      this.RSI.initIndicatorChart(this.$refs.RSI, clear, type);
+      this.RSI.initRSIChart(this.$refs.RSI, clear, type);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.RSI.getIndicatorTipData();
+      let index = this.RSI.getRSITipData();
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
     changeDataZoom(type) {
-      this.RSI.changeIndicatorDataZoom(type);
+      this.RSI.changeRSIDataZoom(type);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.RSI.resizeIndicatorChart(
+        this.RSI.resizeRSIChart(
           this.$refs.RSI,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -212,7 +212,7 @@ export default {
       }
     },
     dispose() {
-      this.RSI.disposeIndicatorEChart();
+      this.RSI.disposeRSIEChart();
     }
   }
 };
