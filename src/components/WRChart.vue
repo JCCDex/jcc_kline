@@ -35,7 +35,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
-      chartType: "indicator",
+      chartType: "wr",
       toolTipData: null,
       WRSize: {
         height: "",
@@ -100,12 +100,12 @@ export default {
           this.isRefresh
         ) {
           this.init(true, 'init');
-          this.WR.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.WR.setWROption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.init(true, 'update');
-          this.WR.updateIndicatorOption(
+          this.WR.updateWROption(
             this.indicatorsData,
             this.currentCycle
           );
@@ -138,8 +138,8 @@ export default {
         }
         if (this.WRData) {
           this.toolTipData = {
-            WR1: parseFloat(this.WRData.WR1[index]).toFixed(7),
-            WR2: parseFloat(this.WRData.WR2[index]).toFixed(7)
+            WR1: formatDecimal(this.WRData.WR1[index], 7, true),
+            WR2: formatDecimal(this.WRData.WR2[index], 7, true)
           };
         }
       }
@@ -159,10 +159,10 @@ export default {
       }
     } else {
       this.platform = "mobile";
-      this.WRSize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.WRSize.height = this.klineConfig.size.height * 0.3 + "px";
       this.WRSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "wr";
     this.WR = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -173,22 +173,22 @@ export default {
   },
   methods: {
     init(clear, type) {
-      this.WR.initIndicatorChart(this.$refs.WR, clear, type);
+      this.WR.initWRChart(this.$refs.WR, clear, type);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.WR.getIndicatorTipData();
+      let index = this.WR.getWRTipData();
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
     changeDataZoom(type) {
-      this.WR.changeIndicatorDataZoom(type);
+      this.WR.changeWRDataZoom(type);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.WR.resizeIndicatorChart(
+        this.WR.resizeWRChart(
           this.$refs.WR,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -196,7 +196,7 @@ export default {
       }
     },
     dispose() {
-      this.WR.disposeIndicatorEChart();
+      this.WR.disposeWREChart();
     }
   }
 };

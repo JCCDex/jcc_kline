@@ -35,7 +35,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
-      chartType: "indicator",
+      chartType: "vr",
       toolTipData: null,
       VRSize: {
         height: "",
@@ -100,12 +100,12 @@ export default {
           this.isRefresh
         ) {
           this.init(true, 'init');
-          this.VR.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.VR.setVROption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.init(true, 'update');
-          this.VR.updateIndicatorOption(
+          this.VR.updateVROption(
             this.indicatorsData,
             this.currentCycle
           );
@@ -159,10 +159,10 @@ export default {
       }
     } else {
       this.platform = "mobile";
-      this.VRSize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.VRSize.height = this.klineConfig.size.height * 0.3 + "px";
       this.VRSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "vr";
     this.VR = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -173,22 +173,22 @@ export default {
   },
   methods: {
     init(clear, type) {
-      this.VR.initIndicatorChart(this.$refs.VR, clear, type);
+      this.VR.initVRChart(this.$refs.VR, clear, type);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.VR.getIndicatorTipData();
+      let index = this.VR.getVRTipData();
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
     changeDataZoom(type) {
-      this.VR.changeIndicatorDataZoom(type);
+      this.VR.changeVRDataZoom(type);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.VR.resizeIndicatorChart(
+        this.VR.resizeVRChart(
           this.$refs.VR,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -196,7 +196,7 @@ export default {
       }
     },
     dispose() {
-      this.VR.disposeIndicatorEChart();
+      this.VR.disposeVREChart();
     }
   }
 };

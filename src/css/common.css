@@ -90,7 +90,7 @@
     position: absolute;
     color: #fff;
     left: 34%;
-    top: 5.5rem;
+    top: 5.4rem;
     z-index: 10;    
 }
 
@@ -189,7 +189,7 @@
     float: left;
     font-size: 0.24rem;
     color: #e6e6e6;
-    margin-top: 0.1rem;
+    margin-top: 0.15rem;
     margin-left: 0.2rem;
     width: 0.7rem;
     border: 1px solid #1b2026;
@@ -955,22 +955,22 @@
 .kline-levitation-btn {
     width: 32px;
     height: 32px;
-    background-color: #c1c2c6;
+    background-color: #ffffff;
     border-radius: 50%;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     float: left;
     margin-left: 20px;
     position: relative;
-    opacity: 0.6;
-    filter: alpha(opacity=60);
+    opacity: 0.15;
+    filter: alpha(opacity=15);
     cursor:pointer;
 }
 
 .kline-levitation-btn:hover {
     cursor:pointer;
-    opacity: 0.95;
-    filter: alpha(opacity=95);
+    opacity: 0.75;
+    filter: alpha(opacity=75);
 }
 
 .left-shift-icon {

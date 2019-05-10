@@ -421,7 +421,7 @@ export const getWRData = (data) => {
     var WR2 = []; // 
     for (var i=0; i<data.length; i++) {
         if (i < 9) {
-            WR1[i] = "-";
+            WR1[i] = '-';
         } else {
             var HIGH1 = data[i][4];
             var LOW1 = data[i][3];
@@ -432,13 +432,13 @@ export const getWRData = (data) => {
             WR1[i] = 100 * [ HIGH1- data[i][2] ] / [ HIGH1-LOW1 ];
         }
         if (i < 5) {
-            WR2[i] = "-";
+            WR2[i] = '-';
         } else {
             var HIGH2 = data[i][4];
             var LOW2 = data[i][3];
-            for (var j=i; j>i-6; j--) {
-                HIGH2 = data[j][4] > HIGH2 ? data[j][4] : HIGH2;
-                LOW2 = data[j][3] > LOW2 ? LOW2 : data[j][3];
+            for (var k=i; k>i-6; k--) {
+                HIGH2 = data[k][4] > HIGH2 ? data[k][4] : HIGH2;
+                LOW2 = data[k][3] > LOW2 ? LOW2 : data[k][3];
             }
             WR2[i] = 100 * [ HIGH2- data[i][2] ] / [ HIGH2 - LOW2 ];
         }
@@ -446,7 +446,7 @@ export const getWRData = (data) => {
     return {
         WR1 : WR1,
         WR2 : WR2
-    }
+    };
 };
 
 export const getVRData = (data) => {

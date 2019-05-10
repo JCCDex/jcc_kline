@@ -65,7 +65,7 @@
         <div v-show="showIndicatorOpt"
           style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;">
           <div class="indicatorOpt">
-            <div style="margin-left:10px">
+            <div style="margin-left:10px; padding-top:1px;">
               <font>{{message.indicator}}</font>
             </div>
             <div
@@ -73,7 +73,7 @@
               style="margin-right: 10px; float:right; margin-top: -14px;"
               class="close-background-icon"
             ></div>
-            <div style="height: 0.05rem; background-color:#2b3944; margin-top:5px"></div>
+            <div style="height: 0.05rem; background-color:#2b3944; margin-top:3px"></div>
             <div
               @click="showIndicatorChart('MACD')"
               :class="this.showIndicator ==='MACD' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
@@ -104,12 +104,12 @@
               >
               <div class="indicator-line">{{message.WR}}</div>
             </div>
-            <div
+            <!-- <div
               @click="showIndicatorChart('VR')"
               :class="this.showIndicator ==='VR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
               >
               <div class="indicator-line">{{message.VR}}</div>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -145,7 +145,7 @@
         @mouseenter="enter()"
         @mouseleave="leave()"
       >
-        <div class="kline-levitation-icon" v-show="isShow">
+        <div class="kline-levitation-icon" >
           <div
             class="kline-levitation-btn"
             @mousedown="changeDataZoomByMouseDown('leftShift')"

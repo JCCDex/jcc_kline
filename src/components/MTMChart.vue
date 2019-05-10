@@ -35,7 +35,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
-      chartType: "indicator",
+      chartType: "mtm",
       toolTipData: null,
       MTMSize: {
         height: "",
@@ -100,12 +100,12 @@ export default {
           this.isRefresh
         ) {
           this.init(true, 'init');
-          this.MTM.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.MTM.setMTMOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.init(true, 'update');
-          this.MTM.updateIndicatorOption(
+          this.MTM.updateMTMOption(
             this.indicatorsData,
             this.currentCycle
           );
@@ -138,8 +138,8 @@ export default {
         }
         if (this.MTMData) {
           this.toolTipData = {
-            MTM: parseFloat(this.MTMData.MTM[index]).toFixed(7),
-            MAMTM: parseFloat(this.MTMData.MAMTM[index]).toFixed(7)
+            MTM: formatDecimal(this.MTMData.MTM[index], 7, true),
+            MAMTM: formatDecimal(this.MTMData.MAMTM[index], 7, true)
           };
         }
       }
@@ -159,10 +159,10 @@ export default {
       }
     } else {
       this.platform = "mobile";
-      this.MTMSize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.MTMSize.height = this.klineConfig.size.height * 0.3 + "px";
       this.MTMSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "mtm";
     this.MTM = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -173,22 +173,22 @@ export default {
   },
   methods: {
     init(clear, type) {
-      this.MTM.initIndicatorChart(this.$refs.MTM, clear, type);
+      this.MTM.initMTMChart(this.$refs.MTM, clear, type);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.MTM.getIndicatorTipData();
+      let index = this.MTM.getMTMTipData();
       this.$emit("listenToTipIndex", index);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
     changeDataZoom(type) {
-      this.MTM.changeIndicatorDataZoom(type);
+      this.MTM.changeMTMDataZoom(type);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.MTM.resizeIndicatorChart(
+        this.MTM.resizeMTMChart(
           this.$refs.MTM,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -196,7 +196,7 @@ export default {
       }
     },
     dispose() {
-      this.MTM.disposeIndicatorEChart();
+      this.MTM.disposeMTMEChart();
     }
   }
 };

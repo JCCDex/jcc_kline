@@ -83,7 +83,8 @@
       <div class="mobile-indicator">
         <div class="indicator-font"><font>{{message.indicator}}</font></div>
             <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
-            <div @click = "showIndicatorChart('MACD')" :class = "this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
+        <div @click = "showIndicatorChart('MACD')" 
+          :class = "this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
               <div class = "indicator-mobile-line">{{message.MACD}}</div>
             </div>
         <div
@@ -110,12 +111,12 @@
         >
           <div class="indicator-mobile-line">{{message.WR}}</div>
         </div>
-        <div
+        <!-- <div
           @click="showIndicatorChart('VR')"
           :class="this.showIndicator ==='VR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
         >
           <div class="indicator-mobile-line">{{message.VR}}</div>
-        </div>
+        </div> -->
         <!-- <div @click = "showIndicatorChart('OBV')" :class = "this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
               <div class = "indicator-mobile-line">{{message.OBV}}</div>
             </div>
