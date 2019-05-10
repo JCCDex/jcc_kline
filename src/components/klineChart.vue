@@ -140,7 +140,7 @@
           style="margin-left: 10px;margin-right: 20px;"
         >{{message.depth}}</div>
 
-        <div v-show="showIndicatorOpt"
+        <div v-show="showIndicatorOpt && cycle !== 'everyhour'"
           style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;">
           <div class="indicatorOpt">
             <div style="margin-left:10px; padding-top:1px;">
@@ -317,7 +317,7 @@
       ></RSI>
       <MTM
         ref="mtm"
-        v-show="showIndicator === 'MTM' && showChart !== 'depth'"
+        v-show="showIndicator === 'MTM' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -328,7 +328,7 @@
       ></MTM>
       <WR
         ref="wr"
-        v-show="showIndicator === 'WR' && showChart !== 'depth'"
+        v-show="showIndicator === 'WR' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -339,7 +339,7 @@
       ></WR>
       <VR
         ref="vr"
-        v-show="showIndicator === 'VR' && showChart !== 'depth'"
+        v-show="showIndicator === 'VR' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -531,6 +531,9 @@ export default {
     chooseCycle(cycle) {
       if (cycle === this.cycle) {
         return;
+      }
+      if (cycle === 'everyhour') {
+        this.showIndicatorOpt = false
       }
       this.toolTipData = null;
       this.cycle = cycle;
