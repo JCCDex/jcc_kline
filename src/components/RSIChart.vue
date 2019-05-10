@@ -22,7 +22,6 @@
   </div>
 </template>
 <script>
-import { getRSIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -75,7 +74,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, 'init');
+        this.init(true, "init");
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -86,12 +85,12 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: 'RSI',
+          indicator: "RSI",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        let RSI6 = getRSIData(this.chartDataObj.candleData.values, 6);
-        let RSI12 = getRSIData(this.chartDataObj.candleData.values, 12);
-        let RSI24 = getRSIData(this.chartDataObj.candleData.values, 24);
+        let RSI6 = this.getRSIData(this.chartDataObj.candleData.values, 6);
+        let RSI12 = this.getRSIData(this.chartDataObj.candleData.values, 12);
+        let RSI24 = this.getRSIData(this.chartDataObj.candleData.values, 24);
         this.RSIData = {
           RSI6: RSI6,
           RSI12: RSI12,
@@ -107,16 +106,13 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true, 'init');
+          this.init(true, "init");
           this.RSI.setRSIOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.init(true, 'update');
-          this.RSI.updateRSIOption(
-            this.indicatorsData,
-            this.currentCycle
-          );
+          this.init(true, "update");
+          this.RSI.updateRSIOption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -142,9 +138,9 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.candleData && !this.RSIData) {
-          let RSI6 = getRSIData(this.chartDataObj.candleData.values, 6);
-          let RSI12 = getRSIData(this.chartDataObj.candleData.values, 12);
-          let RSI24 = getRSIData(this.chartDataObj.candleData.values, 24);
+          let RSI6 = this.getRSIData(this.chartDataObj.candleData.values, 6);
+          let RSI12 = this.getRSIData(this.chartDataObj.candleData.values, 12);
+          let RSI24 = this.getRSIData(this.chartDataObj.candleData.values, 24);
           this.RSIData = {
             RSI6: RSI6,
             RSI12: RSI12,
@@ -213,6 +209,51 @@ export default {
     },
     dispose() {
       this.RSI.disposeRSIEChart();
+    },
+    getRSIData(datas, periodic) {
+      if (!datas) {
+        return;
+      }
+      let RSI = [];
+      let upsAndDowns = [];
+      for (let i = 0; i < datas.length; i++) {
+        if (i === 0) {
+          upsAndDowns.push(0);
+        } else {
+          upsAndDowns.push((datas[i][1] - datas[i - 1][1]) / datas[i - 1][1]);
+        }
+      }
+      // N日RSI =N日内收盘涨幅的平均值/(N日内收盘涨幅均值+N日内收盘跌幅均值) ×100
+
+      for (let i = 0; i < upsAndDowns.length; i++) {
+        if (i < periodic - 1) {
+          RSI.push("-");
+        } else {
+          let gains = 0; //涨幅
+          let gainsNumber = 0; //涨幅天数
+          let drop = 0; //跌幅
+          let dropNumber = 0; //跌幅天数
+          for (let j = i - periodic + 1; j < i + 1; j++) {
+            if (upsAndDowns[j] >= 0) {
+              gains = gains + upsAndDowns[j];
+              gainsNumber = gainsNumber + 1;
+            } else {
+              drop = drop + upsAndDowns[j];
+              dropNumber = dropNumber + 1;
+            }
+          }
+          let gainsAverage = gains / gainsNumber;
+          let dropAverage = drop / dropNumber;
+          let RSIValue =
+            (gainsAverage / (gainsAverage + Math.abs(dropAverage))) * 100;
+          if (isNaN(RSIValue)) {
+            RSI.push(0);
+          } else {
+            RSI.push(RSIValue);
+          }
+        }
+      }
+      return RSI;
     }
   }
 };

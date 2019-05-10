@@ -21,7 +21,6 @@
   </div>
 </template>
 <script>
-import { getVRData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -74,7 +73,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, 'init');
+        this.init(true, "init");
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -88,7 +87,7 @@ export default {
           indicator: "VR",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.VRData = getVRData(this.chartDataObj.klineData);
+        this.VRData = this.getVRData(this.chartDataObj.klineData);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.VRData;
@@ -99,16 +98,13 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true, 'init');
+          this.init(true, "init");
           this.VR.setVROption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.init(true, 'update');
-          this.VR.updateVROption(
-            this.indicatorsData,
-            this.currentCycle
-          );
+          this.init(true, "update");
+          this.VR.updateVROption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -134,7 +130,7 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.klineData && !this.VRData) {
-          this.VRData = getVRData(this.chartDataObj.klineData);
+          this.VRData = this.getVRData(this.chartDataObj.klineData);
         }
         if (this.VRData) {
           this.toolTipData = {
@@ -197,6 +193,71 @@ export default {
     },
     dispose() {
       this.VR.disposeVREChart();
+    },
+    getVRData(data) {
+      if (!data) {
+        return;
+      }
+      var VR = [];
+      for (var i = 0; i < data.length; i++) {
+        var UVS = 0;
+        var DVS = 0;
+        var PVS = 0;
+        var temp;
+        if (i < 11) {
+          VR.push("-");
+        } else {
+          for (var j = i; j > i - 12; j--) {
+            if (j === 0) {
+              temp = data[0][2] - data[0][1];
+              // up
+              if (temp > 0) {
+                UVS = UVS + data[0][6];
+              } else if (temp < 0) {
+                DVS = DVS + data[0][6];
+              } else if (temp === 0) {
+                PVS = PVS + data[0][6];
+              }
+            } else {
+              temp = data[j][2] - data[j - 1][2];
+              if (temp > 0) {
+                UVS = UVS + data[j][6];
+              } else if (temp < 0) {
+                DVS = DVS + data[j][6];
+              } else if (temp === 0) {
+                PVS = PVS + data[j][6];
+              }
+            }
+          }
+          var VRTmp = (UVS + 0.5 * PVS) / (DVS + 0.5 * PVS);
+          VR.push(VRTmp);
+        }
+      }
+      var MAVR = this.getMADataByDetailData(10, VR);
+      return {
+        VR: VR,
+        MAVR: MAVR
+      };
+    },
+    getMADataByDetailData(periodic, data) {
+      var result = [];
+      for (var i = 0, len = data.length; i < len; i++) {
+        if (i < periodic - 1) {
+          result.push("-");
+          continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < periodic - 1; j++) {
+          let item = parseFloat(data[i - j]);
+          if (isNaN(item)) {
+            sum += 0;
+          } else {
+            sum += item;
+          }
+        }
+        result.push(sum / periodic);
+      }
+      return result;
     }
   }
 };

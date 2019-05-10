@@ -22,12 +22,12 @@ export const getKDJData = (dayCount, data) => {
                 highestPriceData.push(countData[3]);
             }
             let smallToBigLowestPriceData = JSON.parse(JSON.stringify(lowestPriceData));
-            smallToBigLowestPriceData = smallToBigLowestPriceData.sort(function (a, b) {
+            smallToBigLowestPriceData = smallToBigLowestPriceData.sort(function(a, b) {
                 return a - b;
             });
             let lowestPrice = smallToBigLowestPriceData[0];
             let bigToSmallHighestPriceData = JSON.parse(JSON.stringify(lowestPriceData));
-            bigToSmallHighestPriceData = bigToSmallHighestPriceData.sort(function (a, b) {
+            bigToSmallHighestPriceData = bigToSmallHighestPriceData.sort(function(a, b) {
                 return b - a;
             });
             let highestPrice = bigToSmallHighestPriceData[0];
@@ -381,17 +381,17 @@ export const getPSYData = (data) => {
         return;
     }
     var PSY = [];
-    for (var i=0; i<data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         var riseDay = 0;
         if (i < 11) {
             PSY.push('-');
         } else {
-            for (var j=i-11; j<=i; j++) {
+            for (var j = i - 11; j <= i; j++) {
                 if (data[j][2] - data[j][1] > 0) {
                     riseDay++;
                 }
             }
-            PSY.push(riseDay/12*100);
+            PSY.push(riseDay / 12 * 100);
         }
     }
     return PSY;
@@ -402,11 +402,11 @@ export const getROCData = (data) => {
         return;
     }
     var ROC = [];
-    for (var i=0; i<data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         if (i < 12) {
             ROC.push('-');
         } else {
-            var ROCTmp = (data[i][2] - data[i-12][2]) * data[i-12][2];
+            var ROCTmp = (data[i][2] - data[i - 12][2]) * data[i - 12][2];
             ROC.push(ROCTmp);
         }
     }
@@ -419,33 +419,33 @@ export const getWRData = (data) => {
     }
     var WR1 = []; // 
     var WR2 = []; // 
-    for (var i=0; i<data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         if (i < 9) {
             WR1[i] = '-';
         } else {
             var HIGH1 = data[i][4];
             var LOW1 = data[i][3];
-            for (var j=i; j>i-10; j--) {
+            for (var j = i; j > i - 10; j--) {
                 HIGH1 = data[j][4] > HIGH1 ? data[j][4] : HIGH1;
                 LOW1 = data[j][3] > LOW1 ? LOW1 : data[j][3];
             }
-            WR1[i] = 100 * [ HIGH1- data[i][2] ] / [ HIGH1-LOW1 ];
+            WR1[i] = 100 * [HIGH1 - data[i][2]] / [HIGH1 - LOW1];
         }
         if (i < 5) {
             WR2[i] = '-';
         } else {
             var HIGH2 = data[i][4];
             var LOW2 = data[i][3];
-            for (var k=i; k>i-6; k--) {
+            for (var k = i; k > i - 6; k--) {
                 HIGH2 = data[k][4] > HIGH2 ? data[k][4] : HIGH2;
                 LOW2 = data[k][3] > LOW2 ? LOW2 : data[k][3];
             }
-            WR2[i] = 100 * [ HIGH2- data[i][2] ] / [ HIGH2 - LOW2 ];
+            WR2[i] = 100 * [HIGH2 - data[i][2]] / [HIGH2 - LOW2];
         }
     }
     return {
-        WR1 : WR1,
-        WR2 : WR2
+        WR1: WR1,
+        WR2: WR2
     };
 };
 
@@ -454,7 +454,7 @@ export const getVRData = (data) => {
         return;
     }
     var VR = [];
-    for (var i=0; i<data.length; i++) {
+    for (var i = 0; i < data.length; i++) {
         var UVS = 0;
         var DVS = 0;
         var PVS = 0;
@@ -462,37 +462,35 @@ export const getVRData = (data) => {
         if (i < 11) {
             VR.push('-');
         } else {
-            for (var j=i; j>i-12; j--) {
-                if (j===0) {
+            for (var j = i; j > i - 12; j--) {
+                if (j === 0) {
                     temp = data[0][2] - data[0][1];
                     // up
                     if (temp > 0) {
                         UVS = UVS + data[0][6];
-                    } else if (temp < 0){
+                    } else if (temp < 0) {
                         DVS = DVS + data[0][6];
-                    } else if (temp === 0){
+                    } else if (temp === 0) {
                         PVS = PVS + data[0][6];
                     }
                 } else {
-                    temp = data[j][2] - data[j-1][2];
+                    temp = data[j][2] - data[j - 1][2];
                     if (temp > 0) {
                         UVS = UVS + data[j][6];
-                    } else if (temp < 0){
+                    } else if (temp < 0) {
                         DVS = DVS + data[j][6];
-                    } else if (temp === 0){
+                    } else if (temp === 0) {
                         PVS = PVS + data[j][6];
                     }
                 }
             }
-            var VRTmp =(UVS+ 0.5*PVS)/(DVS + 0.5*PVS);
+            var VRTmp = (UVS + 0.5 * PVS) / (DVS + 0.5 * PVS);
             VR.push(VRTmp);
         }
     }
     var MAVR = getMADataByDetailData(10, VR);
     return {
         VR: VR,
-        MAVR: MAVR 
+        MAVR: MAVR
     };
 };
-
-

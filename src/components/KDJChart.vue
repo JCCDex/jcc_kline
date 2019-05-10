@@ -22,7 +22,6 @@
   </div>
 </template>
 <script>
-import { getKDJData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -73,7 +72,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, 'init');
+        this.init(true, "init");
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -85,7 +84,7 @@ export default {
           let data = JSON.parse(
             JSON.stringify(this.chartDataObj.candleData.values)
           );
-          this.KDJData = getKDJData(9, data);
+          this.KDJData = this.getKDJData(9, data);
         }
         if (this.KDJData) {
           this.toolTipData = {
@@ -104,7 +103,7 @@ export default {
         let data = JSON.parse(
           JSON.stringify(this.chartDataObj.candleData.values)
         );
-        this.KDJData = getKDJData(9, data);
+        this.KDJData = this.getKDJData(9, data);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.KDJData.precision = this.chartDataObj.precision;
@@ -117,7 +116,7 @@ export default {
               JSON.stringify(this.chartDataObj.coinType) ||
             this.isRefresh
           ) {
-            this.init(true, 'init');
+            this.init(true, "init");
             this.stochastic.setStochasticOption(
               this.KDJData,
               this.currentCycle
@@ -125,7 +124,7 @@ export default {
             this.isRefresh = false;
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.init(true, 'update')
+            this.init(true, "update");
             this.stochastic.updateStochasticOption(
               this.KDJData,
               this.currentCycle
@@ -205,6 +204,78 @@ export default {
     },
     dispose() {
       this.stochastic.disposeStochasticEChart();
+    },
+    getKDJData(dayCount, data) {
+      if (!data) {
+        return;
+      }
+      var RSV = [];
+      var KData = [];
+      var DData = [];
+      var JData = [];
+      for (var i = 0; i < data.length; i++) {
+        if (i < dayCount - 1) {
+          RSV.push("-");
+          KData.push("-");
+          DData.push("-");
+          JData.push("-");
+        } else {
+          var dayCountData = data.slice(i - dayCount + 1, i + 1);
+          var lowestPriceData = [];
+          var highestPriceData = [];
+          for (var countData of dayCountData) {
+            lowestPriceData.push(countData[2]);
+            highestPriceData.push(countData[3]);
+          }
+          let smallToBigLowestPriceData = JSON.parse(
+            JSON.stringify(lowestPriceData)
+          );
+          smallToBigLowestPriceData = smallToBigLowestPriceData.sort(function(
+            a,
+            b
+          ) {
+            return a - b;
+          });
+          let lowestPrice = smallToBigLowestPriceData[0];
+          let bigToSmallHighestPriceData = JSON.parse(
+            JSON.stringify(lowestPriceData)
+          );
+          bigToSmallHighestPriceData = bigToSmallHighestPriceData.sort(function(
+            a,
+            b
+          ) {
+            return b - a;
+          });
+          let highestPrice = bigToSmallHighestPriceData[0];
+          let RSVData =
+            ((data[i][1] - lowestPrice) / (highestPrice - lowestPrice)) * 100;
+          if (isNaN(RSVData)) {
+            RSVData = 0;
+          }
+          RSV.push(RSVData);
+          let KBeforeData;
+          if (!isNaN(KData[i - 1])) {
+            KBeforeData = KData[i - 1];
+          } else {
+            KBeforeData = 50;
+          }
+          let DBeforeData;
+          if (!isNaN(DData[i - 1])) {
+            DBeforeData = KData[i - 1];
+          } else {
+            DBeforeData = 50;
+          }
+          KData.push((2 / 3) * KBeforeData + (1 / 3) * RSV[i]);
+          DData.push((2 / 3) * DBeforeData + (1 / 3) * KData[i]);
+          JData.push(3 * KData[i] - 2 * DData[i]);
+        }
+      }
+      return {
+        RSV: RSV,
+        K: KData,
+        D: DData,
+        J: JData
+      };
     }
   }
 };

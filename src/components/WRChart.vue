@@ -21,7 +21,6 @@
   </div>
 </template>
 <script>
-import { getWRData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -74,7 +73,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, 'init');
+        this.init(true, "init");
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -88,7 +87,7 @@ export default {
           indicator: "WR",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.WRData = getWRData(this.chartDataObj.klineData);
+        this.WRData = this.getWRData(this.chartDataObj.klineData);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.WRData;
@@ -99,16 +98,13 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true, 'init');
+          this.init(true, "init");
           this.WR.setWROption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.init(true, 'update');
-          this.WR.updateWROption(
-            this.indicatorsData,
-            this.currentCycle
-          );
+          this.init(true, "update");
+          this.WR.updateWROption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -134,7 +130,7 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.klineData && !this.WRData) {
-          this.WRData = getWRData(this.chartDataObj.klineData);
+          this.WRData = this.getWRData(this.chartDataObj.klineData);
         }
         if (this.WRData) {
           this.toolTipData = {
@@ -197,6 +193,41 @@ export default {
     },
     dispose() {
       this.WR.disposeWREChart();
+    },
+    getWRData(data) {
+      if (!data) {
+        return;
+      }
+      var WR1 = []; //
+      var WR2 = []; //
+      for (var i = 0; i < data.length; i++) {
+        if (i < 9) {
+          WR1[i] = "-";
+        } else {
+          var HIGH1 = data[i][4];
+          var LOW1 = data[i][3];
+          for (var j = i; j > i - 10; j--) {
+            HIGH1 = data[j][4] > HIGH1 ? data[j][4] : HIGH1;
+            LOW1 = data[j][3] > LOW1 ? LOW1 : data[j][3];
+          }
+          WR1[i] = (100 * [HIGH1 - data[i][2]]) / [HIGH1 - LOW1];
+        }
+        if (i < 5) {
+          WR2[i] = "-";
+        } else {
+          var HIGH2 = data[i][4];
+          var LOW2 = data[i][3];
+          for (var k = i; k > i - 6; k--) {
+            HIGH2 = data[k][4] > HIGH2 ? data[k][4] : HIGH2;
+            LOW2 = data[k][3] > LOW2 ? LOW2 : data[k][3];
+          }
+          WR2[i] = (100 * [HIGH2 - data[i][2]]) / [HIGH2 - LOW2];
+        }
+      }
+      return {
+        WR1: WR1,
+        WR2: WR2
+      };
     }
   }
 };

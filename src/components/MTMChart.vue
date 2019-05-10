@@ -21,7 +21,6 @@
   </div>
 </template>
 <script>
-import { getMTMData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -74,7 +73,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, 'init');
+        this.init(true, "init");
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -88,7 +87,7 @@ export default {
           indicator: "MTM",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.MTMData = getMTMData(this.chartDataObj.klineData);
+        this.MTMData = this.getMTMData(this.chartDataObj.klineData);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.MTMData;
@@ -99,16 +98,13 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true, 'init');
+          this.init(true, "init");
           this.MTM.setMTMOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.init(true, 'update');
-          this.MTM.updateMTMOption(
-            this.indicatorsData,
-            this.currentCycle
-          );
+          this.init(true, "update");
+          this.MTM.updateMTMOption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -134,7 +130,7 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.klineData && !this.MTMData) {
-          this.MTMData = getMTMData(this.chartDataObj.klineData);
+          this.MTMData = this.getMTMData(this.chartDataObj.klineData);
         }
         if (this.MTMData) {
           this.toolTipData = {
@@ -197,6 +193,46 @@ export default {
     },
     dispose() {
       this.MTM.disposeMTMEChart();
+    },
+    getMTMData(data) {
+      if (!data) {
+        return;
+      }
+      var MTM = [];
+      var MTMTmp = "";
+      for (var i = 0; i < data.length; i++) {
+        if (i < 6) {
+          MTM.push("-");
+        } else {
+          MTMTmp = data[i][1] - data[i - 6][1];
+          MTM.push(MTMTmp);
+        }
+      }
+      var MAMTM = this.getMADataByDetailData(10, MTM);
+      return {
+        MTM: MTM,
+        MAMTM: MAMTM
+      };
+    },
+    getMADataByDetailData(periodic, data) {
+      var result = [];
+      for (var i = 0, len = data.length; i < len; i++) {
+        if (i < periodic - 1) {
+          result.push("-");
+          continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < periodic - 1; j++) {
+          let item = parseFloat(data[i - j]);
+          if (isNaN(item)) {
+            sum += 0;
+          } else {
+            sum += item;
+          }
+        }
+        result.push(sum / periodic);
+      }
+      return result;
     }
   }
 };
