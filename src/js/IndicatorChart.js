@@ -55,8 +55,8 @@ class IndicatorChartController {
     }
 
     /* 绘制随机指标（KDJ） */
-    initStochasticChart(DOM, clear, type) {
-        this.setStochasticChart.initStochasticECharts(DOM, clear, type);
+    initStochasticChart(DOM, clear) {
+        this.setStochasticChart.initStochasticECharts(DOM, clear);
     }
 
     resizeStochasticChart(DOM, isFullScreen, size) {
@@ -84,8 +84,8 @@ class IndicatorChartController {
     }
 
     /* 绘制指标线(RSI) */
-    initRSIChart(DOM, clear, type) {
-        this.setRSIChart.initIndicatorECharts(DOM, clear, type);
+    initRSIChart(DOM, clear) {
+        this.setRSIChart.initIndicatorECharts(DOM, clear);
     }
 
     resizeRSIChart(DOM, isFullScreen, size) {
@@ -113,8 +113,8 @@ class IndicatorChartController {
     }
 
     /* 绘制指标线(MTM) */
-    initMTMChart(DOM, clear, type) {
-        this.setMTMChart.initIndicatorECharts(DOM, clear, type);
+    initMTMChart(DOM, clear) {
+        this.setMTMChart.initIndicatorECharts(DOM, clear);
     }
 
     resizeMTMChart(DOM, isFullScreen, size) {
@@ -142,8 +142,8 @@ class IndicatorChartController {
     }
 
     /* 绘制指标线(WR) */
-    initWRChart(DOM, clear, type) {
-        this.setWRChart.initIndicatorECharts(DOM, clear, type);
+    initWRChart(DOM, clear) {
+        this.setWRChart.initIndicatorECharts(DOM, clear);
     }
 
     resizeWRChart(DOM, isFullScreen, size) {
@@ -171,8 +171,8 @@ class IndicatorChartController {
     }
 
     /* 绘制指标线(VR) */
-    initVRChart(DOM, clear, type) {
-        this.setVRChart.initIndicatorECharts(DOM, clear, type);
+    initVRChart(DOM, clear) {
+        this.setVRChart.initIndicatorECharts(DOM, clear);
     }
 
     resizeVRChart(DOM, isFullScreen, size) {

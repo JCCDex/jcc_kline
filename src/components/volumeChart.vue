@@ -51,7 +51,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, "init");
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -69,12 +69,11 @@ export default {
               JSON.stringify(this.chartDataObj.coinType) ||
             this.isRefresh
           ) {
-            this.init(true, "init");
+            this.init(true);
             this.volume.setVolumeOption(data, this.currentCycle);
             this.isRefresh = false;
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.init(true, "update");
             this.volume.updateVolumeOption(data, this.currentCycle);
           }
         }
@@ -92,11 +91,10 @@ export default {
           divisionData.prices !== null &&
           divisionData.volumes !== null
         ) {
-          this.init(true, "init");
+          this.init(true);
           this.volume.setVolumeOption(divisionData, this.currentCycle);
           this.isRefresh = false;
         } else {
-          this.init(true, "update");
           this.volume.updateVolumeOption(divisionData, this.currentCycle);
         }
       }
@@ -145,8 +143,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear, type) {
-      this.volume.initVolumeChart(this.$refs.volume, clear, type);
+    init(clear) {
+      this.volume.initVolumeChart(this.$refs.volume, clear);
       this.resize();
     },
     getToolTipIndex() {

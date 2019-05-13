@@ -19,8 +19,8 @@ class KLineController {
         }
     }
 
-    initChart(DOM, clear, type) {
-        this.setKLineChart.initECharts(DOM, clear, type);
+    initChart(DOM, clear) {
+        this.setKLineChart.initECharts(DOM, clear);
     }
 
     resizeChart(DOM, isFullScreen, isCloseIndicator, size) {

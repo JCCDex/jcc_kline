@@ -74,7 +74,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, "init");
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -106,12 +106,11 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true, "init");
+          this.init(true);
           this.RSI.setRSIOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.init(true, "update");
           this.RSI.updateRSIOption(this.indicatorsData, this.currentCycle);
         }
       }
@@ -184,8 +183,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear, type) {
-      this.RSI.initRSIChart(this.$refs.RSI, clear, type);
+    init(clear) {
+      this.RSI.initRSIChart(this.$refs.RSI, clear);
       this.resize();
     },
     getToolTipIndex() {

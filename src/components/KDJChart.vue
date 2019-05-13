@@ -72,7 +72,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, "init");
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -116,7 +116,7 @@ export default {
               JSON.stringify(this.chartDataObj.coinType) ||
             this.isRefresh
           ) {
-            this.init(true, "init");
+            this.init(true);
             this.stochastic.setStochasticOption(
               this.KDJData,
               this.currentCycle
@@ -124,7 +124,6 @@ export default {
             this.isRefresh = false;
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.init(true, "update");
             this.stochastic.updateStochasticOption(
               this.KDJData,
               this.currentCycle
@@ -179,8 +178,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear, type) {
-      this.stochastic.initStochasticChart(this.$refs.stochastic, clear, type);
+    init(clear) {
+      this.stochastic.initStochasticChart(this.$refs.stochastic, clear);
       this.resize();
     },
     getToolTipData() {

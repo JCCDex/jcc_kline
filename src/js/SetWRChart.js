@@ -9,7 +9,6 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
-var oldDataZoom;
 
 class IndicatorChartController {
     constructor(configs) {
@@ -51,10 +50,7 @@ class IndicatorChartController {
         }
     }
 
-    initIndicatorECharts(DOM, clear, type) {
-        if (type === 'update') {
-            oldDataZoom = this.indicator.getOption().dataZoom;
-        }
+    initIndicatorECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -86,7 +82,6 @@ class IndicatorChartController {
         };
         if (data) {
             indicatorOption = JSON.parse(JSON.stringify(this.indicatorConfig));
-            oldDataZoom = null;
             this.indicator.hideLoading();
             let option = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
@@ -115,7 +110,7 @@ class IndicatorChartController {
             let option = JSON.parse(JSON.stringify(indicatorConfig));
             merge(indicatorOption, indicatorConfig);
             indicatorOption.series = JSON.parse(JSON.stringify(option.series));
-            indicatorOption.dataZoom = oldDataZoom;
+            indicatorOption.dataZoom = this.indicator.getOption().dataZoom;
             this.indicator.setOption(indicatorOption);
             saveIndicator(this.indicator);
         }

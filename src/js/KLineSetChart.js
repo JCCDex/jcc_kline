@@ -11,7 +11,6 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var config;
 var toolTipIndex;
 var oldKlineData;
-var oldDataZoom;
 
 class KLineSetChartController {
     constructor(configs) {
@@ -54,10 +53,7 @@ class KLineSetChartController {
         }
     }
 
-    initECharts(DOM, clear, type) {
-        if (type === 'update') {
-            oldDataZoom = this.kline.getOption().dataZoom;
-        }
+    initECharts(DOM, clear) {
         if (this.kline && clear) {
             toolTipIndex = 0;
             oldKlineData = null;
@@ -97,7 +93,6 @@ class KLineSetChartController {
         };
         config = JSON.parse(JSON.stringify(this.klineConfig));
         if (data) {
-            oldDataZoom = null;
             let length = data.values.length - 1;
             toolTipIndex = length;
             this.kline.hideLoading();
@@ -126,7 +121,7 @@ class KLineSetChartController {
                 series: this.getSeries(data)
             };
             merge(config, klineOption);
-            config.dataZoom = oldDataZoom;
+            config.dataZoom = this.kline.getOption().dataZoom;
             this.kline.hideLoading();
             this.kline.setOption(config);
             saveCandle(this.kline);

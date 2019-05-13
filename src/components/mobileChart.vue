@@ -71,7 +71,6 @@
         </div> -->
       </div>
     </div>
-    <!-- <TimeSharing ref="timeSharing" :kline-data-obj = "klineDataObj" :kline-config = "klineConfig"></TimeSharing> -->
     <KLine
       ref="candle"
       v-show="showChart === 'candle'"

@@ -51,7 +51,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, "init");
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -67,7 +67,7 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true, "init");
+          this.init(true);
           let tipIndex = this.timeSharing.setTimeSharingOption(divisionData);
           this.$emit("listenToTipIndex", tipIndex);
           this.timeSharing.resizeTimeSharingChart(
@@ -78,7 +78,6 @@ export default {
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.init(true, "update");
           this.timeSharing.updateTimeSharingOption(divisionData);
         }
       }
@@ -137,11 +136,10 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear, type) {
+    init(clear) {
       this.timeSharing.initTimeSharingChart(
         this.$refs.timeSharing,
-        clear,
-        type
+        clear
       );
       this.resizeSize(this.klineConfig.size);
     },

@@ -71,8 +71,8 @@ class ChartController {
 
     /* 绘制分时图 */
 
-    initTimeSharingChart(DOM, clear, type) {
-        this.setTimeSharing.initTimeSharingECharts(DOM, clear, type);
+    initTimeSharingChart(DOM, clear) {
+        this.setTimeSharing.initTimeSharingECharts(DOM, clear);
     }
 
     resizeTimeSharingChart(DOM, isFullScreen, size) {
@@ -101,8 +101,8 @@ class ChartController {
 
     /* 绘制交易量柱状图 */
 
-    initVolumeChart(DOM, clear, type) {
-        this.setVolumeChart.initVolumeECharts(DOM, clear, type);
+    initVolumeChart(DOM, clear) {
+        this.setVolumeChart.initVolumeECharts(DOM, clear);
     }
 
     resizeVolumeChart(DOM, isFullScreen, isCloseIndicator, size) {
@@ -130,8 +130,8 @@ class ChartController {
     }
 
     /* 绘制MACD指标 */
-    initMACDECharts(DOM, clear, type) {
-        this.setMACDChart.initMACD(DOM, clear, type);
+    initMACDECharts(DOM, clear) {
+        this.setMACDChart.initMACD(DOM, clear);
     }
 
     resizeMACDChart(DOM, isFullScreen, size) {

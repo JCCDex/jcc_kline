@@ -11,7 +11,6 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var timeSharingOption;
 var oldTimeSharingData;
 var toolTipIndex;
-var oldDataZoom;
 
 class TimeSharingChart {
     constructor(configs) {
@@ -55,10 +54,7 @@ class TimeSharingChart {
         }
     }
 
-    initTimeSharingECharts(DOM, clear, type) {
-        if (type === 'update') {
-            oldDataZoom = this.timeSharing.getOption().dataZoom;
-        }
+    initTimeSharingECharts(DOM, clear) {
         if (this.timeSharing && clear) {
             oldTimeSharingData = null;
             this.timeSharing.dispose();
@@ -93,7 +89,6 @@ class TimeSharingChart {
         oldTimeSharingData = data;
         let { times, averages, prices, volumes } = data;
         let length = averages.length - 1;
-        oldDataZoom = null;
         toolTipIndex = length;
         let option = {
             xAxis: this.getTimeSharingXAxis(times),
@@ -117,7 +112,7 @@ class TimeSharingChart {
             dataZoom: this.getTimeSharingDataZoom()
         };
         merge(timeSharingOption, option);
-        timeSharingOption.dataZoom = oldDataZoom;
+        timeSharingOption.dataZoom = this.timeSharing.getOption().dataZoom;
         this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption);
         saveTimeSharing(this.timeSharing);

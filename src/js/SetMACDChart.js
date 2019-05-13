@@ -11,7 +11,6 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var MACDOption;
 var oldMACDData;
 var toolTipIndex;
-var oldDataZoom;
 
 class MACDChart {
 
@@ -54,10 +53,7 @@ class MACDChart {
         }
     }
 
-    initMACD(DOM, clear, type) {
-        if (type === 'update') {
-            oldDataZoom = this.macd.getOption().dataZoom;
-        }
+    initMACD(DOM, clear) {
         if (this.macd && clear) {
             oldMACDData = null;
             this.macd.dispose();
@@ -86,7 +82,6 @@ class MACDChart {
         oldMACDData = data;
         if (data) {
             MACDOption = JSON.parse(JSON.stringify(this.macdConfig));
-            oldDataZoom = null;
             this.macd.hideLoading();
             let option = {
                 xAxis: this.getMACDXAxis(data),
@@ -112,7 +107,7 @@ class MACDChart {
                 series: this.getMACDSeries(data)
             };
             merge(MACDOption, macdConfig);
-            MACDOption.dataZoom = oldDataZoom;
+            MACDOption.dataZoom = this.macd.getOption().dataZoom;
             this.macd.setOption(MACDOption);
             saveMacd(this.macd);
         }

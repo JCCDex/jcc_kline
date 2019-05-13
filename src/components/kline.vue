@@ -55,7 +55,7 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true, "init");
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -74,13 +74,12 @@ export default {
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType)
           ) {
-            this.init(true, "init");
+            this.init(true);
             let toolTipIndex = this.kline.setOption(data, this.currentCycle);
             this.isRefresh = false;
             this.$emit("listenToTipIndex", toolTipIndex);
             this.coinType = this.chartDataObj.coinType;
           } else {
-            this.init(true, "update");
             this.kline.updateOption(data, this.currentCycle);
           }
         }
@@ -124,8 +123,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init(clear, type) {
-      this.kline.initChart(this.$refs.klineRef, clear, type);
+    init(clear) {
+      this.kline.initChart(this.$refs.klineRef, clear);
       this.resize();
     },
     changeDataZoom(type) {
