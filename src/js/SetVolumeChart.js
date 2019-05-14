@@ -103,7 +103,7 @@ class VolumeChart {
             data: data,
             cycle: cycle
         };
-        if (data) {
+        if (this.volume.getOption()) {
             this.volume.hideLoading();
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data, cycle),

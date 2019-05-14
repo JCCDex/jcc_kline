@@ -98,7 +98,7 @@ class MACDChart {
 
     updateMACDOption(data) {
         oldMACDData = data;
-        if (data) {
+        if (this.macd.getOption()) {
             this.macd.hideLoading();
             let macdConfig = {
                 xAxis: this.getMACDXAxis(data),

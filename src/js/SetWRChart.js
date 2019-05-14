@@ -100,7 +100,7 @@ class IndicatorChartController {
             data: data,
             cycle: cycle
         };
-        if (data) {
+        if (this.indicator.getOption()) {
             this.indicator.hideLoading();
             let indicatorConfig = {
                 xAxis: this.getIndicatorXAxis(data, cycle),

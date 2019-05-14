@@ -101,7 +101,7 @@ class StochasticChartController {
             data: data,
             cycle: cycle
         };
-        if (data) {
+        if (this.stochastic.getOption()) {
             this.stochastic.hideLoading();
             let stochasticConfig = {
                 xAxis: this.getStochasticXAxis(data, cycle),

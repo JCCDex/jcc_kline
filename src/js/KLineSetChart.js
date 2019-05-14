@@ -114,7 +114,7 @@ class KLineSetChartController {
             oldData: data,
             oldCycle: cycle
         };
-        if (data) {
+        if (this.kline.getOption()) {
             let klineOption = {
                 tooltip: this.getToolTip(),
                 xAxis: this.getXAxis(data, cycle),
