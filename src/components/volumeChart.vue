@@ -77,6 +77,9 @@ export default {
             this.volume.updateVolumeOption(data, this.currentCycle);
           }
         }
+      } else if (!this.chartDataObj.candleData  && this.currentCycle !== "everyhour") {
+        this.init(true)
+        this.coinType = this.chartDataObj.coinType;
       }
       if (
         this.currentCycle === "everyhour" &&
@@ -97,6 +100,9 @@ export default {
         } else {
           this.volume.updateVolumeOption(divisionData, this.currentCycle);
         }
+      } else if (!this.chartDataObj.timeDivisionData  && this.currentCycle === "everyhour") {
+        this.init(true)
+        this.coinType = this.chartDataObj.coinType;
       }
     },
     klineConfig() {

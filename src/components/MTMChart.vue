@@ -91,6 +91,11 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.MTMData;
+      } else {
+        this.init(true)
+        this.toolTipData = null;
+        this.indicatorsData = null;
+        this.coinType = this.chartDataObj.coinType;
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (

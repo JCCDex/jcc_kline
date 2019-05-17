@@ -49,7 +49,7 @@ export default {
     },
     cycle: {
       type: String,
-      default: ''
+      default: ""
     }
   },
   watch: {
@@ -65,7 +65,7 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.candleData) {
-        let cycle = this.chartDataObj.cycle
+        let cycle = this.chartDataObj.cycle;
         let data = this.chartDataObj.candleData;
         data.precision = this.chartDataObj.precision;
         if (data.values && data.volumes && data.categoryData) {
@@ -83,6 +83,9 @@ export default {
             this.kline.updateOption(data, this.currentCycle);
           }
         }
+      } else {
+        this.init(true);
+        this.coinType = this.chartDataObj.coinType;
       }
     },
     klineConfig() {

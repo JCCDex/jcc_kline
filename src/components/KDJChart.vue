@@ -130,6 +130,10 @@ export default {
             );
           }
         }
+      } else {
+        this.init(true)
+        this.toolTipData = null;
+        this.coinType = this.chartDataObj.coinType;
       }
     },
     klineConfig() {
