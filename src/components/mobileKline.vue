@@ -215,6 +215,8 @@ export default {
           );
           this.$emit("listenTipIndex", toolTipIndex);
         }
+      } else {
+        this.init(true);
       }
       if (this.currentCycle === "everyhour" && this.chartDataObj.divisionData) {
         let divisionData = this.chartDataObj.divisionData;
@@ -230,6 +232,8 @@ export default {
           );
           this.$emit("listenTipIndex", toolTipIndex);
         }
+      } else if (this.currentCycle === "everyhour" && !this.chartDataObj.divisionData) {
+        this.init(true);
       }
     }
   },

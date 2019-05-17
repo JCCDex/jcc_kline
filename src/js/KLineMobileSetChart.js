@@ -157,7 +157,9 @@ class KLineMobileSetChartController {
             }
         };
         merge(timeDivisionconfig, updateTimeOption);
-        timeDivisionconfig.dataZoom = this.kline.getOption().dataZoom;
+        if (this.kline.getOption()) {
+            timeDivisionconfig.dataZoom = this.kline.getOption().dataZoom;
+        }
         this.kline.hideLoading();
         this.kline.setOption(timeDivisionconfig);
         return toolTipIndex;
