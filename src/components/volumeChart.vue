@@ -77,8 +77,11 @@ export default {
             this.volume.updateVolumeOption(data, this.currentCycle);
           }
         }
-      } else if (!this.chartDataObj.candleData  && this.currentCycle !== "everyhour") {
-        this.init(true)
+      } else if (
+        !this.chartDataObj.candleData &&
+        this.currentCycle !== "everyhour"
+      ) {
+        this.init(true);
         this.coinType = this.chartDataObj.coinType;
       }
       if (
@@ -88,20 +91,26 @@ export default {
         let timeDivisionData = this.chartDataObj.timeDivisionData;
         let divisionData = this.chartDataObj.divisionData;
         if (
-          this.isRefresh &&
-          divisionData.times !== null &&
-          divisionData.averages !== null &&
-          divisionData.prices !== null &&
-          divisionData.volumes !== null
+          JSON.stringify(this.coinType) !==
+            JSON.stringify(this.chartDataObj.coinType) ||
+          (this.isRefresh &&
+            divisionData.times !== null &&
+            divisionData.averages !== null &&
+            divisionData.prices !== null &&
+            divisionData.volumes !== null)
         ) {
           this.init(true);
           this.volume.setVolumeOption(divisionData, this.currentCycle);
           this.isRefresh = false;
+          this.coinType = this.chartDataObj.coinType;
         } else {
           this.volume.updateVolumeOption(divisionData, this.currentCycle);
         }
-      } else if (!this.chartDataObj.timeDivisionData  && this.currentCycle === "everyhour") {
-        this.init(true)
+      } else if (
+        !this.chartDataObj.timeDivisionData &&
+        this.currentCycle === "everyhour"
+      ) {
+        this.init(true);
         this.coinType = this.chartDataObj.coinType;
       }
     },

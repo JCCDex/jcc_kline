@@ -140,8 +140,10 @@
           style="margin-left: 10px;margin-right: 20px;"
         >{{message.depth}}</div>
 
-        <div v-show="showIndicatorOpt && cycle !== 'everyhour'"
-          style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;">
+        <div
+          v-show="showIndicatorOpt && cycle !== 'everyhour'"
+          style="background-color: #1e262c; margin-top: 30px; right: 660px; height: 100px; width: 212px;"
+        >
           <div class="indicatorOpt">
             <div style="margin-left:10px; padding-top:1px;">
               <font>{{message.indicator}}</font>
@@ -173,13 +175,13 @@
             <div
               @click="showIndicatorChart('MTM')"
               :class="this.showIndicator ==='MTM' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
-              >
+            >
               <div class="indicator-line">{{message.MTM}}</div>
             </div>
             <div
               @click="showIndicatorChart('WR')"
               :class="this.showIndicator ==='WR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
-              >
+            >
               <div class="indicator-line">{{message.WR}}</div>
             </div>
             <!-- <div
@@ -187,7 +189,7 @@
               :class="this.showIndicator ==='VR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
               >
               <div class="indicator-line">{{message.VR}}</div>
-            </div> -->
+            </div>-->
           </div>
         </div>
       </div>
@@ -221,7 +223,7 @@
         @mouseenter="enter()"
         @mouseleave="leave()"
       >
-        <div class="kline-levitation-icon" >
+        <div class="kline-levitation-icon">
           <div
             class="kline-levitation-btn"
             @mousedown="changeDataZoomByMouseDown('leftShift')"
@@ -335,7 +337,7 @@
         :kline-config="klineConfig"
         :chart-data-obj="chartDataObj"
         :resize-size="resizeSize"
-        :cycle="cycle"  
+        :cycle="cycle"
       ></WR>
       <VR
         ref="vr"
@@ -346,7 +348,7 @@
         :kline-config="klineConfig"
         :chart-data-obj="chartDataObj"
         :resize-size="resizeSize"
-        :cycle="cycle"  
+        :cycle="cycle"
       ></VR>
     </fullscreen>
   </div>
@@ -532,8 +534,8 @@ export default {
       if (cycle === this.cycle) {
         return;
       }
-      if (cycle === 'everyhour') {
-        this.showIndicatorOpt = false
+      if (cycle === "everyhour") {
+        this.showIndicatorOpt = false;
       }
       this.toolTipData = null;
       this.cycle = cycle;
@@ -704,24 +706,26 @@ export default {
             }
           }
           if (this.cycle === "everyhour") {
-            let tipsData = this.chartDataObj.divisionData;
-            this.toolTipData = {
-              volume: formatDecimal(
-                tipsData.volumes[index][1],
-                amountsPrecision,
-                true
-              ),
-              price: formatDecimal(
-                tipsData.prices[index],
-                pricePrecision,
-                true
-              ),
-              averagePrice: formatDecimal(
-                tipsData.averages[index],
-                pricePrecision,
-                true
-              )
-            };
+            if (this.chartDataObj.divisionData) {
+              let tipsData = this.chartDataObj.divisionData;
+              this.toolTipData = {
+                volume: formatDecimal(
+                  tipsData.volumes[index][1],
+                  amountsPrecision,
+                  true
+                ),
+                price: formatDecimal(
+                  tipsData.prices[index],
+                  pricePrecision,
+                  true
+                ),
+                averagePrice: formatDecimal(
+                  tipsData.averages[index],
+                  pricePrecision,
+                  true
+                )
+              };
+            }
           }
         }
       }

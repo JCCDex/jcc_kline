@@ -94,7 +94,7 @@ class TimeSharingChart {
             xAxis: this.getTimeSharingXAxis(times),
             tooltip: this.getTimeSharingToolTip(data),
             series: this.getTimeSharingSeries(prices, averages, volumes),
-            dataZoom: this.getTimeSharingDataZoom()
+            dataZoom: this.getTimeSharingDataZoom(data)
         };
         merge(timeSharingOption, option);
         this.timeSharing.hideLoading();
@@ -109,7 +109,7 @@ class TimeSharingChart {
             xAxis: this.getTimeSharingXAxis(times),
             tooltip: this.getTimeSharingToolTip(data),
             series: this.getTimeSharingSeries(prices, averages, volumes),
-            dataZoom: this.getTimeSharingDataZoom()
+            dataZoom: this.getTimeSharingDataZoom(data)
         };
         merge(timeSharingOption, option);
         timeSharingOption.dataZoom = this.timeSharing.getOption().dataZoom;
@@ -156,13 +156,35 @@ class TimeSharingChart {
         ];
     }
 
-    getTimeSharingDataZoom() {
+    getTimeSharingDataZoom(data) {
+        let start = 0;
+        if (this.timeSharingConfig.platform === 'mobile') {
+            if (data.volumes.length > 40) {
+                start = 60;
+            }
+            if (data.volumes.length > 100) {
+                start = 80;
+            }
+        } else {
+            if (data.volumes.length > 80) {
+                start = 20;
+            }
+            if (data.volumes.length > 120) {
+                start = 30;
+            }
+            if (data.volumes.length > 160) {
+                start = 50;
+            }
+            if (data.volumes.length > 200) {
+                start = 60;
+            }
+        }
         return [
             {
                 id: 'dataZoomX',
                 type: 'inside',
                 filterMode: 'filter',
-                start: 60,
+                start: start,
                 end: 100,
                 minSpan: 5
             }
