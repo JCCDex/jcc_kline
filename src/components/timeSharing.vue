@@ -80,6 +80,8 @@ export default {
         } else {
           this.timeSharing.updateTimeSharingOption(divisionData);
         }
+      } else {
+        this.init(true)
       }
     },
     klineConfig() {
