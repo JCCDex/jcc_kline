@@ -162,6 +162,7 @@ class KLineMobileSetChartController {
         }
         this.kline.hideLoading();
         this.kline.setOption(timeDivisionconfig);
+        saveCandle(this.kline);
         return toolTipIndex;
     }
 

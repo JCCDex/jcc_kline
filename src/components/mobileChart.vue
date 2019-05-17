@@ -51,12 +51,12 @@
       >{{this.timeSharingTipData.averagePrice}}</font> &nbsp;
       <br>
     </div>
-          <!-- 平移、刷新、缩放按钮 -->
+    <!-- 平移、刷新、缩放按钮 -->
     <div class="kline-levitation-mobile-div">
-      <div class="kline-levitation-icon" >
+      <div class="kline-levitation-icon">
         <!-- <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')">
           <div class="left-shift-icon"></div>
-        </div> -->
+        </div>-->
         <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
           <i class="narrow-icon"></i>
         </div>
@@ -65,10 +65,10 @@
         </div>
         <!-- <div class="kline-levitation-btn" @click="changeDataZoom('refresh')">
           <i class="refresh-icon"></i>
-        </div> -->
+        </div>-->
         <!-- <div class="kline-levitation-btn" @click="changeDataZoom('rightShift')">
           <i class="right-shift-icon"></i>
-        </div> -->
+        </div>-->
       </div>
     </div>
     <KLine
@@ -429,7 +429,7 @@ export default {
       }
     },
     changeDataZoom(type) {
-      if (this.showChart !== "depth") {
+      if (this.cycle !== "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);
         this.$refs.macd.changeDataZoom(type);
@@ -437,8 +437,11 @@ export default {
         this.$refs.rsi.changeDataZoom(type);
         this.$refs.mtm.changeDataZoom(type);
         this.$refs.wr.changeDataZoom(type);
+      } else if (this.cycle === "everyhour") {
+        this.$refs.candle.changeDataZoom(type);
+        this.$refs.volume.changeDataZoom(type);
       }
-    },
+    }
   }
 };
 </script>
