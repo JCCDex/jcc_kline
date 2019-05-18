@@ -112,7 +112,9 @@ class TimeSharingChart {
             dataZoom: this.getTimeSharingDataZoom(data)
         };
         merge(timeSharingOption, option);
-        timeSharingOption.dataZoom = this.timeSharing.getOption().dataZoom;
+        if (this.timeSharing.getOption()) {
+            timeSharingOption.dataZoom = this.timeSharing.getOption().dataZoom;
+        }
         this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption);
         saveTimeSharing(this.timeSharing);
