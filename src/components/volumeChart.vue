@@ -16,6 +16,7 @@ export default {
       coinType: "",
       currentCycle: "",
       refreshCycle: 0,
+      refreshKline: true,
       isRefresh: true,
       chartType: "volume",
       volumeSize: {
@@ -67,11 +68,12 @@ export default {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.isRefresh
+            this.isRefresh || this.refreshKline
           ) {
             this.init(true);
             this.volume.setVolumeOption(data, this.currentCycle);
             this.isRefresh = false;
+            this.refreshKline = false;
             this.coinType = this.chartDataObj.coinType;
           } else {
             this.volume.updateVolumeOption(data, this.currentCycle);
@@ -79,7 +81,9 @@ export default {
         }
       } else if (
         !this.chartDataObj.candleData &&
-        this.currentCycle !== "everyhour"
+        this.currentCycle !== "everyhour" &&
+        JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType)
       ) {
         this.init(true);
         this.coinType = this.chartDataObj.coinType;
@@ -97,18 +101,21 @@ export default {
             divisionData.times !== null &&
             divisionData.averages !== null &&
             divisionData.prices !== null &&
-            divisionData.volumes !== null)
+            divisionData.volumes !== null) || this.refreshKline
         ) {
           this.init(true);
           this.volume.setVolumeOption(divisionData, this.currentCycle);
           this.isRefresh = false;
+          this.refreshKline = false
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.volume.updateVolumeOption(divisionData, this.currentCycle);
         }
       } else if (
         !this.chartDataObj.timeDivisionData &&
-        this.currentCycle === "everyhour"
+        this.currentCycle === "everyhour" &&
+        JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType)
       ) {
         this.init(true);
         this.coinType = this.chartDataObj.coinType;
@@ -159,6 +166,7 @@ export default {
   },
   methods: {
     init(clear) {
+      this.refreshKline = true;
       this.volume.initVolumeChart(this.$refs.volume, clear);
       this.resize();
     },

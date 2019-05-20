@@ -34,6 +34,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
+      refreshKline: true,
       chartType: "mtm",
       toolTipData: null,
       MTMSize: {
@@ -91,7 +92,10 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.MTMData;
-      } else {
+      } else  if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.chartDataObj.coinType)
+      ) {
         this.init(true)
         this.toolTipData = null;
         this.indicatorsData = null;
@@ -101,11 +105,12 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.isRefresh
+          this.isRefresh || this.refreshKline
         ) {
           this.init(true);
           this.MTM.setMTMOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
+          this.refreshKline = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.MTM.updateMTMOption(this.indicatorsData, this.currentCycle);
@@ -173,6 +178,7 @@ export default {
   },
   methods: {
     init(clear) {
+      this.refreshKline = true;
       this.MTM.initMTMChart(this.$refs.MTM, clear);
       this.resize();
     },

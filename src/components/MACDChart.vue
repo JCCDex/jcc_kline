@@ -34,6 +34,7 @@ export default {
       chartType: "MACD",
       currentCycle: "",
       refreshCycle: 0,
+      refreshKline: true,
       isRefresh: true,
       macdData: "",
       toolTipData: null,
@@ -115,9 +116,10 @@ export default {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.isRefresh
+            this.isRefresh || this.refreshKline
           ) {
             this.isRefresh = false;
+            this.refreshKline = false;
             this.init(true);
             this.refreshCycle = 0;
             this.cycle = this.chartDataObj.cycle;
@@ -127,8 +129,11 @@ export default {
             this.macd.updateMACDOption(macdData);
           }
         }
-      } else {
-        this.init(true)
+      } else if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.chartDataObj.coinType)
+      ) {
+        this.init(true);
         this.toolTipData = null;
         this.coinType = this.chartDataObj.coinType;
       }
@@ -186,6 +191,7 @@ export default {
   },
   methods: {
     init(clear) {
+      this.refreshKline = true
       this.macd.initMACDECharts(this.$refs.macd, clear);
       this.resize();
     },

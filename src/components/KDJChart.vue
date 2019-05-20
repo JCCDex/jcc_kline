@@ -33,6 +33,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
+      refreshKline: true,
       chartType: "stochastic",
       toolTipData: null,
       stochasticSize: {
@@ -114,13 +115,14 @@ export default {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.isRefresh
+            this.isRefresh || this.refreshKline
           ) {
             this.init(true);
             this.stochastic.setStochasticOption(
               this.KDJData,
               this.currentCycle
             );
+            this.refreshKline = false;
             this.isRefresh = false;
             this.coinType = this.chartDataObj.coinType;
           } else {
@@ -130,7 +132,10 @@ export default {
             );
           }
         }
-      } else {
+      } else  if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.chartDataObj.coinType)
+      ) {
         this.init(true)
         this.toolTipData = null;
         this.coinType = this.chartDataObj.coinType;
@@ -183,6 +188,7 @@ export default {
   },
   methods: {
     init(clear) {
+      this.refreshKline = true;
       this.stochastic.initStochasticChart(this.$refs.stochastic, clear);
       this.resize();
     },

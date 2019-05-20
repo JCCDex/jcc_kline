@@ -25,7 +25,8 @@ export default {
       message: null,
       timeSharingData: null,
       currentCycle: "",
-      isRefresh: true
+      isRefresh: true,
+      refreshKline: true
     };
   },
   props: {
@@ -65,7 +66,7 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.isRefresh
+          this.isRefresh || this.refreshKline
         ) {
           this.init(true);
           let tipIndex = this.timeSharing.setTimeSharingOption(divisionData);
@@ -75,13 +76,17 @@ export default {
             false,
             this.klineConfig.size
           );
+          this.refreshKline = false;
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.timeSharing.updateTimeSharingOption(divisionData);
         }
-      } else {
-        this.init(true)
+      } else if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.chartDataObj.coinType)
+      ) {
+        this.init(true);
       }
     },
     klineConfig() {
@@ -139,10 +144,8 @@ export default {
   },
   methods: {
     init(clear) {
-      this.timeSharing.initTimeSharingChart(
-        this.$refs.timeSharing,
-        clear
-      );
+      this.refreshKline = true;
+      this.timeSharing.initTimeSharingChart(this.$refs.timeSharing, clear);
       this.resizeSize(this.klineConfig.size);
     },
     changeDataZoom(type) {

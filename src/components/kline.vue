@@ -17,6 +17,7 @@ export default {
   data() {
     return {
       kline: null,
+      refreshKline: true,
       currentCycle: "",
       isRefresh: true,
       platform: "pc",
@@ -69,7 +70,7 @@ export default {
         let data = this.chartDataObj.candleData;
         data.precision = this.chartDataObj.precision;
         if (data.values && data.volumes && data.categoryData) {
-          if (
+          if (this.refreshKline ||
             this.isRefresh ||
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType)
@@ -77,13 +78,15 @@ export default {
             this.init(true);
             let toolTipIndex = this.kline.setOption(data, this.currentCycle);
             this.isRefresh = false;
+            this.refreshKline = false;
             this.$emit("listenToTipIndex", toolTipIndex);
             this.coinType = this.chartDataObj.coinType;
           } else {
             this.kline.updateOption(data, this.currentCycle);
           }
         }
-      } else {
+      } else if (JSON.stringify(this.coinType) !==
+              JSON.stringify(this.chartDataObj.coinType)) {
         this.init(true);
         this.coinType = this.chartDataObj.coinType;
       }
@@ -127,6 +130,7 @@ export default {
   },
   methods: {
     init(clear) {
+      this.refreshKline = true;
       this.kline.initChart(this.$refs.klineRef, clear);
       this.resize();
     },

@@ -35,6 +35,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
+      refreshKline: true,
       chartType: "rsi",
       toolTipData: null,
       RSISize: {
@@ -99,7 +100,10 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.RSIData;
-      } else {
+      } else  if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.chartDataObj.coinType)
+      ) {
         this.init(true);
         this.toolTipData = null;
         this.indicatorsData = null;
@@ -109,11 +113,12 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.isRefresh
+          this.isRefresh || this.refreshKline
         ) {
           this.init(true);
           this.RSI.setRSIOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
+          this.refreshKline = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.RSI.updateRSIOption(this.indicatorsData, this.currentCycle);
@@ -189,6 +194,7 @@ export default {
   },
   methods: {
     init(clear) {
+      this.refreshKline = true;
       this.RSI.initRSIChart(this.$refs.RSI, clear);
       this.resize();
     },
