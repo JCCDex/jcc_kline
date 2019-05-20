@@ -81,12 +81,16 @@
     </div>
     <div v-show="showIndicatorDiv && currentCycle !== 'everyhour'" class="indicatorConfigure">
       <div class="mobile-indicator">
-        <div class="indicator-font"><font>{{message.indicator}}</font></div>
-            <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
-        <div @click = "showIndicatorChart('MACD')" 
-          :class = "this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
-              <div class = "indicator-mobile-line">{{message.MACD}}</div>
-            </div>
+        <div class="indicator-font">
+          <font>{{message.indicator}}</font>
+        </div>
+        <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
+        <div
+          @click="showIndicatorChart('MACD')"
+          :class="this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.MACD}}</div>
+        </div>
         <div
           @click="showIndicatorChart('KDJ')"
           :class="this.showIndicator ==='KDJ' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
@@ -116,7 +120,7 @@
           :class="this.showIndicator ==='VR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
         >
           <div class="indicator-mobile-line">{{message.VR}}</div>
-        </div> -->
+        </div>-->
         <!-- <div @click = "showIndicatorChart('OBV')" :class = "this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
               <div class = "indicator-mobile-line">{{message.OBV}}</div>
             </div>
@@ -156,7 +160,9 @@ export default {
       kline: null,
       platform: "mobile",
       currentCycle: "hour",
+      coinType: null,
       isRefresh: true,
+      refreshKline: true,
       message: null,
       isSelected: false,
       showMinCycle: false,
@@ -188,19 +194,25 @@ export default {
       if (!this.chartDataObj) {
         return;
       }
-      if (this.isRefresh) {
+      if (this.isRefresh || this.refreshKline) {
         this.init(true);
+        if (!this.chartDataObj.candleData) {
+          return
+        }
         if (this.currentCycle !== "everyhour") {
           this.kline.setMobileOption(
             this.klineConfig.size,
             this.chartDataObj.candleData
           );
           this.isRefresh = false;
+          this.refreshKline = false;
         } else {
           this.kline.setTimeDivisionsOption(this.klineConfig.size);
           this.isRefresh = false;
+          this.refreshKline = false;
         }
       }
+      console.log(this.chartDataObj);
       if (this.chartDataObj.candleData) {
         let candleData = this.chartDataObj.candleData;
         if (
@@ -213,9 +225,13 @@ export default {
             candleData,
             this.currentCycle
           );
+          this.coinType = this.chartDataObj.coinType;
           this.$emit("listenTipIndex", toolTipIndex);
         }
-      } else {
+      } else if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.chartDataObj.coinType)
+      ) {
         this.init(true);
       }
       if (this.currentCycle === "everyhour" && this.chartDataObj.divisionData) {
@@ -232,7 +248,10 @@ export default {
           );
           this.$emit("listenTipIndex", toolTipIndex);
         }
-      } else if (this.currentCycle === "everyhour" && !this.chartDataObj.divisionData) {
+      } else if (
+        this.currentCycle === "everyhour" &&
+        !this.chartDataObj.divisionData
+      ) {
         this.init(true);
       }
     }
@@ -251,6 +270,7 @@ export default {
   },
   methods: {
     init(clear) {
+      this.refreshKline = true;
       this.kline.initMobileChart(this.$refs.klineRef, clear);
     },
     clickMinCycle() {

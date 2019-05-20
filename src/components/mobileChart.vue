@@ -163,7 +163,6 @@ import {
   calculateMA
 } from "../js/processData";
 import { formatDecimal, getLanguage, formatTime } from "../js/utils";
-import { linkageVolume, linkageMacd } from "../js/linkageCharts";
 export default {
   name: "mobileChart",
   components: {
@@ -308,36 +307,6 @@ export default {
       this.toolTipIndex = null;
       this.chartDataObj.candleData = null;
       this.$emit("listenToChildEvent", cycle);
-    },
-    getCandleChart(candle) {
-      this.candle = candle;
-      if (this.volume) {
-        linkageVolume(this.candle, this.volume);
-      }
-    },
-    getVolumeChart(volume) {
-      this.volume = volume;
-      if (this.candle) {
-        linkageVolume(this.candle, this.volume);
-      }
-    },
-    getMacdChart(macd) {
-      this.macd = macd;
-      if (this.candle) {
-        linkageMacd(this.candle, this.macd);
-      }
-    },
-    getKDJChart(KDJ) {
-      this.stochastic = KDJ;
-      if (this.candle) {
-        linkageVolume(this.candle, this.stochastic);
-      }
-    },
-    getIndicatorChart(indicator) {
-      this.indicator = indicator;
-      if (this.candle) {
-        linkageVolume(this.candle, this.indicator);
-      }
     },
     getMATipData(name) {
       for (let tipData of this.toolTipData.MAData) {
