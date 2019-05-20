@@ -212,7 +212,6 @@ export default {
           this.refreshKline = false;
         }
       }
-      console.log(this.chartDataObj);
       if (this.chartDataObj.candleData) {
         let candleData = this.chartDataObj.candleData;
         if (
