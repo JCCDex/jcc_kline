@@ -196,7 +196,7 @@ export default {
       }
       if (this.isRefresh || this.refreshKline) {
         this.init(true);
-        if (!this.chartDataObj.candleData) {
+        if (!this.chartDataObj.candleData && this.currentCycle !== "everyhour") {
           return
         }
         if (this.currentCycle !== "everyhour") {
