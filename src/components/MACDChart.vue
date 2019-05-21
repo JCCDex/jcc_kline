@@ -118,9 +118,9 @@ export default {
               JSON.stringify(this.chartDataObj.coinType) ||
             this.isRefresh || this.refreshKline
           ) {
+            this.init(true);
             this.isRefresh = false;
             this.refreshKline = false;
-            this.init(true);
             this.refreshCycle = 0;
             this.cycle = this.chartDataObj.cycle;
             this.macd.setMACDOption(macdData);
