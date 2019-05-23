@@ -145,6 +145,8 @@ describe('test SetVolumeChart', () => {
         volumeChart.changeDataZoom('narrow')
         expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(55)
         expect(volumeChart.volume.getOption().dataZoom[0].end).toBe(100)
+        volumeChart.changeDataZoom('test')
+        expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(55)
       })
 
 })

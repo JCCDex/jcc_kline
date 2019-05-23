@@ -4,8 +4,11 @@ import { StochasticOption } from 'js/IndicatorsLineOption'
 import testData from '../../testData/testData.json'
 
 let RSIData = getRSIData(testData.candleData.values, 6)
-RSIData.categoryData = testData.candleData.categoryData
-RSIData.precision = testData.precision
+let indicatorData = {
+    categoryData: testData.candleData.categoryData,
+    indicator: 'RSI',
+    indicatorData: { RSI6: RSIData }
+}
 let size = {
     height: 1080,
     width: 1920
@@ -16,7 +19,7 @@ describe('test SetRSIChart', () => {
         let rsi = new SetRSIChart(StochasticOption);
         expect(rsi).toBeInstanceOf(SetRSIChart)
     })
-    
+
     it('test initIndicatorECharts', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
@@ -29,8 +32,27 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, 'hour')
+        rsi.setIndicatorOption(indicatorData, 'hour')
         expect(rsi.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test changeDataZoom', () => {
+        const element = document.createElement('div');
+        let rsi = new SetRSIChart(StochasticOption);
+        rsi.initIndicatorECharts(element, false, 'init')
+        rsi.setIndicatorOption(indicatorData, 'hour')
+        rsi.changeDataZoom('leftShift')
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(rsi.indicator.getOption().dataZoom[0].end).toBe(98);
+        rsi.changeDataZoom('rightShift')
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(rsi.indicator.getOption().dataZoom[0].end).toBe(100);
+        rsi.changeDataZoom('enlarge')
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(65);
+        rsi.changeDataZoom('refresh')
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(60);
+        rsi.changeDataZoom('narrow')
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(55);
     })
 
     it('test setIndicatorOption if data is null', () => {
@@ -45,8 +67,8 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, 'hour')
-        rsi.updateIndicatorOption(RSIData, 'week')
+        rsi.setIndicatorOption(indicatorData, 'hour')
+        rsi.updateIndicatorOption(indicatorData, 'week')
         expect(rsi.indicator.getOption()).not.toBeNull();
     })
 
@@ -54,7 +76,7 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, 'hour')
+        rsi.setIndicatorOption(indicatorData, 'hour')
         let tipData = rsi.getToolTipData()
         expect(tipData).not.toBeNull();
     })
@@ -63,7 +85,7 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, 'hour')
+        rsi.setIndicatorOption(indicatorData, 'hour')
         rsi.resizeECharts(element, false, size)
         expect(rsi.indicator.getOption()).not.toBeNull();
     })
@@ -72,7 +94,7 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, 'aa')
+        rsi.setIndicatorOption(indicatorData, 'aa')
         rsi.resizeECharts(null, false, size)
         expect(rsi.indicator.getOption()).not.toBeNull();
     })
@@ -81,7 +103,7 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, '5minute')
+        rsi.setIndicatorOption(indicatorData, '5minute')
         rsi.resizeECharts(element, true, size)
         expect(rsi.indicator.getOption()).not.toBeNull();
     })
@@ -90,7 +112,7 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, 'hour')
+        rsi.setIndicatorOption(indicatorData, 'hour')
         rsi.disposeIndicatorEChart()
         expect(rsi.indicator.getOption()).not.toBeNull();
     })
@@ -99,7 +121,7 @@ describe('test SetRSIChart', () => {
         const element = document.createElement('div');
         let rsi = new SetRSIChart(StochasticOption);
         rsi.initIndicatorECharts(element, false, 'init')
-        rsi.setIndicatorOption(RSIData, 'week')
+        rsi.setIndicatorOption(indicatorData, 'week')
         expect(rsi).not.toBeNull();
     })
 })

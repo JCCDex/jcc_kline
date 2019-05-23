@@ -4,8 +4,11 @@ import { StochasticOption } from 'js/IndicatorsLineOption'
 import testData from '../../testData/testData.json'
 
 let WRData = getWRData(testData.candleData.values, 6)
-WRData.categoryData = testData.candleData.categoryData
-WRData.precision = testData.precision
+let indicatorData = {
+    categoryData: testData.candleData.categoryData,
+    indicator: 'WR',
+    indicatorData: WRData
+}
 let size = {
     height: 1080,
     width: 1920
@@ -29,8 +32,29 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, 'hour')
+        WR.setIndicatorOption(indicatorData, 'hour')
         expect(WR.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test changeDataZoom', () => {
+        const element = document.createElement('div');
+        let WR = new SetWRChart(StochasticOption);
+        WR.initIndicatorECharts(element, false, 'init')
+        WR.setIndicatorOption(indicatorData, 'hour')
+        WR.changeDataZoom('leftShift')
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(WR.indicator.getOption().dataZoom[0].end).toBe(98);
+        WR.changeDataZoom('rightShift')
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(WR.indicator.getOption().dataZoom[0].end).toBe(100);
+        WR.changeDataZoom('enlarge')
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(65);
+        WR.changeDataZoom('refresh')
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(60);
+        WR.changeDataZoom('narrow')
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(55);
+        WR.changeDataZoom('test')
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(55);
     })
 
     it('test setIndicatorOption if data is null', () => {
@@ -45,8 +69,8 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, 'hour')
-        WR.updateIndicatorOption(WRData, 'week')
+        WR.setIndicatorOption(indicatorData, 'hour')
+        WR.updateIndicatorOption(indicatorData, 'week')
         expect(WR.indicator.getOption()).not.toBeNull();
     })
 
@@ -54,7 +78,7 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, 'hour')
+        WR.setIndicatorOption(indicatorData, 'hour')
         let tipData = WR.getToolTipData()
         expect(tipData).not.toBeNull();
     })
@@ -63,7 +87,7 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, 'hour')
+        WR.setIndicatorOption(indicatorData, 'hour')
         WR.resizeECharts(element, false, size)
         expect(WR.indicator.getOption()).not.toBeNull();
     })
@@ -72,7 +96,7 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, 'aa')
+        WR.setIndicatorOption(indicatorData, 'aa')
         WR.resizeECharts(null, false, size)
         expect(WR.indicator.getOption()).not.toBeNull();
     })
@@ -81,7 +105,7 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, '5minute')
+        WR.setIndicatorOption(indicatorData, '5minute')
         WR.resizeECharts(element, true, size)
         expect(WR.indicator.getOption()).not.toBeNull();
     })
@@ -90,7 +114,7 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, 'hour')
+        WR.setIndicatorOption(indicatorData, 'hour')
         WR.disposeIndicatorEChart()
         expect(WR.indicator.getOption()).not.toBeNull();
     })
@@ -99,7 +123,7 @@ describe('test SetWRChart', () => {
         const element = document.createElement('div');
         let WR = new SetWRChart(StochasticOption);
         WR.initIndicatorECharts(element, false, 'init')
-        WR.setIndicatorOption(WRData, 'week')
+        WR.setIndicatorOption(indicatorData, 'week')
         expect(WR).not.toBeNull();
     })
 })

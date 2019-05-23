@@ -4,8 +4,11 @@ import { StochasticOption } from 'js/IndicatorsLineOption'
 import testData from '../../testData/testData.json'
 
 let MTMData = getMTMData(testData.candleData.values, 6)
-MTMData.categoryData = testData.candleData.categoryData
-MTMData.precision = testData.precision
+let indicatorData = {
+    categoryData: testData.candleData.categoryData,
+    indicator: 'MTM',
+    indicatorData: MTMData
+}
 let size = {
     height: 1080,
     width: 1920
@@ -16,7 +19,7 @@ describe('test SetMTMChart', () => {
         let MTM = new SetMTMChart(StochasticOption);
         expect(MTM).toBeInstanceOf(SetMTMChart)
     })
-    
+
     it('test initIndicatorECharts', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
@@ -29,7 +32,7 @@ describe('test SetMTMChart', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, 'hour')
+        MTM.setIndicatorOption(indicatorData, 'hour')
         expect(MTM.indicator.getOption()).not.toBeNull();
     })
 
@@ -45,16 +48,37 @@ describe('test SetMTMChart', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, 'hour')
-        MTM.updateIndicatorOption(MTMData, 'week')
+        MTM.setIndicatorOption(indicatorData, 'hour')
+        MTM.updateIndicatorOption(indicatorData, 'week')
         expect(MTM.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test changeDataZoom', () => {
+        const element = document.createElement('div');
+        let MTM = new SetMTMChart(StochasticOption);
+        MTM.initIndicatorECharts(element, false, 'init')
+        MTM.setIndicatorOption(indicatorData, 'hour')
+        MTM.changeDataZoom('leftShift')
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(58);
+        MTM.changeDataZoom('enlarge')
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(63);
+        MTM.changeDataZoom('refresh')
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(60);
+        MTM.changeDataZoom('narrow')
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(55);
+        MTM.changeDataZoom('leftShift')
+        MTM.changeDataZoom('leftShift')
+        MTM.changeDataZoom('rightShift')
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(53);
+        MTM.changeDataZoom('test')
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(53);
     })
 
     it('test getToolTipData', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, 'hour')
+        MTM.setIndicatorOption(indicatorData, 'hour')
         let tipData = MTM.getToolTipData()
         expect(tipData).not.toBeNull();
     })
@@ -63,7 +87,7 @@ describe('test SetMTMChart', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, 'hour')
+        MTM.setIndicatorOption(indicatorData, 'hour')
         MTM.resizeECharts(element, false, size)
         expect(MTM.indicator.getOption()).not.toBeNull();
     })
@@ -72,7 +96,7 @@ describe('test SetMTMChart', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, 'aa')
+        MTM.setIndicatorOption(indicatorData, 'aa')
         MTM.resizeECharts(null, false, size)
         expect(MTM.indicator.getOption()).not.toBeNull();
     })
@@ -81,7 +105,7 @@ describe('test SetMTMChart', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, '5minute')
+        MTM.setIndicatorOption(indicatorData, '5minute')
         MTM.resizeECharts(element, true, size)
         expect(MTM.indicator.getOption()).not.toBeNull();
     })
@@ -90,7 +114,7 @@ describe('test SetMTMChart', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, 'hour')
+        MTM.setIndicatorOption(indicatorData, 'hour')
         MTM.disposeIndicatorEChart()
         expect(MTM.indicator.getOption()).not.toBeNull();
     })
@@ -99,7 +123,7 @@ describe('test SetMTMChart', () => {
         const element = document.createElement('div');
         let MTM = new SetMTMChart(StochasticOption);
         MTM.initIndicatorECharts(element, false, 'init')
-        MTM.setIndicatorOption(MTMData, 'week')
+        MTM.setIndicatorOption(indicatorData, 'week')
         expect(MTM).not.toBeNull();
     })
 })

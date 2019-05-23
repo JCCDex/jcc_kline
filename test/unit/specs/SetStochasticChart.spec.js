@@ -33,6 +33,27 @@ describe('test SetStochasticChart', () => {
         expect(stochastic.stochastic.getOption()).not.toBeNull();
     })
 
+    it('test changeDataZoom', () => {
+        const element = document.createElement('div');
+        let stochastic = new SetStochasticChart(StochasticOption);
+        stochastic.initStochasticECharts(element)
+        stochastic.setStochasticOption(KDJData, 'hour')
+        stochastic.changeDataZoom('leftShift')
+        expect(stochastic.stochastic.getOption().dataZoom[0].start).toBe(58);
+        expect(stochastic.stochastic.getOption().dataZoom[0].end).toBe(98);
+        stochastic.changeDataZoom('rightShift')
+        expect(stochastic.stochastic.getOption().dataZoom[0].start).toBe(60);
+        expect(stochastic.stochastic.getOption().dataZoom[0].end).toBe(100);
+        stochastic.changeDataZoom('enlarge')
+        expect(stochastic.stochastic.getOption().dataZoom[0].start).toBe(65);
+        stochastic.changeDataZoom('refresh')
+        expect(stochastic.stochastic.getOption().dataZoom[0].start).toBe(60);
+        stochastic.changeDataZoom('narrow')
+        expect(stochastic.stochastic.getOption().dataZoom[0].start).toBe(55);
+        stochastic.changeDataZoom('test')
+        expect(stochastic.stochastic.getOption().dataZoom[0].start).toBe(55);
+    })
+
     it('test setStochasticOption if data is null', () => {
         const element = document.createElement('div');
         let stochastic = new SetStochasticChart(StochasticOption);

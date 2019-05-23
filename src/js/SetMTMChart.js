@@ -193,6 +193,7 @@ class IndicatorChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
+        console.log(data)
         if (data.indicator === 'MTM') {
             len = data.indicatorData.MTM.length;
         }

@@ -122,6 +122,15 @@ describe('test Chart', () => {
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
+  it('test changeTimeSharingDataZoom', () => {
+    let timeSharing = new ChartController(klineConfig)
+    const element = document.createElement('div');
+    timeSharing.initTimeSharingChart(element)
+    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.changeTimeSharingDataZoom('leftShift')
+    expect(timeSharing.setTimeSharing.timeSharing.getOption().dataZoom).not.toBeNull()
+  })
+
   it('test getTimeSharingTipIndex', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');

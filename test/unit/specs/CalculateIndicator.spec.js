@@ -1,5 +1,5 @@
 import { splitData, getDepthData, calculateMA } from 'js/processData'
-import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData, getPSYData, getROCData, getVRData } from 'js/CalculateIndicator'
+import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData, getPSYData, getROCData, getWRData, getVRData } from 'js/CalculateIndicator'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 
@@ -126,6 +126,16 @@ describe('test CalculateIndicator', () => {
   it('test getROCData if data is null', () => {
     let ROCData = getROCData(null)
     expect(ROCData).toBe(undefined)
+  })
+
+  it('test getWRData', () => {
+    let WRData = getWRData(testData.klineData)
+    expect(WRData).not.toBeNull()
+  })
+
+  it('test getWRData if data is null', () => {
+    let WRData = getWRData(null)
+    expect(WRData).toBe(undefined)
   })
 
 

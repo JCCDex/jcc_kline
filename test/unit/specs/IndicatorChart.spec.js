@@ -14,38 +14,14 @@ let Config = {
 let RSIData = getRSIData(testData.candleData.values, 6)
 RSIData.categoryData = testData.candleData.categoryData
 
-let rsiConfig = {
-    chartType: 'rsi',
-    platform: 'pc',
-    defaultSize: false
-}
-
 let MTMData = getMTMData(testData.candleData.values)
 MTMData.categoryData = testData.candleData.categoryData
-
-let MTMConfig = {
-    chartType: 'mtm',
-    platform: 'pc',
-    defaultSize: false
-}
 
 let WRData = getWRData(testData.candleData.values)
 WRData.categoryData = testData.candleData.categoryData
 
-let WRConfig = {
-    chartType: 'wr',
-    platform: 'pc',
-    defaultSize: false
-}
-
 let VRData = getVRData(testData.candleData.values)
 VRData.categoryData = testData.candleData.categoryData
-
-let VRConfig = {
-    chartType: 'vr',
-    platform: 'pc',
-    defaultSize: false
-}
 
 let size = {
     height: 1080,
@@ -55,12 +31,12 @@ let size = {
 describe('test IndicatorChart', () => {
 
     /* 测试绘制KDJ方法 */
-    it('test IndicatorChart', () => {
+    it('test IndicatorChart if chartType is stochastic', () => {
         let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 
-    it('test initStochasticChart', () => {
+    it('test initStochasticChart if chartType is stochastic', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initStochasticChart(element)
@@ -94,6 +70,17 @@ describe('test IndicatorChart', () => {
         expect(indicator.setStochasticChart.stochastic.getOption()).not.toBeNull();
     })
 
+    it('test changeStochasticDataZoom if chartType is stochastic', () => {
+        const element = document.createElement('div');
+        Config.platform = 'pc'
+        let indicator = new IndicatorChart(Config);
+        indicator.initStochasticChart(element)
+        indicator.setStochasticOption(KDJData, 'day')
+        indicator.updateStochasticOption(KDJData, 'week')
+        indicator.changeStochasticDataZoom('leftShift')
+        expect(indicator.setStochasticChart.stochastic.getOption().dataZoom).not.toBeNull();
+    })
+
     it('test getStochasticTipData', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
@@ -103,7 +90,7 @@ describe('test IndicatorChart', () => {
         expect(tipData).not.toBeNull();
     })
 
-    it('test resizeECharts', () => {
+    it('test resizeECharts if chartType is stochastic', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initStochasticChart(element)
@@ -122,21 +109,22 @@ describe('test IndicatorChart', () => {
     })
 
     /* 测试RSI指标线的方法 */
-    it('test IndicatorChart', () => {
-        let indicator = new IndicatorChart(rsiConfig);
+    it('test IndicatorChart if chartType is rsi', () => {
+        Config.chartType = 'rsi'
+        let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 
-    it('test initRSIChart', () => {
+    it('test initRSIChart if chartType is rsi', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(rsiConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initRSIChart(element)
         expect(indicator).not.toBeNull();
     })
 
     it('test setRSIOption', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(rsiConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initRSIChart(element)
         indicator.setRSIOption(RSIData, 'hour')
         expect(indicator.setRSIChart.indicator.getOption()).not.toBeNull();
@@ -145,16 +133,26 @@ describe('test IndicatorChart', () => {
     it('test setRSIOption if platform is mobile', () => {
         const element = document.createElement('div');
         Config.platform = 'mobile'
-        let indicator = new IndicatorChart(rsiConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initRSIChart(element)
         indicator.setRSIOption(RSIData, 'hour')
         expect(indicator.setRSIChart.indicator.getOption()).not.toBeNull();
     })
 
+    it('test changeRSIDataZoom if chartType is rsi', () => {
+        const element = document.createElement('div');
+        Config.platform = 'mobile'
+        let indicator = new IndicatorChart(Config);
+        indicator.initRSIChart(element)
+        indicator.setRSIOption(RSIData, 'hour')
+        indicator.changeRSIDataZoom('rightShift')
+        expect(indicator.setRSIChart.indicator.getOption().dataZoom).not.toBeNull();
+    })
+
     it('test updateRSIOption', () => {
         const element = document.createElement('div');
         Config.platform = 'pc'
-        let indicator = new IndicatorChart(rsiConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initRSIChart(element)
         indicator.setRSIOption(RSIData, 'day')
         indicator.updateRSIOption(RSIData, 'week')
@@ -163,16 +161,16 @@ describe('test IndicatorChart', () => {
 
     it('test getRSITipData', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(rsiConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initRSIChart(element)
         indicator.setRSIOption(RSIData, 'day')
         let tipData = indicator.getRSITipData()
         expect(tipData).not.toBeNull();
     })
 
-    it('test resizeECharts', () => {
+    it('test resizeECharts if chartType is rsi', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(rsiConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initRSIChart(element)
         indicator.setRSIOption(RSIData, 'hour')
         indicator.resizeRSIChart(element, false, size)
@@ -181,7 +179,7 @@ describe('test IndicatorChart', () => {
 
     it('test disposeRSIEChart', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(rsiConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initRSIChart(element)
         indicator.setRSIOption(RSIData, 'hour')
         indicator.disposeRSIEChart()
@@ -189,21 +187,22 @@ describe('test IndicatorChart', () => {
     })
 
     /* 测试MTM指标线的方法 */
-    it('test IndicatorChart', () => {
-        let indicator = new IndicatorChart(MTMConfig);
+    it('test IndicatorChart if chartType is mtm', () => {
+        Config.chartType = 'mtm'
+        let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 
-    it('test initMTMChart', () => {
+    it('test initMTMChart if chartType is mtm', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(MTMConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initMTMChart(element)
         expect(indicator).not.toBeNull();
     })
 
     it('test setMTMOption', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(MTMConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initMTMChart(element)
         indicator.setMTMOption(MTMData, 'hour')
         expect(indicator.setMTMChart.indicator.getOption()).not.toBeNull();
@@ -212,16 +211,26 @@ describe('test IndicatorChart', () => {
     it('test setMTMOption if platform is mobile', () => {
         const element = document.createElement('div');
         Config.platform = 'mobile'
-        let indicator = new IndicatorChart(MTMConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initMTMChart(element)
         indicator.setMTMOption(MTMData, 'hour')
         expect(indicator.setMTMChart.indicator.getOption()).not.toBeNull();
     })
 
+    it('test changeMTMDataZoom if chartType is mtm', () => {
+        const element = document.createElement('div');
+        Config.platform = 'mobile'
+        let indicator = new IndicatorChart(Config);
+        indicator.initMTMChart(element)
+        indicator.setMTMOption(MTMData, 'hour')
+        indicator.changeMTMDataZoom('enlarge')
+        expect(indicator.setMTMChart.indicator.getOption().dataZoom).not.toBeNull();
+    })
+
     it('test updateMTMOption', () => {
         const element = document.createElement('div');
         Config.platform = 'pc'
-        let indicator = new IndicatorChart(MTMConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initMTMChart(element)
         indicator.setMTMOption(MTMData, 'day')
         indicator.updateMTMOption(MTMData, 'week')
@@ -230,16 +239,16 @@ describe('test IndicatorChart', () => {
 
     it('test getMTMTipData', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(MTMConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initMTMChart(element)
         indicator.setMTMOption(MTMData, 'day')
         let tipData = indicator.getMTMTipData()
         expect(tipData).not.toBeNull();
     })
 
-    it('test resizeECharts', () => {
+    it('test resizeECharts if chartType is mtm', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(MTMConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initMTMChart(element)
         indicator.setMTMOption(MTMData, 'hour')
         indicator.resizeMTMChart(element, false, size)
@@ -248,7 +257,7 @@ describe('test IndicatorChart', () => {
 
     it('test disposeMTMEChart', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(MTMConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initMTMChart(element)
         indicator.setMTMOption(MTMData, 'hour')
         indicator.disposeMTMEChart()
@@ -256,30 +265,40 @@ describe('test IndicatorChart', () => {
     })
 
     /* 测试WR指标线的方法 */
-    it('test IndicatorChart', () => {
-        let indicator = new IndicatorChart(WRConfig);
+    it('test IndicatorChart if chartType is wr', () => {
+        Config.chartType = 'wr'
+        let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 
-    it('test initWRChart', () => {
+    it('test initWRChart if chartType is wr', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(WRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initWRChart(element)
         expect(indicator).not.toBeNull();
     })
 
     it('test setWROption', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(WRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initWRChart(element)
         indicator.setWROption(WRData, 'hour')
         expect(indicator.setWRChart.indicator.getOption()).not.toBeNull();
     })
 
+    it('test changeWRDataZoom if chartType is wr', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initWRChart(element)
+        indicator.setWROption(WRData, 'hour')
+        indicator.changeWRDataZoom('narrow')
+        expect(indicator.setWRChart.indicator.getOption().dataZoom).not.toBeNull();
+    })
+
     it('test setWROption if platform is mobile', () => {
         const element = document.createElement('div');
         Config.platform = 'mobile'
-        let indicator = new IndicatorChart(WRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initWRChart(element)
         indicator.setWROption(WRData, 'hour')
         expect(indicator.setWRChart.indicator.getOption()).not.toBeNull();
@@ -288,7 +307,7 @@ describe('test IndicatorChart', () => {
     it('test updateWROption', () => {
         const element = document.createElement('div');
         Config.platform = 'pc'
-        let indicator = new IndicatorChart(WRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initWRChart(element)
         indicator.setWROption(WRData, 'day')
         indicator.updateWROption(WRData, 'week')
@@ -297,16 +316,16 @@ describe('test IndicatorChart', () => {
 
     it('test getWRTipData', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(WRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initWRChart(element)
         indicator.setWROption(WRData, 'day')
         let tipData = indicator.getWRTipData()
         expect(tipData).not.toBeNull();
     })
 
-    it('test resizeECharts', () => {
+    it('test resizeECharts if chartType is wr', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(WRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initWRChart(element)
         indicator.setWROption(WRData, 'hour')
         indicator.resizeWRChart(element, false, size)
@@ -315,7 +334,7 @@ describe('test IndicatorChart', () => {
 
     it('test disposeWREChart', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(WRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initWRChart(element)
         indicator.setWROption(WRData, 'hour')
         indicator.disposeWREChart()
@@ -323,30 +342,40 @@ describe('test IndicatorChart', () => {
     })
 
      /* 测试VR指标线的方法 */
-     it('test IndicatorChart', () => {
-        let indicator = new IndicatorChart(VRConfig);
+     it('test IndicatorChart if chartType is vr', () => {
+        Config.chartType = 'vr'
+        let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 
-    it('test initVRChart', () => {
+    it('test initVRChart if chartType is vr', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(VRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initVRChart(element)
         expect(indicator).not.toBeNull();
     })
 
     it('test setVROption', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(VRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initVRChart(element)
         indicator.setVROption(VRData, 'hour')
         expect(indicator.setVRChart.indicator.getOption()).not.toBeNull();
     })
 
+    it('test changeVRDataZoom if chartType is vr', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initVRChart(element)
+        indicator.setVROption(VRData, 'hour')
+        indicator.changeVRDataZoom('refresh')
+        expect(indicator.setVRChart.indicator.getOption().dataZoom).not.toBeNull();
+    })
+
     it('test setVROption if platform is mobile', () => {
         const element = document.createElement('div');
         Config.platform = 'mobile'
-        let indicator = new IndicatorChart(VRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initVRChart(element)
         indicator.setVROption(VRData, 'hour')
         expect(indicator.setVRChart.indicator.getOption()).not.toBeNull();
@@ -355,7 +384,7 @@ describe('test IndicatorChart', () => {
     it('test updateVROption', () => {
         const element = document.createElement('div');
         Config.platform = 'pc'
-        let indicator = new IndicatorChart(VRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initVRChart(element)
         indicator.setVROption(VRData, 'day')
         indicator.updateVROption(VRData, 'week')
@@ -364,7 +393,7 @@ describe('test IndicatorChart', () => {
 
     it('test getVRTipData', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(VRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initVRChart(element)
         indicator.setVROption(VRData, 'day')
         let tipData = indicator.getVRTipData()
@@ -373,7 +402,7 @@ describe('test IndicatorChart', () => {
 
     it('test resizeECharts', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(VRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initVRChart(element)
         indicator.setVROption(VRData, 'hour')
         indicator.resizeVRChart(element, false, size)
@@ -382,10 +411,16 @@ describe('test IndicatorChart', () => {
 
     it('test disposeVREChart', () => {
         const element = document.createElement('div');
-        let indicator = new IndicatorChart(VRConfig);
+        let indicator = new IndicatorChart(Config);
         indicator.initVRChart(element)
         indicator.setVROption(VRData, 'hour')
         indicator.disposeVREChart()
         expect(indicator.setVRChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test IndicatorChart if chartType is test', () => {
+        Config.chartType = 'test'
+        let indicator = new IndicatorChart(Config);
+        expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 })
