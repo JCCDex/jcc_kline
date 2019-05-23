@@ -489,7 +489,7 @@
 
 .indicator-line {
     text-align: center;
-    margin-top: 4px;
+    line-height: 23px;
 }
 
 .chart-btn {
