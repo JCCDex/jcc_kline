@@ -1,5 +1,4 @@
 <template>
-  <!-- kline -->
   <div
     id="kline"
     ref="klineRef"

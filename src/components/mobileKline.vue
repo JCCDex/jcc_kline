@@ -79,12 +79,12 @@
         ></i>
       </div>
     </div>
+    <!-- 指标线按钮 -->
     <div v-show="showIndicatorDiv && currentCycle !== 'everyhour'" class="indicatorConfigure">
       <div class="mobile-indicator">
         <div class="indicator-font">
           <font>{{message.indicator}}</font>
         </div>
-        <!-- <div style="height: 0.05rem; background-color:#2b3944"></div> -->
         <div
           @click="showIndicatorChart('MACD')"
           :class="this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
@@ -115,24 +115,6 @@
         >
           <div class="indicator-mobile-line">{{message.WR}}</div>
         </div>
-        <!-- <div
-          @click="showIndicatorChart('VR')"
-          :class="this.showIndicator ==='VR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
-        >
-          <div class="indicator-mobile-line">{{message.VR}}</div>
-        </div>-->
-        <!-- <div @click = "showIndicatorChart('OBV')" :class = "this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
-              <div class = "indicator-mobile-line">{{message.OBV}}</div>
-            </div>
-            <div @click = "showIndicatorChart('DMI')" :class = "this.showIndicator ==='DMI' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
-              <div class = "indicator-mobile-line">{{message.DMI}}</div>
-            </div>
-            <div @click = "showIndicatorChart('Boll')" :class = "this.showIndicator ==='Boll' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
-              <div class = "indicator-mobile-line">{{message.Boll}}</div>
-            </div>
-            <div @click = "showIndicatorChart('TRIX')" :class = "this.showIndicator ==='TRIX' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'">
-              <div class = "indicator-mobile-line">{{message.TRIX}}</div>
-        </div>-->
         <div
           @click="openCloseEyes"
           style="position:absolute;right:70px;z-index:5;margin-top: 0.22rem;margin-right: -0.4rem;"
@@ -140,6 +122,7 @@
         ></div>
       </div>
     </div>
+    <!-- mobile kline -->
     <div
       id="kline"
       ref="klineRef"

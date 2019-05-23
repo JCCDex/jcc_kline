@@ -184,12 +184,6 @@
             >
               <div class="indicator-line">{{message.WR}}</div>
             </div>
-            <!-- <div
-              @click="showIndicatorChart('VR')"
-              :class="this.showIndicator ==='VR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
-              >
-              <div class="indicator-line">{{message.VR}}</div>
-            </div>-->
           </div>
         </div>
       </div>
@@ -366,10 +360,6 @@ import RSI from "./RSIChart.vue";
 import MTM from "./MTMChart.vue";
 import WR from "./WRChart.vue";
 import VR from "./VRChart.vue";
-// import BRAR from "./BRARChart.vue";
-// import PSY from "./PSYChart.vue";
-// import ROC from "./ROCChart.vue";
-// import VR from "./VRChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -391,15 +381,6 @@ export default {
     MTM,
     WR,
     VR,
-    // BRAR,
-    // PSY,
-    // ROC,
-    // VR,
-    // DMI,
-    // OBV,
-    // TRIX,
-    // MTM,
-    // TimeSharing
     TimeSharing
   },
   data() {

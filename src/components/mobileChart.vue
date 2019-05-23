@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <span @click = "changeChart" >分时</span> -->
     <div
       :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'"
       v-if="toolTipData"
@@ -54,21 +53,12 @@
     <!-- 平移、刷新、缩放按钮 -->
     <div class="kline-levitation-mobile-div">
       <div class="kline-levitation-icon">
-        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')">
-          <div class="left-shift-icon"></div>
-        </div>-->
         <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
           <i class="narrow-icon"></i>
         </div>
         <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
           <i class="enlarge-icon"></i>
         </div>
-        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('refresh')">
-          <i class="refresh-icon"></i>
-        </div>-->
-        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('rightShift')">
-          <i class="right-shift-icon"></i>
-        </div>-->
       </div>
     </div>
     <KLine
@@ -133,15 +123,6 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></WR>
-    <VR
-      ref="vr"
-      v-show="showIndicatorChart === 'VR' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></VR>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -155,7 +136,6 @@ import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
 import MTM from "./MTMChart.vue";
 import WR from "./WRChart.vue";
-import VR from "./VRChart.vue";
 import {
   splitData,
   handleDivisionData,
@@ -174,8 +154,7 @@ export default {
     KDJ,
     RSI,
     MTM,
-    WR,
-    VR
+    WR
   },
   data() {
     return {
@@ -317,7 +296,6 @@ export default {
     },
     getMacdOpenClose(indicator) {
       this.showIndicatorChart = indicator;
-      // this.showIndicatorChart === "MACD" ? null : "MACD";
     },
     getTipDataIndex(index) {
       if (index) {

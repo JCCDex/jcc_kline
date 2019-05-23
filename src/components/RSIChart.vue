@@ -233,8 +233,6 @@ export default {
           upsAndDowns.push((datas[i][1] - datas[i - 1][1]) / datas[i - 1][1]);
         }
       }
-      // N日RSI =N日内收盘涨幅的平均值/(N日内收盘涨幅均值+N日内收盘跌幅均值) ×100
-
       for (let i = 0; i < upsAndDowns.length; i++) {
         if (i < periodic - 1) {
           RSI.push("-");
