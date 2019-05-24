@@ -1,5 +1,5 @@
 import IndicatorChart from 'js/IndicatorChart'
-import { getKDJData, getRSIData, getMTMData, getWRData, getVRData } from 'js/CalculateIndicator'
+import { getKDJData, getRSIData, getMTMData, getWRData, getVRData, getOBVData, getTRIXData, getDMIData } from 'js/CalculateIndicator'
 import testData from '../../testData/testData.json'
 
 let KDJData = getKDJData(9, testData.candleData.values)
@@ -22,6 +22,15 @@ WRData.categoryData = testData.candleData.categoryData
 
 let VRData = getVRData(testData.candleData.values)
 VRData.categoryData = testData.candleData.categoryData
+
+let OBVData = getOBVData(testData.klineData)
+OBVData.categoryData = testData.candleData.categoryData
+
+let TRIXData = getTRIXData(testData.candleData.values)
+TRIXData.categoryData = testData.candleData.categoryData
+
+let DMIData = getDMIData(testData.candleData.values)
+DMIData.categoryData = testData.candleData.categoryData
 
 let size = {
     height: 1080,
@@ -341,8 +350,8 @@ describe('test IndicatorChart', () => {
         expect(indicator.setWRChart.indicator.getOption()).not.toBeNull();
     })
 
-     /* 测试VR指标线的方法 */
-     it('test IndicatorChart if chartType is vr', () => {
+    /* 测试VR指标线的方法 */
+    it('test IndicatorChart if chartType is vr', () => {
         Config.chartType = 'vr'
         let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
@@ -416,6 +425,237 @@ describe('test IndicatorChart', () => {
         indicator.setVROption(VRData, 'hour')
         indicator.disposeVREChart()
         expect(indicator.setVRChart.indicator.getOption()).not.toBeNull();
+    })
+
+    /* 测试OBV指标线的方法 */
+    it('test IndicatorChart if chartType is obv', () => {
+        Config.chartType = 'obv'
+        let indicator = new IndicatorChart(Config);
+        expect(indicator).toBeInstanceOf(IndicatorChart)
+    })
+
+    it('test initOBVChart if chartType is obv', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        expect(indicator).not.toBeNull();
+    })
+
+    it('test setOBVOption', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        indicator.setOBVOption(OBVData, 'hour')
+        expect(indicator.setOBVChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test changeOBVDataZoom if chartType is vr', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        indicator.setOBVOption(OBVData, 'hour')
+        indicator.changeOBVDataZoom('refresh')
+        expect(indicator.setOBVChart.indicator.getOption().dataZoom).not.toBeNull();
+    })
+
+    it('test setOBVOption if platform is mobile', () => {
+        const element = document.createElement('div');
+        Config.platform = 'mobile'
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        indicator.setOBVOption(OBVData, 'hour')
+        expect(indicator.setOBVChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test updateOBVOption', () => {
+        const element = document.createElement('div');
+        Config.platform = 'pc'
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        indicator.setOBVOption(OBVData, 'day')
+        indicator.updateOBVOption(OBVData, 'week')
+        expect(indicator.setOBVChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test getOBVTipData', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        indicator.setOBVOption(OBVData, 'day')
+        let tipData = indicator.getOBVTipData()
+        expect(tipData).not.toBeNull();
+    })
+
+    it('test resizeOBVChart', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        indicator.setOBVOption(OBVData, 'hour')
+        indicator.resizeOBVChart(element, false, size)
+        expect(indicator.setOBVChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test disposeOBVEChart', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initOBVChart(element)
+        indicator.setOBVOption(OBVData, 'hour')
+        indicator.disposeOBVEChart()
+        expect(indicator.setOBVChart.indicator.getOption()).not.toBeNull();
+    })
+
+     /* 测试TRIX指标线的方法 */
+     it('test IndicatorChart if chartType is obv', () => {
+        Config.chartType = 'trix'
+        let indicator = new IndicatorChart(Config);
+        expect(indicator).toBeInstanceOf(IndicatorChart)
+    })
+
+    it('test initTRIXChart if chartType is obv', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        expect(indicator).not.toBeNull();
+    })
+
+    it('test setTRIXOption', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        indicator.setTRIXOption(TRIXData, 'hour')
+        expect(indicator.setTRIXChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test changeTRIXDataZoom if chartType is vr', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        indicator.setTRIXOption(TRIXData, 'hour')
+        indicator.changeTRIXDataZoom('refresh')
+        expect(indicator.setTRIXChart.indicator.getOption().dataZoom).not.toBeNull();
+    })
+
+    it('test setTRIXOption if platform is mobile', () => {
+        const element = document.createElement('div');
+        Config.platform = 'mobile'
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        indicator.setTRIXOption(TRIXData, 'hour')
+        expect(indicator.setTRIXChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test updateTRIXOption', () => {
+        const element = document.createElement('div');
+        Config.platform = 'pc'
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        indicator.setTRIXOption(TRIXData, 'day')
+        indicator.updateTRIXOption(TRIXData, 'week')
+        expect(indicator.setTRIXChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test getTRIXTipData', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        indicator.setTRIXOption(TRIXData, 'day')
+        let tipData = indicator.getTRIXTipData()
+        expect(tipData).not.toBeNull();
+    })
+
+    it('test resizeTRIXChart', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        indicator.setTRIXOption(TRIXData, 'hour')
+        indicator.resizeTRIXChart(element, false, size)
+        expect(indicator.setTRIXChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test disposeTRIXEChart', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initTRIXChart(element)
+        indicator.setTRIXOption(TRIXData, 'hour')
+        indicator.disposeTRIXEChart()
+        expect(indicator.setTRIXChart.indicator.getOption()).not.toBeNull();
+    })
+
+     /* 测试DMI指标线的方法 */
+     it('test IndicatorChart if chartType is obv', () => {
+        Config.chartType = 'dmi'
+        let indicator = new IndicatorChart(Config);
+        expect(indicator).toBeInstanceOf(IndicatorChart)
+    })
+
+    it('test initDMIChart if chartType is obv', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        expect(indicator).not.toBeNull();
+    })
+
+    it('test setDMIOption', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        indicator.setDMIOption(DMIData, 'hour')
+        expect(indicator.setDMIChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test changeDMIDataZoom if chartType is vr', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        indicator.setDMIOption(DMIData, 'hour')
+        indicator.changeDMIDataZoom('refresh')
+        expect(indicator.setDMIChart.indicator.getOption().dataZoom).not.toBeNull();
+    })
+
+    it('test setDMIOption if platform is mobile', () => {
+        const element = document.createElement('div');
+        Config.platform = 'mobile'
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        indicator.setDMIOption(DMIData, 'hour')
+        expect(indicator.setDMIChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test updateDMIOption', () => {
+        const element = document.createElement('div');
+        Config.platform = 'pc'
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        indicator.setDMIOption(DMIData, 'day')
+        indicator.updateDMIOption(DMIData, 'week')
+        expect(indicator.setDMIChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test getDMITipData', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        indicator.setDMIOption(DMIData, 'day')
+        let tipData = indicator.getDMITipData()
+        expect(tipData).not.toBeNull();
+    })
+
+    it('test resizeDMIChart', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        indicator.setDMIOption(DMIData, 'hour')
+        indicator.resizeDMIChart(element, false, size)
+        expect(indicator.setDMIChart.indicator.getOption()).not.toBeNull();
+    })
+
+    it('test disposeDMIEChart', () => {
+        const element = document.createElement('div');
+        let indicator = new IndicatorChart(Config);
+        indicator.initDMIChart(element)
+        indicator.setDMIOption(DMIData, 'hour')
+        indicator.disposeDMIEChart()
+        expect(indicator.setDMIChart.indicator.getOption()).not.toBeNull();
     })
 
     it('test IndicatorChart if chartType is test', () => {
