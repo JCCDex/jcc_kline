@@ -10,12 +10,12 @@ var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
 
-class IndicatorChartController {
+class OBVChartController {
     constructor(configs) {
         this.indicatorConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen, resizeSize) {
+    resizeOBVECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
             if (this.indicatorConfig.defaultSize === false) {
@@ -46,11 +46,11 @@ class IndicatorChartController {
             this.indicator.resize();
         }
         if (oldIndicatorData) {
-            this.updateIndicatorOption(oldIndicatorData.data, oldIndicatorData.cycle);
+            this.updateOBVOption(oldIndicatorData.data, oldIndicatorData.cycle);
         }
     }
 
-    initIndicatorECharts(DOM, clear) {
+    initOBVECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -75,7 +75,7 @@ class IndicatorChartController {
     }
 
     /* 绘制IndicatorChart开始 */
-    setIndicatorOption(data, cycle) {
+    setOBVOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -95,21 +95,20 @@ class IndicatorChartController {
         }
     }
 
-    updateIndicatorOption(data, cycle) {
+    updateOBVOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
         };
         if (this.indicator.getOption()) {
             this.indicator.hideLoading();
-            let indicatorConfig = {
+            let config = {
                 xAxis: this.getIndicatorXAxis(data, cycle),
                 tooltip: this.getIndicatorToolTip(),
                 series: this.getIndicatorSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
-            let option = JSON.parse(JSON.stringify(indicatorConfig));
-            merge(indicatorOption, indicatorConfig);
-            indicatorOption.series = JSON.parse(JSON.stringify(option.series));
+            merge(indicatorOption, config);
             indicatorOption.dataZoom = this.indicator.getOption().dataZoom;
             this.indicator.setOption(indicatorOption);
             saveIndicator(this.indicator);
@@ -161,27 +160,16 @@ class IndicatorChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'MTM' && data.indicatorData) {
+        if (data.indicator === 'OBV' && data.indicatorData) {
             series = [
                 {
-                    name: 'MTM',
-                    data: data.indicatorData.MTM,
+                    name: 'OBV',
+                    data: data.indicatorData.OBV,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
                             color: '#67ff7c'
-                        }
-                    }
-                },
-                {
-                    name: 'MAMTM',
-                    data: data.indicatorData.MAMTM,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#f6d026'
                         }
                     }
                 }
@@ -193,8 +181,8 @@ class IndicatorChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
-        if (data.indicator === 'MTM') {
-            len = data.indicatorData.MTM.length;
+        if (data.indicator === 'OBV') {
+            len = data.indicatorData.OBV.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -231,7 +219,7 @@ class IndicatorChartController {
         return dataZoom;
     }
 
-    disposeIndicatorEChart() {
+    disposeOBVEChart() {
         if (this.indicator) {
             this.indicator.dispose();
         }
@@ -258,4 +246,4 @@ class IndicatorChartController {
     }
 }
 
-export default IndicatorChartController;
+export default OBVChartController;

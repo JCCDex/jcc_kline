@@ -84,7 +84,7 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.klineData) {
         this.indicatorsData = {
-          indicator: this.chartDataObj.indicators,
+          indicator: 'OBV',
           categoryData: this.chartDataObj.candleData.categoryData
         };
         this.OBVData = getOBVData(this.chartDataObj.klineData);
@@ -102,11 +102,11 @@ export default {
           this.isRefresh
         ) {
           this.init(true)
-          this.OBV.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.OBV.setOBVOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.OBV.updateIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.OBV.updateOBVOption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -157,7 +157,7 @@ export default {
       this.OBVSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.OBVSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "obv";
     this.OBV = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -168,19 +168,22 @@ export default {
   },
   methods: {
     init(clear) {
-      this.OBV.initIndicatorChart(this.$refs.OBV, clear);
+      this.OBV.initOBVChart(this.$refs.OBV, clear);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.OBV.getIndicatorTipData();
+      let index = this.OBV.getOBVTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    changeDataZoom(type) {
+      this.OBV.changeOBVDataZoom(type);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.OBV.resizeIndicatorChart(
+        this.OBV.resizeOBVChart(
           this.$refs.OBV,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -188,7 +191,7 @@ export default {
       }
     },
     dispose() {
-      this.OBV.disposeIndicatorEChart();
+      this.OBV.disposeOBVEChart();
     }
   }
 };

@@ -84,7 +84,7 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: this.chartDataObj.indicators,
+          indicator: 'TRIX',
           categoryData: this.chartDataObj.candleData.categoryData
         };
         this.TRIXData = getTRIXData(this.chartDataObj.candleData.values);
@@ -99,11 +99,11 @@ export default {
           this.isRefresh
         ) {
           this.init(true);
-          this.TRIX.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.TRIX.setTRIXOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.TRIX.updateIndicatorOption(
+          this.TRIX.updateTRIXOption(
             this.indicatorsData,
             this.currentCycle
           );
@@ -158,7 +158,7 @@ export default {
       this.TRIXSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.TRIXSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "trix";
     this.TRIX = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -169,19 +169,22 @@ export default {
   },
   methods: {
     init(clear) {
-      this.TRIX.initIndicatorChart(this.$refs.TRIX, clear);
+      this.TRIX.initTRIXChart(this.$refs.TRIX, clear);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.TRIX.getIndicatorTipData();
+      let index = this.TRIX.getTRIXTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    changeDataZoom(type) {
+      this.TRIX.changeTRIXDataZoom(type);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.TRIX.resizeIndicatorChart(
+        this.TRIX.resizeTRIXChart(
           this.$refs.TRIX,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -189,7 +192,7 @@ export default {
       }
     },
     dispose() {
-      this.TRIX.disposeIndicatorEChart();
+      this.TRIX.disposeTRIXEChart();
     }
   }
 };

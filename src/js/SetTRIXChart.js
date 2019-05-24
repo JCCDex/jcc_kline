@@ -10,12 +10,12 @@ var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
 
-class IndicatorChartController {
+class TRIXChartController {
     constructor(configs) {
         this.indicatorConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen, resizeSize) {
+    resizeTRIXECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
             if (this.indicatorConfig.defaultSize === false) {
@@ -46,11 +46,11 @@ class IndicatorChartController {
             this.indicator.resize();
         }
         if (oldIndicatorData) {
-            this.updateIndicatorOption(oldIndicatorData.data, oldIndicatorData.cycle);
+            this.updateTRIXOption(oldIndicatorData.data, oldIndicatorData.cycle);
         }
     }
 
-    initIndicatorECharts(DOM, clear) {
+    initTRIXECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -75,7 +75,7 @@ class IndicatorChartController {
     }
 
     /* 绘制IndicatorChart开始 */
-    setIndicatorOption(data, cycle) {
+    setTRIXOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -95,7 +95,7 @@ class IndicatorChartController {
         }
     }
 
-    updateIndicatorOption(data, cycle) {
+    updateTRIXOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -106,10 +106,9 @@ class IndicatorChartController {
                 xAxis: this.getIndicatorXAxis(data, cycle),
                 tooltip: this.getIndicatorToolTip(),
                 series: this.getIndicatorSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
-            let option = JSON.parse(JSON.stringify(indicatorConfig));
             merge(indicatorOption, indicatorConfig);
-            indicatorOption.series = JSON.parse(JSON.stringify(option.series));
             indicatorOption.dataZoom = this.indicator.getOption().dataZoom;
             this.indicator.setOption(indicatorOption);
             saveIndicator(this.indicator);
@@ -161,22 +160,22 @@ class IndicatorChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'MTM' && data.indicatorData) {
+        if (data.indicator === 'TRIX' && data.indicatorData) {
             series = [
                 {
-                    name: 'MTM',
-                    data: data.indicatorData.MTM,
+                    name: 'TRIX',
+                    data: data.indicatorData.TRIX,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
-                            color: '#67ff7c'
+                            color: '#e6e6e6'
                         }
                     }
                 },
                 {
-                    name: 'MAMTM',
-                    data: data.indicatorData.MAMTM,
+                    name: 'MATRIX',
+                    data: data.indicatorData.MATRIX,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -193,8 +192,8 @@ class IndicatorChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
-        if (data.indicator === 'MTM') {
-            len = data.indicatorData.MTM.length;
+        if (data.indicator === 'TRIX') {
+            len = data.indicatorData.TRIX.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -231,7 +230,7 @@ class IndicatorChartController {
         return dataZoom;
     }
 
-    disposeIndicatorEChart() {
+    disposeTRIXEChart() {
         if (this.indicator) {
             this.indicator.dispose();
         }
@@ -258,4 +257,4 @@ class IndicatorChartController {
     }
 }
 
-export default IndicatorChartController;
+export default TRIXChartController;

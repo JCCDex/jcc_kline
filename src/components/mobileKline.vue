@@ -116,6 +116,24 @@
           <div class="indicator-mobile-line">{{message.WR}}</div>
         </div>
         <div
+          @click="showIndicatorChart('OBV')"
+          :class="this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.OBV}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('TRIX')"
+          :class="this.showIndicator ==='TRIX' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.TRIX}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('DMI')"
+          :class="this.showIndicator ==='DMI' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.DMI}}</div>
+        </div>
+        <div
           @click="openCloseEyes"
           style="position:absolute;right:70px;z-index:5;margin-top: 0.22rem;margin-right: -0.4rem;"
           :class="this.showIndicator === null ? 'close-eye-icon' : 'open-eye-icon'"
@@ -179,8 +197,11 @@ export default {
       }
       if (this.isRefresh || this.refreshKline) {
         this.init(true);
-        if (!this.chartDataObj.candleData && this.currentCycle !== "everyhour") {
-          return
+        if (
+          !this.chartDataObj.candleData &&
+          this.currentCycle !== "everyhour"
+        ) {
+          return;
         }
         if (this.currentCycle !== "everyhour") {
           this.kline.setMobileOption(

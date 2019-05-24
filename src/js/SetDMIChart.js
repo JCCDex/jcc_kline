@@ -10,12 +10,12 @@ var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
 
-class IndicatorChartController {
+class DMIChartController {
     constructor(configs) {
         this.indicatorConfig = configs;
     }
 
-    resizeECharts(DOM, isFullScreen, resizeSize) {
+    resizeDMIECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
             if (this.indicatorConfig.defaultSize === false) {
@@ -46,11 +46,11 @@ class IndicatorChartController {
             this.indicator.resize();
         }
         if (oldIndicatorData) {
-            this.updateIndicatorOption(oldIndicatorData.data, oldIndicatorData.cycle);
+            this.updateDMIOption(oldIndicatorData.data, oldIndicatorData.cycle);
         }
     }
 
-    initIndicatorECharts(DOM, clear) {
+    initDMIECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -75,7 +75,7 @@ class IndicatorChartController {
     }
 
     /* 绘制IndicatorChart开始 */
-    setIndicatorOption(data, cycle) {
+    setDMIOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -95,7 +95,7 @@ class IndicatorChartController {
         }
     }
 
-    updateIndicatorOption(data, cycle) {
+    updateDMIOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -106,10 +106,9 @@ class IndicatorChartController {
                 xAxis: this.getIndicatorXAxis(data, cycle),
                 tooltip: this.getIndicatorToolTip(),
                 series: this.getIndicatorSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
-            let option = JSON.parse(JSON.stringify(indicatorConfig));
             merge(indicatorOption, indicatorConfig);
-            indicatorOption.series = JSON.parse(JSON.stringify(option.series));
             indicatorOption.dataZoom = this.indicator.getOption().dataZoom;
             this.indicator.setOption(indicatorOption);
             saveIndicator(this.indicator);
@@ -161,27 +160,49 @@ class IndicatorChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'MTM' && data.indicatorData) {
+        if (data.indicator === 'DMI' && data.indicatorData) {
             series = [
                 {
-                    name: 'MTM',
-                    data: data.indicatorData.MTM,
+                    name: 'PDI',
+                    data: data.indicatorData.PDI,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
-                            color: '#67ff7c'
+                            color: '#e6e6e6'
                         }
                     }
                 },
                 {
-                    name: 'MAMTM',
-                    data: data.indicatorData.MAMTM,
+                    name: 'MDI',
+                    data: data.indicatorData.MDI,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
                             color: '#f6d026'
+                        }
+                    }
+                },
+                {
+                    name: 'ADX',
+                    data: data.indicatorData.ADX,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#e03bfa'
+                        }
+                    }
+                },
+                {
+                    name: 'ADXR',
+                    data: data.indicatorData.ADXR,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#67ff7c'
                         }
                     }
                 }
@@ -193,8 +214,8 @@ class IndicatorChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
-        if (data.indicator === 'MTM') {
-            len = data.indicatorData.MTM.length;
+        if (data.indicator === 'DMI') {
+            len = data.indicatorData.PDI.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -231,7 +252,7 @@ class IndicatorChartController {
         return dataZoom;
     }
 
-    disposeIndicatorEChart() {
+    disposeDMIEChart() {
         if (this.indicator) {
             this.indicator.dispose();
         }
@@ -258,4 +279,4 @@ class IndicatorChartController {
     }
 }
 
-export default IndicatorChartController;
+export default DMIChartController;

@@ -104,7 +104,7 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: this.chartDataObj.indicators,
+          indicator: 'DMI',
           categoryData: this.chartDataObj.candleData.categoryData
         };
         this.DMIData = getDMIData(this.chartDataObj.candleData.values);
@@ -119,11 +119,11 @@ export default {
           this.isRefresh
         ) {
           this.init(true);
-          this.DMI.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.DMI.setDMIOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.DMI.updateIndicatorOption(
+          this.DMI.updateDMIOption(
             this.indicatorsData,
             this.currentCycle
           );
@@ -164,7 +164,7 @@ export default {
       this.DMISize.height = this.klineConfig.size.height * 0.4 + "px";
       this.DMISize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "dmi";
     this.DMI = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -175,19 +175,22 @@ export default {
   },
   methods: {
     init(clear) {
-      this.DMI.initIndicatorChart(this.$refs.DMI, clear);
+      this.DMI.initDMIChart(this.$refs.DMI, clear);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.DMI.getIndicatorTipData();
+      let index = this.DMI.getDMITipData();
       this.$emit("listenToTipIndex", index);
+    },
+    changeDataZoom(type) {
+      this.DMI.changeDMIDataZoom(type);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.DMI.resizeIndicatorChart(
+        this.DMI.resizeDMIChart(
           this.$refs.DMI,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -195,7 +198,7 @@ export default {
       }
     },
     dispose() {
-      this.DMI.disposeIndicatorEChart();
+      this.DMI.disposeDMIEChart();
     }
   }
 };

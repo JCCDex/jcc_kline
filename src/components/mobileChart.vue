@@ -123,6 +123,33 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></WR>
+    <OBV
+      ref="obv"
+      v-show="showIndicatorChart === 'OBV' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></OBV>
+    <TRIX
+      ref="trix"
+      v-show="showIndicatorChart === 'TRIX' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></TRIX>
+    <DMI
+      ref="dmi"
+      v-show="showIndicatorChart === 'DMI' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></DMI>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -136,6 +163,9 @@ import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
 import MTM from "./MTMChart.vue";
 import WR from "./WRChart.vue";
+import OBV from "./OBVChart.vue";
+import TRIX from "./TRIXChart.vue";
+import DMI from "./DMIChart.vue";
 import {
   splitData,
   handleDivisionData,
@@ -154,7 +184,10 @@ export default {
     KDJ,
     RSI,
     MTM,
-    WR
+    WR,
+    OBV,
+    TRIX,
+    DMI
   },
   data() {
     return {
@@ -384,6 +417,9 @@ export default {
         this.$refs.rsi.changeDataZoom(type);
         this.$refs.mtm.changeDataZoom(type);
         this.$refs.wr.changeDataZoom(type);
+        this.$refs.obv.changeDataZoom(type);
+        this.$refs.trix.changeDataZoom(type);
+        this.$refs.dmi.changeDataZoom(type);
       } else if (this.cycle === "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);

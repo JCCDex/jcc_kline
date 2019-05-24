@@ -184,6 +184,24 @@
             >
               <div class="indicator-line">{{message.WR}}</div>
             </div>
+            <div
+              @click="showIndicatorChart('OBV')"
+              :class="this.showIndicator ==='OBV' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.OBV}}</div>
+            </div>
+            <div
+              @click="showIndicatorChart('TRIX')"
+              :class="this.showIndicator ==='TRIX' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.TRIX}}</div>
+            </div>
+            <div
+              @click="showIndicatorChart('DMI')"
+              :class="this.showIndicator ==='DMI' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.DMI}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -333,9 +351,9 @@
         :resize-size="resizeSize"
         :cycle="cycle"
       ></WR>
-      <VR
-        ref="vr"
-        v-show="showIndicator === 'VR' && showChart !== 'depth' && cycle !== 'everyhour'"
+      <OBV
+        ref="obv"
+        v-show="showIndicator === 'OBV' && showChart !== 'depth' && cycle !== 'everyhour'"
         @listenIndicatorChartClose="closeIndicatorChart"
         v-on:listenToTipIndex="getTipDataIndex"
         :toolTipIndex="toolTipIndex"
@@ -343,7 +361,29 @@
         :chart-data-obj="chartDataObj"
         :resize-size="resizeSize"
         :cycle="cycle"
-      ></VR>
+      ></OBV>
+      <TRIX
+        ref="trix"
+        v-show="showIndicator === 'TRIX' && showChart !== 'depth' && cycle !== 'everyhour'"
+        @listenIndicatorChartClose="closeIndicatorChart"
+        v-on:listenToTipIndex="getTipDataIndex"
+        :toolTipIndex="toolTipIndex"
+        :kline-config="klineConfig"
+        :chart-data-obj="chartDataObj"
+        :resize-size="resizeSize"
+        :cycle="cycle"
+      ></TRIX>
+      <DMI
+        ref="dmi"
+        v-show="showIndicator === 'DMI' && showChart !== 'depth' && cycle !== 'everyhour'"
+        @listenIndicatorChartClose="closeIndicatorChart"
+        v-on:listenToTipIndex="getTipDataIndex"
+        :toolTipIndex="toolTipIndex"
+        :kline-config="klineConfig"
+        :chart-data-obj="chartDataObj"
+        :resize-size="resizeSize"
+        :cycle="cycle"
+      ></DMI>
     </fullscreen>
   </div>
 </template>
@@ -359,7 +399,9 @@ import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
 import MTM from "./MTMChart.vue";
 import WR from "./WRChart.vue";
-import VR from "./VRChart.vue";
+import OBV from "./OBVChart.vue"
+import TRIX from "./TRIXChart.vue"
+import DMI from "./DMIChart.vue"
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -380,7 +422,9 @@ export default {
     RSI,
     MTM,
     WR,
-    VR,
+    OBV,
+    TRIX,
+    DMI,
     TimeSharing
   },
   data() {
@@ -750,7 +794,9 @@ export default {
         this.$refs.rsi.changeDataZoom(this.changeDataZoomType);
         this.$refs.mtm.changeDataZoom(this.changeDataZoomType);
         this.$refs.wr.changeDataZoom(this.changeDataZoomType);
-        this.$refs.vr.changeDataZoom(this.changeDataZoomType);
+        this.$refs.obv.changeDataZoom(this.changeDataZoomType);
+        this.$refs.trix.changeDataZoom(this.changeDataZoomType);
+        this.$refs.dmi.changeDataZoom(this.changeDataZoomType);
       }
       if (this.cycle === "everyhour") {
         this.$refs.timeSharing.changeDataZoom(this.changeDataZoomType);

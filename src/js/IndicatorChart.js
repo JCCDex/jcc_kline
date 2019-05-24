@@ -4,8 +4,9 @@ import RSIChart from './SetRSIChart';
 import MTMChart from './SetMTMChart';
 import WRChart from './SetWRChart';
 import VRChart from './SetVRChart';
-
-// import IndicatorChart from './SetIndicatorChart';
+import OBVChart from './SetOBVChart';
+import TRIXChart from './SetTRIXChart';
+import DMIChart from './SetDMIChart';
 
 class IndicatorChartController {
     constructor(chartsConfig) {
@@ -50,8 +51,31 @@ class IndicatorChartController {
                 merge(mobileIndicatorsLine, chartsConfig);
                 this.setVRChart = new VRChart(mobileIndicatorsLine);
             }
+        } else if (chartsConfig.chartType === 'obv') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setOBVChart = new OBVChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setOBVChart = new OBVChart(mobileIndicatorsLine);
+            }
+        } else if (chartsConfig.chartType === 'trix') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setTRIXChart = new TRIXChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setTRIXChart = new TRIXChart(mobileIndicatorsLine);
+            }
+        } else if (chartsConfig.chartType === 'dmi') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setDMIChart = new DMIChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setDMIChart = new DMIChart(mobileIndicatorsLine);
+            }
         }
-
     }
 
     /* 绘制随机指标（KDJ） */
@@ -197,6 +221,93 @@ class IndicatorChartController {
 
     disposeVREChart() {
         this.setVRChart.disposeIndicatorEChart();
+    }
+
+    /* 绘制OBV指标线 */
+    initOBVChart(DOM, clear) {
+        this.setOBVChart.initOBVECharts(DOM, clear);
+    }
+
+    resizeOBVChart(DOM, isFullScreen, size) {
+        this.setOBVChart.resizeOBVECharts(DOM, isFullScreen, size);
+    }
+
+    getOBVTipData() {
+        return this.setOBVChart.getToolTipData();
+    }
+
+    changeOBVDataZoom(type) {
+        this.setOBVChart.changeDataZoom(type);
+    }
+
+    setOBVOption(data, cycle) {
+        this.setOBVChart.setOBVOption(data, cycle);
+    }
+
+    updateOBVOption(data, cycle) {
+        this.setOBVChart.updateOBVOption(data, cycle);
+    }
+
+    disposeOBVEChart() {
+        this.setOBVChart.disposeOBVEChart();
+    }
+
+    /* 绘制TRIX指标线 */
+    initTRIXChart(DOM, clear) {
+        this.setTRIXChart.initTRIXECharts(DOM, clear);
+    }
+
+    resizeTRIXChart(DOM, isFullScreen, size) {
+        this.setTRIXChart.resizeTRIXECharts(DOM, isFullScreen, size);
+    }
+
+    getTRIXTipData() {
+        return this.setTRIXChart.getToolTipData();
+    }
+
+    changeTRIXDataZoom(type) {
+        this.setTRIXChart.changeDataZoom(type);
+    }
+
+    setTRIXOption(data, cycle) {
+        this.setTRIXChart.setTRIXOption(data, cycle);
+    }
+
+    updateTRIXOption(data, cycle) {
+        this.setTRIXChart.updateTRIXOption(data, cycle);
+    }
+
+    disposeTRIXEChart() {
+        this.setTRIXChart.disposeTRIXEChart();
+    }
+
+    /* 绘制DMI指标线 */
+    initDMIChart(DOM, clear) {
+        this.setDMIChart.initDMIECharts(DOM, clear);
+    }
+
+    resizeDMIChart(DOM, isFullScreen, size) {
+        this.setDMIChart.resizeDMIECharts(DOM, isFullScreen, size);
+    }
+
+    getDMITipData() {
+        return this.setDMIChart.getToolTipData();
+    }
+
+    changeDMIDataZoom(type) {
+        this.setDMIChart.changeDataZoom(type);
+    }
+
+    setDMIOption(data, cycle) {
+        this.setDMIChart.setDMIOption(data, cycle);
+    }
+
+    updateDMIOption(data, cycle) {
+        this.setDMIChart.updateDMIOption(data, cycle);
+    }
+
+    disposeDMIEChart() {
+        this.setDMIChart.disposeDMIEChart();
     }
 
 }
