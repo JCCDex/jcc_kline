@@ -171,6 +171,9 @@ class DMIChartController {
                         normal: {
                             color: '#e6e6e6'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 },
                 {
@@ -182,6 +185,9 @@ class DMIChartController {
                         normal: {
                             color: '#f6d026'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 },
                 {
@@ -193,6 +199,9 @@ class DMIChartController {
                         normal: {
                             color: '#e03bfa'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 },
                 {
@@ -204,6 +213,9 @@ class DMIChartController {
                         normal: {
                             color: '#67ff7c'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 }
             ];

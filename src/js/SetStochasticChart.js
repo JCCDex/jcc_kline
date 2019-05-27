@@ -169,6 +169,9 @@ class StochasticChartController {
                     normal: {
                         color: '#67ff7c'
                     }
+                },
+                lineStyle: {
+                    width: 1
                 }
             },
             {
@@ -181,6 +184,9 @@ class StochasticChartController {
                     normal: {
                         color: '#ff4d71'
                     }
+                },
+                lineStyle: {
+                    width: 1
                 }
             },
             {
@@ -193,6 +199,9 @@ class StochasticChartController {
                     normal: {
                         color: '#f6d026'
                     }
+                },
+                lineStyle: {
+                    width: 1
                 }
             }
         ];

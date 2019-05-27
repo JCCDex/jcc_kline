@@ -172,6 +172,9 @@ class IndicatorChartController {
                         normal: {
                             color: '#67ff7c'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 },
                 {
@@ -183,6 +186,9 @@ class IndicatorChartController {
                         normal: {
                             color: '#16c5ff'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 },
                 {
@@ -194,6 +200,9 @@ class IndicatorChartController {
                         normal: {
                             color: '#e03bfa'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 }
             ];

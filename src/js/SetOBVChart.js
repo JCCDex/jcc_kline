@@ -171,6 +171,9 @@ class OBVChartController {
                         normal: {
                             color: '#67ff7c'
                         }
+                    },
+                    lineStyle: {
+                        width: 1
                     }
                 }
             ];
