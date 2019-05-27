@@ -23,7 +23,7 @@
 <script>
 import { getTRIXData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "TRIX",
   data() {
@@ -136,8 +136,8 @@ export default {
         }
         if (this.TRIXData) {
           this.toolTipData = {
-            TRIX: parseFloat(this.TRIXData.TRIX[index]).toFixed(4),
-            MATRIX: parseFloat(this.TRIXData.MATRIX[index]).toFixed(4)
+            TRIX: formatDecimal(this.TRIXData.TRIX[index], 2, true),
+            MATRIX: formatDecimal(this.TRIXData.MATRIX[index], 2, true)
           };
         }
       }

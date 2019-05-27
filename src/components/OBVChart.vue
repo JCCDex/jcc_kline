@@ -22,7 +22,7 @@
 <script>
 import { getOBVData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "OBV",
   data() {
@@ -136,7 +136,7 @@ export default {
         }
         if (this.OBVData) {
           this.toolTipData = {
-            OBV: parseFloat(this.OBVData.OBV[index]).toFixed(2)
+            OBV: formatDecimal(this.OBVData.OBV[index], 2, true)
           };
         }
       }

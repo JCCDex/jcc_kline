@@ -24,7 +24,7 @@
 <script>
 import { getDMIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "DMI",
   data() {
@@ -90,10 +90,10 @@ export default {
         }
         if (this.DMIData) {
           this.toolTipData = {
-            PDI: parseFloat(this.DMIData.PDI[index]).toFixed(4),
-            MDI: parseFloat(this.DMIData.MDI[index]).toFixed(4),
-            ADX: parseFloat(this.DMIData.ADX[index]).toFixed(4),
-            ADXR: parseFloat(this.DMIData.ADXR[index]).toFixed(4)
+            PDI: formatDecimal(this.DMIData.PDI[index], 2, true),
+            MDI: formatDecimal(this.DMIData.MDI[index], 2, true),
+            ADX: formatDecimal(this.DMIData.ADX[index], 2, true),
+            ADXR: formatDecimal(this.DMIData.ADXR[index], 2, true)
           };
         }
       }
