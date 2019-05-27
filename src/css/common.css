@@ -143,14 +143,18 @@
 
 .close-eye-icon {
     content: url('../icon/images/closeEye.png');
-    margin: 0;
+    margin-top: 0.255rem;
     cursor: pointer;
+    width: 0.26rem;
+    height: 0.16rem;
 }
 
 .open-eye-icon {
     content: url('../icon/images/openEye.png');
-    margin: 0;
+    margin-top: 0.255rem;
     cursor: pointer;
+    width: 0.26rem;
+    height: 0.16rem;
 }
 
 .close-background-icon {
@@ -188,11 +192,15 @@
     float: left;
     font-size: 0.24rem;
     color: #e6e6e6;
-    margin-top: 0.15rem;
-    margin-left: 0.2rem;
+    margin: 0.15rem 0.15rem 0 0.2rem;
     width: 0.7rem;
-    border: 1px solid #1b2026;
-    border-right: 1px solid #e6e6e6;
+    border-right: solid #e6e6e6;
+}
+
+.mobile-indicator {
+    width: 92%;
+    height: 100%;
+    float: left;
 }
 
 .mobile-indicator-div {
@@ -200,9 +208,7 @@
     color: #e6e6e6;
     font-size: 0.24rem;
     float: left;
-    margin-left: 0.3rem;
-    margin-right: 0.2rem;
-    margin-top: 0.2rem;
+    margin: 0.2rem 0.15rem 0 0.15rem;
 }
 
 .mobile-indicator-div-active {
@@ -210,9 +216,7 @@
     color: #1bdafd;
     font-size: 0.24rem;
     float: left;
-    margin-left: 0.3rem;
-    margin-right: 0.2rem;
-    margin-top: 0.2rem;
+    margin: 0.2rem 0.15rem 0 0.15rem;
 }
 
 .icon-indicator-div .icon-indicator-ch {

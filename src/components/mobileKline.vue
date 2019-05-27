@@ -133,12 +133,11 @@
         >
           <div class="indicator-mobile-line">{{message.DMI}}</div>
         </div>
-        <div
+      </div>
+      <div
           @click="openCloseEyes"
-          style="position:absolute;right:70px;z-index:5;margin-top: 0.22rem;margin-right: -0.4rem;"
           :class="this.showIndicator === null ? 'close-eye-icon' : 'open-eye-icon'"
         ></div>
-      </div>
     </div>
     <!-- mobile kline -->
     <div
