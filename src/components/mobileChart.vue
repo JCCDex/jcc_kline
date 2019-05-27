@@ -54,21 +54,12 @@
     <!-- 平移、刷新、缩放按钮 -->
     <div class="kline-levitation-mobile-div">
       <div class="kline-levitation-icon">
-        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('leftShift')">
-          <div class="left-shift-icon"></div>
-        </div>-->
         <div class="kline-levitation-btn" @click="changeDataZoom('narrow')">
           <i class="narrow-icon"></i>
         </div>
         <div class="kline-levitation-btn" @click="changeDataZoom('enlarge')">
           <i class="enlarge-icon"></i>
         </div>
-        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('refresh')">
-          <i class="refresh-icon"></i>
-        </div>-->
-        <!-- <div class="kline-levitation-btn" @click="changeDataZoom('rightShift')">
-          <i class="right-shift-icon"></i>
-        </div>-->
       </div>
     </div>
     <KLine
