@@ -115,7 +115,8 @@ export default {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.isRefresh || this.refreshKline
+            this.isRefresh ||
+            this.refreshKline
           ) {
             this.init(true);
             this.stochastic.setStochasticOption(
@@ -132,11 +133,11 @@ export default {
             );
           }
         }
-      } else  if (
+      } else if (
         JSON.stringify(this.coinType) !==
         JSON.stringify(this.chartDataObj.coinType)
       ) {
-        this.init(true)
+        this.init(true);
         this.toolTipData = null;
         this.coinType = this.chartDataObj.coinType;
       }

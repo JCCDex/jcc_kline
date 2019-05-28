@@ -256,8 +256,16 @@ class VolumeChart {
         } else if (type === 'refresh') {
             dataZoom[0].start = this.volumeConfig.dataZoom[0].start;
             dataZoom[0].end = this.volumeConfig.dataZoom[0].end;
-        } else if (type === 'narrow' && dataZoom[0].start >= 5) {
-            dataZoom[0].start = dataZoom[0].start - 5;
+        } else if (type === 'narrow') {
+            if (dataZoom[0].start >= 5) {
+                dataZoom[0].start = dataZoom[0].start - 5;
+            } else if (dataZoom[0].start > 0) {
+                dataZoom[0].start = 0;
+            } else if (dataZoom[0].end <= 95) {
+                dataZoom[0].end = dataZoom[0].end + 5;
+            }else if (dataZoom[0].end > 95) {
+                dataZoom[0].end = 100;
+            }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
             dataZoom[0].start = dataZoom[0].start + 2;
             dataZoom[0].end = dataZoom[0].end + 2;

@@ -83,6 +83,9 @@ export default {
       this.resize();
     },
     chartDataObj() {
+      if (this.chartDataObj.cycle === "everyhour") {
+        return;
+      }
       if (this.chartDataObj.klineData) {
         this.indicatorsData = {
           indicator: "WR",
@@ -92,11 +95,11 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.WRData;
-      } else  if (
+      } else if (
         JSON.stringify(this.coinType) !==
         JSON.stringify(this.chartDataObj.coinType)
       ) {
-        this.init(true)
+        this.init(true);
         this.toolTipData = null;
         this.indicatorsData = null;
         this.coinType = this.chartDataObj.coinType;
@@ -105,7 +108,8 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.isRefresh || this.refreshKline
+          this.isRefresh ||
+          this.refreshKline
         ) {
           this.init(true);
           this.WR.setWROption(this.indicatorsData, this.currentCycle);
