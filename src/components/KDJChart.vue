@@ -258,7 +258,7 @@ export default {
           let highestPrice = bigToSmallHighestPriceData[0];
           let RSVData =
             ((data[i][1] - lowestPrice) / (highestPrice - lowestPrice)) * 100;
-          if (isNaN(RSVData)) {
+          if (isNaN(RSVData) || RSVData == Infinity) {
             RSVData = 0;
           }
           RSV.push(RSVData);
