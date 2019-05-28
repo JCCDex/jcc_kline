@@ -66,7 +66,7 @@
       v-show="showChart === 'candle'"
       v-on:listenToChildEvent="changeCycle"
       v-on:listenTipIndex="getTipDataIndex"
-      v-on:listenMacdChartOpenClose="getMacdOpenClose"
+      v-on:listenIndicatorChartOpenClose="getIndicatorOpenClose"
       :kline-config="klineConfig"
       :chart-data-obj="chartDataObj"
     ></KLine>
@@ -327,8 +327,12 @@ export default {
         }
       }
     },
-    getMacdOpenClose(indicator) {
-      this.showIndicatorChart = indicator;
+    getIndicatorOpenClose(indicator) {
+      if (this.showIndicatorChart === indicator) {
+        this.showIndicatorChart = null;
+      } else {
+        this.showIndicatorChart = indicator;
+      }
     },
     getTipDataIndex(index) {
       if (index) {

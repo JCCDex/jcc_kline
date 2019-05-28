@@ -135,9 +135,9 @@
         </div>
       </div>
       <div
-          @click="openCloseEyes"
-          :class="this.showIndicator === null ? 'close-eye-icon' : 'open-eye-icon'"
-        ></div>
+        @click="openCloseEyes"
+        :class="this.showIndicator === '' ? 'close-eye-icon' : 'open-eye-icon'"
+      ></div>
     </div>
     <!-- mobile kline -->
     <div
@@ -171,7 +171,7 @@ export default {
       selectHour: "",
       showIndicatorBtn: true,
       showIndicatorDiv: false,
-      showIndicator: null
+      showIndicator: ""
     };
   },
   props: {
@@ -351,9 +351,13 @@ export default {
       this.showIndicatorDiv = !this.showIndicatorDiv;
     },
     showIndicatorChart(indicator) {
-      this.$emit("listenMacdChartOpenClose", indicator);
+      this.$emit("listenIndicatorChartOpenClose", indicator);
+      if (this.showIndicator === indicator) {
+        this.showIndicator = "";
+      } else {
+        this.showIndicator = indicator;
+      }
       this.showIndicatorDiv = false;
-      this.showIndicator = indicator;
     },
     openCloseEyes() {
       if (this.showIndicator === null) {
