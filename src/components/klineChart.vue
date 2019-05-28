@@ -262,6 +262,7 @@
         </div>
       </div>
       <!-- 图表 -->
+      <div @click="hiddenPopover">
       <KLine
         ref="candle"
         v-show="showChart === 'candle' && cycle !== 'everyhour'"
@@ -384,6 +385,7 @@
         :resize-size="resizeSize"
         :cycle="cycle"
       ></DMI>
+      </div>
     </fullscreen>
   </div>
 </template>
@@ -399,9 +401,9 @@ import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
 import MTM from "./MTMChart.vue";
 import WR from "./WRChart.vue";
-import OBV from "./OBVChart.vue"
-import TRIX from "./TRIXChart.vue"
-import DMI from "./DMIChart.vue"
+import OBV from "./OBVChart.vue";
+import TRIX from "./TRIXChart.vue";
+import DMI from "./DMIChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -547,12 +549,14 @@ export default {
       this.showMinCycle = !this.showMinCycle;
       if (this.showMinCycle) {
         this.showHourCycle = false;
+        this.showIndicatorOpt = false;
       }
     },
     clickHourCycle() {
       this.showHourCycle = !this.showHourCycle;
       if (this.showHourCycle) {
         this.showMinCycle = false;
+        this.showIndicatorOpt = false;
       }
     },
     chooseCycle(cycle) {
@@ -665,6 +669,7 @@ export default {
         this.showIndicator = indicator;
         this.isClose = false;
       }
+      this.showIndicatorOpt = false;
       this.resize();
       this.changeChartDataObj(this.klineDataObj);
     },
@@ -824,6 +829,15 @@ export default {
     },
     showIndicatorOptions() {
       this.showIndicatorOpt = !this.showIndicatorOpt;
+      if (this.showIndicatorOpt) {
+        this.showMinCycle = false;
+        this.showHourCycle = false;
+      }
+    },
+    hiddenPopover() {
+      this.showMinCycle = false;
+      this.showHourCycle = false;
+      this.showIndicatorOpt = false;
     }
   }
 };
