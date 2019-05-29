@@ -157,7 +157,18 @@ class OBVChartController {
                             return (value / 1000) + 'K';
                         } else if (value >= 1000000) {
                             return (value / 1000000) + 'M';
-                        } else {
+                        } else if (value < 0) {
+                            if (value > -1000) {
+                                return value
+                            }
+                            if(value > -1000000) {
+                                return (value / 1000) + 'K';
+                            }
+                            if (value < -1000000) {
+                                return (value / 1000000) + 'M';
+                            }
+                        }
+                         else {
                             return value;
                         }
                     }

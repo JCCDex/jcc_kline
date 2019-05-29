@@ -136,7 +136,7 @@ export default {
         }
         if (this.OBVData) {
           this.toolTipData = {
-            OBV: formatDecimal(this.OBVData.OBV[index], 2, true)
+            OBV: formatDecimal(this.OBVData.OBV[index], 2, false)
           };
         }
       }
