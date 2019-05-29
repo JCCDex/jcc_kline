@@ -7,10 +7,10 @@
       <font style="color: #67ff7c;">OBV:&nbsp;{{toolTipData.OBV}}</font>
     </div>
     <i
-      v-if
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="OBV"
@@ -20,7 +20,6 @@
   </div>
 </template>
 <script>
-import { getOBVData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -31,7 +30,8 @@ export default {
       indicatorsData: null,
       OBVData: null,
       coinType: "",
-      currentCycle: '',
+      platform: "",
+      currentCycle: "",
       isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
@@ -66,17 +66,17 @@ export default {
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-    cycle () {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true)
-        this.toolTipData = null
-        this.isRefresh = true
+        this.init(true);
+        this.toolTipData = null;
+        this.isRefresh = true;
       }
-      this.currentCycle = JSON.parse(JSON.stringify(this.cycle))
+      this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
     resizeSize() {
       this.resize();
@@ -87,26 +87,23 @@ export default {
       }
       if (this.chartDataObj.klineData) {
         this.indicatorsData = {
-          indicator: 'OBV',
+          indicator: "OBV",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.OBVData = getOBVData(this.chartDataObj.klineData);
+        this.OBVData = this.getOBVData(this.chartDataObj.klineData);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.OBVData;
       }
-      if (
-        this.indicatorsData &&
-        this.indicatorsData.indicatorData
-      ) {
+      if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
-          this.init(true)
+          this.init(true);
           this.OBV.setOBVOption(this.indicatorsData, this.currentCycle);
-          this.isRefresh = false
+          this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.OBV.updateOBVOption(this.indicatorsData, this.currentCycle);
@@ -135,7 +132,7 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.klineData && !this.OBVData) {
-          this.OBVData = getOBVData(this.chartDataObj.klineData);
+          this.OBVData = this.getOBVData(this.chartDataObj.klineData);
         }
         if (this.OBVData) {
           this.toolTipData = {
@@ -147,6 +144,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.OBVSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.OBVSize.width = this.klineConfig.size.width + "px";
@@ -157,7 +155,8 @@ export default {
         };
       }
     } else {
-      this.OBVSize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.platform = "mobile";
+      this.OBVSize.height = this.klineConfig.size.height * 0.3 + "px";
       this.OBVSize.width = this.klineConfig.size.width + "px";
     }
     this.klineConfig.chartType = "obv";
@@ -182,7 +181,7 @@ export default {
       this.OBV.changeOBVDataZoom(type);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
@@ -195,6 +194,29 @@ export default {
     },
     dispose() {
       this.OBV.disposeOBVEChart();
+    },
+    getOBVData(data) {
+      if (!data) {
+        return;
+      }
+      var OBV = [];
+      var OnBalanceVolume;
+      for (var i = 0; i < data.length; i++) {
+        if (i === 0) {
+          OBV.push("-");
+          OnBalanceVolume = 0;
+        } else {
+          let oldValues = JSON.parse(JSON.stringify(data[i - 1]));
+          let values = JSON.parse(JSON.stringify(data[i]));
+          if (values[2] > oldValues[2]) {
+            OnBalanceVolume = OnBalanceVolume + values[6];
+          } else if (values[2] < oldValues[2]) {
+            OnBalanceVolume = OnBalanceVolume - values[6];
+          }
+          OBV.push(OnBalanceVolume);
+        }
+      }
+      return { OBV: OBV };
     }
   }
 };

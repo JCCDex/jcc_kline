@@ -10,9 +10,10 @@
       <font style="color: #67ff7c;">ADXR:{{this.toolTipData.ADXR}}</font>
     </div>
     <i
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="DMI"
@@ -22,7 +23,6 @@
   </div>
 </template>
 <script>
-import { getDMIData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -37,6 +37,7 @@ export default {
       isRefresh: true,
       chartType: "indicator",
       toolTipData: null,
+      platform: "",
       DMISize: {
         height: "",
         width: ""
@@ -86,7 +87,7 @@ export default {
           let data = JSON.parse(
             JSON.stringify(this.chartDataObj.candleData.values)
           );
-          this.DMIData = getDMIData(data);
+          this.DMIData = this.getDMIData(data);
         }
         if (this.DMIData) {
           this.toolTipData = {
@@ -104,10 +105,10 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: 'DMI',
+          indicator: "DMI",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.DMIData = getDMIData(this.chartDataObj.candleData.values);
+        this.DMIData = this.getDMIData(this.chartDataObj.candleData.values);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.DMIData;
@@ -123,10 +124,7 @@ export default {
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.DMI.updateDMIOption(
-            this.indicatorsData,
-            this.currentCycle
-          );
+          this.DMI.updateDMIOption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -151,6 +149,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.DMISize.height = this.klineConfig.size.height * 0.25 + "px";
         this.DMISize.width = this.klineConfig.size.width + "px";
@@ -161,7 +160,8 @@ export default {
         };
       }
     } else {
-      this.DMISize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.platform = "mobile";
+      this.DMISize.height = this.klineConfig.size.height * 0.3 + "px";
       this.DMISize.width = this.klineConfig.size.width + "px";
     }
     this.klineConfig.chartType = "dmi";
@@ -199,6 +199,111 @@ export default {
     },
     dispose() {
       this.DMI.disposeDMIEChart();
+    },
+    getDMIData(data) {
+      if (!data) {
+        return;
+      }
+      let datas = JSON.parse(JSON.stringify(data));
+      var PDM = []; //上升动向
+      var MDM = []; //下降动向
+      var TR = []; //真实波动
+      for (let i = 0; i < datas.length; i++) {
+        let TRa;
+        let TRb;
+        let TRc;
+        if (i === 0) {
+          PDM.push(0);
+          MDM.push(0);
+          TRb = 0;
+          TRc = 0;
+        } else {
+          PDM.push(
+            datas[i][3] - datas[i - 1][3] <= 0
+              ? 0
+              : datas[i][3] - datas[i - 1][3]
+          );
+          MDM.push(
+            datas[i - 1][2] - datas[i][2] <= 0
+              ? 0
+              : datas[i - 1][2] - datas[i][2]
+          );
+          TRb = datas[i][3] - datas[i - 1][1];
+          TRc = datas[i][2] - datas[i - 1][1];
+        }
+        TRa = datas[i][3] - datas[i][2];
+        TR.push(Math.max(Math.abs(TRa), Math.abs(TRb), Math.abs(TRc)));
+      }
+
+      var PDI = []; //上升方向指标线
+      var MDI = []; //下降方向指标线
+      var PDM14 = this.getMADataByDetailData(
+        14,
+        JSON.parse(JSON.stringify(PDM))
+      );
+      var MDM14 = this.getMADataByDetailData(
+        14,
+        JSON.parse(JSON.stringify(MDM))
+      );
+      var TR14 = this.getMADataByDetailData(14, JSON.parse(JSON.stringify(TR)));
+      for (let j = 0; j < PDM.length; j++) {
+        if (isNaN(PDM14[j]) || isNaN(TR14[j])) {
+          PDI.push("-");
+        } else {
+          PDI.push((PDM14[j] / TR14[j]) * 100);
+        }
+        if (isNaN(MDM14[j]) || isNaN(TR14[j])) {
+          MDI.push("-");
+        } else {
+          MDI.push((MDM14[j] / TR14[j]) * 100);
+        }
+      }
+
+      var DX = []; //动向指数
+      var ADX = []; //动向平均数
+      for (let i = 0; i < PDI.length; i++) {
+        if (isNaN(PDI[i]) || isNaN(MDI[i])) {
+          DX.push("-");
+        } else {
+          DX.push((Math.abs(MDI[i] - PDI[i]) / (MDI[i] + PDI[i])) * 100);
+        }
+      }
+      ADX = this.getMADataByDetailData(13 + 6, DX);
+
+      var ADXR = []; //评估数值 ADXR=（当日的ADX+前6日的ADX）÷2
+      for (let i = 0; i < ADX.length; i++) {
+        if (i < 5 || isNaN(ADX[i]) || isNaN(ADX[i - 5])) {
+          ADXR.push("-");
+        } else {
+          ADXR.push((ADX[i] + ADX[i - 5]) / 2);
+        }
+      }
+      return {
+        PDI: PDI,
+        MDI: MDI,
+        ADX: ADX,
+        ADXR: ADXR
+      };
+    },
+    getMADataByDetailData(periodic, data) {
+      var result = [];
+      for (var i = 0, len = data.length; i < len; i++) {
+        if (i < periodic - 1) {
+          result.push("-");
+          continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < periodic - 1; j++) {
+          let item = parseFloat(data[i - j]);
+          if (isNaN(item)) {
+            sum += 0;
+          } else {
+            sum += item;
+          }
+        }
+        result.push(sum / periodic);
+      }
+      return result;
     }
   }
 };

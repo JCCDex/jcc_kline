@@ -36,6 +36,7 @@ export default {
       refreshKline: true,
       chartType: "stochastic",
       toolTipData: null,
+      platform: '',
       stochasticSize: {
         height: "",
         width: ""

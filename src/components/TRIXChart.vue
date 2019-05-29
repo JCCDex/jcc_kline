@@ -8,10 +8,10 @@
       <font style="color: #f6d026;">MATRIX:{{this.toolTipData.MATRIX}}</font>
     </div>
     <i
-      v-if
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="TRIX"
@@ -21,7 +21,6 @@
   </div>
 </template>
 <script>
-import { getTRIXData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage, formatDecimal } from "../js/utils";
 export default {
@@ -34,6 +33,7 @@ export default {
       coinType: "",
       currentCycle: "",
       isRefresh: true,
+      platform: "",
       chartType: "indicator",
       toolTipData: null,
       TRIXSize: {
@@ -84,10 +84,10 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: 'TRIX',
+          indicator: "TRIX",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.TRIXData = getTRIXData(this.chartDataObj.candleData.values);
+        this.TRIXData = this.getTRIXData(this.chartDataObj.candleData.values);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.TRIXData;
@@ -103,10 +103,7 @@ export default {
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.TRIX.updateTRIXOption(
-            this.indicatorsData,
-            this.currentCycle
-          );
+          this.TRIX.updateTRIXOption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -132,7 +129,7 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.candleData && this.TRIXData) {
-          this.TRIXData = getTRIXData(this.chartDataObj.candleData.values);
+          this.TRIXData = this.getTRIXData(this.chartDataObj.candleData.values);
         }
         if (this.TRIXData) {
           this.toolTipData = {
@@ -145,6 +142,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.TRIXSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.TRIXSize.width = this.klineConfig.size.width + "px";
@@ -155,7 +153,8 @@ export default {
         };
       }
     } else {
-      this.TRIXSize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.platform = "mobile";
+      this.TRIXSize.height = this.klineConfig.size.height * 0.3 + "px";
       this.TRIXSize.width = this.klineConfig.size.width + "px";
     }
     this.klineConfig.chartType = "trix";
@@ -193,6 +192,74 @@ export default {
     },
     dispose() {
       this.TRIX.disposeTRIXEChart();
+    },
+    getTRIXData(datas) {
+      if (!datas) {
+        return;
+      }
+      var TR = [];
+      let TRa = this.calculateEMAByCandleData(datas, 12);
+      let TRb = this.getEMAData(TRa, 12);
+      TR = this.getEMAData(TRb, 12);
+      var TRIX = [];
+      for (let i = 0; i < TR.length; i++) {
+        if (i === 0) {
+          TRIX.push("-");
+        } else {
+          TRIX.push(((TR[i] - TR[i - 1]) / TR[i - 1]) * 100);
+        }
+      }
+      var MATRIX = this.getMADataByDetailData(20, TRIX);
+      return {
+        TRIX: TRIX,
+        MATRIX: MATRIX
+      };
+    },
+    calculateEMAByCandleData(data, periodic) {
+      var EMA = [];
+      for (let i = 0; i < data.length; i++) {
+        if (i === 0) {
+          EMA.push(data[i][1]);
+        } else {
+          let value =
+            (2 * data[i][1] + (periodic - 1) * EMA[i - 1]) / (periodic + 1);
+          EMA.push(value);
+        }
+      }
+      return EMA;
+    },
+    getEMAData(data, periodic) {
+      var EMA = [];
+      for (let i = 0; i < data.length; i++) {
+        if (i === 0) {
+          EMA.push(data[i]);
+        } else {
+          EMA.push(
+            (2 * data[i] + (periodic - 1) * EMA[i - 1]) / (periodic + 1)
+          );
+        }
+      }
+      return EMA;
+    },
+    getMADataByDetailData(periodic, data) {
+      var result = [];
+      for (var i = 0, len = data.length; i < len; i++) {
+        if (i < periodic - 1) {
+          result.push("-");
+          continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < periodic - 1; j++) {
+          let item = parseFloat(data[i - j]);
+          if (isNaN(item)) {
+            sum += 0;
+          } else {
+            sum += item;
+          }
+        }
+        result.push(sum / periodic);
+      }
+      return result;
     }
   }
 };
