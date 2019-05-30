@@ -569,6 +569,7 @@ export default {
       }
     },
     chooseCycle(cycle) {
+      this.showIndicatorOpt = false;
       if (cycle === this.cycle) {
         return;
       }
