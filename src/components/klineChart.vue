@@ -528,6 +528,15 @@ export default {
     },
     klineDataObj() {
       this.cycle = this.klineDataObj.cycle;
+      if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.klineDataObj.coinType)
+      ) {
+        this.showMinCycle = false;
+        this.showHourCycle = false;
+        this.showIndicatorOpt = false;
+        this.coinType = this.klineDataObj.coinType;
+      }
       this.changeCycleLanguage(this.cycle);
       this.changeChartDataObj(this.klineDataObj);
     },
