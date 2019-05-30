@@ -263,128 +263,128 @@
       </div>
       <!-- 图表 -->
       <div @click="hiddenPopover">
-      <KLine
-        ref="candle"
-        v-show="showChart === 'candle' && cycle !== 'everyhour'"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></KLine>
-      <TimeSharing
-        ref="timeSharing"
-        v-show="cycle === 'everyhour' && showChart !== 'depth'"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :chart-data-obj="chartDataObj"
-        :kline-config="klineConfig"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></TimeSharing>
-      <Depth
-        ref="depth"
-        v-show="showChart === 'depth'"
-        :chart-data-obj="chartDataObj"
-        :kline-config="klineConfig"
-        :resize-size="resizeSize"
-      ></Depth>
-      <Volume
-        ref="volume"
-        v-show="showChart !== 'depth'"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></Volume>
-      <MACD
-        ref="macd"
-        v-show="showIndicator === 'MACD' && showChart !== 'depth' && cycle !== 'everyhour'"
-        v-on:listenMacdChartClose="getMacdClose"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></MACD>
-      <KDJ
-        ref="stochastic"
-        v-show="showIndicator === 'KDJ' && showChart !== 'depth' && cycle !== 'everyhour'"
-        @listenIndicatorChartClose="closeIndicatorChart"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></KDJ>
-      <RSI
-        ref="rsi"
-        v-show="showIndicator === 'RSI' && showChart !== 'depth' && cycle !== 'everyhour'"
-        @listenIndicatorChartClose="closeIndicatorChart"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></RSI>
-      <MTM
-        ref="mtm"
-        v-show="showIndicator === 'MTM' && showChart !== 'depth' && cycle !== 'everyhour'"
-        @listenIndicatorChartClose="closeIndicatorChart"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></MTM>
-      <WR
-        ref="wr"
-        v-show="showIndicator === 'WR' && showChart !== 'depth' && cycle !== 'everyhour'"
-        @listenIndicatorChartClose="closeIndicatorChart"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></WR>
-      <OBV
-        ref="obv"
-        v-show="showIndicator === 'OBV' && showChart !== 'depth' && cycle !== 'everyhour'"
-        @listenIndicatorChartClose="closeIndicatorChart"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></OBV>
-      <TRIX
-        ref="trix"
-        v-show="showIndicator === 'TRIX' && showChart !== 'depth' && cycle !== 'everyhour'"
-        @listenIndicatorChartClose="closeIndicatorChart"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></TRIX>
-      <DMI
-        ref="dmi"
-        v-show="showIndicator === 'DMI' && showChart !== 'depth' && cycle !== 'everyhour'"
-        @listenIndicatorChartClose="closeIndicatorChart"
-        v-on:listenToTipIndex="getTipDataIndex"
-        :toolTipIndex="toolTipIndex"
-        :kline-config="klineConfig"
-        :chart-data-obj="chartDataObj"
-        :resize-size="resizeSize"
-        :cycle="cycle"
-      ></DMI>
+        <KLine
+          ref="candle"
+          v-show="showChart === 'candle' && cycle !== 'everyhour'"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></KLine>
+        <TimeSharing
+          ref="timeSharing"
+          v-show="cycle === 'everyhour' && showChart !== 'depth'"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :chart-data-obj="chartDataObj"
+          :kline-config="klineConfig"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></TimeSharing>
+        <Depth
+          ref="depth"
+          v-show="showChart === 'depth'"
+          :chart-data-obj="chartDataObj"
+          :kline-config="klineConfig"
+          :resize-size="resizeSize"
+        ></Depth>
+        <Volume
+          ref="volume"
+          v-show="showChart !== 'depth'"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></Volume>
+        <MACD
+          ref="macd"
+          v-show="showIndicator === 'MACD' && showChart !== 'depth' && cycle !== 'everyhour'"
+          v-on:listenMacdChartClose="getMacdClose"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></MACD>
+        <KDJ
+          ref="stochastic"
+          v-show="showIndicator === 'KDJ' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></KDJ>
+        <RSI
+          ref="rsi"
+          v-show="showIndicator === 'RSI' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></RSI>
+        <MTM
+          ref="mtm"
+          v-show="showIndicator === 'MTM' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></MTM>
+        <WR
+          ref="wr"
+          v-show="showIndicator === 'WR' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></WR>
+        <OBV
+          ref="obv"
+          v-show="showIndicator === 'OBV' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></OBV>
+        <TRIX
+          ref="trix"
+          v-show="showIndicator === 'TRIX' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></TRIX>
+        <DMI
+          ref="dmi"
+          v-show="showIndicator === 'DMI' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></DMI>
       </div>
     </fullscreen>
   </div>
@@ -563,7 +563,13 @@ export default {
       if (cycle === this.cycle) {
         return;
       }
+      if (cycle === "day" || cycle === "week" || cycle === "month") {
+        this.showMinCycle = false;
+        this.showHourCycle = false;
+      }
       if (cycle === "everyhour") {
+        this.showMinCycle = false;
+        this.showHourCycle = false;
         this.showIndicatorOpt = false;
       }
       this.toolTipData = null;
@@ -761,6 +767,9 @@ export default {
       }
     },
     fullscreenChange(fullscreen) {
+      this.showMinCycle = false;
+      this.showHourCycle = false;
+      this.showIndicatorOpt = false;
       this.isFullScreen = fullscreen;
       this.resize();
     },
