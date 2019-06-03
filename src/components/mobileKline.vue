@@ -133,6 +133,24 @@
         >
           <div class="indicator-mobile-line">{{message.DMI}}</div>
         </div>
+        <div
+          @click="showIndicatorChart('PSY')"
+          :class="this.showIndicator ==='PSY' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.PSY}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('ROC')"
+          :class="this.showIndicator ==='ROC' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.ROC}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('BRAR')"
+          :class="this.showIndicator ==='BRAR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.BRAR}}</div>
+        </div>
       </div>
       <div
         @click="openCloseEyes"

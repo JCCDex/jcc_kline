@@ -150,6 +150,33 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></DMI>
+    <PSY
+      ref="psy"
+      v-show="showIndicatorChart === 'PSY' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></PSY>
+    <ROC
+      ref="roc"
+      v-show="showIndicatorChart === 'ROC' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></ROC>
+    <BRAR
+      ref="brar"
+      v-show="showIndicatorChart === 'BRAR' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></BRAR>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -166,6 +193,9 @@ import WR from "./WRChart.vue";
 import OBV from "./OBVChart.vue";
 import TRIX from "./TRIXChart.vue";
 import DMI from "./DMIChart.vue";
+import PSY from "./PSYChart.vue"
+import ROC from "./ROCChart.vue"
+import BRAR from "./BRARChart.vue"
 import {
   splitData,
   handleDivisionData,
@@ -187,7 +217,10 @@ export default {
     WR,
     OBV,
     TRIX,
-    DMI
+    DMI,
+    PSY,
+    ROC,
+    BRAR
   },
   data() {
     return {
@@ -424,6 +457,9 @@ export default {
         this.$refs.obv.changeDataZoom(type);
         this.$refs.trix.changeDataZoom(type);
         this.$refs.dmi.changeDataZoom(type);
+        this.$refs.psy.changeDataZoom(type);
+        this.$refs.roc.changeDataZoom(type);
+        this.$refs.brar.changeDataZoom(type);
       } else if (this.cycle === "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);
