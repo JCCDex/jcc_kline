@@ -202,6 +202,24 @@
             >
               <div class="indicator-line">{{message.DMI}}</div>
             </div>
+            <div
+              @click="showIndicatorChart('PSY')"
+              :class="this.showIndicator ==='PSY' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.PSY}}</div>
+            </div>
+            <div
+              @click="showIndicatorChart('ROC')"
+              :class="this.showIndicator ==='ROC' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.ROC}}</div>
+            </div>
+            <div
+              @click="showIndicatorChart('BRAR')"
+              :class="this.showIndicator ==='BRAR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.BRAR}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -385,6 +403,39 @@
           :resize-size="resizeSize"
           :cycle="cycle"
         ></DMI>
+        <PSY
+          ref="psy"
+          v-show="showIndicator === 'PSY' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></PSY>
+        <ROC
+          ref="roc"
+          v-show="showIndicator === 'ROC' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></ROC>
+        <BRAR
+          ref="brar"
+          v-show="showIndicator === 'BRAR' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></BRAR>
       </div>
     </fullscreen>
   </div>
@@ -404,6 +455,9 @@ import WR from "./WRChart.vue";
 import OBV from "./OBVChart.vue";
 import TRIX from "./TRIXChart.vue";
 import DMI from "./DMIChart.vue";
+import PSY from "./PSYChart.vue"
+import ROC from "./ROCChart.vue"
+import BRAR from "./BRARChart.vue"
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -427,6 +481,9 @@ export default {
     OBV,
     TRIX,
     DMI,
+    PSY,
+    ROC,
+    BRAR,
     TimeSharing
   },
   data() {
@@ -821,6 +878,9 @@ export default {
         this.$refs.obv.changeDataZoom(this.changeDataZoomType);
         this.$refs.trix.changeDataZoom(this.changeDataZoomType);
         this.$refs.dmi.changeDataZoom(this.changeDataZoomType);
+        this.$refs.psy.changeDataZoom(this.changeDataZoomType);
+        this.$refs.roc.changeDataZoom(this.changeDataZoomType);
+        this.$refs.brar.changeDataZoom(this.changeDataZoomType);
       }
       if (this.cycle === "everyhour") {
         this.$refs.timeSharing.changeDataZoom(this.changeDataZoomType);

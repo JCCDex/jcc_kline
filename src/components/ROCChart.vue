@@ -7,9 +7,10 @@
       <font style="color: #67ff7c;">ROC:&nbsp;{{toolTipData.ROC}}</font>
     </div>
     <i
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="ROC"
@@ -32,7 +33,7 @@ export default {
       coinType: "",
       currentCycle: '',
       isRefresh: true,
-      chartType: "indicator",
+      platform: '',
       toolTipData: null,
       ROCSize: {
         height: "",
@@ -92,11 +93,11 @@ export default {
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
-          this.ROC.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.ROC.setROCOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.ROC.updateIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.ROC.updateROCOption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -134,6 +135,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform ='pc'
       if (!this.klineConfig.defaultSize) {
         this.ROCSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.ROCSize.width = this.klineConfig.size.width + "px";
@@ -144,10 +146,11 @@ export default {
         };
       }
     } else {
+      this.platform ='mobile'
       this.ROCSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.ROCSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "roc";
     this.ROC = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -158,19 +161,22 @@ export default {
   },
   methods: {
     init() {
-      this.ROC.initIndicatorChart(this.$refs.ROC);
+      this.ROC.initROCChart(this.$refs.ROC);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.ROC.getIndicatorTipData();
+      let index = this.ROC.getROCTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    changeDataZoom(type) {
+      this.ROC.changeROCDataZoom(type);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.ROC.resizeIndicatorChart(
+        this.ROC.resizeROCChart(
           this.$refs.ROC,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -178,7 +184,7 @@ export default {
       }
     },
     dispose() {
-      this.ROC.disposeIndicatorEChart();
+      this.ROC.disposeROCEChart();
     }
   }
 };

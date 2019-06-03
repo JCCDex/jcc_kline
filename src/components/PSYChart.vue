@@ -7,9 +7,10 @@
       <font style="color: #67ff7c;">PSY:&nbsp;{{toolTipData.PSY}}</font>
     </div>
     <i
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="PSY"
@@ -30,9 +31,9 @@ export default {
       indicatorsData: null,
       PSYData: null,
       coinType: "",
+      platform: '',
       currentCycle: '',
       isRefresh: true,
-      chartType: "indicator",
       toolTipData: null,
       PSYSize: {
         height: "",
@@ -92,11 +93,11 @@ export default {
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
-          this.PSY.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.PSY.setPSYOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.PSY.updateIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.PSY.updatePSYOption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -134,6 +135,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = 'pc'
       if (!this.klineConfig.defaultSize) {
         this.PSYSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.PSYSize.width = this.klineConfig.size.width + "px";
@@ -144,10 +146,11 @@ export default {
         };
       }
     } else {
+      this.platform = 'mobile'
       this.PSYSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.PSYSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "psy";
     this.PSY = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -158,19 +161,22 @@ export default {
   },
   methods: {
     init() {
-      this.PSY.initIndicatorChart(this.$refs.PSY);
+      this.PSY.initPSYChart(this.$refs.PSY);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.PSY.getIndicatorTipData();
+      let index = this.PSY.getPSYTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    changeDataZoom(type) {
+      this.PSY.changePSYDataZoom(type);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true)
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.PSY.resizeIndicatorChart(
+        this.PSY.resizePSYChart(
           this.$refs.PSY,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -178,7 +184,7 @@ export default {
       }
     },
     dispose() {
-      this.PSY.disposeIndicatorEChart();
+      this.PSY.disposePSYEChart();
     }
   }
 };

@@ -10,12 +10,12 @@ var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
 
-class OBVChartController {
+class ROCChartController {
     constructor(configs) {
         this.indicatorConfig = configs;
     }
 
-    resizeOBVECharts(DOM, isFullScreen, resizeSize) {
+    resizeROCECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
             if (this.indicatorConfig.defaultSize === false) {
@@ -46,11 +46,11 @@ class OBVChartController {
             this.indicator.resize();
         }
         if (oldIndicatorData) {
-            this.updateOBVOption(oldIndicatorData.data, oldIndicatorData.cycle);
+            this.updateROCOption(oldIndicatorData.data, oldIndicatorData.cycle);
         }
     }
 
-    initOBVECharts(DOM, clear) {
+    initROCECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -75,7 +75,7 @@ class OBVChartController {
     }
 
     /* 绘制IndicatorChart开始 */
-    setOBVOption(data, cycle) {
+    setROCOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -96,7 +96,7 @@ class OBVChartController {
         }
     }
 
-    updateOBVOption(data, cycle) {
+    updateROCOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -191,11 +191,11 @@ class OBVChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'OBV' && data.indicatorData) {
+        if (data.indicator === 'ROC' && data.indicatorData) {
             series = [
                 {
-                    name: 'OBV',
-                    data: data.indicatorData.OBV,
+                    name: 'ROC',
+                    data: data.indicatorData,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -215,8 +215,8 @@ class OBVChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
-        if (data.indicator === 'OBV') {
-            len = data.indicatorData.OBV.length;
+        if (data.indicator === 'ROC') {
+            len = data.indicatorData.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -253,7 +253,7 @@ class OBVChartController {
         return dataZoom;
     }
 
-    disposeOBVEChart() {
+    disposeROCEChart() {
         if (this.indicator) {
             this.indicator.dispose();
         }
@@ -288,4 +288,4 @@ class OBVChartController {
     }
 }
 
-export default OBVChartController;
+export default ROCChartController;

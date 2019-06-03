@@ -8,9 +8,10 @@
       <font style="color: #f6d026;">AR:{{this.toolTipData.AR}}</font>
     </div>
     <i
+      v-if="platform === 'pc'"
       @click="closeChart"
-      style="position:absolute;right:70px;z-index:5;"
-      class="icon iconfont icon-popover-close"
+      style="position:absolute;right:70px;z-index:5;margin-top:3px"
+      class="close-icon"
     ></i>
     <div
       ref="BRAR"
@@ -31,9 +32,9 @@ export default {
       indicatorsData: null,
       BRARData: null,
       coinType: "",
+      platform: '',
       currentCycle: "",
       isRefresh: true,
-      chartType: "indicator",
       toolTipData: null,
       BRARSize: {
         height: "",
@@ -100,7 +101,7 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: this.chartDataObj.indicators,
+          indicator: 'BRAR',
           categoryData: this.chartDataObj.candleData.categoryData
         };
         this.BRARData = getBRARData(this.chartDataObj.candleData.values, 24);
@@ -115,11 +116,11 @@ export default {
           this.isRefresh
         ) {
           this.init(true);
-          this.BRAR.setIndicatorOption(this.indicatorsData, this.currentCycle);
+          this.BRAR.setBRAROption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.BRAR.updateIndicatorOption(
+          this.BRAR.updateBRAROption(
             this.indicatorsData,
             this.currentCycle
           );
@@ -147,6 +148,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
+      this.platform = 'pc'
       if (!this.klineConfig.defaultSize) {
         this.BRARSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.BRARSize.width = this.klineConfig.size.width + "px";
@@ -157,10 +159,11 @@ export default {
         };
       }
     } else {
+      this.platform = 'mobile'
       this.BRARSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.BRARSize.width = this.klineConfig.size.width + "px";
     }
-    this.klineConfig.chartType = "indicator";
+    this.klineConfig.chartType = "brar";
     this.BRAR = new IndicatorChart(this.klineConfig);
   },
   mounted() {
@@ -171,19 +174,22 @@ export default {
   },
   methods: {
     init(clear) {
-      this.BRAR.initIndicatorChart(this.$refs.BRAR, clear);
+      this.BRAR.initBRARChart(this.$refs.BRAR, clear);
       this.resize();
     },
     getToolTipIndex() {
-      let index = this.BRAR.getIndicatorTipData();
+      let index = this.BRAR.getBRARTipData();
       this.$emit("listenToTipIndex", index);
+    },
+    changeDataZoom(type) {
+      this.BRAR.changeBRARDataZoom(type);
     },
     closeChart() {
       this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
-        this.BRAR.resizeIndicatorChart(
+        this.BRAR.resizeBRARChart(
           this.$refs.BRAR,
           this.resizeSize.isFullScreen,
           this.klineConfig.size
@@ -191,7 +197,7 @@ export default {
       }
     },
     dispose() {
-      this.BRAR.disposeIndicatorEChart();
+      this.BRAR.disposeBRAREChart();
     }
   }
 };

@@ -10,12 +10,12 @@ var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
 
-class OBVChartController {
+class PSYChartController {
     constructor(configs) {
         this.indicatorConfig = configs;
     }
 
-    resizeOBVECharts(DOM, isFullScreen, resizeSize) {
+    resizePSYECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
             if (this.indicatorConfig.defaultSize === false) {
@@ -46,11 +46,11 @@ class OBVChartController {
             this.indicator.resize();
         }
         if (oldIndicatorData) {
-            this.updateOBVOption(oldIndicatorData.data, oldIndicatorData.cycle);
+            this.updatePSYOption(oldIndicatorData.data, oldIndicatorData.cycle);
         }
     }
 
-    initOBVECharts(DOM, clear) {
+    initPSYECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -75,7 +75,7 @@ class OBVChartController {
     }
 
     /* 绘制IndicatorChart开始 */
-    setOBVOption(data, cycle) {
+    setPSYOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -96,7 +96,7 @@ class OBVChartController {
         }
     }
 
-    updateOBVOption(data, cycle) {
+    updatePSYOption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -191,11 +191,11 @@ class OBVChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'OBV' && data.indicatorData) {
+        if (data.indicator === 'PSY' && data.indicatorData) {
             series = [
                 {
-                    name: 'OBV',
-                    data: data.indicatorData.OBV,
+                    name: 'PSY',
+                    data: data.indicatorData,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -215,8 +215,8 @@ class OBVChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
-        if (data.indicator === 'OBV') {
-            len = data.indicatorData.OBV.length;
+        if (data.indicator === 'PSY') {
+            len = data.indicatorData.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -253,7 +253,7 @@ class OBVChartController {
         return dataZoom;
     }
 
-    disposeOBVEChart() {
+    disposePSYEChart() {
         if (this.indicator) {
             this.indicator.dispose();
         }
@@ -288,4 +288,4 @@ class OBVChartController {
     }
 }
 
-export default OBVChartController;
+export default PSYChartController;

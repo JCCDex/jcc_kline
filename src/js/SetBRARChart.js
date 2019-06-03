@@ -10,12 +10,12 @@ var toolTipIndex;
 var oldIndicatorData;
 var indicatorOption;
 
-class OBVChartController {
+class BRARChartController {
     constructor(configs) {
         this.indicatorConfig = configs;
     }
 
-    resizeOBVECharts(DOM, isFullScreen, resizeSize) {
+    resizeBRARECharts(DOM, isFullScreen, resizeSize) {
         let size = getDefaultChartSize();
         if (!isFullScreen) {
             if (this.indicatorConfig.defaultSize === false) {
@@ -46,11 +46,11 @@ class OBVChartController {
             this.indicator.resize();
         }
         if (oldIndicatorData) {
-            this.updateOBVOption(oldIndicatorData.data, oldIndicatorData.cycle);
+            this.updateBRAROption(oldIndicatorData.data, oldIndicatorData.cycle);
         }
     }
 
-    initOBVECharts(DOM, clear) {
+    initBRARECharts(DOM, clear) {
         if (this.indicator && clear) {
             oldIndicatorData = null;
             this.indicator.dispose();
@@ -75,7 +75,7 @@ class OBVChartController {
     }
 
     /* 绘制IndicatorChart开始 */
-    setOBVOption(data, cycle) {
+    setBRAROption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -96,7 +96,7 @@ class OBVChartController {
         }
     }
 
-    updateOBVOption(data, cycle) {
+    updateBRAROption(data, cycle) {
         oldIndicatorData = {
             data: data,
             cycle: cycle
@@ -191,16 +191,29 @@ class OBVChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'OBV' && data.indicatorData) {
+        if (data.indicator === 'BRAR' && data.indicatorData) {
             series = [
                 {
-                    name: 'OBV',
-                    data: data.indicatorData.OBV,
+                    name: 'BR',
+                    data: data.indicatorData.BR,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
-                            color: '#67ff7c'
+                            color: '#e6e6e6'
+                        }
+                    },
+                    lineStyle: {
+                        width: 1
+                    }
+                },{
+                    name: 'AR',
+                    data: data.indicatorData.AR,
+                    type: 'line',
+                    symbol: 'none',
+                    itemStyle: {
+                        normal: {
+                            color: '#f6d026'
                         }
                     },
                     lineStyle: {
@@ -215,8 +228,8 @@ class OBVChartController {
     getDataZoom(data) {
         let start = 0;
         let len = 0;
-        if (data.indicator === 'OBV') {
-            len = data.indicatorData.OBV.length;
+        if (data.indicator === 'BRAR') {
+            len = data.indicatorData.AR.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {
@@ -253,7 +266,7 @@ class OBVChartController {
         return dataZoom;
     }
 
-    disposeOBVEChart() {
+    disposeBRAREChart() {
         if (this.indicator) {
             this.indicator.dispose();
         }
@@ -288,4 +301,4 @@ class OBVChartController {
     }
 }
 
-export default OBVChartController;
+export default BRARChartController;

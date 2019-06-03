@@ -7,6 +7,9 @@ import VRChart from './SetVRChart';
 import OBVChart from './SetOBVChart';
 import TRIXChart from './SetTRIXChart';
 import DMIChart from './SetDMIChart';
+import PSYChart from './SetPSYChart';
+import ROCChart from './SetROCChart';
+import BRARChart from './SetBRARChart';
 
 class IndicatorChartController {
     constructor(chartsConfig) {
@@ -75,7 +78,32 @@ class IndicatorChartController {
                 merge(mobileIndicatorsLine, chartsConfig);
                 this.setDMIChart = new DMIChart(mobileIndicatorsLine);
             }
+        } else if (chartsConfig.chartType === 'psy') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setPSYChart = new PSYChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setPSYChart = new PSYChart(mobileIndicatorsLine);
+            }
+        } else if (chartsConfig.chartType === 'roc') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setROCChart = new ROCChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setROCChart = new ROCChart(mobileIndicatorsLine);
+            }
+        } else if (chartsConfig.chartType === 'brar') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setBRARChart = new BRARChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setBRARChart = new BRARChart(mobileIndicatorsLine);
+            }
         }
+        
     }
 
     /* 绘制随机指标（KDJ） */
@@ -309,6 +337,94 @@ class IndicatorChartController {
     disposeDMIEChart() {
         this.setDMIChart.disposeDMIEChart();
     }
+
+    /* 绘制PSY指标线 */
+    initPSYChart(DOM, clear) {
+        this.setPSYChart.initPSYECharts(DOM, clear);
+    }
+
+    resizePSYChart(DOM, isFullScreen, size) {
+        this.setPSYChart.resizePSYECharts(DOM, isFullScreen, size);
+    }
+
+    getPSYTipData() {
+        return this.setPSYChart.getToolTipData();
+    }
+
+    changePSYDataZoom(type) {
+        this.setPSYChart.changeDataZoom(type);
+    }
+
+    setPSYOption(data, cycle) {
+        this.setPSYChart.setPSYOption(data, cycle);
+    }
+
+    updatePSYOption(data, cycle) {
+        this.setPSYChart.updatePSYOption(data, cycle);
+    }
+
+    disposePSYEChart() {
+        this.setPSYChart.disposePSYEChart();
+    }
+
+    /* 绘制ROC指标线 */
+    initROCChart(DOM, clear) {
+        this.setROCChart.initROCECharts(DOM, clear);
+    }
+
+    resizeROCChart(DOM, isFullScreen, size) {
+        this.setROCChart.resizeROCECharts(DOM, isFullScreen, size);
+    }
+
+    getROCTipData() {
+        return this.setROCChart.getToolTipData();
+    }
+
+    changeROCDataZoom(type) {
+        this.setROCChart.changeDataZoom(type);
+    }
+
+    setROCOption(data, cycle) {
+        this.setROCChart.setROCOption(data, cycle);
+    }
+
+    updateROCOption(data, cycle) {
+        this.setROCChart.updateROCOption(data, cycle);
+    }
+
+    disposeROCEChart() {
+        this.setROCChart.disposeROCEChart();
+    }
+
+    /* 绘制BRAR指标线 */
+    initBRARChart(DOM, clear) {
+        this.setBRARChart.initBRARECharts(DOM, clear);
+    }
+
+    resizeBRARChart(DOM, isFullScreen, size) {
+        this.setBRARChart.resizeBRARECharts(DOM, isFullScreen, size);
+    }
+
+    getBRARTipData() {
+        return this.setBRARChart.getToolTipData();
+    }
+
+    changeBRARDataZoom(type) {
+        this.setBRARChart.changeDataZoom(type);
+    }
+
+    setBRAROption(data, cycle) {
+        this.setBRARChart.setBRAROption(data, cycle);
+    }
+
+    updateBRAROption(data, cycle) {
+        this.setBRARChart.updateBRAROption(data, cycle);
+    }
+
+    disposeBRAREChart() {
+        this.setBRARChart.disposeBRAREChart();
+    }
+
 
 }
 
