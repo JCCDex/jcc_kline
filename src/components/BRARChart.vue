@@ -21,7 +21,6 @@
   </div>
 </template>
 <script>
-import { getBRARData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {
@@ -85,7 +84,7 @@ export default {
           let data = JSON.parse(
             JSON.stringify(this.chartDataObj.candleData.values)
           );
-          this.BRARData = getBRARData(data, 24);
+          this.BRARData = this.getBRARData(data, 24);
         }
         if (this.BRARData) {
           this.toolTipData = {
@@ -104,7 +103,7 @@ export default {
           indicator: 'BRAR',
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.BRARData = getBRARData(this.chartDataObj.candleData.values, 24);
+        this.BRARData = this.getBRARData(this.chartDataObj.candleData.values, 24);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.BRARData;
@@ -198,7 +197,56 @@ export default {
     },
     dispose() {
       this.BRAR.disposeBRAREChart();
+    },
+    getBRARData (data, periodic) {
+    if (!data) { return; }
+    var BR = [];
+    var AR = [];
+    var HighMinusOpen = []; // 当日最高价 - 当日开盘价
+    var OpenMinusLow = []; // 当日开盘价 - 当日最低价
+    var HighMinusCY = []; // 当日最高价 - 前一日收盘价
+    var CYMinusLow = []; // 前一日收盘价 - 当日最低价
+    for (let i = 0; i < data.length; i++) {
+        HighMinusOpen.push(data[i][3] - data[i][0]);
+        OpenMinusLow.push(data[i][0] - data[i][2]);
+        if (i === 0) {
+            HighMinusCY.push(0);
+            CYMinusLow.push(0);
+        } else {
+            HighMinusCY.push(data[i][3] - data[i - 1][1]);
+            CYMinusLow.push(data[i - 1][1] - data[i][2]);
+        }
+        if (i < periodic) {
+            BR.push('-');
+            AR.push('-');
+        } else {
+            let HighMinusOpenSum = 0;
+            let OpenMinusLowSum = 0;
+            let HighMinusCYSum = 0;
+            let CYMinusLowSum = 0;
+            for (let j = i - periodic; j < i; j++) {
+                HighMinusOpenSum = HighMinusOpenSum + HighMinusOpen[j];
+                OpenMinusLowSum = OpenMinusLowSum + OpenMinusLow[j];
+                HighMinusCYSum = HighMinusCYSum + HighMinusCY[j];
+                CYMinusLowSum = CYMinusLowSum + CYMinusLow[j];
+            }
+            if (OpenMinusLowSum === 0) {
+                AR.push(0);
+            } else {
+                AR.push(HighMinusOpenSum / OpenMinusLowSum * 100);
+            }
+            if (CYMinusLowSum === 0) {
+                BR.push(0);
+            } else {
+                BR.push(HighMinusCYSum / CYMinusLowSum * 100);
+            }
+        }
     }
+    return {
+        AR: AR,
+        BR: BR
+    };
+}
   }
 };
 </script>

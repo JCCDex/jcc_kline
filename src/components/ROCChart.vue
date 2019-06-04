@@ -20,7 +20,6 @@
   </div>
 </template>
 <script>
-import { getROCData } from "../js/CalculateIndicator";
 import IndicatorChart from "../js/IndicatorChart";
 import { getLanguage } from "../js/utils";
 export default {
@@ -31,9 +30,9 @@ export default {
       indicatorsData: null,
       ROCData: null,
       coinType: "",
-      currentCycle: '',
+      currentCycle: "",
       isRefresh: true,
-      platform: '',
+      platform: "",
       toolTipData: null,
       ROCSize: {
         height: "",
@@ -66,11 +65,11 @@ export default {
     },
     cycle: {
       type: String,
-      default: 'hour'
+      default: "hour"
     }
   },
   watch: {
-     cycle() {
+    cycle() {
       if (this.cycle !== this.currentCycle) {
         this.init(true);
         this.isRefresh = true;
@@ -86,13 +85,17 @@ export default {
           indicator: "ROC",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.ROCData = getROCData(this.chartDataObj.klineData);
+        this.ROCData = this.getROCData(this.chartDataObj.klineData);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.ROCData;
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
-        if (JSON.stringify(this.coinType) !== JSON.stringify(this.chartDataObj.coinType) || this.isRefresh) {
+        if (
+          JSON.stringify(this.coinType) !==
+            JSON.stringify(this.chartDataObj.coinType) ||
+          this.isRefresh
+        ) {
           this.ROC.setROCOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
@@ -123,7 +126,7 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.klineData && !this.ROCData) {
-          this.ROCData = getROCData(this.chartDataObj.klineData);
+          this.ROCData = this.getROCData(this.chartDataObj.klineData);
         }
         if (this.ROCData) {
           this.toolTipData = {
@@ -135,7 +138,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
-      this.platform ='pc'
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.ROCSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.ROCSize.width = this.klineConfig.size.width + "px";
@@ -146,7 +149,7 @@ export default {
         };
       }
     } else {
-      this.platform ='mobile'
+      this.platform = "mobile";
       this.ROCSize.height = this.klineConfig.size.height * 0.4 + "px";
       this.ROCSize.width = this.klineConfig.size.width + "px";
     }
@@ -172,7 +175,7 @@ export default {
       this.ROC.changeROCDataZoom(type);
     },
     closeChart() {
-      this.$emit("listenIndicatorChartClose", true)
+      this.$emit("listenIndicatorChartClose", true);
     },
     resize() {
       if (this.klineConfig.platform === "pc") {
@@ -185,6 +188,21 @@ export default {
     },
     dispose() {
       this.ROC.disposeROCEChart();
+    },
+    getROCData(data) {
+      if (!data) {
+        return;
+      }
+      var ROC = [];
+      for (var i = 0; i < data.length; i++) {
+        if (i < 12) {
+          ROC.push("-");
+        } else {
+          var ROCTmp = (data[i][2] - data[i - 12][2]) * data[i - 12][2];
+          ROC.push(ROCTmp);
+        }
+      }
+      return ROC;
     }
   }
 };
