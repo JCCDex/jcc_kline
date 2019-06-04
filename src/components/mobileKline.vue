@@ -5,7 +5,7 @@
       <div class="kline-cycle-div">
         <div @click="clickMinCycle()">
           <div
-            :class="!this.showMinCycle ? 'mobile-kline-drop-down' : 'mobile-kline-drop-down kline-select-color'"
+            :class="!this.showMinCycle ? this.message.language === 'en' ? 'mobile-kline-drop-down-en':'mobile-kline-drop-down' : this.message.language === 'en' ? 'mobile-kline-drop-down-en kline-select-color':'mobile-kline-drop-down kline-select-color'"
           >
             <font
               :class="selectMin !== '分'  ? selectMin !== 'm' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
@@ -35,7 +35,7 @@
         </div>
         <div @click="clickHourCycle()">
           <div
-            :class="!this.showHourCycle ? 'mobile-kline-drop-down' : 'mobile-kline-drop-down kline-select-color'"
+            :class="!this.showHourCycle  ? this.message.language === 'en' ? 'mobile-kline-drop-down-en':'mobile-kline-drop-down' : this.message.language === 'en' ? 'mobile-kline-drop-down-en kline-select-color':'mobile-kline-drop-down kline-select-color'"
           >
             <font
               :class="selectHour !== '时'  ? selectHour !== 'H' ? 'kline-select-color kline-text-decoration' : 'kline-uncheck-color' : 'kline-uncheck-color'"
