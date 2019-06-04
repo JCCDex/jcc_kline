@@ -72,6 +72,7 @@
         @click="chooseCycle('everyhour')"
         :class="this.currentCycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.timeSharing}}</div>
+      <!-- 指标线图标 -->
       <div @click="openCloseIndicator" class="indicator-select-div">
         <i
           v-show="showIndicatorBtn"
@@ -294,12 +295,14 @@ export default {
       this.kline.initMobileChart(this.$refs.klineRef, clear);
     },
     clickMinCycle() {
+      this.showIndicatorDiv = false;
       this.showMinCycle = !this.showMinCycle;
       if (this.showMinCycle) {
         this.showHourCycle = false;
       }
     },
     clickHourCycle() {
+      this.showIndicatorDiv = false;
       this.showHourCycle = !this.showHourCycle;
       if (this.showHourCycle) {
         this.showMinCycle = false;
@@ -332,10 +335,20 @@ export default {
       }
     },
     chooseCycle(cycle) {
+      this.showIndicatorDiv = false;
       if (cycle === "everyhour") {
         this.showIndicatorBtn = false;
       } else {
         this.showIndicatorBtn = true;
+      }
+      if (
+        cycle === "day" ||
+        cycle === "week" ||
+        cycle === "month" ||
+        cycle === "everyhour"
+      ) {
+        this.showHourCycle = false;
+        this.showMinCycle = false;
       }
       let selectCycle = cycle;
       if (cycle instanceof Object) {
@@ -366,6 +379,8 @@ export default {
       this.kline.disposeMobileChart();
     },
     openCloseIndicator() {
+      this.showHourCycle = false;
+      this.showMinCycle = false;
       this.showIndicatorDiv = !this.showIndicatorDiv;
     },
     showIndicatorChart(indicator) {
