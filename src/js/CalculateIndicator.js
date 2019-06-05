@@ -406,7 +406,7 @@ export const getROCData = (data) => {
         if (i < 12) {
             ROC.push('-');
         } else {
-            var ROCTmp = (data[i][2] - data[i - 12][2]) * data[i - 12][2];
+            var ROCTmp = (data[i][2] - data[i - 12][2]) / data[i - 12][2] * 100;
             ROC.push(ROCTmp);
         }
     }

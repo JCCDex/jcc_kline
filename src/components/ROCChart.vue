@@ -21,7 +21,7 @@
 </template>
 <script>
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "ROC",
   data() {
@@ -130,7 +130,7 @@ export default {
         }
         if (this.ROCData) {
           this.toolTipData = {
-            ROC: parseFloat(this.ROCData[index]).toFixed(7)
+            ROC: formatDecimal(this.ROCData[index], 2, true)
           };
         }
       }
@@ -198,7 +198,7 @@ export default {
         if (i < 12) {
           ROC.push("-");
         } else {
-          var ROCTmp = (data[i][2] - data[i - 12][2]) * data[i - 12][2];
+          var ROCTmp = ((data[i][2] - data[i - 12][2]) / data[i - 12][2]) * 100;
           ROC.push(ROCTmp);
         }
       }
