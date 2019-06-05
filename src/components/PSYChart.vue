@@ -21,7 +21,7 @@
 </template>
 <script>
 import IndicatorChart from "../js/IndicatorChart";
-import { getLanguage } from "../js/utils";
+import { getLanguage, formatDecimal } from "../js/utils";
 export default {
   name: "PSY",
   data() {
@@ -130,7 +130,7 @@ export default {
         }
         if (this.PSYData) {
           this.toolTipData = {
-            PSY: parseFloat(this.PSYData[index]).toFixed(7)
+            PSY: formatDecimal(this.PSYData[index], 2, true)
           };
         }
       }
