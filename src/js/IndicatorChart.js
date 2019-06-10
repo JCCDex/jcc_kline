@@ -10,6 +10,9 @@ import DMIChart from './SetDMIChart';
 import PSYChart from './SetPSYChart';
 import ROCChart from './SetROCChart';
 import BRARChart from './SetBRARChart';
+import DMAChart from './SetDMAChart';
+import BollChart from './SetBollChart';
+import SARChart from './SetSARChart';
 
 class IndicatorChartController {
     constructor(chartsConfig) {
@@ -102,8 +105,32 @@ class IndicatorChartController {
                 merge(mobileIndicatorsLine, chartsConfig);
                 this.setBRARChart = new BRARChart(mobileIndicatorsLine);
             }
+        } else if (chartsConfig.chartType === 'dma') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setDMAChart = new DMAChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setDMAChart = new DMAChart(mobileIndicatorsLine);
+            }
+        } else if (chartsConfig.chartType === 'Boll') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setBollChart = new BollChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setBollChart = new BollChart(mobileIndicatorsLine);
+            }
+        } else if (chartsConfig.chartType === 'sar') {
+            if (chartsConfig.platform === 'pc') {
+                merge(StochasticOption, chartsConfig);
+                this.setSARChart = new SARChart(StochasticOption);
+            } else {
+                merge(mobileIndicatorsLine, chartsConfig);
+                this.setSARChart = new SARChart(mobileIndicatorsLine);
+            }
         }
-        
+
     }
 
     /* 绘制随机指标（KDJ） */
@@ -423,6 +450,93 @@ class IndicatorChartController {
 
     disposeBRAREChart() {
         this.setBRARChart.disposeBRAREChart();
+    }
+
+    /* 绘制DMA指标线 */
+    initDMAChart(DOM, clear) {
+        this.setDMAChart.initDMAECharts(DOM, clear);
+    }
+
+    resizeDMAChart(DOM, isFullScreen, size) {
+        this.setDMAChart.resizeDMAECharts(DOM, isFullScreen, size);
+    }
+
+    getDMATipData() {
+        return this.setDMAChart.getToolTipData();
+    }
+
+    changeDMADataZoom(type) {
+        this.setDMAChart.changeDataZoom(type);
+    }
+
+    setDMAOption(data, cycle) {
+        this.setDMAChart.setDMAOption(data, cycle);
+    }
+
+    updateDMAOption(data, cycle) {
+        this.setDMAChart.updateDMAOption(data, cycle);
+    }
+
+    disposeDMAEChart() {
+        this.setDMAChart.disposeDMAEChart();
+    }
+
+    /* 绘制Boll指标线 */
+    initBollChart(DOM, clear) {
+        this.setBollChart.initBollECharts(DOM, clear);
+    }
+
+    resizeBollChart(DOM, isFullScreen, size) {
+        this.setBollChart.resizeBollECharts(DOM, isFullScreen, size);
+    }
+
+    getBollTipData() {
+        return this.setBollChart.getToolTipData();
+    }
+
+    changeBollDataZoom(type) {
+        this.setBollChart.changeDataZoom(type);
+    }
+
+    setBollOption(data, cycle) {
+        this.setBollChart.setBollOption(data, cycle);
+    }
+
+    updateBollOption(data, cycle) {
+        this.setBollChart.updateBollOption(data, cycle);
+    }
+
+    disposeBollEChart() {
+        this.setBollChart.disposeBollEChart();
+    }
+
+    /* 绘制SAR指标线 */
+    initSARChart(DOM, clear) {
+        this.setSARChart.initSARECharts(DOM, clear);
+    }
+
+    resizeSARChart(DOM, isFullScreen, size) {
+        this.setSARChart.resizeSARECharts(DOM, isFullScreen, size);
+    }
+
+    getSARTipData() {
+        return this.setSARChart.getToolTipData();
+    }
+
+    changeSARDataZoom(type) {
+        this.setSARChart.changeDataZoom(type);
+    }
+
+    setSAROption(data, cycle) {
+        this.setSARChart.setSAROption(data, cycle);
+    }
+
+    updateSAROption(data, cycle) {
+        this.setSARChart.updateSAROption(data, cycle);
+    }
+
+    disposeSAREChart() {
+        this.setSARChart.disposeSAREChart();
     }
 
 

@@ -50,6 +50,8 @@
   "MTM": "MTM",
   "WR": "WR",
   "BRAR": "BRAR",
+  "DMA": "DMA",
+  "SAR": "SAR",
   "minute": "m",
   "oneMin": "1m",
   "fiveMin": "5m",
