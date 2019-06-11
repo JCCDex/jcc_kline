@@ -494,3 +494,45 @@ export const getVRData = (data) => {
         MAVR: MAVR
     };
 };
+
+export const getDMAData = (data) => {
+    if (!data) {
+        return;
+    }
+    let MA10 = calculateMA(10, data);
+    let MA50 = calculateMA(50, data);
+    let DMAData = [];
+    for (var i = 0; i < MA50.length; i++) {
+        if (isNaN(MA50[i])) {
+            DMAData.push("-");
+        } else {
+            DMAData.push(MA10[i] - MA50[i]);
+        }
+    }
+    let AMAData = getMAByDMAData(10, DMAData);
+    return {
+        DMA: DMAData,
+        AMA: AMAData
+    }
+}
+
+export const getMAByDMAData = (periodic, data) => {
+    var result = [];
+    for (var i = 0, len = data.length; i < len; i++) {
+        if (i < periodic - 1 || isNaN(data[i])) {
+            result.push("-");
+            continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < periodic - 1; j++) {
+            let item = parseFloat(data[i - j]);
+            if (isNaN(item)) {
+                sum += 0;
+            } else {
+                sum += item;
+            }
+        }
+        result.push(sum / periodic);
+    }
+    return result;
+}

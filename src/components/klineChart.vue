@@ -221,6 +221,12 @@
               <div class="indicator-line">{{message.BRAR}}</div>
             </div>
             <div
+              @click="showIndicatorChart('DMA')"
+              :class="this.showIndicator ==='DMA' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.DMA}}</div>
+            </div>
+            <div
               @click="showIndicatorChart('Boll')"
               :class="this.showIndicator ==='Boll' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
             >
@@ -442,6 +448,17 @@
           :resize-size="resizeSize"
           :cycle="cycle"
         ></BRAR>
+        <DMA
+          ref="dma"
+          v-show="showIndicator === 'DMA' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></DMA>
         <Boll
           ref="boll"
           v-show="showIndicator === 'Boll' && showChart !== 'depth' && cycle !== 'everyhour'"
@@ -475,6 +492,7 @@ import DMI from "./DMIChart.vue";
 import PSY from "./PSYChart.vue"
 import ROC from "./ROCChart.vue"
 import BRAR from "./BRARChart.vue"
+import DMA from "./DMAChart.vue"
 import Boll from "./BollChart.vue"
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
@@ -502,6 +520,7 @@ export default {
     PSY,
     ROC,
     BRAR,
+    DMA,
     Boll,
     TimeSharing
   },
@@ -900,6 +919,7 @@ export default {
         this.$refs.psy.changeDataZoom(this.changeDataZoomType);
         this.$refs.roc.changeDataZoom(this.changeDataZoomType);
         this.$refs.brar.changeDataZoom(this.changeDataZoomType);
+        this.$refs.dma.changeDataZoom(this.changeDataZoomType);
         this.$refs.boll.changeDataZoom(this.changeDataZoomType);
       }
       if (this.cycle === "everyhour") {

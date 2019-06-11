@@ -163,8 +163,8 @@ class DMAChartController {
         if (data.indicator === 'DMA' && data.indicatorData) {
             series = [
                 {
-                    name: 'PDI',
-                    data: data.indicatorData.PDI,
+                    name: 'DMA',
+                    data: data.indicatorData.DMA,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -177,41 +177,13 @@ class DMAChartController {
                     }
                 },
                 {
-                    name: 'MDI',
-                    data: data.indicatorData.MDI,
+                    name: 'AMA',
+                    data: data.indicatorData.AMA,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
                         normal: {
                             color: '#f6d026'
-                        }
-                    },
-                    lineStyle: {
-                        width: 1
-                    }
-                },
-                {
-                    name: 'ADX',
-                    data: data.indicatorData.ADX,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#e03bfa'
-                        }
-                    },
-                    lineStyle: {
-                        width: 1
-                    }
-                },
-                {
-                    name: 'ADXR',
-                    data: data.indicatorData.ADXR,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#67ff7c'
                         }
                     },
                     lineStyle: {
@@ -227,7 +199,7 @@ class DMAChartController {
         let start = 0;
         let len = 0;
         if (data.indicator === 'DMA') {
-            len = data.indicatorData.PDI.length;
+            len = data.indicatorData.DMA.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 40) {

@@ -4,8 +4,8 @@
       :class="this.klineConfig.platform === 'pc' ? 'kline-tip' : 'mobile-kline-tip'"
       v-if="toolTipData"
     >
-      <font style="color: #e6e6e6;">PDI:{{this.toolTipData.PDI}}</font>
-      <font style="color: #f6d026;">MDI:{{this.toolTipData.MDI}}</font>
+      <font style="color: #e6e6e6;">DMA:{{this.toolTipData.DMA}}</font>
+      <font style="color: #f6d026;">AMA:{{this.toolTipData.AMA}}</font>
     </div>
     <i
       v-if="platform === 'pc'"
@@ -82,17 +82,13 @@ export default {
       let index = this.toolTipIndex;
       if (index) {
         if (this.chartDataObj.candleData && !this.DMAData) {
-          let data = JSON.parse(
-            JSON.stringify(this.chartDataObj.candleData.values)
-          );
+          let data = JSON.parse(JSON.stringify(this.chartDataObj.candleData));
           this.DMAData = this.getDMAData(data);
         }
         if (this.DMAData) {
           this.toolTipData = {
-            PDI: formatDecimal(this.DMAData.PDI[index], 2, true),
-            MDI: formatDecimal(this.DMAData.MDI[index], 2, true),
-            ADX: formatDecimal(this.DMAData.ADX[index], 2, true),
-            ADXR: formatDecimal(this.DMAData.ADXR[index], 2, true)
+            DMA: formatDecimal(this.DMAData.DMA[index], 8, true),
+            AMA: formatDecimal(this.DMAData.AMA[index], 8, true)
           };
         }
       }
@@ -106,7 +102,7 @@ export default {
           indicator: "DMA",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.DMAData = this.getDMAData(this.chartDataObj.candleData.values);
+        this.DMAData = this.getDMAData(this.chartDataObj.candleData);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.DMAData;
@@ -202,6 +198,61 @@ export default {
       if (!data) {
         return;
       }
+      let MA10 = this.calculateMA(10, data);
+      let MA50 = this.calculateMA(50, data);
+      let DMAData = [];
+      for (var i = 0; i < MA50.length; i++) {
+        if (isNaN(MA50[i])) {
+          DMAData.push("-");
+        } else {
+          DMAData.push(MA10[i] - MA50[i]);
+        }
+      }
+      let AMAData = this.getMADataByDetailData(10, DMAData);
+      return {
+        DMA: DMAData,
+        AMA: AMAData
+      }
+    },
+    calculateMA(dayCount, data) {
+      var result = [];
+      for (var i = 0, len = data.values.length; i < len; i++) {
+        if (i < dayCount - 1) {
+          result.push("-");
+          continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < dayCount; j++) {
+          let item = parseFloat(data.values[i - j][1]);
+          if (isNaN(item)) {
+            sum += 0;
+          } else {
+            sum += item;
+          }
+        }
+        result.push(+(sum / dayCount));
+      }
+      return result;
+    },
+    getMADataByDetailData(periodic, data) {
+      var result = [];
+      for (var i = 0, len = data.length; i < len; i++) {
+        if (i < periodic - 1 || isNaN(data[i])) {
+          result.push("-");
+          continue;
+        }
+        var sum = 0;
+        for (var j = 0; j < periodic - 1; j++) {
+          let item = parseFloat(data[i - j]);
+          if (isNaN(item)) {
+            sum += 0;
+          } else {
+            sum += item;
+          }
+        }
+        result.push(sum / periodic);
+      }
+      return result;
     }
   }
 };
