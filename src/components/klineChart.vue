@@ -185,6 +185,12 @@
               <div class="indicator-line">{{message.WR}}</div>
             </div>
             <div
+              @click="showIndicatorChart('VR')"
+              :class="this.showIndicator ==='VR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.VR}}</div>
+            </div>
+            <div
               @click="showIndicatorChart('OBV')"
               :class="this.showIndicator ==='OBV' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
             >
@@ -382,6 +388,17 @@
           :resize-size="resizeSize"
           :cycle="cycle"
         ></WR>
+        <VR
+          ref="vr"
+          v-show="showIndicator === 'VR' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></VR>
         <OBV
           ref="obv"
           v-show="showIndicator === 'OBV' && showChart !== 'depth' && cycle !== 'everyhour'"
@@ -470,6 +487,17 @@
           :resize-size="resizeSize"
           :cycle="cycle"
         ></Boll>
+        <!-- <SAR
+          ref="sar"
+          v-show="showIndicator === 'SAR' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></SAR> -->
       </div>
     </fullscreen>
   </div>
@@ -485,6 +513,7 @@ import MACD from "./MACDChart.vue";
 import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
 import MTM from "./MTMChart.vue";
+import VR from "./VRChart.vue"
 import WR from "./WRChart.vue";
 import OBV from "./OBVChart.vue";
 import TRIX from "./TRIXChart.vue";
@@ -494,6 +523,7 @@ import ROC from "./ROCChart.vue"
 import BRAR from "./BRARChart.vue"
 import DMA from "./DMAChart.vue"
 import Boll from "./BollChart.vue"
+import SAR from "./SARChart.vue"
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -514,6 +544,7 @@ export default {
     RSI,
     MTM,
     WR,
+    VR,
     OBV,
     TRIX,
     DMI,
@@ -522,6 +553,7 @@ export default {
     BRAR,
     DMA,
     Boll,
+    SAR,
     TimeSharing
   },
   data() {
@@ -912,6 +944,7 @@ export default {
         this.$refs.stochastic.changeDataZoom(this.changeDataZoomType);
         this.$refs.rsi.changeDataZoom(this.changeDataZoomType);
         this.$refs.mtm.changeDataZoom(this.changeDataZoomType);
+        this.$refs.vr.changeDataZoom(this.changeDataZoomType);
         this.$refs.wr.changeDataZoom(this.changeDataZoomType);
         this.$refs.obv.changeDataZoom(this.changeDataZoomType);
         this.$refs.trix.changeDataZoom(this.changeDataZoomType);
@@ -921,6 +954,7 @@ export default {
         this.$refs.brar.changeDataZoom(this.changeDataZoomType);
         this.$refs.dma.changeDataZoom(this.changeDataZoomType);
         this.$refs.boll.changeDataZoom(this.changeDataZoomType);
+        // this.$refs.sar.changeDataZoom(this.changeDataZoomType);
       }
       if (this.cycle === "everyhour") {
         this.$refs.timeSharing.changeDataZoom(this.changeDataZoomType);
