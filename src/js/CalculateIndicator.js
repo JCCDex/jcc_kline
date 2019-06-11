@@ -504,7 +504,7 @@ export const getDMAData = (data) => {
     let DMAData = [];
     for (var i = 0; i < MA50.length; i++) {
         if (isNaN(MA50[i])) {
-            DMAData.push("-");
+            DMAData.push('-');
         } else {
             DMAData.push(MA10[i] - MA50[i]);
         }
@@ -513,14 +513,14 @@ export const getDMAData = (data) => {
     return {
         DMA: DMAData,
         AMA: AMAData
-    }
-}
+    };
+};
 
 export const getMAByDMAData = (periodic, data) => {
     var result = [];
     for (var i = 0, len = data.length; i < len; i++) {
         if (i < periodic - 1 || isNaN(data[i])) {
-            result.push("-");
+            result.push('-');
             continue;
         }
         var sum = 0;
@@ -535,4 +535,4 @@ export const getMAByDMAData = (periodic, data) => {
         result.push(sum / periodic);
     }
     return result;
-}
+};
