@@ -146,9 +146,10 @@ export default {
           this.MTMData = this.getMTMData(this.chartDataObj.klineData);
         }
         if (this.MTMData) {
+          let precision = parseInt(this.chartDataObj.precision.price) + 1
           this.toolTipData = {
-            MTM: formatDecimal(this.MTMData.MTM[index], 7, true),
-            MAMTM: formatDecimal(this.MTMData.MAMTM[index], 7, true)
+            MTM: formatDecimal(this.MTMData.MTM[index], precision, true),
+            MAMTM: formatDecimal(this.MTMData.MAMTM[index], precision, true)
           };
         }
       }

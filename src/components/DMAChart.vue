@@ -86,9 +86,10 @@ export default {
           this.DMAData = this.getDMAData(data);
         }
         if (this.DMAData) {
+          let precision = parseInt(this.chartDataObj.precision.price) + 1
           this.toolTipData = {
-            DMA: formatDecimal(this.DMAData.DMA[index], 8, true),
-            AMA: formatDecimal(this.DMAData.AMA[index], 8, true)
+            DMA: formatDecimal(this.DMAData.DMA[index], precision, true),
+            AMA: formatDecimal(this.DMAData.AMA[index], precision, true)
           };
         }
       }

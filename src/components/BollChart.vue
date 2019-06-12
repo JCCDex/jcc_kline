@@ -88,11 +88,12 @@ export default {
           );
           this.BollData = this.getBollData(data, 20);
         }
+        let precision = parseInt(this.chartDataObj.precision.price) + 1
         if (this.BollData) {
           this.toolTipData = {
-            UB: formatDecimal(this.BollData.UB[index], 2, true),
-            MB: formatDecimal(this.BollData.MB[index], 2, true),
-            LB: formatDecimal(this.BollData.LB[index], 2, true),
+            UB: formatDecimal(this.BollData.UB[index], precision, true),
+            MB: formatDecimal(this.BollData.MB[index], precision, true),
+            LB: formatDecimal(this.BollData.LB[index], precision, true),
           };
         }
       }
