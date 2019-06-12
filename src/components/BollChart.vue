@@ -105,7 +105,8 @@ export default {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
           indicator: "Boll",
-          categoryData: this.chartDataObj.candleData.categoryData
+          categoryData: this.chartDataObj.candleData.categoryData,
+          candlestickData: this.chartDataObj.candleData.values
         };
         this.BollData = this.getBollData(this.chartDataObj.candleData, 20);
         let index = this.chartDataObj.index;

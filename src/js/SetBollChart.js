@@ -1,5 +1,6 @@
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
+import 'echarts/lib/chart/candlestick';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
@@ -163,6 +164,20 @@ class BollChartController {
         if (data.indicator === 'Boll' && data.indicatorData) {
             series = [
                 {
+                    type: 'candlestick',
+                    data: data.candlestickData,
+                    name: 'candle',
+                    barMaxWidth: 10,
+                    itemStyle: {
+                        normal: {
+                            color: '#ee4b4b',
+                            color0: '#3ee99f',
+                            borderColor: null,
+                            borderColor0: null
+                        }
+                    }
+                },
+                {
                     name: 'UB',
                     data: data.indicatorData.UB,
                     type: 'line',
@@ -273,7 +288,7 @@ class BollChartController {
                 dataZoom[0].start = 0;
             } else if (dataZoom[0].end <= 95) {
                 dataZoom[0].end = dataZoom[0].end + 5;
-            }else if (dataZoom[0].end > 95) {
+            } else if (dataZoom[0].end > 95) {
                 dataZoom[0].end = 100;
             }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {

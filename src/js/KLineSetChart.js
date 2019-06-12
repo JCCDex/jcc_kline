@@ -182,56 +182,6 @@ class KLineSetChartController {
                 data: data.MAData[i].data
             };
         }
-        if (data.indicatorType === 'Boll') {
-            let MB = {
-                name: 'MB',
-                type: 'line',
-                data: data.BollData.MB,
-                symbol: 'none',
-                smooth: true,
-                showSymbol: false,
-                lineStyle: {
-                    normal: {
-                        color: '#e6e6e6',
-                        opacity: 1,
-                        width: 1
-                    }
-                }
-            };
-            let LB = {
-                name: 'LB',
-                type: 'line',
-                data: data.BollData.LB,
-                symbol: 'none',
-                smooth: true,
-                showSymbol: false,
-                lineStyle: {
-                    normal: {
-                        color: '#e03bfa',
-                        opacity: 1,
-                        width: 1
-                    }
-                }
-            };
-            let UB = {
-                name: 'UB',
-                type: 'line',
-                data: data.BollData.UB,
-                symbol: 'none',
-                smooth: true,
-                showSymbol: false,
-                lineStyle: {
-                    normal: {
-                        color: '#f6d026',
-                        opacity: 1,
-                        width: 1
-                    }
-                }
-            };
-            s.push(MB);
-            s.push(LB);
-            s.push(UB);
-        }
         return s;
     }
 
