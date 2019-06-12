@@ -117,6 +117,12 @@
           <div class="indicator-mobile-line">{{message.WR}}</div>
         </div>
         <div
+          @click="showIndicatorChart('VR')"
+          :class="this.showIndicator ==='VR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.VR}}</div>
+        </div>
+        <div
           @click="showIndicatorChart('OBV')"
           :class="this.showIndicator ==='OBV' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
         >
@@ -151,6 +157,18 @@
           :class="this.showIndicator ==='BRAR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
         >
           <div class="indicator-mobile-line">{{message.BRAR}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('DMA')"
+          :class="this.showIndicator ==='DMA' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.DMA}}</div>
+        </div>
+        <div
+          @click="showIndicatorChart('Boll')"
+          :class="this.showIndicator ==='Boll' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.Boll}}</div>
         </div>
       </div>
       <div

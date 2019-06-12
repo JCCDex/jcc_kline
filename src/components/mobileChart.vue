@@ -123,6 +123,15 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></WR>
+    <VR
+      ref="vr"
+      v-show="showIndicatorChart === 'VR' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></VR>
     <OBV
       ref="obv"
       v-show="showIndicatorChart === 'OBV' && cycle !== 'everyhour'"
@@ -168,6 +177,15 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></ROC>
+    <DMA
+      ref="dma"
+      v-show="showIndicatorChart === 'DMA' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></DMA>
     <BRAR
       ref="brar"
       v-show="showIndicatorChart === 'BRAR' && cycle !== 'everyhour'"
@@ -177,6 +195,15 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></BRAR>
+    <Boll
+      ref="boll"
+      v-show="showIndicatorChart === 'Boll' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></Boll>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -196,6 +223,9 @@ import DMI from "./DMIChart.vue";
 import PSY from "./PSYChart.vue"
 import ROC from "./ROCChart.vue"
 import BRAR from "./BRARChart.vue"
+import VR from "./VRChart.vue"
+import DMA from "./DMAChart.vue"
+import Boll from "./BollChart.vue"
 import {
   splitData,
   handleDivisionData,
@@ -220,7 +250,10 @@ export default {
     DMI,
     PSY,
     ROC,
-    BRAR
+    BRAR,
+    VR,
+    DMA,
+    Boll
   },
   data() {
     return {
@@ -460,6 +493,9 @@ export default {
         this.$refs.psy.changeDataZoom(type);
         this.$refs.roc.changeDataZoom(type);
         this.$refs.brar.changeDataZoom(type);
+        this.$refs.vr.changeDataZoom(type);
+        this.$refs.dma.changeDataZoom(type);
+        this.$refs.boll.changeDataZoom(type);
       } else if (this.cycle === "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);
