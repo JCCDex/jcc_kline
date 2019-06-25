@@ -166,11 +166,11 @@ class MACDChart {
     getDataZoom(data) {
         let start = 0;
         if (this.macdConfig.platform === 'mobile') {
-            if (data.macds.length > 40) {
-                start = 60;
+            if (data.macds.length > 60) {
+                start = 50;
             }
-            if (data.macds.length > 100) {
-                start = 80;
+            if (data.macds.length > 120) {
+                start = 75;
             }
         } else {
             if (data.macds.length > 80) {

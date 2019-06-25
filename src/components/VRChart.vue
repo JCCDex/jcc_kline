@@ -82,6 +82,9 @@ export default {
       this.resize();
     },
     chartDataObj() {
+      if (this.chartDataObj.cycle === "everyhour") {
+        return
+      }
       if (this.chartDataObj.klineData) {
         this.indicatorsData = {
           indicator: "VR",

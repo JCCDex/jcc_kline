@@ -98,6 +98,9 @@ export default {
       this.resize();
     },
     chartDataObj() {
+      if (this.chartDataObj.cycle === "everyhour") {
+        return
+      }
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
           indicator: 'BRAR',

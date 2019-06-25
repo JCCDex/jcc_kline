@@ -93,16 +93,6 @@ class KLineMobileSetChartController {
                         }
                     }
                 }
-            ],
-            dataZoom: [
-                {
-                    id: 'dataZoomX',
-                    type: 'inside',
-                    filterMode: 'filter',
-                    start: 80,
-                    end: 100,
-                    minSpan: 5
-                }
             ]
         };
         merge(timeDivisionconfig, option);
@@ -154,7 +144,8 @@ class KLineMobileSetChartController {
                     let dataIndex = param[0].dataIndex;
                     toolTipIndex = dataIndex;
                 }
-            }
+            },
+            dataZoom: this.getTimeDivisionDataZoom(data)
         };
         merge(timeDivisionconfig, updateTimeOption);
         if (this.kline.getOption()) {
@@ -262,14 +253,37 @@ class KLineMobileSetChartController {
         return g;
     }
 
+    getTimeDivisionDataZoom(data) {
+        if (!data) { return; }
+        let start = 0;
+        if (data.volumes.length > 60) {
+            start = 50;
+        }
+        if (data.volumes.length > 120) {
+            start = 75;
+        }
+        var dataZoom = [
+            {
+                id: 'dataZoomX',
+                type: 'inside',
+                filterMode: 'filter',
+                start: start,
+                end: 100,
+                minSpan: 5
+            }
+        ]
+        console.log(dataZoom)
+        return dataZoom
+    }
+
     getDataZoom(data) {
         if (!data) { return; }
         let start = 0;
-        if (data.values.length > 40) {
-            start = 60;
+        if (data.values.length > 60) {
+            start = 50;
         }
-        if (data.values.length > 100) {
-            start = 80;
+        if (data.values.length > 120) {
+            start = 75;
         }
         var dataZoom = [
             {

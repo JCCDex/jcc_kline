@@ -101,6 +101,9 @@ export default {
       this.resize();
     },
     chartDataObj() {
+      if (this.chartDataObj.cycle === "everyhour") {
+        return
+      }
       if (this.chartDataObj.candleData) {
         let data = JSON.parse(
           JSON.stringify(this.chartDataObj.candleData.values)

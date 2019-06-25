@@ -161,11 +161,11 @@ class TimeSharingChart {
     getTimeSharingDataZoom(data) {
         let start = 0;
         if (this.timeSharingConfig.platform === 'mobile') {
-            if (data.volumes.length > 40) {
-                start = 60;
+            if (data.volumes.length > 60) {
+                start = 50;
             }
-            if (data.volumes.length > 100) {
-                start = 80;
+            if (data.volumes.length > 120) {
+                start = 75;
             }
         } else {
             if (data.volumes.length > 80) {

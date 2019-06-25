@@ -203,11 +203,11 @@ class IndicatorChartController {
             len = data.indicatorData.VR.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
-            if (len > 40) {
-                start = 60;
+            if (len > 60) {
+                start = 50;
             }
-            if (len > 100) {
-                start = 80;
+            if (len > 120) {
+                start = 75;
             }
         } else {
             if (len > 80) {
