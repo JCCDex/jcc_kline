@@ -174,16 +174,16 @@ class MACDChart {
             }
         } else {
             if (data.macds.length > 80) {
-                start = 20;
+                start = 0;
             }
             if (data.macds.length > 120) {
-                start = 30;
+                start = 15;
             }
             if (data.macds.length > 160) {
-                start = 50;
+                start = 30;
             }
             if (data.macds.length > 200) {
-                start = 60;
+                start = 45;
             }
         }
         var dataZoom = [

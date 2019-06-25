@@ -210,16 +210,16 @@ class DMAChartController {
             }
         } else {
             if (len > 80) {
-                start = 20;
+                start = 0;
             }
             if (len > 120) {
-                start = 30;
+                start = 15;
             }
             if (len > 160) {
-                start = 50;
+                start = 30;
             }
             if (len > 200) {
-                start = 60;
+                start = 45;
             }
         }
         var dataZoom = [

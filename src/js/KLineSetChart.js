@@ -188,16 +188,16 @@ class KLineSetChartController {
     getDataZoom(data) {
         let start = 0;
         if (data.values.length > 80) {
-            start = 20;
+            start = 0;
         }
         if (data.values.length > 120) {
-            start = 30;
+            start = 15;
         }
         if (data.values.length > 160) {
-            start = 50;
+            start = 30;
         }
         if (data.values.length > 200) {
-            start = 60;
+            start = 45;
         }
         var dataZoom = [
             {
