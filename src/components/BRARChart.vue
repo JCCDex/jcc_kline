@@ -162,7 +162,7 @@ export default {
       }
     } else {
       this.platform = 'mobile'
-      this.BRARSize.height = this.klineConfig.size.height * 0.4 + "px";
+      this.BRARSize.height = this.klineConfig.size.height * 0.3 + "px";
       this.BRARSize.width = this.klineConfig.size.width + "px";
     }
     this.klineConfig.chartType = "brar";

@@ -272,7 +272,6 @@ class KLineMobileSetChartController {
                 minSpan: 5
             }
         ]
-        console.log(dataZoom)
         return dataZoom
     }
 
