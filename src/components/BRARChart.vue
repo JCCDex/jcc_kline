@@ -210,14 +210,14 @@ export default {
     var HighMinusCY = []; // 当日最高价 - 前一日收盘价
     var CYMinusLow = []; // 前一日收盘价 - 当日最低价
     for (let i = 0; i < data.length; i++) {
-        HighMinusOpen.push(data[i][3] - data[i][0]);
-        OpenMinusLow.push(data[i][0] - data[i][2]);
+        HighMinusOpen.push(parseFloat(data[i][3]) - parseFloat(data[i][0]));
+        OpenMinusLow.push(parseFloat(data[i][0]) - parseFloat(data[i][2]));
         if (i === 0) {
             HighMinusCY.push(0);
             CYMinusLow.push(0);
         } else {
-            HighMinusCY.push(data[i][3] - data[i - 1][1]);
-            CYMinusLow.push(data[i - 1][1] - data[i][2]);
+            HighMinusCY.push(parseFloat(data[i][3]) - parseFloat(data[i - 1][1]));
+            CYMinusLow.push(parseFloat(data[i - 1][1]) - parseFloat(data[i][2]));
         }
         if (i < periodic) {
             BR.push('-');
@@ -228,10 +228,10 @@ export default {
             let HighMinusCYSum = 0;
             let CYMinusLowSum = 0;
             for (let j = i - periodic; j < i; j++) {
-                HighMinusOpenSum = HighMinusOpenSum + HighMinusOpen[j];
-                OpenMinusLowSum = OpenMinusLowSum + OpenMinusLow[j];
-                HighMinusCYSum = HighMinusCYSum + HighMinusCY[j];
-                CYMinusLowSum = CYMinusLowSum + CYMinusLow[j];
+                HighMinusOpenSum = HighMinusOpenSum + parseFloat(HighMinusOpen[j]);
+                OpenMinusLowSum = OpenMinusLowSum + parseFloat(OpenMinusLow[j]);
+                HighMinusCYSum = HighMinusCYSum + parseFloat(HighMinusCY[j]);
+                CYMinusLowSum = CYMinusLowSum + parseFloat(CYMinusLow[j]);
             }
             if (OpenMinusLowSum === 0) {
                 AR.push(0);

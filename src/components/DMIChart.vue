@@ -222,19 +222,19 @@ export default {
           TRc = 0;
         } else {
           PDM.push(
-            datas[i][3] - datas[i - 1][3] <= 0
+            parseFloat(datas[i][3]) - parseFloat(datas[i - 1][3]) <= 0
               ? 0
-              : datas[i][3] - datas[i - 1][3]
+              : parseFloat(datas[i][3]) - parseFloat(datas[i - 1][3])
           );
           MDM.push(
-            datas[i - 1][2] - datas[i][2] <= 0
+            parseFloat(datas[i - 1][2]) - parseFloat(datas[i][2]) <= 0
               ? 0
-              : datas[i - 1][2] - datas[i][2]
+              : parseFloat(datas[i - 1][2]) - parseFloat(datas[i][2])
           );
-          TRb = datas[i][3] - datas[i - 1][1];
-          TRc = datas[i][2] - datas[i - 1][1];
+          TRb = parseFloat(datas[i][3]) - parseFloat(datas[i - 1][1]);
+          TRc = parseFloat(datas[i][2]) - parseFloat(datas[i - 1][1]);
         }
-        TRa = datas[i][3] - datas[i][2];
+        TRa = parseFloat(datas[i][3]) - parseFloat(datas[i][2]);
         TR.push(Math.max(Math.abs(TRa), Math.abs(TRb), Math.abs(TRc)));
       }
 
@@ -253,12 +253,12 @@ export default {
         if (isNaN(PDM14[j]) || isNaN(TR14[j])) {
           PDI.push("-");
         } else {
-          PDI.push((PDM14[j] / TR14[j]) * 100);
+          PDI.push((parseFloat(PDM14[j]) / parseFloat(TR14[j])) * 100);
         }
         if (isNaN(MDM14[j]) || isNaN(TR14[j])) {
           MDI.push("-");
         } else {
-          MDI.push((MDM14[j] / TR14[j]) * 100);
+          MDI.push((parseFloat(MDM14[j]) / parseFloat(TR14[j])) * 100);
         }
       }
 
@@ -268,7 +268,7 @@ export default {
         if (isNaN(PDI[i]) || isNaN(MDI[i])) {
           DX.push("-");
         } else {
-          DX.push((Math.abs(MDI[i] - PDI[i]) / (MDI[i] + PDI[i])) * 100);
+          DX.push((Math.abs(parseFloat(MDI[i]) - parseFloat(PDI[i])) / (parseFloat(MDI[i]) + parseFloat(PDI[i]))) * 100);
         }
       }
       ADX = this.getMADataByDetailData(13 + 6, DX);
@@ -278,7 +278,7 @@ export default {
         if (i < 5 || isNaN(ADX[i]) || isNaN(ADX[i - 5])) {
           ADXR.push("-");
         } else {
-          ADXR.push((ADX[i] + ADX[i - 5]) / 2);
+          ADXR.push((parseFloat(ADX[i]) + parseFloat(ADX[i - 5])) / 2);
         }
       }
       return {
