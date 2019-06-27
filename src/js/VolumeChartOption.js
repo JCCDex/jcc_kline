@@ -204,7 +204,7 @@ var volumeMoobileOption = {
         {
             name: 'Volume',
             type: 'bar',  // 柱状/条形图
-            barMaxWidth: 10, // 柱条的最大宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
+            barWidth: '74%', // 柱条的最大宽度，不设时自适应。支持设置成相对于类目宽度的百分比。
             itemStyle: {
                 normal: {
                     color: function (param) { // 柱条的颜色
