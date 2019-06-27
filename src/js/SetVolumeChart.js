@@ -236,7 +236,6 @@ class VolumeChart {
                 minSpan: 5
             }
         ];
-        console.log(dataZoom)
         this.volumeConfig.dataZoom = dataZoom;
         return dataZoom;
     }

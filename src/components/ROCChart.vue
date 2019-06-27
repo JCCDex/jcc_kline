@@ -72,6 +72,7 @@ export default {
     cycle() {
       if (this.cycle !== this.currentCycle) {
         this.init(true);
+        this.toolTipData = null;
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -99,6 +100,7 @@ export default {
             JSON.stringify(this.chartDataObj.coinType) ||
           this.isRefresh
         ) {
+          this.init(true);
           this.ROC.setROCOption(this.indicatorsData, this.currentCycle);
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
@@ -166,8 +168,8 @@ export default {
     this.dispose();
   },
   methods: {
-    init() {
-      this.ROC.initROCChart(this.$refs.ROC);
+    init(clear) {
+      this.ROC.initROCChart(this.$refs.ROC, clear);
       this.resize();
     },
     getToolTipIndex() {
