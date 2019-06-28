@@ -185,9 +185,16 @@ class KLineMobileSetChartController {
     }
 
     getSeries(data) {
+        let barWidth;
+        if (data.values.length > 40) {
+            barWidth = '74%'
+        } else {
+            barWidth = 18
+        }
         var s = [
             {
                 type: 'candlestick',
+                barWidth: barWidth,
                 data: data.values
             },
             {

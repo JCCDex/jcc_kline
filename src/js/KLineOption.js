@@ -101,7 +101,6 @@ var option = {
         {
             name: 'candle',
             type: 'candlestick', // K线图
-            barWidth: '74%', //  指定柱最小宽度。可以使用绝对数值（如 10）或百分比（如 '20%'，表示 band width 的百分之多少）。默认自适应
             itemStyle: { // K 线图的图形样式
                 normal: { // 
                     color: '#ee4b4b', // 阳线图像颜色

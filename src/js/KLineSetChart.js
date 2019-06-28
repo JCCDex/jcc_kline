@@ -172,8 +172,15 @@ class KLineSetChartController {
     }
 
     getSeries(data) {
+        let barWidth;
+        if (data.values.length > 40) {
+            barWidth = '75%'
+        } else {
+            barWidth = 18
+        }
         var s = [{
             type: 'candlestick',
+            barWidth: barWidth,
             data: data.values,
         }];
         for (var i = 0; i < data.MAData.length; i++) {
@@ -230,7 +237,7 @@ class KLineSetChartController {
                 dataZoom[0].start = 0;
             } else if (dataZoom[0].end <= 95) {
                 dataZoom[0].end = dataZoom[0].end + 5;
-            }else if (dataZoom[0].end > 95) {
+            } else if (dataZoom[0].end > 95) {
                 dataZoom[0].end = 100;
             }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {

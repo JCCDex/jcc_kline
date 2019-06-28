@@ -187,11 +187,17 @@ class VolumeChart {
     }
 
     getVolumeSeries(data) {
-        return [
+        var barWidth;
+        if (data.volumes.length > 40) {
+            barWidth = '74%'
+        } else {
+            barWidth = 18
+        }
+        var s = [
             {
                 name: 'Volume',
+                barWidth: barWidth,
                 data: data.volumes,
-                barMaxWidth: 10,
                 itemStyle: {
                     normal: {
                         color: function (param) {
@@ -201,6 +207,7 @@ class VolumeChart {
                 }
             }
         ];
+        return s;
     }
 
     getDataZoom(data) {
@@ -263,7 +270,7 @@ class VolumeChart {
                 dataZoom[0].start = 0;
             } else if (dataZoom[0].end <= 95) {
                 dataZoom[0].end = dataZoom[0].end + 5;
-            }else if (dataZoom[0].end > 95) {
+            } else if (dataZoom[0].end > 95) {
                 dataZoom[0].end = 100;
             }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
