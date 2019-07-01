@@ -67,7 +67,7 @@ var option = {
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 lineStyle: {
                     color: '#37404b',
-                    type: 'dotted'
+                    type: 'dashed'
                 }
             },
             axisLine: { // 坐标轴轴线

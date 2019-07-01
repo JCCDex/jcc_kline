@@ -65,7 +65,7 @@ var depthOption = {
             axisPointer: { //  坐标轴指示器配置项
                 show: true,
                 lineStyle: { // 线的类型
-                    type: 'dotted' // 分隔线线的类型，dotted表示点虚线
+                    type: 'dashed' // 分隔线线的类型，dotted表示点虚线
                 }
             },
             axisTick: { // 坐标轴刻度相关设置
@@ -201,6 +201,9 @@ var mobileDepthOption = {
                 label: { // 指示器样式
                     backgroundColor: '#232b34', // 背景色
                     fontSize:22, // 字体大小
+                },
+                lineStyle: { // 线的类型
+                    type: 'dashed' // 分隔线线的类型，dotted表示点虚线
                 }
             },
             axisTick: { // 坐标轴刻度相关设置

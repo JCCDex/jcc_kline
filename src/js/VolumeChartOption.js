@@ -58,7 +58,7 @@ var volumeOption = {
             splitLine: {
                 lineStyle: {
                     color: '#37404b',
-                    type: 'dotted'
+                    type: 'dashed'
                 }
             },
             axisLine: {
@@ -169,7 +169,7 @@ var volumeMoobileOption = {
             splitLine: {
                 lineStyle: {
                     color: '#37404b',
-                    type: 'dotted'
+                    type: 'dashed'
                 }
             },
             axisLine: {

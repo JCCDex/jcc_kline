@@ -43,8 +43,13 @@ var macdOption = {
                 show: false,
                 onZero: false,
             },
+            splitLine: { // 坐标轴在 grid 区域中的分隔线
+                lineStyle: {
+                    color: '#37404b', // 分隔线颜色
+                    type: 'dashed' // 分隔线线的类型,dotted是点虚线
+                }
+            },
             axisTick: {show: false},
-            splitLine: {show: false},
             axisLabel: {
                 show: true, // 是否显示刻度标签
                 margin: 0, // 刻度标签与轴线之间的距离
@@ -162,7 +167,12 @@ var macdMobileOption = {
                 }
             },
             axisTick: {show: false},
-            splitLine: {show: false},
+            splitLine: { // 坐标轴在 grid 区域中的分隔线
+                lineStyle: {
+                    color: '#37404b', // 分隔线颜色
+                    type: 'dashed' // 分隔线线的类型,dotted是点虚线
+                }
+            },
             axisLabel: { // 坐标轴刻度标签的相关设置
                 show: true, // 是否显示刻度标签
                 margin: 0, // 刻度标签与轴线之间的距离
