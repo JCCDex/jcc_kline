@@ -76,7 +76,8 @@ var timeSharingOption = {
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 lineStyle: { // 分隔线样式
                     color: '#37404b', 
-                    type: 'dashed' // 分隔线线的类型，dotted表示点虚线
+                    type: 'dashed', // 分隔线线的类型，dotted表示点虚线
+                    opacity: 0.6
                 }
             },
             axisLine: { // 坐标轴轴线相关设置
@@ -211,7 +212,8 @@ var mobileTimeSharingOption = {
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 lineStyle: {
                     color: '#37404b', // 分隔线颜色
-                    type: 'dashed' // 分隔线线的类型,dotted是点虚线
+                    type: 'dashed', // 分隔线线的类型,dotted是点虚线
+                    opacity: 0.6
                 }
             },
             axisLine: { // 坐标轴轴线相关设置

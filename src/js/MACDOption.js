@@ -46,7 +46,8 @@ var macdOption = {
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 lineStyle: {
                     color: '#37404b', // 分隔线颜色
-                    type: 'dashed' // 分隔线线的类型,dotted是点虚线
+                    type: 'dashed', // 分隔线线的类型,dotted是点虚线
+                    opacity: 0.6
                 }
             },
             axisTick: {show: false},
@@ -170,7 +171,8 @@ var macdMobileOption = {
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 lineStyle: {
                     color: '#37404b', // 分隔线颜色
-                    type: 'dashed' // 分隔线线的类型,dotted是点虚线
+                    type: 'dashed', // 分隔线线的类型,dotted是点虚线
+                    opacity: 0.6
                 }
             },
             axisLabel: { // 坐标轴刻度标签的相关设置

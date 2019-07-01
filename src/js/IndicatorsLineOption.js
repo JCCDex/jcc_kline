@@ -58,7 +58,8 @@ var StochasticOption = {
             splitLine: {
                 lineStyle: {
                     color: '#37404b',
-                    type: 'dashed'
+                    type: 'dashed',
+                    opacity: 0.6
                 }
             },
             axisLine: {
@@ -163,7 +164,8 @@ var mobileIndicatorsLine = {
             splitLine: {
                 lineStyle: {
                     color: '#37404b',
-                    type: 'dashed'
+                    type: 'dashed',
+                    opacity: 0.6
                 }
             },
             axisLine: {

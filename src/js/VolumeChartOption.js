@@ -58,7 +58,8 @@ var volumeOption = {
             splitLine: {
                 lineStyle: {
                     color: '#37404b',
-                    type: 'dashed'
+                    type: 'dashed',
+                    opacity: 0.6
                 }
             },
             axisLine: {
@@ -169,7 +170,8 @@ var volumeMoobileOption = {
             splitLine: {
                 lineStyle: {
                     color: '#37404b',
-                    type: 'dashed'
+                    type: 'dashed',
+                    opacity: 0.6
                 }
             },
             axisLine: {
