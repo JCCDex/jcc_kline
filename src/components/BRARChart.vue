@@ -88,8 +88,8 @@ export default {
         }
         if (this.BRARData) {
           this.toolTipData = {
-            BR: parseFloat(this.BRARData.BR[index]).toFixed(4),
-            AR: parseFloat(this.BRARData.AR[index]).toFixed(4)
+            BR: this.fixed(parseFloat(this.BRARData.BR[index]), 4),
+            AR: this.fixed(parseFloat(this.BRARData.AR[index]), 4)
           };
         }
       }
@@ -200,6 +200,13 @@ export default {
     },
     dispose() {
       this.BRAR.disposeBRAREChart();
+    },
+    fixed(value, num) {
+      if (isNaN(value)) {
+        return '--'
+      }else {
+        return value.toFixed(num)
+      }
     },
     getBRARData (data, periodic) {
     if (!data) { return; }

@@ -136,8 +136,8 @@ export default {
         }
         if (this.VRData) {
           this.toolTipData = {
-            VR: parseFloat(this.VRData.VR[index]).toFixed(7),
-            MAVR: parseFloat(this.VRData.MAVR[index]).toFixed(7)
+            VR: this.fixed(parseFloat(this.VRData.VR[index]), 7),
+            MAVR: this.fixed(parseFloat(this.VRData.MAVR[index]), 7)
           };
         }
       }
@@ -195,6 +195,13 @@ export default {
     },
     dispose() {
       this.VR.disposeVREChart();
+    },
+    fixed(value, num) {
+      if (isNaN(value)) {
+        return '--'
+      }else {
+        return value.toFixed(num)
+      }
     },
     getVRData(data) {
       if (!data) {
