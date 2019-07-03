@@ -4,17 +4,6 @@
       :class="this.message.language === 'zh' ? 'mobile-tooltip-zh' : 'mobile-tooltip-en'"
       v-if="toolTipData"
     >
-      <div style="font-size:0.16rem; margin-top: 0.1rem;">
-        <font
-          v-for="MAitem in this.klineConfig.MA"
-          :key="MAitem.id"
-          :style="{ color: MAitem.color, marginRight: '0.14rem'}"
-        >
-          {{MAitem.name}}
-          <font>:&nbsp;{{ getMATipData(MAitem.name) }}</font>
-        </font>
-        <br>
-      </div>
       <div style="margin-left: -0.1rem; margin-top: 0.05rem;">
         <font class="mobile-tooltip-name">{{message.openingMobile}}</font>
         <font class="mobile-tooltip-data">{{this.toolTipData.opening}}</font>
@@ -26,6 +15,17 @@
         <font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
         <font class="mobile-tooltip-name">{{message.volumeMobile}}</font>
         <font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
+      </div>
+      <div style="font-size:0.16rem; margin-top: 0.1rem;">
+        <font
+          v-for="MAitem in this.klineConfig.MA"
+          :key="MAitem.id"
+          :style="{ color: MAitem.color, marginRight: '0.14rem'}"
+        >
+          {{MAitem.name}}
+          <font>:&nbsp;{{ getMATipData(MAitem.name) }}</font>
+        </font>
+        <br />
       </div>
     </div>
     <!-- timeDivision tootip 数据显示 -->
@@ -48,7 +48,7 @@
       <font
         :class="timeSharingTipData.color === 1 ? 'tooltip-data-green' : 'tooltip-data-red'"
       >{{this.timeSharingTipData.averagePrice}}</font> &nbsp;
-      <br>
+      <br />
     </div>
     <!-- 平移、刷新、缩放按钮 -->
     <div class="kline-levitation-mobile-div">
@@ -211,11 +211,11 @@ import WR from "./WRChart.vue";
 import OBV from "./OBVChart.vue";
 import TRIX from "./TRIXChart.vue";
 import DMI from "./DMIChart.vue";
-import PSY from "./PSYChart.vue"
-import ROC from "./ROCChart.vue"
-import BRAR from "./BRARChart.vue"
-import VR from "./VRChart.vue"
-import DMA from "./DMAChart.vue"
+import PSY from "./PSYChart.vue";
+import ROC from "./ROCChart.vue";
+import BRAR from "./BRARChart.vue";
+import VR from "./VRChart.vue";
+import DMA from "./DMAChart.vue";
 import {
   splitData,
   handleDivisionData,
