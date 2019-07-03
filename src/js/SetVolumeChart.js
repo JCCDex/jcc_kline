@@ -189,9 +189,9 @@ class VolumeChart {
     getVolumeSeries(data) {
         var barWidth;
         if (data.volumes.length > 40) {
-            barWidth = '74%'
+            barWidth = '74%';
         } else {
-            barWidth = 18
+            barWidth = 18;
         }
         var s = [
             {

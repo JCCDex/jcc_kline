@@ -174,9 +174,9 @@ class KLineSetChartController {
     getSeries(data) {
         let barWidth;
         if (data.values.length > 40) {
-            barWidth = '75%'
+            barWidth = '75%';
         } else {
-            barWidth = 18
+            barWidth = 18;
         }
         var s = [{
             type: 'candlestick',

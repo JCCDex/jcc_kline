@@ -187,9 +187,9 @@ class KLineMobileSetChartController {
     getSeries(data) {
         let barWidth;
         if (data.values.length > 40) {
-            barWidth = '74%'
+            barWidth = '74%';
         } else {
-            barWidth = 18
+            barWidth = 18;
         }
         var s = [
             {
@@ -278,8 +278,8 @@ class KLineMobileSetChartController {
                 end: 100,
                 minSpan: 5
             }
-        ]
-        return dataZoom
+        ];
+        return dataZoom;
     }
 
     getDataZoom(data) {

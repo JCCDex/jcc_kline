@@ -1,6 +1,7 @@
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/candlestick';
+import 'echarts/lib/chart/custom';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
@@ -161,21 +162,59 @@ class BollChartController {
 
     getIndicatorSeries(data) {
         var series = [];
+        let len = data.candlestickData.length;
+        for (let i = 0; i < len; i++) {
+            data.candlestickData[i].unshift(i);
+        }
         if (data.indicator === 'Boll' && data.indicatorData) {
             series = [
                 {
-                    type: 'candlestick',
-                    data: data.candlestickData,
-                    name: 'candle',
-                    barMaxWidth: 10,
-                    itemStyle: {
-                        normal: {
-                            color: '#ee4b4b',
-                            color0: '#3ee99f',
-                            borderColor: null,
-                            borderColor0: null
-                        }
-                    }
+                    name: 'Dow-Jones index',
+                    type: 'custom',
+                    renderItem: function (params, api) {
+                        var xValue = api.value(0);
+                        var openPoint = api.coord([xValue, api.value(1)]);
+                        var closePoint = api.coord([xValue, api.value(2)]);
+                        var lowPoint = api.coord([xValue, api.value(3)]);
+                        var highPoint = api.coord([xValue, api.value(4)]);
+                        var halfWidth = api.size([1, 0])[0] * 0.35;
+                        var style = api.style({
+                            stroke: api.visual('color')
+                        });
+
+                        return {
+                            type: 'group',
+                            children: [{
+                                type: 'line',
+                                shape: {
+                                    x1: lowPoint[0], y1: lowPoint[1],
+                                    x2: highPoint[0], y2: highPoint[1]
+                                },
+                                style: style
+                            }, {
+                                type: 'line',
+                                shape: {
+                                    x1: openPoint[0], y1: openPoint[1],
+                                    x2: openPoint[0] - halfWidth, y2: openPoint[1]
+                                },
+                                style: style
+                            }, {
+                                type: 'line',
+                                shape: {
+                                    x1: closePoint[0], y1: closePoint[1],
+                                    x2: closePoint[0] + halfWidth, y2: closePoint[1]
+                                },
+                                style: style
+                            }]
+                        };
+                    },
+                    dimensions: [null, 'open', 'close', 'lowest', 'highest'],
+                    encode: {
+                        x: 0,
+                        y: [1, 2, 3, 4],
+                        tooltip: [1, 2, 3, 4]
+                    },
+                    data: data.candlestickData
                 },
                 {
                     name: 'UB',
