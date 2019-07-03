@@ -42,19 +42,19 @@ describe('test SetVRChart', () => {
         VR.initIndicatorECharts(element, false, 'init')
         VR.setIndicatorOption(indicatorData, 'hour')
         VR.changeDataZoom('leftShift')
-        expect(VR.indicator.getOption().dataZoom[0].start).toBe(28);
+        expect(VR.indicator.getOption().dataZoom[0].start).toBe(13);
         expect(VR.indicator.getOption().dataZoom[0].end).toBe(98);
         VR.changeDataZoom('rightShift')
-        expect(VR.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(VR.indicator.getOption().dataZoom[0].start).toBe(15);
         expect(VR.indicator.getOption().dataZoom[0].end).toBe(100);
         VR.changeDataZoom('enlarge')
-        expect(VR.indicator.getOption().dataZoom[0].start).toBe(35);
+        expect(VR.indicator.getOption().dataZoom[0].start).toBe(20);
         VR.changeDataZoom('refresh')
-        expect(VR.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(VR.indicator.getOption().dataZoom[0].start).toBe(15);
         VR.changeDataZoom('narrow')
-        expect(VR.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(VR.indicator.getOption().dataZoom[0].start).toBe(10);
         VR.changeDataZoom('test')
-        expect(VR.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(VR.indicator.getOption().dataZoom[0].start).toBe(10);
     })
 
     it('test setIndicatorOption if data is null', () => {

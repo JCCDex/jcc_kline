@@ -42,19 +42,19 @@ describe('test SetBollChart', () => {
         Boll.initBollECharts(element, false, 'init')
         Boll.setBollOption(indicatorData, 'hour')
         Boll.changeDataZoom('leftShift')
-        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(43);
         expect(Boll.indicator.getOption().dataZoom[0].end).toBe(98);
         Boll.changeDataZoom('rightShift')
-        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(45);
         expect(Boll.indicator.getOption().dataZoom[0].end).toBe(100);
         Boll.changeDataZoom('enlarge')
-        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(65);
+        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(50);
         Boll.changeDataZoom('refresh')
-        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(45);
         Boll.changeDataZoom('narrow')
-        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(40);
         Boll.changeDataZoom('test')
-        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(Boll.indicator.getOption().dataZoom[0].start).toBe(40);
     })
 
     it('test setBollOption if data is null', () => {

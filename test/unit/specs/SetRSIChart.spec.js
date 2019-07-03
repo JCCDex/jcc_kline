@@ -42,17 +42,17 @@ describe('test SetRSIChart', () => {
         rsi.initIndicatorECharts(element, false, 'init')
         rsi.setIndicatorOption(indicatorData, 'hour')
         rsi.changeDataZoom('leftShift')
-        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(43);
         expect(rsi.indicator.getOption().dataZoom[0].end).toBe(98);
         rsi.changeDataZoom('rightShift')
-        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(45);
         expect(rsi.indicator.getOption().dataZoom[0].end).toBe(100);
         rsi.changeDataZoom('enlarge')
-        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(65);
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(50);
         rsi.changeDataZoom('refresh')
-        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(45);
         rsi.changeDataZoom('narrow')
-        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(rsi.indicator.getOption().dataZoom[0].start).toBe(40);
     })
 
     it('test setIndicatorOption if data is null', () => {

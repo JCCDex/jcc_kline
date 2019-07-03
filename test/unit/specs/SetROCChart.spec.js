@@ -42,19 +42,19 @@ describe('test SetROCChart', () => {
         roc.initROCECharts(element, false, 'init')
         roc.setROCOption(indicatorData, 'hour')
         roc.changeDataZoom('leftShift')
-        expect(roc.indicator.getOption().dataZoom[0].start).toBe(28);
+        expect(roc.indicator.getOption().dataZoom[0].start).toBe(13);
         expect(roc.indicator.getOption().dataZoom[0].end).toBe(98);
         roc.changeDataZoom('rightShift')
-        expect(roc.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(roc.indicator.getOption().dataZoom[0].start).toBe(15);
         expect(roc.indicator.getOption().dataZoom[0].end).toBe(100);
         roc.changeDataZoom('enlarge')
-        expect(roc.indicator.getOption().dataZoom[0].start).toBe(35);
+        expect(roc.indicator.getOption().dataZoom[0].start).toBe(20);
         roc.changeDataZoom('refresh')
-        expect(roc.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(roc.indicator.getOption().dataZoom[0].start).toBe(15);
         roc.changeDataZoom('narrow')
-        expect(roc.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(roc.indicator.getOption().dataZoom[0].start).toBe(10);
         roc.changeDataZoom('test')
-        expect(roc.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(roc.indicator.getOption().dataZoom[0].start).toBe(10);
     })
 
     it('test setROCOption if data is null', () => {

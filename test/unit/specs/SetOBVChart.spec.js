@@ -42,19 +42,19 @@ describe('test SetOBVChart', () => {
         obv.initOBVECharts(element, false, 'init')
         obv.setOBVOption(indicatorData, 'hour')
         obv.changeDataZoom('leftShift')
-        expect(obv.indicator.getOption().dataZoom[0].start).toBe(28);
+        expect(obv.indicator.getOption().dataZoom[0].start).toBe(13);
         expect(obv.indicator.getOption().dataZoom[0].end).toBe(98);
         obv.changeDataZoom('rightShift')
-        expect(obv.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(obv.indicator.getOption().dataZoom[0].start).toBe(15);
         expect(obv.indicator.getOption().dataZoom[0].end).toBe(100);
         obv.changeDataZoom('enlarge')
-        expect(obv.indicator.getOption().dataZoom[0].start).toBe(35);
+        expect(obv.indicator.getOption().dataZoom[0].start).toBe(20);
         obv.changeDataZoom('refresh')
-        expect(obv.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(obv.indicator.getOption().dataZoom[0].start).toBe(15);
         obv.changeDataZoom('narrow')
-        expect(obv.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(obv.indicator.getOption().dataZoom[0].start).toBe(10);
         obv.changeDataZoom('test')
-        expect(obv.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(obv.indicator.getOption().dataZoom[0].start).toBe(10);
     })
 
     it('test setOBVOption if data is null', () => {

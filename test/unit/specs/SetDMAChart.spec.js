@@ -42,19 +42,19 @@ describe('test SetDMAChart', () => {
         DMA.initDMAECharts(element, false, 'init')
         DMA.setDMAOption(indicatorData, 'hour')
         DMA.changeDataZoom('leftShift')
-        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(43);
         expect(DMA.indicator.getOption().dataZoom[0].end).toBe(98);
         DMA.changeDataZoom('rightShift')
-        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(45);
         expect(DMA.indicator.getOption().dataZoom[0].end).toBe(100);
         DMA.changeDataZoom('enlarge')
-        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(65);
+        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(50);
         DMA.changeDataZoom('refresh')
-        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(45);
         DMA.changeDataZoom('narrow')
-        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(40);
         DMA.changeDataZoom('test')
-        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(DMA.indicator.getOption().dataZoom[0].start).toBe(40);
     })
 
     it('test setDMAOption if data is null', () => {

@@ -42,19 +42,19 @@ describe('test SetTRIXChart', () => {
         trix.initTRIXECharts(element, false, 'init')
         trix.setTRIXOption(indicatorData, 'hour')
         trix.changeDataZoom('leftShift')
-        expect(trix.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(trix.indicator.getOption().dataZoom[0].start).toBe(43);
         expect(trix.indicator.getOption().dataZoom[0].end).toBe(98);
         trix.changeDataZoom('rightShift')
-        expect(trix.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(trix.indicator.getOption().dataZoom[0].start).toBe(45);
         expect(trix.indicator.getOption().dataZoom[0].end).toBe(100);
         trix.changeDataZoom('enlarge')
-        expect(trix.indicator.getOption().dataZoom[0].start).toBe(65);
+        expect(trix.indicator.getOption().dataZoom[0].start).toBe(50);
         trix.changeDataZoom('refresh')
-        expect(trix.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(trix.indicator.getOption().dataZoom[0].start).toBe(45);
         trix.changeDataZoom('narrow')
-        expect(trix.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(trix.indicator.getOption().dataZoom[0].start).toBe(40);
         trix.changeDataZoom('test')
-        expect(trix.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(trix.indicator.getOption().dataZoom[0].start).toBe(40);
     })
 
     it('test setTRIXOption if data is null', () => {

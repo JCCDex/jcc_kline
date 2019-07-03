@@ -64,13 +64,13 @@ describe('test setTimeSharingChart', () => {
     TimeSharing.initTimeSharingECharts(element)
     TimeSharing.setTimeSharingOption(divisionData)
     TimeSharing.changeDataZoom('leftShift')
-    expect(TimeSharing.timeSharing.getOption().dataZoom[0].start).toBe(58);
+    expect(TimeSharing.timeSharing.getOption().dataZoom[0].start).toBe(43);
     expect(TimeSharing.timeSharing.getOption().dataZoom[0].end).toBe(98);
     TimeSharing.changeDataZoom('rightShift')
-    expect(TimeSharing.timeSharing.getOption().dataZoom[0].start).toBe(60);
+    expect(TimeSharing.timeSharing.getOption().dataZoom[0].start).toBe(45);
     expect(TimeSharing.timeSharing.getOption().dataZoom[0].end).toBe(100);
     TimeSharing.changeDataZoom('enlarge')
-    expect(TimeSharing.timeSharing.getOption().dataZoom[0].start).toBe(65);
+    expect(TimeSharing.timeSharing.getOption().dataZoom[0].start).toBe(50);
     TimeSharing.changeDataZoom('refresh')
     expect(TimeSharing.timeSharing.getOption().dataZoom[0].start).toBe(60);
     TimeSharing.changeDataZoom('narrow')

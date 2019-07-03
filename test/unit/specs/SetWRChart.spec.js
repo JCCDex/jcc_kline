@@ -42,19 +42,19 @@ describe('test SetWRChart', () => {
         WR.initIndicatorECharts(element, false, 'init')
         WR.setIndicatorOption(indicatorData, 'hour')
         WR.changeDataZoom('leftShift')
-        expect(WR.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(43);
         expect(WR.indicator.getOption().dataZoom[0].end).toBe(98);
         WR.changeDataZoom('rightShift')
-        expect(WR.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(45);
         expect(WR.indicator.getOption().dataZoom[0].end).toBe(100);
         WR.changeDataZoom('enlarge')
-        expect(WR.indicator.getOption().dataZoom[0].start).toBe(65);
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(50);
         WR.changeDataZoom('refresh')
-        expect(WR.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(45);
         WR.changeDataZoom('narrow')
-        expect(WR.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(40);
         WR.changeDataZoom('test')
-        expect(WR.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(WR.indicator.getOption().dataZoom[0].start).toBe(40);
     })
 
     it('test setIndicatorOption if data is null', () => {

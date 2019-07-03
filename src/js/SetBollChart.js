@@ -162,9 +162,11 @@ class BollChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        let len = data.candlestickData.length;
-        for (let i = 0; i < len; i++) {
-            data.candlestickData[i].unshift(i);
+        if (data.candlestickData) {
+            let len = data.candlestickData.length;
+            for (let i = 0; i < len; i++) {
+                data.candlestickData[i].unshift(i);
+            }
         }
         if (data.indicator === 'Boll' && data.indicatorData) {
             series = [

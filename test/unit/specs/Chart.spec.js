@@ -279,19 +279,19 @@ describe('test Chart', () => {
     volume.initVolumeChart(element)
     volume.setVolumeOption(data)
     volume.changeDataZoom('leftShift')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(28);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(13);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(98);
     volume.changeDataZoom('rightShift')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(30);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(15);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('enlarge')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(35);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(20);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('refresh')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(30);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(15);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
     volume.changeDataZoom('narrow')
-    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(25);
+    expect(volume.setVolumeChart.volume.getOption().dataZoom[0].start).toBe(10);
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
   })
 
@@ -371,19 +371,19 @@ describe('test Chart', () => {
     macd.initMACDECharts(element)
     macd.setMACDOption(macdData)
     macd.changeMacdDataZoom('leftShift')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(58);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(43);
     expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(98);
     macd.changeMacdDataZoom('rightShift')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(60);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(45);
     expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
     macd.changeMacdDataZoom('enlarge')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(65);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(50);
     expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
     macd.changeMacdDataZoom('refresh')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(60);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(45);
     expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
     macd.changeMacdDataZoom('narrow')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(55);
+    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(40);
     expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
   })
 })

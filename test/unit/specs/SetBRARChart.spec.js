@@ -42,19 +42,19 @@ describe('test SetBRARChart', () => {
         brar.initBRARECharts(element, false, 'init')
         brar.setBRAROption(indicatorData, 'hour')
         brar.changeDataZoom('leftShift')
-        expect(brar.indicator.getOption().dataZoom[0].start).toBe(28);
+        expect(brar.indicator.getOption().dataZoom[0].start).toBe(13);
         expect(brar.indicator.getOption().dataZoom[0].end).toBe(98);
         brar.changeDataZoom('rightShift')
-        expect(brar.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(brar.indicator.getOption().dataZoom[0].start).toBe(15);
         expect(brar.indicator.getOption().dataZoom[0].end).toBe(100);
         brar.changeDataZoom('enlarge')
-        expect(brar.indicator.getOption().dataZoom[0].start).toBe(35);
+        expect(brar.indicator.getOption().dataZoom[0].start).toBe(20);
         brar.changeDataZoom('refresh')
-        expect(brar.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(brar.indicator.getOption().dataZoom[0].start).toBe(15);
         brar.changeDataZoom('narrow')
-        expect(brar.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(brar.indicator.getOption().dataZoom[0].start).toBe(10);
         brar.changeDataZoom('test')
-        expect(brar.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(brar.indicator.getOption().dataZoom[0].start).toBe(10);
     })
 
     it('test setBRAROption if data is null', () => {

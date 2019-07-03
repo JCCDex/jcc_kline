@@ -42,19 +42,19 @@ describe('test SetPSYChart', () => {
         psy.initPSYECharts(element, false, 'init')
         psy.setPSYOption(indicatorData, 'hour')
         psy.changeDataZoom('leftShift')
-        expect(psy.indicator.getOption().dataZoom[0].start).toBe(28);
+        expect(psy.indicator.getOption().dataZoom[0].start).toBe(13);
         expect(psy.indicator.getOption().dataZoom[0].end).toBe(98);
         psy.changeDataZoom('rightShift')
-        expect(psy.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(psy.indicator.getOption().dataZoom[0].start).toBe(15);
         expect(psy.indicator.getOption().dataZoom[0].end).toBe(100);
         psy.changeDataZoom('enlarge')
-        expect(psy.indicator.getOption().dataZoom[0].start).toBe(35);
+        expect(psy.indicator.getOption().dataZoom[0].start).toBe(20);
         psy.changeDataZoom('refresh')
-        expect(psy.indicator.getOption().dataZoom[0].start).toBe(30);
+        expect(psy.indicator.getOption().dataZoom[0].start).toBe(15);
         psy.changeDataZoom('narrow')
-        expect(psy.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(psy.indicator.getOption().dataZoom[0].start).toBe(10);
         psy.changeDataZoom('test')
-        expect(psy.indicator.getOption().dataZoom[0].start).toBe(25);
+        expect(psy.indicator.getOption().dataZoom[0].start).toBe(10);
     })
 
     it('test setPSYOption if data is null', () => {

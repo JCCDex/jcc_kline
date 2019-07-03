@@ -59,19 +59,19 @@ describe('test SetMTMChart', () => {
         MTM.initIndicatorECharts(element, false, 'init')
         MTM.setIndicatorOption(indicatorData, 'hour')
         MTM.changeDataZoom('leftShift')
-        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(43);
         MTM.changeDataZoom('enlarge')
-        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(63);
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(48);
         MTM.changeDataZoom('refresh')
-        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(45);
         MTM.changeDataZoom('narrow')
-        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(40);
         MTM.changeDataZoom('leftShift')
         MTM.changeDataZoom('leftShift')
         MTM.changeDataZoom('rightShift')
-        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(53);
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(38);
         MTM.changeDataZoom('test')
-        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(53);
+        expect(MTM.indicator.getOption().dataZoom[0].start).toBe(38);
     })
 
     it('test getToolTipData', () => {

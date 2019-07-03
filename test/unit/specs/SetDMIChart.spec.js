@@ -42,19 +42,19 @@ describe('test SetDMIChart', () => {
         dmi.initDMIECharts(element, false, 'init')
         dmi.setDMIOption(indicatorData, 'hour')
         dmi.changeDataZoom('leftShift')
-        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(58);
+        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(43);
         expect(dmi.indicator.getOption().dataZoom[0].end).toBe(98);
         dmi.changeDataZoom('rightShift')
-        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(45);
         expect(dmi.indicator.getOption().dataZoom[0].end).toBe(100);
         dmi.changeDataZoom('enlarge')
-        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(65);
+        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(50);
         dmi.changeDataZoom('refresh')
-        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(60);
+        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(45);
         dmi.changeDataZoom('narrow')
-        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(40);
         dmi.changeDataZoom('test')
-        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(55);
+        expect(dmi.indicator.getOption().dataZoom[0].start).toBe(40);
     })
 
     it('test setDMIOption if data is null', () => {

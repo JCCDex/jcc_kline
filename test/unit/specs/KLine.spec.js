@@ -113,19 +113,19 @@ describe('test KLine', () => {
     kline.initChart(element)
     kline.setOption(klineData, 'hour')
     kline.changeDataZoom('leftShift')
-    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(58);
+    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(43);
     expect(kline.setKLineChart.kline.getOption().dataZoom[0].end).toBe(98);
     kline.changeDataZoom('rightShift')
-    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(60);
+    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(45);
     expect(kline.setKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
     kline.changeDataZoom('enlarge')
-    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(65);
+    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(50);
     expect(kline.setKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
     kline.changeDataZoom('refresh')
-    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(60);
+    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(45);
     expect(kline.setKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
     kline.changeDataZoom('narrow')
-    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(55);
+    expect(kline.setKLineChart.kline.getOption().dataZoom[0].start).toBe(40);
     expect(kline.setKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
   })
 
@@ -196,19 +196,19 @@ describe('test KLine', () => {
     mobileKline.setMobileOption(moboleSize, mobileData)
     mobileKline.updateMobileOption(mobileData, cycle)
     mobileKline.changeMobileDataZoom('leftShift')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(78);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(73);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(98);
     mobileKline.changeMobileDataZoom('rightShift')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(80);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(75);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
     mobileKline.changeMobileDataZoom('enlarge')
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(85);
-    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
-    mobileKline.changeMobileDataZoom('refresh')
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(80);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
-    mobileKline.changeMobileDataZoom('narrow')
+    mobileKline.changeMobileDataZoom('refresh')
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(75);
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
+    mobileKline.changeMobileDataZoom('narrow')
+    expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].start).toBe(70);
     expect(mobileKline.setMobileKLineChart.kline.getOption().dataZoom[0].end).toBe(100);
   })
 
