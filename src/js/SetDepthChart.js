@@ -171,7 +171,7 @@ class DepthChart {
             bottom: 20,
             width: depthSize.width / 2,
             containLabel: true
-        }]
+        }];
         return grid;
     }
 

@@ -194,16 +194,6 @@ describe('test Chart', () => {
     expect(depth).not.toBeNull()
   })
 
-  // 测试成交量绘制方法
-  it('test getMobileTipsData if platform is mobile and chartType is depth', () => {
-    let depth = new ChartController(klineConfig)
-    const element = document.createElement('div');
-    depth.initDepth(element)
-    depth.setDepthOption(depthData)
-    let tipsData = depth.getMobileTipsData()
-    expect(tipsData).toBe(undefined)
-  })
-
   // 测试交易量图绘制方法
   let volumeConfig = {
     platform: 'pc',
