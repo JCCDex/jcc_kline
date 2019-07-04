@@ -116,6 +116,7 @@ class DepthChart {
                         ]
                     }
                 ],
+                grid: this.getDepthGrid(),
                 yAxis: this.getDepthYAxis(),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
@@ -156,11 +157,42 @@ class DepthChart {
         return mobileToolTipData;
     }
 
+    getDepthGrid() {
+        let grid = [{
+            top: 60,
+            left: 20,
+            right: 5,
+            bottom: 20,
+            width: depthSize.width / 2,
+            containLabel: true
+        }, {
+            top: 60,
+            left: 20 + depthSize.width / 2,
+            right: 5,
+            bottom: 20,
+            width: depthSize.width / 2,
+            containLabel: true
+        }]
+        return grid;
+    }
+
     getDepthYAxis() {
         if (this.depthConfig.platform === 'mobile') {
             return [
                 {
                     gridIndex: 0,
+                    axisLabel: {
+                        formatter: function (value) {
+                            if (value >= 1000) {
+                                return (value / 1000) + 'K';
+                            } else {
+                                return value;
+                            }
+                        }
+                    }
+                },
+                {
+                    gridIndex: 1,
                     axisLabel: {
                         formatter: function (value) {
                             if (value >= 1000) {
@@ -247,11 +279,15 @@ class DepthChart {
         return [
             {
                 name: buy,
-                data: data.buyData
+                data: data.buyData,
+                xAxisIndex: 0,
+                yAxisIndex: 0
             },
             {
                 name: sell,
-                data: data.sellData
+                data: data.sellData,
+                xAxisIndex: 1,
+                yAxisIndex: 1
             }
         ];
     }

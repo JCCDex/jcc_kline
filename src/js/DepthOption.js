@@ -42,6 +42,12 @@ var depthOption = {
             right: 5, // grid 组件离容器右侧的距离,20代表20px
             bottom: 20, // grid 组件离容器底部的距离,20代表20px
             containLabel: true // grid 区域是否包含坐标轴的刻度标签
+        }, {
+            top: 60,
+            left: 20,
+            right: 5,
+            bottom: 20,
+            containLabel: true
         }
     ],
     xAxis: [ // 直角坐标系 grid 中的 x 轴，一般情况下单个 grid 组件最多只能放上下两个 x 轴，多于两个 x 轴需要通过配置 offset 属性防止同个位置多个 x 轴的重叠
@@ -77,12 +83,61 @@ var depthOption = {
                 color: '#9aa4ac', // 刻度标签文字的颜色
                 fontSize: 12 // 刻度标签文字的字体大小
             }
+        },
+        {
+            type: 'category', // 类目轴，适用于离散的类目数据，为该类型时必须通过 data 设置类目数据。
+            gridIndex: 1, // x 轴所在的 grid 的索引，默认位于第一个 grid。
+            boundaryGap: true, // 坐标轴两边留白策略，类目轴中 boundaryGap 可以配置为 true 和 false。默认为 true，这时候刻度只是作为分隔线，标签和数据点都会在两个刻度之间的带(band)中间
+            axisLine: { // 坐标轴轴线相关设置
+                onZero: false, // X 轴或者 Y 轴的轴线是否在另一个轴的 0 刻度上，只有在另一个轴为数值轴且包含 0 刻度时有效
+                lineStyle: { // 坐标轴线线的样式
+                    color: '#37404b'
+                }
+            },
+            splitArea: { // 坐标轴在 grid 区域中的分隔区域
+                show: false
+            },
+            splitLine: { // 坐标轴在 grid 区域中的分隔线
+                show: false
+            },
+            axisPointer: { //  坐标轴指示器配置项
+                show: true,
+                lineStyle: { // 线的类型
+                    type: 'dashed' // 分隔线线的类型，dotted表示点虚线
+                }
+            },
+            axisTick: { // 坐标轴刻度相关设置
+                show: true, // 是否显示
+                alignWithLabel: true // 类目轴中在 boundaryGap 为 true 的时候有效，可以保证刻度线和标签对齐
+            },
+            axisLabel: { // 坐标轴刻度标签的相关设置
+                show: true, // 是否显示
+                color: '#9aa4ac', // 刻度标签文字的颜色
+                fontSize: 12 // 刻度标签文字的字体大小
+            }
         }
     ],
     yAxis: [ // 直角坐标系 grid 中的y轴
         {
             type: 'value', // 数值轴，适用于连续数据
             gridIndex: 0, // y 轴所在的 grid 的索引，默认位于第一个 grid
+            position: 'right', // y 轴的位置
+            splitNumber: 6, // 坐标轴的分割段数，需要注意的是这个分割段数只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整
+            splitLine: { // 坐标轴在 grid 区域中的分隔线
+                show: false
+            },
+            axisLabel: { // 坐标轴刻度标签的相关设置
+                show: false, // 是否显示刻度标签
+            },
+            splitArea: { // 坐标轴在 grid 区域中的分隔区域，默认不显示
+                show: false
+            },
+            axisPointer: { // 坐标轴指示器配置项
+                show: false
+            }
+        },{
+            type: 'value', // 数值轴，适用于连续数据
+            gridIndex: 1, // y 轴所在的 grid 的索引，默认位于第一个 grid
             position: 'right', // y 轴的位置
             splitNumber: 6, // 坐标轴的分割段数，需要注意的是这个分割段数只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整
             splitLine: { // 坐标轴在 grid 区域中的分隔线
@@ -200,7 +255,7 @@ var mobileDepthOption = {
                 show: true,
                 label: { // 指示器样式
                     backgroundColor: '#232b34', // 背景色
-                    fontSize:22, // 字体大小
+                    fontSize: 22, // 字体大小
                 },
                 lineStyle: { // 线的类型
                     type: 'dashed' // 分隔线线的类型，dotted表示点虚线
@@ -222,14 +277,14 @@ var mobileDepthOption = {
             type: 'value', // 数值轴，适用于连续数据
             gridIndex: 0, // y 轴所在的 grid 的索引，默认位于第一个 grid
             position: 'right', // y 轴的位置
-            z:2, // Y 轴组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖
+            z: 2, // Y 轴组件的所有图形的z值。控制图形的前后顺序。z值小的图形会被z值大的图形覆盖
             splitNumber: 4, // 坐标轴的分割段数，需要注意的是这个分割段数只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整
             splitLine: { // 坐标轴在 grid 区域中的分隔线
                 show: false,
                 type: 'shadow'
             },
             axisLabel: { // 坐标轴刻度标签的相关设置
-                inside:true, // 刻度标签是否朝内，true表示朝内
+                inside: true, // 刻度标签是否朝内，true表示朝内
                 show: true, // 是否显示刻度标签
                 onZero: false,
                 margin: 0, // 刻度标签与轴线之间的距离
