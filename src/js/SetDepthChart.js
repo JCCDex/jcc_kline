@@ -163,8 +163,7 @@ class DepthChart {
             left: 20,
             right: 5,
             bottom: 20,
-            width: depthSize.width / 2,
-            containLabel: true
+            width: depthSize.width / 2
         }, {
             top: 60,
             left: 20 + depthSize.width / 2,

@@ -40,8 +40,7 @@ var depthOption = {
             top: 60, // grid 组件离容器顶部的距离,60代表60px
             left: 20, // grid 组件离容器左侧的距离,20代表20px
             right: 5, // grid 组件离容器右侧的距离,20代表20px
-            bottom: 20, // grid 组件离容器底部的距离,20代表20px
-            containLabel: true // grid 区域是否包含坐标轴的刻度标签
+            bottom: 20 // grid 组件离容器底部的距离,20代表20px
         }, {
             top: 60,
             left: 20,
@@ -120,21 +119,8 @@ var depthOption = {
     yAxis: [ // 直角坐标系 grid 中的y轴
         {
             type: 'value', // 数值轴，适用于连续数据
-            gridIndex: 0, // y 轴所在的 grid 的索引，默认位于第一个 grid
-            position: 'right', // y 轴的位置
-            splitNumber: 6, // 坐标轴的分割段数，需要注意的是这个分割段数只是个预估值，最后实际显示的段数会在这个基础上根据分割后坐标轴刻度显示的易读程度作调整
-            splitLine: { // 坐标轴在 grid 区域中的分隔线
-                show: false
-            },
-            axisLabel: { // 坐标轴刻度标签的相关设置
-                show: false, // 是否显示刻度标签
-            },
-            splitArea: { // 坐标轴在 grid 区域中的分隔区域，默认不显示
-                show: false
-            },
-            axisPointer: { // 坐标轴指示器配置项
-                show: false
-            }
+            show: false,
+            gridIndex: 0 // y 轴所在的 grid 的索引，默认位于第一个 grid
         },{
             type: 'value', // 数值轴，适用于连续数据
             gridIndex: 1, // y 轴所在的 grid 的索引，默认位于第一个 grid
