@@ -160,19 +160,37 @@ class DepthChart {
     }
 
     getDepthGrid() {
-        let grid = [{
-            top: 60,
-            left: 20,
-            right: 20,
-            bottom: 30,
-            width: depthSize.width / 2 - 60
-        }, {
-            top: 60,
-            left: depthSize.width / 2 - 20,
-            right: 100,
-            bottom: 30,
-            width: depthSize.width / 2 - 60
-        }];
+        let grid = [];
+        if (this.depthConfig.platform === 'mobile') {
+            let depthWidth = this.depthConfig.size.width;
+            grid = [{
+                top: 48,
+                left: 0,
+                right: 0,
+                bottom: 40,
+                width: depthWidth / 2 - 10
+            }, {
+                top: 48,
+                left: depthWidth / 2 + 10,
+                right: 5,
+                bottom: 40,
+                width: depthWidth / 2 - 10
+            }];
+        } else {
+            grid = [{
+                top: 60,
+                left: 20,
+                right: 20,
+                bottom: 30,
+                width: depthSize.width / 2 - 50
+            }, {
+                top: 60,
+                left: depthSize.width / 2 - 20,
+                right: 80,
+                bottom: 30,
+                width: depthSize.width / 2 - 50
+            }];
+        }
         return grid;
     }
 

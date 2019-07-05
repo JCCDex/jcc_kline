@@ -93,15 +93,15 @@ export const getDepthData = (data, precision) => {
             sellData.push([formatDecimal(ask.price, pricePrecision, false), ask.total]);
         }
     }
-    let sellLen = sellData.length
+    let sellLen = sellData.length;
     let sellMax = 0;
     if (sellLen > 0) {
-        sellMax = sellData[sellLen - 1][1]
+        sellMax = sellData[sellLen - 1][1];
     }
-    let buyLen = buyData.length
+    let buyLen = buyData.length;
     let buyMax = 0;
     if (buyLen > 0) {
-        buyMax = buyData[buyLen - 1][1]
+        buyMax = buyData[buyLen - 1][1];
     }
     let maxAmount = parseFloat(buyMax) > parseFloat(sellMax) ? buyMax : sellMax;
     buyData = buyData.reverse();
