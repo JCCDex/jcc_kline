@@ -94,6 +94,10 @@ describe('test SetDepthChart', () => {
 
   it('test updateDepthOption if platform is mobile', () => {
     const element = document.createElement('div');
+    depthOption.size = {
+      width: 600,
+      height: 560
+    }
     depthOption.platform = 'mobile'
     let depthChart = new SetDepthChart(depthOption);
     depthChart.initDepthECharts(element)
@@ -182,7 +186,7 @@ describe('test SetDepthChart', () => {
     const element = document.createElement('div');
     let depthChart = new SetDepthChart(depthOption);
     let yAxis = depthChart.getDepthYAxis(element)
-    expect(yAxis).toBe();
+    expect(yAxis).not.toBeNull();
   })
 
   it('test getDepthYAxis if platform is mobile', () => {
