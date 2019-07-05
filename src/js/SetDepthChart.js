@@ -163,13 +163,13 @@ class DepthChart {
         let grid = [{
             top: 60,
             left: 20,
-            right: 10,
+            right: 20,
             bottom: 30,
             width: depthSize.width / 2 - 60
         }, {
             top: 60,
-            left: depthSize.width / 2 - 40,
-            right: 110,
+            left: depthSize.width / 2 - 20,
+            right: 100,
             bottom: 30,
             width: depthSize.width / 2 - 60
         }];
@@ -182,8 +182,10 @@ class DepthChart {
                 gridIndex: 0,
                 axisLabel: {
                     formatter: function (value) {
-                        if (value >= 1000) {
+                        if (value >= 1000 && value < 1000000) {
                             return (value / 1000).toFixed(1) + 'K';
+                        } else if (value >= 1000000) {
+                            return (value / 1000000).toFixed(1) + 'M';
                         } else {
                             return value;
                         }
@@ -196,8 +198,10 @@ class DepthChart {
                 gridIndex: 1,
                 axisLabel: {
                     formatter: function (value) {
-                        if (value >= 1000) {
+                        if (value >= 1000 && value < 1000000) {
                             return (value / 1000).toFixed(1) + 'K';
+                        } else if (value >= 1000000) {
+                            return (value / 1000000).toFixed(1) + 'M';
                         } else {
                             return value;
                         }
