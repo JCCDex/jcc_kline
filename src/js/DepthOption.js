@@ -40,13 +40,12 @@ var depthOption = {
             top: 60, // grid 组件离容器顶部的距离,60代表60px
             left: 20, // grid 组件离容器左侧的距离,20代表20px
             right: 5, // grid 组件离容器右侧的距离,20代表20px
-            bottom: 20 // grid 组件离容器底部的距离,20代表20px
+            bottom: 30 // grid 组件离容器底部的距离,20代表20px
         }, {
             top: 60,
             left: 20,
             right: 5,
-            bottom: 20,
-            containLabel: true
+            bottom: 30
         }
     ],
     xAxis: [ // 直角坐标系 grid 中的 x 轴，一般情况下单个 grid 组件最多只能放上下两个 x 轴，多于两个 x 轴需要通过配置 offset 属性防止同个位置多个 x 轴的重叠

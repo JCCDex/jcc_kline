@@ -117,7 +117,7 @@ class DepthChart {
                     }
                 ],
                 grid: this.getDepthGrid(),
-                yAxis: this.getDepthYAxis(),
+                yAxis: this.getDepthYAxis(data),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
             };
@@ -145,6 +145,8 @@ class DepthChart {
                         ]
                     }
                 ],
+                grid: this.getDepthGrid(),
+                yAxis: this.getDepthYAxis(data),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
             };
@@ -161,49 +163,50 @@ class DepthChart {
         let grid = [{
             top: 60,
             left: 20,
-            right: 5,
-            bottom: 20,
-            width: depthSize.width / 2
+            right: 10,
+            bottom: 30,
+            width: depthSize.width / 2 - 60
         }, {
             top: 60,
-            left: 20 + depthSize.width / 2,
-            right: 5,
-            bottom: 20,
-            width: depthSize.width / 2,
-            containLabel: true
+            left: depthSize.width / 2 - 40,
+            right: 110,
+            bottom: 30,
+            width: depthSize.width / 2 - 60
         }];
         return grid;
     }
 
-    getDepthYAxis() {
-        if (this.depthConfig.platform === 'mobile') {
-            return [
-                {
-                    gridIndex: 0,
-                    axisLabel: {
-                        formatter: function (value) {
-                            if (value >= 1000) {
-                                return (value / 1000) + 'K';
-                            } else {
-                                return value;
-                            }
+    getDepthYAxis(data) {
+        return [
+            {
+                gridIndex: 0,
+                axisLabel: {
+                    formatter: function (value) {
+                        if (value >= 1000) {
+                            return (value / 1000).toFixed(1) + 'K';
+                        } else {
+                            return value;
                         }
                     }
                 },
-                {
-                    gridIndex: 1,
-                    axisLabel: {
-                        formatter: function (value) {
-                            if (value >= 1000) {
-                                return (value / 1000) + 'K';
-                            } else {
-                                return value;
-                            }
+                min: 0,
+                max: data.maxAmount
+            },
+            {
+                gridIndex: 1,
+                axisLabel: {
+                    formatter: function (value) {
+                        if (value >= 1000) {
+                            return (value / 1000).toFixed(1) + 'K';
+                        } else {
+                            return value;
                         }
                     }
-                }
-            ];
-        }
+                },
+                min: 0,
+                max: data.maxAmount
+            }
+        ];
     }
 
     getDepthToolTip() {
