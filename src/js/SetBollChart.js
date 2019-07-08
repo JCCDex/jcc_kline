@@ -162,13 +162,14 @@ class BollChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.candlestickData) {
-            let len = data.candlestickData.length;
+        let seriesData = JSON.parse(JSON.stringify(data));
+        if (seriesData.candlestickData) {
+            let len = seriesData.candlestickData.length;
             for (let i = 0; i < len; i++) {
-                data.candlestickData[i].unshift(i);
+                seriesData.candlestickData[i].unshift(i);
             }
         }
-        if (data.indicator === 'Boll' && data.indicatorData) {
+        if (seriesData.indicator === 'Boll' && seriesData.indicatorData) {
             series = [
                 {
                     name: 'Dow-Jones index',
@@ -216,11 +217,11 @@ class BollChartController {
                         y: [1, 2, 3, 4],
                         tooltip: [1, 2, 3, 4]
                     },
-                    data: data.candlestickData
+                    data: seriesData.candlestickData
                 },
                 {
                     name: 'UB',
-                    data: data.indicatorData.UB,
+                    data: seriesData.indicatorData.UB,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -234,7 +235,7 @@ class BollChartController {
                 },
                 {
                     name: 'MB',
-                    data: data.indicatorData.MB,
+                    data: seriesData.indicatorData.MB,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
@@ -248,7 +249,7 @@ class BollChartController {
                 },
                 {
                     name: 'LB',
-                    data: data.indicatorData.LB,
+                    data: seriesData.indicatorData.LB,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
