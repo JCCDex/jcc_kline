@@ -106,7 +106,8 @@ export default {
         this.indicatorsData = {
           indicator: "Boll",
           categoryData: this.chartDataObj.candleData.categoryData,
-          candlestickData: this.chartDataObj.candleData.values
+          candlestickData: this.chartDataObj.candleData.values,
+          volumes: this.chartDataObj.candleData.volumes
         };
         let klineData = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
         this.BollData = this.getBollData(klineData, 20);

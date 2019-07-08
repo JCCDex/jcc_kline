@@ -167,6 +167,7 @@ class BollChartController {
             let len = seriesData.candlestickData.length;
             for (let i = 0; i < len; i++) {
                 seriesData.candlestickData[i].unshift(i);
+                seriesData.candlestickData[i].push(seriesData.volumes[i][2]);
             }
         }
         if (seriesData.indicator === 'Boll' && seriesData.indicatorData) {
@@ -217,7 +218,14 @@ class BollChartController {
                         y: [1, 2, 3, 4],
                         tooltip: [1, 2, 3, 4]
                     },
-                    data: seriesData.candlestickData
+                    data: seriesData.candlestickData,
+                    itemStyle: {
+                        normal: {
+                            color: function (param) {
+                                return param.value[8] <= 0 ? '#ee4b4b' : '#3ee99f';
+                            }
+                        }
+                    }
                 },
                 {
                     name: 'UB',
