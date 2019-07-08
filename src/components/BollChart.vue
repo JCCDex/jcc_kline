@@ -108,7 +108,8 @@ export default {
           categoryData: this.chartDataObj.candleData.categoryData,
           candlestickData: this.chartDataObj.candleData.values
         };
-        this.BollData = this.getBollData(this.chartDataObj.candleData, 20);
+        let klineData = JSON.parse(JSON.stringify(this.chartDataObj.candleData))
+        this.BollData = this.getBollData(klineData, 20);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.BollData;
@@ -207,23 +208,22 @@ export default {
       let LB = []; //下轨线
       let MD = []; //标准差
       let MAData = this.calculateMA(periodic, datas);
+      MB = JSON.parse(JSON.stringify(MAData))
       for (let i = 0; i < MAData.length; i++) {
-        if (isNaN(MAData[i - 1])) {
+        if (isNaN(MAData[i])) {
           UB.push("-");
-          MB.push("-");
           LB.push("-");
           MD.push("-");
         } else {
-          MB.push(MAData[i - 1]);
           let MDValues = 0;
-          for (let j = i - periodic; j < i; j++) {
-            if (isNaN(MAData[j])) {
+          for (let j = i - periodic + 1; j < i; j++) {
+            if (isNaN(MAData[i])) {
               MDValues = MDValues + Math.pow(datas.values[j][1], 2);
             } else {
-              MDValues = MDValues + Math.pow(datas.values[j][1] - MAData[j], 2);
+              MDValues = MDValues + Math.pow(datas.values[j][1] - MAData[i], 2);
             }
           }
-          MD.push(Math.sqrt(MDValues) / periodic);
+          MD.push(Math.sqrt(MDValues / periodic));
           UB.push(MB[i] + 2 * MD[i]);
           LB.push(MB[i] - 2 * MD[i]);
         }
