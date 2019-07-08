@@ -164,6 +164,12 @@
         >
           <div class="indicator-mobile-line">{{message.DMA}}</div>
         </div>
+        <div
+          @click="showIndicatorChart('Boll')"
+          :class="this.showIndicator ==='Boll' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.Boll}}</div>
+        </div>
       </div>
       <div
         @click="openCloseEyes"

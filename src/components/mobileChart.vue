@@ -195,6 +195,15 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></BRAR>
+    <Boll
+      ref="boll"
+      v-show="showIndicatorChart === 'Boll' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></Boll>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -216,6 +225,7 @@ import ROC from "./ROCChart.vue";
 import BRAR from "./BRARChart.vue";
 import VR from "./VRChart.vue";
 import DMA from "./DMAChart.vue";
+import Boll from "./BollChart.vue"
 import {
   splitData,
   handleDivisionData,
@@ -242,7 +252,8 @@ export default {
     ROC,
     BRAR,
     VR,
-    DMA
+    DMA,
+    Boll
   },
   data() {
     return {
@@ -484,6 +495,7 @@ export default {
         this.$refs.brar.changeDataZoom(type);
         this.$refs.vr.changeDataZoom(type);
         this.$refs.dma.changeDataZoom(type);
+        this.$refs.boll.changeDataZoom(type);
       } else if (this.cycle === "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);
