@@ -174,7 +174,7 @@ class KLineSetChartController {
     getSeries(data) {
         let barWidth;
         if (data.values.length > 40) {
-            barWidth = '75%';
+            barWidth = '74%';
         } else {
             barWidth = 18;
         }
