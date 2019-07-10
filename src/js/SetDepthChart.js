@@ -116,7 +116,8 @@ class DepthChart {
                         ]
                     }
                 ],
-                grid: this.getDepthGrid(),
+                grid: this.getDepthGrid(data),
+                xAxis: this.getDepthXAxis(data),
                 yAxis: this.getDepthYAxis(data),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
@@ -146,6 +147,7 @@ class DepthChart {
                     }
                 ],
                 grid: this.getDepthGrid(),
+                xAxis: this.getDepthXAxis(data),
                 yAxis: this.getDepthYAxis(data),
                 tooltip: this.getDepthToolTip(data),
                 series: this.getDepthSeries(data)
@@ -192,6 +194,26 @@ class DepthChart {
             }];
         }
         return grid;
+    }
+
+    getDepthXAxis(data) {
+        let sellLength = data.sellData.length;
+        let xAxis = [{
+            type: 'category',
+            gridIndex: 0
+        }, {
+            type: 'category',
+            gridIndex: 1,
+            axisLabel: {
+                formatter: function (value, index) {
+                    if (index == 0 && sellLength > 6) {
+                        return '';
+                    }
+                    return value;
+                }
+            }
+        }];
+        return xAxis;
     }
 
     getDepthYAxis(data) {
