@@ -146,6 +146,28 @@ export const formatTime = (t) => {
     return toDay;
 };
 
+export const getNextMonthDay = (date) => {
+    let time = new Date(date)
+    let Y = time.getFullYear();
+    let M = time.getMonth() + 1 >= 10 ? time.getMonth() + 1 : '0' + (time.getMonth() + 1);
+    let D = time.getDate() >= 10 ? time.getDate() : '0' + time.getDate();
+    let H = time.getHours();
+    let mm = time.getMinutes() >= 10 ? time.getMinutes() : '0' + time.getMinutes()
+    if (parseInt(M) == 12) {
+        Y = parseInt(Y) + 1
+    }
+    var nextDays = new Date(Y, parseInt(M) + 1, 0).getDate();
+    if (nextDays < D) {
+        D = nextDays
+    }
+    M = parseInt(M) + 1 >= 10 ? parseInt(M) + 1 : '0' + (parseInt(M) + 1)
+    if (parseInt(M) > 12) {
+        M = '01'
+    }
+    let nextDate = Y + '/' + M + '/' + D + ' ' + H + ':' + mm
+    return new Date(nextDate).getTime()
+}
+
 export const getLanguage = function () {
     let languageType = localStorage.getItem('languageType');
     let message;

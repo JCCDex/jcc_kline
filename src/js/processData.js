@@ -1,4 +1,4 @@
-import { formatTime, formatDecimal } from './utils';
+import { formatTime, formatDecimal, getNextMonthDay } from './utils';
 
 export const supplementKlineData = (datas, cycle) => {
     if (!datas) { return; }
@@ -14,7 +14,7 @@ export const supplementKlineData = (datas, cycle) => {
     } else if (cycle === 'hour') {
         timeInterval = 3600000;
     } else if (cycle === '4hour') {
-        timeInterval = 18000000;
+        timeInterval = 14400000;
     } else if (cycle === 'day') {
         timeInterval = 86400000;
     } else if (cycle === 'week') {
@@ -27,18 +27,21 @@ export const supplementKlineData = (datas, cycle) => {
     let index = 0;
     for (let i = 0; i < len; i++) {
         if (i < len - 1) {
-            if (klineData[i][0] + timeInterval !== klineData[i + 1][0]) {
-                let num = (klineData[i + 1][0] - klineData[i][0]) / timeInterval - 1;
+            let num = (klineData[i + 1][0] - klineData[i][0]) / timeInterval - 1;
+            if (num >= 1) {
                 for (let j = 0; j < num; j++) {
                     let splice = i + index + 1;
-                    datas.splice(splice, 0, [klineData[i][0] + timeInterval * (j + 1), klineData[i][2], klineData[i][2], klineData[i][2], klineData[i][2], 0, 0, 0]);
+                    let tradingHours = 0;
+                    if (cycle === 'month') {
+                        tradingHours = getNextMonthDay(klineData[i][0])
+                    } else {
+                        tradingHours = klineData[i][0] + timeInterval * (j + 1)
+                    }
+                    datas.splice(splice, 0, [tradingHours, klineData[i][2], klineData[i][2], klineData[i][2], klineData[i][2], 0, 0, 0]);
                     index = index + 1;
                 }
             }
         }
-    }
-    for (let data of datas) {
-        data[0] = formatTime(data[0]);
     }
     return datas;
 };
