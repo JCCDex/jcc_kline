@@ -88,7 +88,7 @@
           <font class="tooltip-data-name">{{message.max}}{{this.toolTipData.max}}</font>
           <font class="tooltip-data-name">{{message.min}}{{this.toolTipData.min}}</font>
           <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font>
-          <br>
+          <br />
         </div>
         <div v-if="outspreadMA">
           <font
@@ -502,16 +502,16 @@ import MACD from "./MACDChart.vue";
 import KDJ from "./KDJChart.vue";
 import RSI from "./RSIChart.vue";
 import MTM from "./MTMChart.vue";
-import VR from "./VRChart.vue"
+import VR from "./VRChart.vue";
 import WR from "./WRChart.vue";
 import OBV from "./OBVChart.vue";
 import TRIX from "./TRIXChart.vue";
 import DMI from "./DMIChart.vue";
-import PSY from "./PSYChart.vue"
-import ROC from "./ROCChart.vue"
-import BRAR from "./BRARChart.vue"
-import DMA from "./DMAChart.vue"
-import Boll from './BollChart.vue'
+import PSY from "./PSYChart.vue";
+import ROC from "./ROCChart.vue";
+import BRAR from "./BRARChart.vue";
+import DMA from "./DMAChart.vue";
+import Boll from "./BollChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {

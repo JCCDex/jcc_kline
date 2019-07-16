@@ -1,5 +1,48 @@
 import { formatTime, formatDecimal } from './utils';
 
+export const supplementKlineData = (datas, cycle) => {
+    if (!datas) { return; }
+    let timeInterval = 0;
+    if (cycle === 'minute') {
+        timeInterval = 60000;
+    } else if (cycle === '5minute') {
+        timeInterval = 300000;
+    } else if (cycle === '15minute') {
+        timeInterval = 900000;
+    } else if (cycle === '30minute') {
+        timeInterval = 1800000;
+    } else if (cycle === 'hour') {
+        timeInterval = 3600000;
+    } else if (cycle === '4hour') {
+        timeInterval = 18000000;
+    } else if (cycle === 'day') {
+        timeInterval = 86400000;
+    } else if (cycle === 'week') {
+        timeInterval = 604800000;
+    } else if (cycle === 'month') {
+        timeInterval = 2592000000;
+    }
+    let klineData = JSON.parse(JSON.stringify(datas));
+    let len = klineData.length;
+    let index = 0;
+    for (let i = 0; i < len; i++) {
+        if (i < len - 1) {
+            if (klineData[i][0] + timeInterval !== klineData[i + 1][0]) {
+                let num = (klineData[i + 1][0] - klineData[i][0]) / timeInterval - 1;
+                for (let j = 0; j < num; j++) {
+                    let splice = i + index + 1;
+                    datas.splice(splice, 0, [klineData[i][0] + timeInterval * (j + 1), klineData[i][2], klineData[i][2], klineData[i][2], klineData[i][2], 0, 0, 0]);
+                    index = index + 1;
+                }
+            }
+        }
+    }
+    for (let data of datas) {
+        data[0] = formatTime(data[0]);
+    }
+    return datas;
+};
+
 export const splitData = (data) => {
     if (!data) return;
     var categoryData = [];
