@@ -1,6 +1,7 @@
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/custom';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
 import { saveIndicator } from './linkageCharts';
@@ -163,50 +164,63 @@ class SARChartController {
         if (data.indicator === 'SAR' && data.indicatorData) {
             series = [
                 {
-                    name: 'PDI',
-                    data: data.indicatorData.PDI,
-                    type: 'line',
-                    symbol: 'none',
+                    name: 'Dow-Jones index',
+                    type: 'custom',
+                    renderItem: function (params, api) {
+                        var xValue = api.value(0);
+                        var openPoint = api.coord([xValue, api.value(1)]);
+                        var closePoint = api.coord([xValue, api.value(2)]);
+                        var lowPoint = api.coord([xValue, api.value(3)]);
+                        var highPoint = api.coord([xValue, api.value(4)]);
+                        var halfWidth = api.size([1, 0])[0] * 0.35;
+                        var style = api.style({
+                            stroke: api.visual('color')
+                        });
+
+                        return {
+                            type: 'group',
+                            children: [{
+                                type: 'line',
+                                shape: {
+                                    x1: lowPoint[0], y1: lowPoint[1],
+                                    x2: highPoint[0], y2: highPoint[1]
+                                },
+                                style: style
+                            }, {
+                                type: 'line',
+                                shape: {
+                                    x1: openPoint[0], y1: openPoint[1],
+                                    x2: openPoint[0] - halfWidth, y2: openPoint[1]
+                                },
+                                style: style
+                            }, {
+                                type: 'line',
+                                shape: {
+                                    x1: closePoint[0], y1: closePoint[1],
+                                    x2: closePoint[0] + halfWidth, y2: closePoint[1]
+                                },
+                                style: style
+                            }]
+                        };
+                    },
+                    dimensions: [null, 'open', 'close', 'lowest', 'highest'],
+                    encode: {
+                        x: 0,
+                        y: [1, 2, 3, 4],
+                        tooltip: [1, 2, 3, 4]
+                    },
+                    data: data.candlestickData,
                     itemStyle: {
                         normal: {
-                            color: '#e6e6e6'
+                            color: function (param) {
+                                return param.value[8] <= 0 ? '#ee4b4b' : '#3ee99f';
+                            }
                         }
-                    },
-                    lineStyle: {
-                        width: 1
                     }
                 },
                 {
-                    name: 'MDI',
-                    data: data.indicatorData.MDI,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#f6d026'
-                        }
-                    },
-                    lineStyle: {
-                        width: 1
-                    }
-                },
-                {
-                    name: 'ADX',
-                    data: data.indicatorData.ADX,
-                    type: 'line',
-                    symbol: 'none',
-                    itemStyle: {
-                        normal: {
-                            color: '#e03bfa'
-                        }
-                    },
-                    lineStyle: {
-                        width: 1
-                    }
-                },
-                {
-                    name: 'ADXR',
-                    data: data.indicatorData.ADXR,
+                    name: 'SAR',
+                    data: data.indicatorData.SAR,
                     type: 'line',
                     symbol: 'none',
                     itemStyle: {
