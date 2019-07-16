@@ -33,9 +33,9 @@ export const supplementKlineData = (datas, cycle) => {
                     let splice = i + index + 1;
                     let tradingHours = 0;
                     if (cycle === 'month') {
-                        tradingHours = getNextMonthDay(klineData[i][0])
+                        tradingHours = getNextMonthDay(klineData[i][0]);
                     } else {
-                        tradingHours = klineData[i][0] + timeInterval * (j + 1)
+                        tradingHours = klineData[i][0] + timeInterval * (j + 1);
                     }
                     datas.splice(splice, 0, [tradingHours, klineData[i][2], klineData[i][2], klineData[i][2], klineData[i][2], 0, 0, 0]);
                     index = index + 1;
