@@ -4,7 +4,7 @@
       :class="this.klineConfig.platform === 'pc' ? 'kline-tip' : 'mobile-kline-tip'"
       v-if="toolTipData"
     >
-      <font style="color: #e6e6e6;">PDI:{{this.toolTipData.PDI}}</font>
+      <font style="color: #357ce1;">SAR:{{this.toolTipData.SAR}}</font>
     </div>
     <i
       v-if="platform === 'pc'"
@@ -88,10 +88,7 @@ export default {
         }
         if (this.SARData) {
           this.toolTipData = {
-            PDI: formatDecimal(this.SARData.PDI[index], 2, true),
-            MDI: formatDecimal(this.SARData.MDI[index], 2, true),
-            ADX: formatDecimal(this.SARData.ADX[index], 2, true),
-            ADXR: formatDecimal(this.SARData.ADXR[index], 2, true)
+            SAR: formatDecimal(this.SARData[index], 2, true),
           };
         }
       }
@@ -103,9 +100,11 @@ export default {
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
           indicator: "SAR",
-          categoryData: this.chartDataObj.candleData.categoryData
+          categoryData: this.chartDataObj.candleData.categoryData,
+          candlestickData: this.chartDataObj.candleData.values,
+          volumes: this.chartDataObj.candleData.volumes
         };
-        this.SARData = this.getSARData(this.chartDataObj.candleData.values);
+        this.SARData = this.getSARData(this.chartDataObj.candleData);
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.SARData;
@@ -201,6 +200,107 @@ export default {
       if (!data) {
         return;
       }
+      let SARData = [];
+      let cycle = 4; // 时间周期
+      let beforeSAR = 0; // SAR(n-1) 前一周期的SAR
+      let beforeTrend = 0; // 前一周期的趋势
+      let AF = 0.02; // 加速因子
+      let EPMax = 0; // 最大值
+      let EPMin = 0; // 最小值
+      let value = data.values;
+      let volume = data.volumes;
+      let len = value.length;
+      for (let i = 0; i < len; i++) {
+        let minPrice = value[i][2];
+        let maxPrice = value[i][3];
+        let condition1 = i + cycle > len - 1 ? len - 1 : i + cycle;
+        for (let j = i; j < condition1; j++) {
+          if (parseFloat(value[j][2]) < parseFloat(minPrice)) {
+            minPrice = value[j][2];
+          }
+          if (parseFloat(value[j][3]) > parseFloat(maxPrice)) {
+            maxPrice = value[j][3];
+          }
+        }
+        if (i == 0) {
+          let trend = 0;
+          let condition2 = i + cycle > len - 1 ? len - 1 : i + cycle;
+          for (let k = i + 1; k <= condition2; k++) {
+            trend = trend + volume[k][2];
+          }
+          if (trend == 0) {
+            if (value[i + 1][1]) {
+              if (parseFloat(value[i + 1][1]) > parseFloat(value[condition2][1])) {
+                trend = trend + 1;
+              } else {
+                trend = trend - 1;
+              }
+            }
+          }
+          if (trend > 0) {
+            //下跌趋势
+            SARData.push(maxPrice);
+            beforeSAR = maxPrice;
+          } else {
+            SARData.push(minPrice);
+            beforeSAR = minPrice;
+          }
+          let condition3 = i + cycle > len - 1 ? len - 1 : i + cycle;
+          for (let k = i; k < condition3; k++) {
+            beforeTrend = beforeTrend + volume[k][2];
+          }
+          if (beforeTrend == 0) {
+            if (parseFloat(value[i][1]) > parseFloat(value[condition3 - 1][1])) {
+              beforeTrend = beforeTrend + 1;
+            } else {
+              beforeTrend = beforeTrend - 1;
+            }
+          }
+        } else {
+          // SAR(Tn)=SAR(Tn-1)+AF(Tn)*[EP(Tn-1)-SAR(Tn-1)]
+          let trend = 0;
+          let SAR = 0;
+          let condition4 = i + cycle > len - 1 ? len - 1 : i + cycle;
+          for (let k = i; k < condition4; k++) {
+            trend = trend + volume[k][2];
+          }
+          if (trend == 0) {
+            if (parseFloat(value[i][1]) > parseFloat(value[condition4 - 1][1])) {
+              trend = trend + 1;
+            } else {
+              trend = trend - 1;
+            }
+          }
+          if (trend > 0) {
+            //下跌趋势
+            if (beforeTrend > 0) {
+              AF = AF + 0.02;
+            } else if (beforeTrend < 0 || AF > 0.2) {
+              AF = 0.02;
+            }
+            SAR = parseFloat(beforeSAR)  + AF * (parseFloat(EPMax) - parseFloat(beforeSAR));
+            if (SAR < maxPrice || SAR < EPMax) {
+              SAR = maxPrice > EPMax ? maxPrice : EPMax;
+            }
+          } else {
+            if (beforeTrend < 0) {
+              AF = AF + 0.02;
+            } else if (beforeTrend > 0 || AF > 0.2) {
+              AF = 0.02;
+            }
+            SAR = parseFloat(beforeSAR) + AF * (parseFloat(EPMin) - parseFloat(beforeSAR));
+            if (SAR > minPrice || SAR > EPMin) {
+              SAR = EPMin > minPrice ? minPrice : EPMin;
+            }
+          }
+          SARData.push(SAR);
+          beforeSAR = SAR;
+          beforeTrend = trend;
+        }
+        EPMin = minPrice;
+        EPMax = maxPrice;
+      }
+      return SARData;
     }
   }
 };

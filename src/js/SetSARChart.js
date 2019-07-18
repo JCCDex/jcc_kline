@@ -1,6 +1,6 @@
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
-import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/scatter';
 import 'echarts/lib/chart/custom';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';
@@ -161,7 +161,15 @@ class SARChartController {
 
     getIndicatorSeries(data) {
         var series = [];
-        if (data.indicator === 'SAR' && data.indicatorData) {
+        let seriesData = JSON.parse(JSON.stringify(data));
+        if (seriesData.candlestickData) {
+            let len = seriesData.candlestickData.length;
+            for (let i = 0; i < len; i++) {
+                seriesData.candlestickData[i].unshift(i);
+                seriesData.candlestickData[i].push(seriesData.volumes[i][2]);
+            }
+        }
+        if (seriesData.indicator === 'SAR' && seriesData.indicatorData) {
             series = [
                 {
                     name: 'Dow-Jones index',
@@ -209,7 +217,7 @@ class SARChartController {
                         y: [1, 2, 3, 4],
                         tooltip: [1, 2, 3, 4]
                     },
-                    data: data.candlestickData,
+                    data: seriesData.candlestickData,
                     itemStyle: {
                         normal: {
                             color: function (param) {
@@ -220,16 +228,14 @@ class SARChartController {
                 },
                 {
                     name: 'SAR',
-                    data: data.indicatorData.SAR,
-                    type: 'line',
-                    symbol: 'none',
+                    data: seriesData.indicatorData,
+                    type: 'scatter',
+                    symbolSize: 4,
                     itemStyle: {
                         normal: {
-                            color: '#67ff7c'
+                            borderWidth: 0.1,
+                            color: '#357ce1'
                         }
-                    },
-                    lineStyle: {
-                        width: 1
                     }
                 }
             ];
@@ -241,7 +247,7 @@ class SARChartController {
         let start = 0;
         let len = 0;
         if (data.indicator === 'SAR') {
-            len = data.indicatorData.PDI.length;
+            len = data.indicatorData.length;
         }
         if (this.indicatorConfig.platform === 'mobile') {
             if (len > 60) {

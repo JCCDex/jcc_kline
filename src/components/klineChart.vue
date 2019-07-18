@@ -238,6 +238,12 @@
             >
               <div class="indicator-line">{{message.Boll}}</div>
             </div>
+            <div
+              @click="showIndicatorChart('SAR')"
+              :class="this.showIndicator ==='SAR' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.SAR}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -487,6 +493,17 @@
           :resize-size="resizeSize"
           :cycle="cycle"
         ></Boll>
+        <SAR
+          ref="sar"
+          v-show="showIndicator === 'SAR' && showChart !== 'depth' && cycle !== 'everyhour'"
+          @listenIndicatorChartClose="closeIndicatorChart"
+          v-on:listenToTipIndex="getTipDataIndex"
+          :toolTipIndex="toolTipIndex"
+          :kline-config="klineConfig"
+          :chart-data-obj="chartDataObj"
+          :resize-size="resizeSize"
+          :cycle="cycle"
+        ></SAR>
       </div>
     </fullscreen>
   </div>
@@ -512,6 +529,7 @@ import ROC from "./ROCChart.vue";
 import BRAR from "./BRARChart.vue";
 import DMA from "./DMAChart.vue";
 import Boll from "./BollChart.vue";
+import SAR from "./SARChart.vue"
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -541,6 +559,7 @@ export default {
     BRAR,
     DMA,
     Boll,
+    SAR,
     TimeSharing
   },
   data() {
@@ -941,6 +960,7 @@ export default {
         this.$refs.brar.changeDataZoom(this.changeDataZoomType);
         this.$refs.dma.changeDataZoom(this.changeDataZoomType);
         this.$refs.boll.changeDataZoom(this.changeDataZoomType);
+        this.$refs.sar.changeDataZoom(this.changeDataZoomType);
       }
       if (this.cycle === "everyhour") {
         this.$refs.timeSharing.changeDataZoom(this.changeDataZoomType);
