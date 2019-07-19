@@ -204,6 +204,15 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></Boll>
+    <SAR
+      ref="sar"
+      v-show="showIndicatorChart === 'SAR' && cycle !== 'everyhour'"
+      :toolTipIndex="toolTipIndex"
+      @listenToTipIndex="getTipDataIndex"
+      :kline-config="klineConfig"
+      :chart-data-obj="chartDataObj"
+      :cycle="cycle"
+    ></SAR>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -226,6 +235,7 @@ import BRAR from "./BRARChart.vue";
 import VR from "./VRChart.vue";
 import DMA from "./DMAChart.vue";
 import Boll from "./BollChart.vue"
+import SAR from "./SARChart.vue"
 import {
   splitData,
   handleDivisionData,
@@ -253,7 +263,8 @@ export default {
     BRAR,
     VR,
     DMA,
-    Boll
+    Boll,
+    SAR
   },
   data() {
     return {
@@ -496,6 +507,7 @@ export default {
         this.$refs.vr.changeDataZoom(type);
         this.$refs.dma.changeDataZoom(type);
         this.$refs.boll.changeDataZoom(type);
+        this.$refs.sar.changeDataZoom(type);
       } else if (this.cycle === "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);

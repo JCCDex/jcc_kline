@@ -86,9 +86,10 @@ export default {
           );
           this.SARData = this.getSARData(data);
         }
+        let precision = this.chartDataObj.precision.price
         if (this.SARData) {
           this.toolTipData = {
-            SAR: formatDecimal(this.SARData[index], 2, true),
+            SAR: formatDecimal(this.SARData[index], precision, true),
           };
         }
       }

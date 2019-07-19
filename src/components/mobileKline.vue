@@ -170,6 +170,12 @@
         >
           <div class="indicator-mobile-line">{{message.Boll}}</div>
         </div>
+        <div
+          @click="showIndicatorChart('SAR')"
+          :class="this.showIndicator ==='SAR' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >
+          <div class="indicator-mobile-line">{{message.SAR}}</div>
+        </div>
       </div>
       <div
         @click="openCloseEyes"
