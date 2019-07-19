@@ -1,5 +1,6 @@
-import { splitData, getDepthData, handleDivisionData, supplementKlineData } from 'js/processData'
+import { splitData, getDepthData, handleDivisionData } from 'js/processData'
 import testData from '../../testData/data.json'
+import { getKDJData } from '../../../src/js/processData.js';
 
 let precision = {
   price: 6,
@@ -70,29 +71,4 @@ describe('test processData', () => {
     expect(data.times).not.toBeNull()
     expect(data.volumes).not.toBeNull()
   })
-
-  it('test supplementKlineData', () => {
-    let supplementMinuteData = supplementKlineData(testData.klineData, 'minute')
-    expect(supplementMinuteData).not.toBeNull()
-    let supplement5MinuteData = supplementKlineData(testData.klineData, '5minute')
-    expect(supplement5MinuteData).not.toBeNull()
-    let supplement15MinuteData = supplementKlineData(testData.klineData, '15minute')
-    expect(supplement15MinuteData).not.toBeNull()
-    let supplement30MinuteData = supplementKlineData(testData.klineData, '30minute')
-    expect(supplement30MinuteData).not.toBeNull()
-    let supplementHourData = supplementKlineData(testData.klineData, 'hour')
-    expect(supplementHourData).not.toBeNull()
-    let supplement4HourData = supplementKlineData(testData.klineData, '4hour')
-    expect(supplement4HourData).not.toBeNull()
-    let supplementDayData = supplementKlineData(testData.klineData, 'day')
-    expect(supplementDayData).not.toBeNull()
-    let supplementWeekData = supplementKlineData(testData.klineData, 'week')
-    expect(supplementWeekData).not.toBeNull()
-    let supplementMonthData = supplementKlineData(testData.klineData, 'month')
-    expect(supplementMonthData).not.toBeNull()
-    let supplementData = supplementKlineData(testData.klineData)
-    expect(supplementData).not.toBeNull()
-    let data = supplementKlineData()
-    expect(data).toBe(undefined)
-  }) 
 })

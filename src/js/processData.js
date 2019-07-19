@@ -21,6 +21,8 @@ export const supplementKlineData = (datas, cycle) => {
         timeInterval = 604800000;
     } else if (cycle === 'month') {
         timeInterval = 2592000000;
+    } else {
+        return;
     }
     let klineData = JSON.parse(JSON.stringify(datas));
     let len = klineData.length;

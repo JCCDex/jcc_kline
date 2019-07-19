@@ -7,9 +7,7 @@ let SARData = getSARData(testData.candleData)
 let indicatorData = {
     categoryData: testData.candleData.categoryData,
     indicator: 'SAR',
-    indicatorData: SARData,
-    candlestickData: testData.candleData.values,
-    volumes: testData.candleData.volumes
+    indicatorData: SARData
 }
 let size = {
     height: 1080,

@@ -449,7 +449,7 @@ describe('test IndicatorChart', () => {
         expect(indicator.setOBVChart.indicator.getOption()).not.toBeNull();
     })
 
-    it('test changeOBVDataZoom if chartType is obv', () => {
+    it('test changeOBVDataZoom if chartType is vr', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initOBVChart(element)
@@ -505,13 +505,13 @@ describe('test IndicatorChart', () => {
     })
 
      /* 测试TRIX指标线的方法 */
-     it('test IndicatorChart if chartType is trix', () => {
+     it('test IndicatorChart if chartType is obv', () => {
         Config.chartType = 'trix'
         let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 
-    it('test initTRIXChart if chartType is trix', () => {
+    it('test initTRIXChart if chartType is obv', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initTRIXChart(element)
@@ -526,7 +526,7 @@ describe('test IndicatorChart', () => {
         expect(indicator.setTRIXChart.indicator.getOption()).not.toBeNull();
     })
 
-    it('test changeTRIXDataZoom if chartType is trix', () => {
+    it('test changeTRIXDataZoom if chartType is vr', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initTRIXChart(element)
@@ -582,13 +582,13 @@ describe('test IndicatorChart', () => {
     })
 
      /* 测试DMI指标线的方法 */
-     it('test IndicatorChart if chartType is dmi', () => {
+     it('test IndicatorChart if chartType is obv', () => {
         Config.chartType = 'dmi'
         let indicator = new IndicatorChart(Config);
         expect(indicator).toBeInstanceOf(IndicatorChart)
     })
 
-    it('test initDMIChart if chartType is dmi', () => {
+    it('test initDMIChart if chartType is obv', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initDMIChart(element)
@@ -603,7 +603,7 @@ describe('test IndicatorChart', () => {
         expect(indicator.setDMIChart.indicator.getOption()).not.toBeNull();
     })
 
-    it('test changeDMIDataZoom if chartType is dmi', () => {
+    it('test changeDMIDataZoom if chartType is vr', () => {
         const element = document.createElement('div');
         let indicator = new IndicatorChart(Config);
         indicator.initDMIChart(element)

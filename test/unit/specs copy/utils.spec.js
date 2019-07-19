@@ -1,4 +1,4 @@
-import { isNumber, getLanguage, formatDecimal, getClientWidth, getClientHeight, getNextMonthDay } from 'js/utils'
+import { isNumber, getLanguage, formatDecimal, getClientWidth, getClientHeight, formatNumber } from 'js/utils'
 
 describe('test utils', () => {
   it('test is number', () => {
@@ -64,14 +64,5 @@ describe('test utils', () => {
   it('test getClientHeight if window innerHeight is null ', () => {
     window.innerHeight = null
     expect(getClientHeight()).not.toBeNull()
-  })
-
-  it('test getNextMonthDay', () => {
-    let date1 = getNextMonthDay(1548910200000)
-    expect(date1).toBe(1551329400000)
-    let date2 = getNextMonthDay(1577767800000)
-    expect(date2).toBe(1580446200000)
-    let date3 = getNextMonthDay(1551329400000)
-    expect(date3).toBe(1553748600000)
   })
 })

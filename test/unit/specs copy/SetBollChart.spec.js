@@ -7,9 +7,7 @@ let BollData = getBollData(testData.candleData)
 let indicatorData = {
     categoryData: testData.candleData.categoryData,
     indicator: 'Boll',
-    indicatorData: BollData,
-    candlestickData: testData.candleData.values,
-    volumes: testData.candleData.volumes
+    indicatorData: BollData
 }
 let size = {
     height: 1080,

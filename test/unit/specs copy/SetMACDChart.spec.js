@@ -5,10 +5,6 @@ import macdData from '../../testData/macdData.json'
 macdOption.platform = 'pc'
 macdOption.chartType = 'macd'
 macdOption.defaultSize = true
-let size = {
-    height: 1080,
-    width: 1920
-}
 // let depthData = getDepthData(testData.depthData, testData.coinType)
 // let pcData = splitData(testData.klineData)
 // let data = Object.assign({}, pcData, depthData);
@@ -46,50 +42,13 @@ describe('test SetMACDChart', () => {
         expect(macd).not.toBeNull();
     })
 
-    it('test setMACDOption', () => {
-        const element = document.createElement('div');
-        let macdChart = new SetMACDChart(macdOption);
-        macdChart.initMACD(element)
-        macdChart.setMACDOption(macdData)
-        expect(macdChart.macd.getOption()).not.toBeNull();
-    })
-
-    it('test resizeECharts', () => {
-        const element = document.createElement('div');
-        let macdChart = new SetMACDChart(macdOption);
-        macdChart.initMACD(element)
-        macdChart.setMACDOption(macdData)
-        macdChart.resizeECharts(element, false, size)
-        expect(macdChart.macd.getOption()).not.toBeNull();
-    })
-
-    it('test resizeECharts if DOM is null', () => {
-        const element = document.createElement('div');
-        let macdChart = new SetMACDChart(macdOption);
-        macdChart.initMACD(element)
-        macdChart.setMACDOption(macdData)
-        macdChart.resizeECharts(null, false, size)
-        expect(macdChart.macd.getOption()).not.toBeNull();
-    })
-
-    it('test resizeBollECharts if isFullScreen is true', () => {
-        const element = document.createElement('div');
-        let macdChart = new SetMACDChart(macdOption);
-        macdChart.initMACD(element)
-        macdChart.setMACDOption(macdData)
-        macdChart.resizeECharts(element, true, size)
-        expect(macdChart.macd.getOption()).not.toBeNull();
-    })
-
-    it('test setMACDOption', () => {
-        macdOption.platform = 'mobile'
-        const element = document.createElement('div');
-        let macdChart = new SetMACDChart(macdOption);
-        macdChart.initMACD(element)
-        macdChart.setMACDOption(macdData)
-        expect(macdChart.macd.getOption()).not.toBeNull();
-    })
-
+    // it('test setMACDOption', () => {
+    //     const element = document.createElement('div');
+    //     let macdChart = new SetMACDChart(macdOption);
+    //     macdChart.initMACD(element)
+    //     macdChart.setMACDOption(macdData)
+    //     expect(macdChart.macd.getOption()).not.toBeNull();
+    // })
     
     it('test setMACDOption if data is null', () => {
         const element = document.createElement('div');

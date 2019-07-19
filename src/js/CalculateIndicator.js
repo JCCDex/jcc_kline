@@ -599,7 +599,7 @@ export const getSARData = (data) => {
         EPMax = maxPrice;
     }
     return SARData;
-}
+};
 
 export const getDMAData = (data) => {
     if (!data) {
