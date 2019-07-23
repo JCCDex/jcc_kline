@@ -128,7 +128,9 @@ export default {
         klineData: res1.data,
         depthData: res2.data,
         coinType: coinType,
-        cycle: this.cycle
+        cycle: this.cycle,
+        pricePrecision: 6,
+        amountPrecision: 0
       }
     }
   }
