@@ -107,7 +107,8 @@ class VolumeChart {
             this.volume.hideLoading();
             let volumeConfig = {
                 xAxis: this.getVolumeXAxis(data, cycle),
-                series: this.getVolumeSeries(data)
+                series: this.getVolumeSeries(data),
+                dataZoom: this.getDataZoom(data)
             };
             merge(volumeOption, volumeConfig);
             volumeOption.dataZoom = this.volume.getOption().dataZoom;

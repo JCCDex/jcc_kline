@@ -14,6 +14,7 @@ var config;
 var timeDivisionconfig;
 var toolTipIndex;
 var tipsLastLength = true;
+var isTimeDivisionsDataZoom = false;
 
 
 class KLineMobileSetChartController {
@@ -61,6 +62,7 @@ class KLineMobileSetChartController {
     }
 
     setTimeDivisionsOption(size) {
+        isTimeDivisionsDataZoom = false;
         timeDivisionconfig = JSON.parse(JSON.stringify(this.klineConfig));
         toolTipIndex = null;
         tipsLastLength = true;
@@ -148,9 +150,10 @@ class KLineMobileSetChartController {
             dataZoom: this.getTimeDivisionDataZoom(data)
         };
         merge(timeDivisionconfig, updateTimeOption);
-        if (this.kline.getOption()) {
+        if (this.kline.getOption() && isTimeDivisionsDataZoom) {
             timeDivisionconfig.dataZoom = this.kline.getOption().dataZoom;
         }
+        isTimeDivisionsDataZoom = true;
         this.kline.hideLoading();
         this.kline.setOption(timeDivisionconfig);
         saveCandle(this.kline);
@@ -300,13 +303,13 @@ class KLineMobileSetChartController {
         if (data.values.length > 120) {
             start = 75;
         }
-        if(data.value.length > 200) {
+        if(data.values.length > 200) {
             start = 80;
         }
-        if(data.value.length > 300) {
+        if(data.values.length > 300) {
             start = 85;
         }
-        if(data.value.length > 400) {
+        if(data.values.length > 400) {
             start = 90;
         }
         var dataZoom = [

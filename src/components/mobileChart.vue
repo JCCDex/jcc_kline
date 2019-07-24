@@ -331,9 +331,10 @@ export default {
   watch: {
     klineDataObj() {
       this.message = getLanguage();
-      let suppKlineData = JSON.parse(
-        JSON.stringify(this.klineDataObj.klineData)
-      );
+      let suppKlineData = [];
+      if (this.klineDataObj.klineData) {
+        suppKlineData = JSON.parse(JSON.stringify(this.klineDataObj.klineData));
+      }
       this.cycle = this.klineDataObj.cycle;
       this.klineDataObj.klineData = supplementKlineData(
         suppKlineData,
