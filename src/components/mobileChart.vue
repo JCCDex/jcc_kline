@@ -459,15 +459,17 @@ export default {
               color: data.volumes[index][2]
             };
           }
-          for (var i = 0; i < data.MAData.length; i++) {
-            this.toolTipData.MAData[i] = {
-              name: data.MAData[i].name,
-              data: formatDecimal(
-                data.MAData[i].data[index],
-                pricePrecision,
-                true
-              )
-            };
+          if (data.MAData) {
+            for (var i = 0; i < data.MAData.length; i++) {
+              this.toolTipData.MAData[i] = {
+                name: data.MAData[i].name,
+                data: formatDecimal(
+                  data.MAData[i].data[index],
+                  pricePrecision,
+                  true
+                )
+              };
+            }
           }
         } else if (
           this.chartDataObj.divisionData &&

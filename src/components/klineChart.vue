@@ -877,19 +877,21 @@ export default {
                 MAData: [],
                 color: this.chartDataObj.candleData.volumes[index][2]
               };
-              for (
-                var i = 0;
-                i < this.chartDataObj.candleData.MAData.length;
-                i++
-              ) {
-                this.toolTipData.MAData[i] = {
-                  name: this.chartDataObj.candleData.MAData[i].name,
-                  data: formatDecimal(
-                    this.chartDataObj.candleData.MAData[i].data[index],
-                    pricePrecision,
-                    true
-                  )
-                };
+              if (this.chartDataObj.candleData.MAData) {
+                for (
+                  var i = 0;
+                  i < this.chartDataObj.candleData.MAData.length;
+                  i++
+                ) {
+                  this.toolTipData.MAData[i] = {
+                    name: this.chartDataObj.candleData.MAData[i].name,
+                    data: formatDecimal(
+                      this.chartDataObj.candleData.MAData[i].data[index],
+                      pricePrecision,
+                      true
+                    )
+                  };
+                }
               }
             }
           }
