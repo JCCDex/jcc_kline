@@ -150,7 +150,7 @@ describe('test KLineMobileSetChart', () => {
     mobileKline.setTimeDivisionsOption(size)
     mobileKline.updateTimeDivisionOption(divisionData, precision)
     mobileKline.changeDataZoom('enlarge')
-    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(80);
+    expect(mobileKline.kline.getOption().dataZoom[0].start).toBe(90);
     expect(mobileKline.kline.getOption().dataZoom[0].end).toBe(100);
   })
 
