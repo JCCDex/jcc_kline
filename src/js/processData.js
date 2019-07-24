@@ -47,10 +47,10 @@ export const supplementKlineData = (datas, cycle) => {
     }
     let supplementData = [];
     if (datas.length > 500) {
-        let splceIndex = datas.length - 500
-        supplementData = datas.splice(splceIndex, 500)
+        let splceIndex = datas.length - 500;
+        supplementData = datas.splice(splceIndex, 500);
     } else {
-        supplementData = datas
+        supplementData = datas;
     }
     return supplementData;
 };

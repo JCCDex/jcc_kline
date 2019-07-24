@@ -269,6 +269,15 @@ class KLineMobileSetChartController {
         if (data.volumes.length > 120) {
             start = 75;
         }
+        if (data.volumes.length > 200) {
+            start = 80;
+        }
+        if (data.volumes.length > 300) {
+            start = 85;
+        }
+        if (data.volumes.length > 400) {
+            start = 90;
+        }
         var dataZoom = [
             {
                 id: 'dataZoomX',
@@ -290,6 +299,15 @@ class KLineMobileSetChartController {
         }
         if (data.values.length > 120) {
             start = 75;
+        }
+        if(data.value.length > 200) {
+            start = 80;
+        }
+        if(data.value.length > 300) {
+            start = 85;
+        }
+        if(data.value.length > 400) {
+            start = 90;
         }
         var dataZoom = [
             {

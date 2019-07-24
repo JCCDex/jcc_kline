@@ -225,6 +225,15 @@ class PSYChartController {
             if (len > 120) {
                 start = 75;
             }
+            if (len > 200) {
+                start = 80;
+            }
+            if (len > 300) {
+                start = 85;
+            }
+            if (len > 400) {
+                start = 90;
+            }
         } else {
             if (len > 80) {
                 start = 0;
@@ -237,6 +246,12 @@ class PSYChartController {
             }
             if (len > 200) {
                 start = 45;
+            }
+            if (len > 300) {
+                start = 60;
+            }
+            if (len > 400) {
+                start = 75;
             }
         }
         var dataZoom = [

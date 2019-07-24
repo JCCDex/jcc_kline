@@ -161,7 +161,7 @@ class BRARChartController {
                             if (value > -1000) {
                                 return value;
                             }
-                            if(value > -1000000) {
+                            if (value > -1000000) {
                                 return (value / 1000) + 'K';
                             }
                             if (value < -1000000) {
@@ -206,7 +206,7 @@ class BRARChartController {
                     lineStyle: {
                         width: 1
                     }
-                },{
+                }, {
                     name: 'AR',
                     data: data.indicatorData.AR,
                     type: 'line',
@@ -238,6 +238,15 @@ class BRARChartController {
             if (len > 120) {
                 start = 75;
             }
+            if (len > 200) {
+                start = 80;
+            }
+            if (len > 300) {
+                start = 85;
+            }
+            if (len > 400) {
+                start = 90;
+            }
         } else {
             if (len > 80) {
                 start = 0;
@@ -250,6 +259,12 @@ class BRARChartController {
             }
             if (len > 200) {
                 start = 45;
+            }
+            if (len > 300) {
+                start = 60;
+            }
+            if (len > 400) {
+                start = 75;
             }
         }
         var dataZoom = [
@@ -289,7 +304,7 @@ class BRARChartController {
                 dataZoom[0].start = 0;
             } else if (dataZoom[0].end <= 95) {
                 dataZoom[0].end = dataZoom[0].end + 5;
-            }else if (dataZoom[0].end > 95) {
+            } else if (dataZoom[0].end > 95) {
                 dataZoom[0].end = 100;
             }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {

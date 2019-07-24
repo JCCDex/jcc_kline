@@ -206,6 +206,12 @@ class KLineSetChartController {
         if (data.values.length > 200) {
             start = 45;
         }
+        if (data.values.length > 300) {
+            start = 60;
+        }
+        if (data.values.length > 400) {
+            start = 75;
+        }
         var dataZoom = [
             {
                 id: 'dataZoomX',

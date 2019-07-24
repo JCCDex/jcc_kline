@@ -529,7 +529,7 @@ import ROC from "./ROCChart.vue";
 import BRAR from "./BRARChart.vue";
 import DMA from "./DMAChart.vue";
 import Boll from "./BollChart.vue";
-import SAR from "./SARChart.vue"
+import SAR from "./SARChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
@@ -661,9 +661,15 @@ export default {
       }
     },
     klineDataObj() {
-      let suppKlineData = JSON.parse(JSON.stringify(this.klineDataObj.klineData))
+      let suppKlineData = [];
+      if (this.klineDataObj.klineData) {
+        suppKlineData = JSON.parse(JSON.stringify(this.klineDataObj.klineData));
+      }
       this.cycle = this.klineDataObj.cycle;
-      this.klineDataObj.klineData =  supplementKlineData(suppKlineData, this.cycle)
+      this.klineDataObj.klineData = supplementKlineData(
+        suppKlineData,
+        this.cycle
+      );
       if (
         JSON.stringify(this.coinType) !==
         JSON.stringify(this.klineDataObj.coinType)
