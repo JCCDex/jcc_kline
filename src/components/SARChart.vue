@@ -201,6 +201,9 @@ export default {
       if (!data) {
         return;
       }
+      if (data.values.length == 1) {
+        return SARData = [data.values[3]]
+      }
       let SARData = [];
       let cycle = 4; // 时间周期
       let beforeSAR = 0; // SAR(n-1) 前一周期的SAR

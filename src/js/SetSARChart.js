@@ -161,6 +161,7 @@ class SARChartController {
 
     getIndicatorSeries(data) {
         var series = [];
+        let fixedWidth = false;
         let seriesData = JSON.parse(JSON.stringify(data));
         if (seriesData.candlestickData) {
             let len = seriesData.candlestickData.length;
@@ -168,6 +169,11 @@ class SARChartController {
                 seriesData.candlestickData[i].unshift(i);
                 seriesData.candlestickData[i].push(seriesData.volumes[i][2]);
             }
+        }
+        if (seriesData.candlestickData.length > 40) {
+            fixedWidth = false;
+        } else {
+            fixedWidth = true;
         }
         if (seriesData.indicator === 'SAR' && seriesData.indicatorData) {
             series = [
@@ -180,7 +186,12 @@ class SARChartController {
                         var closePoint = api.coord([xValue, api.value(2)]);
                         var lowPoint = api.coord([xValue, api.value(3)]);
                         var highPoint = api.coord([xValue, api.value(4)]);
-                        var halfWidth = api.size([1, 0])[0] * 0.35;
+                        var halfWidth = 0;
+                        if (fixedWidth) {
+                            halfWidth = 15;
+                        } else {
+                            halfWidth = api.size([1, 0])[0] * 0.35;
+                        }
                         var style = api.style({
                             stroke: api.visual('color')
                         });
