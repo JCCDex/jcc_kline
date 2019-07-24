@@ -83,7 +83,7 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.cycle === "everyhour") {
-        return
+        return;
       }
       if (this.chartDataObj.klineData) {
         this.indicatorsData = {
@@ -198,9 +198,9 @@ export default {
     },
     fixed(value, num) {
       if (isNaN(value)) {
-        return '--'
-      }else {
-        return value.toFixed(num)
+        return "--";
+      } else {
+        return value.toFixed(num);
       }
     },
     getVRData(data) {
@@ -239,6 +239,9 @@ export default {
             }
           }
           var VRTmp = (UVS + 0.5 * PVS) / (DVS + 0.5 * PVS);
+          if (VRTmp == Infinity || isNaN(parseFloat(VRTmp))) {
+            VRTmp = 0;
+          }
           VR.push(VRTmp);
         }
       }
@@ -264,7 +267,11 @@ export default {
             sum += item;
           }
         }
-        result.push(sum / periodic);
+        if (sum == 0) {
+          result.push(0);
+        } else {
+          result.push(sum / periodic);
+        }
       }
       return result;
     }

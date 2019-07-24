@@ -224,7 +224,11 @@ export default {
             HIGH1 = data[j][4] > HIGH1 ? data[j][4] : HIGH1;
             LOW1 = data[j][3] > LOW1 ? LOW1 : data[j][3];
           }
-          WR1[i] = (100 * [HIGH1 - data[i][2]]) / [HIGH1 - LOW1];
+          if ([HIGH1 - data[i][2]] == 0 || [HIGH1 - LOW1] == 0) {
+            WR1[i] = 0;
+          } else {
+            WR1[i] = (100 * [HIGH1 - data[i][2]]) / [HIGH1 - LOW1];
+          }
         }
         if (i < 5) {
           WR2[i] = "-";
@@ -235,7 +239,11 @@ export default {
             HIGH2 = data[k][4] > HIGH2 ? data[k][4] : HIGH2;
             LOW2 = data[k][3] > LOW2 ? LOW2 : data[k][3];
           }
-          WR2[i] = (100 * [HIGH2 - data[i][2]]) / [HIGH2 - LOW2];
+          if ( [HIGH2 - data[i][2]] == 0 || [HIGH2 - LOW2] == 0) {
+            WR2[i] = 0;
+          } else {
+            WR2[i] = (100 * [HIGH2 - data[i][2]]) / [HIGH2 - LOW2];
+          }
         }
       }
       return {

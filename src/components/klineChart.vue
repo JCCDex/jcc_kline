@@ -533,6 +533,7 @@ import SAR from "./SARChart.vue"
 import TimeSharing from "./timeSharing.vue";
 import { getLanguage, getDefaultChartSize, formatDecimal } from "../js/utils";
 import {
+  supplementKlineData,
   splitData,
   getDepthData,
   handleDivisionData,
@@ -660,7 +661,9 @@ export default {
       }
     },
     klineDataObj() {
+      let suppKlineData = JSON.parse(JSON.stringify(this.klineDataObj.klineData))
       this.cycle = this.klineDataObj.cycle;
+      this.klineDataObj.klineData =  supplementKlineData(suppKlineData, this.cycle)
       if (
         JSON.stringify(this.coinType) !==
         JSON.stringify(this.klineDataObj.coinType)

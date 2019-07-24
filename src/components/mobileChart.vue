@@ -234,9 +234,10 @@ import ROC from "./ROCChart.vue";
 import BRAR from "./BRARChart.vue";
 import VR from "./VRChart.vue";
 import DMA from "./DMAChart.vue";
-import Boll from "./BollChart.vue"
-import SAR from "./SARChart.vue"
+import Boll from "./BollChart.vue";
+import SAR from "./SARChart.vue";
 import {
+  supplementKlineData,
   splitData,
   handleDivisionData,
   getDepthData,
@@ -330,7 +331,14 @@ export default {
   watch: {
     klineDataObj() {
       this.message = getLanguage();
+      let suppKlineData = JSON.parse(
+        JSON.stringify(this.klineDataObj.klineData)
+      );
       this.cycle = this.klineDataObj.cycle;
+      this.klineDataObj.klineData = supplementKlineData(
+        suppKlineData,
+        this.cycle
+      );
       let candleData;
       let depthData;
       let divisionData;

@@ -104,7 +104,7 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.cycle === "everyhour") {
-        return
+        return;
       }
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
@@ -250,13 +250,22 @@ export default {
       );
       var TR14 = this.getMADataByDetailData(14, JSON.parse(JSON.stringify(TR)));
       for (let j = 0; j < PDM.length; j++) {
-        if (isNaN(PDM14[j]) || isNaN(TR14[j])) {
-          PDI.push("-");
+        if (
+          isNaN(PDM14[j]) ||
+          isNaN(TR14[j]) ||
+          (parseFloat(PDM14[j]) == 0 || parseFloat(TR14[j])) == 0
+        ) {
+          PDI.push(0);
         } else {
           PDI.push((parseFloat(PDM14[j]) / parseFloat(TR14[j])) * 100);
         }
-        if (isNaN(MDM14[j]) || isNaN(TR14[j])) {
-          MDI.push("-");
+        if (
+          isNaN(MDM14[j]) ||
+          isNaN(TR14[j]) ||
+          parseFloat(MDM14[j]) == 0 ||
+          parseFloat(TR14[j]) == 0
+        ) {
+          MDI.push(0);
         } else {
           MDI.push((parseFloat(MDM14[j]) / parseFloat(TR14[j])) * 100);
         }
@@ -268,7 +277,11 @@ export default {
         if (isNaN(PDI[i]) || isNaN(MDI[i])) {
           DX.push("-");
         } else {
-          DX.push((Math.abs(parseFloat(MDI[i]) - parseFloat(PDI[i])) / (parseFloat(MDI[i]) + parseFloat(PDI[i]))) * 100);
+          DX.push(
+            (Math.abs(parseFloat(MDI[i]) - parseFloat(PDI[i])) /
+              (parseFloat(MDI[i]) + parseFloat(PDI[i]))) *
+              100
+          );
         }
       }
       ADX = this.getMADataByDetailData(13 + 6, DX);
