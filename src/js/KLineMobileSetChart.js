@@ -191,7 +191,7 @@ class KLineMobileSetChartController {
         let barWidth;
         if (data.values.length > 40) {
             barWidth = '70%';
-        } else {
+        } else  if(data.values.length  <= 40 && data.values.length > 0) {
             barWidth = 18;
         }
         var s = [

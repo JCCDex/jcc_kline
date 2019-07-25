@@ -172,7 +172,7 @@ class SARChartController {
         }
         if (seriesData.candlestickData.length > 40) {
             fixedWidth = false;
-        } else {
+        } else  if(seriesData.candlestickData.length  <= 40 && seriesData.candlestickData.length > 0){
             fixedWidth = true;
         }
         if (seriesData.indicator === 'SAR' && seriesData.indicatorData) {

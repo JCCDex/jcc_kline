@@ -191,7 +191,7 @@ class VolumeChart {
         var barWidth;
         if (data.volumes.length > 40) {
             barWidth = '74%';
-        } else {
+        } else if(data.volumes.length  <= 40 && data.volumes.length > 0) {
             barWidth = 18;
         }
         var s = [
