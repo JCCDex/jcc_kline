@@ -668,7 +668,8 @@ export default {
       this.cycle = this.klineDataObj.cycle;
       this.klineDataObj.klineData = supplementKlineData(
         suppKlineData,
-        this.cycle
+        this.cycle,
+        this.klineDataObj.pricePrecision
       );
       if (
         JSON.stringify(this.coinType) !==

@@ -1,6 +1,6 @@
 import { formatTime, formatDecimal, getNextMonthDay } from './utils';
 
-export const supplementKlineData = (datas, cycle) => {
+export const supplementKlineData = (datas, cycle, pricePrecision) => {
     if (!datas) { return; }
     let timeInterval = 0;
     if (cycle === 'minute') {
@@ -24,8 +24,16 @@ export const supplementKlineData = (datas, cycle) => {
     } else {
         return;
     }
+    if (!pricePrecision) {
+        pricePrecision = 6;
+    }
+    let currentTime = Date.parse(new Date());
     let klineData = JSON.parse(JSON.stringify(datas));
     let len = klineData.length;
+    if (klineData[len - 1][0] + timeInterval < currentTime) {
+        klineData.push([currentTime, klineData[len - 1][2], klineData[len - 1][2], klineData[len - 1][2], klineData[len - 1][2], 0, 0, 0]);
+        len = klineData.length;
+    }
     let index = 0;
     for (let i = 0; i < len; i++) {
         if (i < len - 1) {
@@ -39,7 +47,8 @@ export const supplementKlineData = (datas, cycle) => {
                     } else {
                         tradingHours = klineData[i][0] + timeInterval * (j + 1);
                     }
-                    datas.splice(splice, 0, [tradingHours, klineData[i][2], klineData[i][2], klineData[i][2], klineData[i][2], 0, 0, 0]);
+                    let allPrice = parseFloat( klineData[i][2]).toFixed(pricePrecision);
+                    datas.splice(splice, 0, [tradingHours, allPrice, allPrice, allPrice, allPrice, 0, 0, 0]);
                     index = index + 1;
                 }
             }
