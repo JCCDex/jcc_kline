@@ -30,6 +30,9 @@ export const supplementKlineData = (datas, cycle, pricePrecision) => {
     let currentTime = Date.parse(new Date());
     let klineData = JSON.parse(JSON.stringify(datas));
     let len = klineData.length;
+    if (len <= 0) {
+        return;
+    }
     if (klineData[len - 1][0] + timeInterval < currentTime) {
         klineData.push([currentTime, klineData[len - 1][2], klineData[len - 1][2], klineData[len - 1][2], klineData[len - 1][2], 0, 0, 0]);
         len = klineData.length;
@@ -47,7 +50,7 @@ export const supplementKlineData = (datas, cycle, pricePrecision) => {
                     } else {
                         tradingHours = klineData[i][0] + timeInterval * (j + 1);
                     }
-                    let allPrice = parseFloat( klineData[i][2]).toFixed(pricePrecision);
+                    let allPrice = parseFloat(klineData[i][2]).toFixed(pricePrecision);
                     datas.splice(splice, 0, [tradingHours, allPrice, allPrice, allPrice, allPrice, 0, 0, 0]);
                     index = index + 1;
                 }
