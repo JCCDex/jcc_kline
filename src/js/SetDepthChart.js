@@ -200,6 +200,7 @@ class DepthChart {
         let sellLength = data.sellData.length;
         let xAxis = [{
             type: 'category',
+            boundaryGap: false,
             data: data.buyPrice,
             gridIndex: 0,
             axisLabel: {
@@ -212,6 +213,7 @@ class DepthChart {
             }
         }, {
             type: 'category',
+            boundaryGap: false,
             data: data.sellPrice,
             gridIndex: 1,
             axisLabel: {
