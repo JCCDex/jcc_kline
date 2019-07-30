@@ -150,14 +150,22 @@ export const getDepthData = (data, precision) => {
     let pricePrecision = !isNaN(precision.price) ? precision.price : 6;
     let buyData = []; //买入数据
     let sellData = []; //卖出数据
+    let buyPrice = []; //买入价格
+    let buyTotal = []; //买入总计
+    let sellPrice = []; //卖出价格
+    let sellTotal = []; //卖出总计
     let bids = data.bids;
     let asks = data.asks;
     if (Array.isArray(bids) && bids.length > 0) {
         for (let bid of bids) {
             buyData.push([formatDecimal(bid.price, pricePrecision, false), bid.total]);
+            buyPrice.push(formatDecimal(bid.price, pricePrecision, false));
+            buyTotal.push(bid.total);
         }
         for (let ask of asks) {
             sellData.push([formatDecimal(ask.price, pricePrecision, false), ask.total]);
+            sellPrice.push(formatDecimal(ask.price, pricePrecision, false));
+            sellTotal.push(ask.total);
         }
     }
     let sellLen = sellData.length;
@@ -172,9 +180,15 @@ export const getDepthData = (data, precision) => {
     }
     let maxAmount = parseFloat(buyMax) > parseFloat(sellMax) ? buyMax : sellMax;
     buyData = buyData.reverse();
+    buyPrice = buyPrice.reverse();
+    buyTotal = buyTotal.reverse();
     return {
         sellData,
+        sellPrice,
+        sellTotal,
         buyData,
+        buyPrice,
+        buyTotal,
         maxAmount: maxAmount
     };
 };

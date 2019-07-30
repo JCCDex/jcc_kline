@@ -181,10 +181,10 @@ class DepthChart {
         } else {
             grid = [{
                 top: 60,
-                left: 20,
+                left: 0,
                 right: 20,
                 bottom: 30,
-                width: depthSize.width / 2 - 50
+                width: depthSize.width / 2 - 20
             }, {
                 top: 60,
                 left: depthSize.width / 2 - 20,
@@ -200,9 +200,19 @@ class DepthChart {
         let sellLength = data.sellData.length;
         let xAxis = [{
             type: 'category',
-            gridIndex: 0
+            data: data.buyPrice,
+            gridIndex: 0,
+            axisLabel: {
+                formatter: function (value, index) {
+                    if (index == 0 && sellLength > 6) {
+                        return '';
+                    }
+                    return value;
+                }
+            }
         }, {
             type: 'category',
+            data: data.sellPrice,
             gridIndex: 1,
             axisLabel: {
                 formatter: function (value, index) {
@@ -267,11 +277,11 @@ class DepthChart {
                                 '<div style="text-align:left; ' + fontSize + '">',
                                 '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                                 message.sellPrice +
-                                formatDecimal(param.data[0], pricePrecision, true) +
+                                formatDecimal(param.name, pricePrecision, true) +
                                 '<br/>',
                                 '<div style="width:10px;height:10px;background:#28b869;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                                 message.sellTotal +
-                                formatDecimal(param.data[1], amountsPrecision, true) +
+                                formatDecimal(param.data, amountsPrecision, true) +
                                 '<br/>',
                                 '</div>'
                             ].join('');
@@ -280,11 +290,11 @@ class DepthChart {
                                 '<div style="text-align:left; ' + fontSize + '">',
                                 '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                                 message.buyPrice +
-                                formatDecimal(param.data[0], pricePrecision, true) +
+                                formatDecimal(param.name, pricePrecision, true) +
                                 '<br/>',
                                 '<div style="width:10px;height:10px;6px;background:#ee4b4b;border-radius:4px;float:left;margin-top:7px;margin-right:2px;"></div>' +
                                 message.buyTotal +
-                                formatDecimal(param.data[1], amountsPrecision, true) +
+                                formatDecimal(param.data, amountsPrecision, true) +
                                 '<br/>',
                                 '</div>'
                             ].join('');
@@ -300,14 +310,14 @@ class DepthChart {
                     if (param) {
                         if (param.seriesName === 'Sell' || param.seriesName === '卖出') {
                             mobileToolTipData = {
-                                price: formatDecimal(param.data[0], pricePrecision, true),
-                                total: formatDecimal(param.data[1], amountsPrecision, true),
+                                price: formatDecimal(param.name, pricePrecision, true),
+                                total: formatDecimal(param.data, amountsPrecision, true),
                                 type: 'Sell'
                             };
                         } else if (param.seriesName === 'Buy' || param.seriesName === '买入') {
                             mobileToolTipData = {
-                                price: formatDecimal(param.data[0], pricePrecision, true),
-                                total: formatDecimal(param.data[1], amountsPrecision, true),
+                                price: formatDecimal(param.name, pricePrecision, true),
+                                total: formatDecimal(param.data, amountsPrecision, true),
                                 type: 'Buy'
                             };
                         }
@@ -325,13 +335,13 @@ class DepthChart {
         return [
             {
                 name: buy,
-                data: data.buyData,
+                data: data.buyTotal,
                 xAxisIndex: 0,
                 yAxisIndex: 0
             },
             {
                 name: sell,
-                data: data.sellData,
+                data: data.sellTotal,
                 xAxisIndex: 1,
                 yAxisIndex: 1
             }
