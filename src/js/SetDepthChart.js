@@ -197,7 +197,8 @@ class DepthChart {
     }
 
     getDepthXAxis(data) {
-        let sellLength = data.sellData.length;
+        let sellLength = data.sellPrice.length;
+        let buyLength = data.buyPrice.length;
         let xAxis = [{
             type: 'category',
             boundaryGap: false,
@@ -205,7 +206,7 @@ class DepthChart {
             gridIndex: 0,
             axisLabel: {
                 formatter: function (value, index) {
-                    if (index == 0 && sellLength > 6) {
+                    if (index == 0 && buyLength != 1) {
                         return '';
                     }
                     return value;
@@ -218,7 +219,7 @@ class DepthChart {
             gridIndex: 1,
             axisLabel: {
                 formatter: function (value, index) {
-                    if (index == 0 && sellLength > 6) {
+                    if (index == 0 && buyLength != 1&&sellLength!=1) {
                         return '';
                     }
                     return value;
