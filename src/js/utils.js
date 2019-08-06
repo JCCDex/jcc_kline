@@ -72,6 +72,43 @@ export const formatDecimal = (num, decimal, thousands = false) => {
     return num;
 };
 
+export const getNextMaxYValue = (value) => {
+    let YValue = parseFloat(value) + 0.2 * parseFloat(value);
+    let nextMaxYValue = 0;
+    if (YValue > 100) {
+        YValue = parseInt(YValue) + '';
+        let highest = YValue.slice(0, 2);
+        let len = YValue.length - 2;
+        for (let i = 0; i < len; i++) {
+            highest = highest + '0';
+        }
+        nextMaxYValue = highest;
+    } else {
+        YValue = YValue + '';
+        let len = YValue.length;
+        let digits = 0;
+        for (let i = 0; i < len; i++) {
+            let num = YValue.slice(i, i + 1);
+            if (!isNaN(num)) {
+                if (num == 0) {
+                    if (digits != 0) {
+                        digits = digits + 1;
+                    }
+                } else {
+                    digits = digits + 1;
+                }
+            }
+            if (digits == 2) {
+                nextMaxYValue = YValue.slice(0, i + 1);
+            }
+            if (digits < 2 && i == len - 1) {
+                nextMaxYValue = YValue;
+            }
+        }
+    }
+    return nextMaxYValue;
+};
+
 export const scientificToDecimal = (num) => {
     // if the number is in scientific notation remove it
     if (/\d+\.?\d*e[+-]*\d+/i.test(num)) {

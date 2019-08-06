@@ -170,7 +170,7 @@ class DepthChart {
                 left: 0,
                 right: 0,
                 bottom: 40,
-                width: depthWidth / 2 - 10
+                width: depthWidth / 2 - 15
             }, {
                 top: 48,
                 left: depthWidth / 2 + 10,
@@ -184,7 +184,7 @@ class DepthChart {
                 left: 0,
                 right: 20,
                 bottom: 30,
-                width: depthSize.width / 2 - 20
+                width: depthSize.width / 2 - 25
             }, {
                 top: 60,
                 left: depthSize.width / 2 - 20,

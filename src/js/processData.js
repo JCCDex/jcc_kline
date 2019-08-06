@@ -1,4 +1,4 @@
-import { formatTime, formatDecimal, getNextMonthDay } from './utils';
+import { formatTime, formatDecimal, getNextMonthDay, getNextMaxYValue } from './utils';
 
 export const supplementKlineData = (datas, cycle, pricePrecision) => {
     if (!datas) { return; }
@@ -179,6 +179,7 @@ export const getDepthData = (data, precision) => {
         buyMax = buyData[buyLen - 1][1];
     }
     let maxAmount = parseFloat(buyMax) > parseFloat(sellMax) ? buyMax : sellMax;
+    maxAmount = getNextMaxYValue(maxAmount);
     buyData = buyData.reverse();
     buyPrice = buyPrice.reverse();
     buyTotal = buyTotal.reverse();
