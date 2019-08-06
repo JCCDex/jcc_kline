@@ -182,6 +182,16 @@ export const getDepthData = (data, precision) => {
     buyData = buyData.reverse();
     buyPrice = buyPrice.reverse();
     buyTotal = buyTotal.reverse();
+    if (sellLen == 1) {
+        sellData.push(sellData[0]);
+        sellPrice.push(sellPrice[0]);
+        sellTotal.push(sellTotal[0]);
+    }
+    if (buyLen == 1) {
+        buyData.push(buyData[0]);
+        buyPrice.push(buyPrice[0]);
+        buyTotal.push(buyTotal[0]);
+    }
     return {
         sellData,
         sellPrice,
