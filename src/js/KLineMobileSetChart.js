@@ -197,6 +197,7 @@ class KLineMobileSetChartController {
         var s = [
             {
                 type: 'candlestick',
+                largeThreshold: 300,
                 barWidth: barWidth,
                 data: data.values
             },
