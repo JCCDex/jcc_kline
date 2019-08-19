@@ -225,11 +225,15 @@ class DMIChartController {
 
     getDataZoom(data) {
         let start = 0;
+        let end = 100;
         let len = 0;
         if (data.indicator === 'DMI') {
             len = data.indicatorData.PDI.length;
         }
-        if (this.indicatorConfig.platform === 'mobile') {
+        if (data.dataZoomData) {
+            start = data.dataZoomData[0].start;
+            end = data.dataZoomData[0].end;
+        } else if (this.indicatorConfig.platform === 'mobile') {
             if (len > 60) {
                 start = 50;
             }
@@ -245,7 +249,7 @@ class DMIChartController {
             if (len > 400) {
                 start = 90;
             }
-        } else {
+        } else if (this.indicatorConfig.platform === 'pc'){
             if (len > 80) {
                 start = 0;
             }
@@ -271,7 +275,7 @@ class DMIChartController {
                 type: 'inside',
                 filterMode: 'filter',
                 start: start,
-                end: 100,
+                end: end,
                 minSpan: 5
             }
         ];
