@@ -360,6 +360,7 @@ export default {
       let depthData;
       let divisionData;
       let timeDivisionData;
+      let dataZoomData;
       let MAData = [];
       let precision = {
         price: chartData.pricePrecision,
@@ -380,6 +381,10 @@ export default {
         if (!this.toolTipIndex) {
           this.toolTipIndex = candleData.values.length - 1;
         }
+      }
+      if (this.dataZoom && this.dataZoom.length > 0) {
+        dataZoomData = JSON.parse(JSON.stringify(this.dataZoom));
+        this.dataZoom = null;
       }
       if (chartData.depthData) {
         depthData = getDepthData(chartData.depthData, precision);
@@ -402,6 +407,7 @@ export default {
         index: this.toolTipIndex,
         candleData: candleData,
         depthData: depthData,
+        dataZoomData: dataZoomData,
         timeDivisionData: timeDivisionData,
         divisionData: divisionData
       };

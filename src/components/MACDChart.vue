@@ -114,9 +114,18 @@ export default {
           var macdData = this.splitData(data.MACDData);
           this.macdData = macdData;
           if (
+            this.chartDataObj.dataZoomData != undefined &&
+            this.chartDataObj.dataZoomData
+          ) {
+            this.macdData.dataZoomData = JSON.parse(
+              JSON.stringify(this.chartDataObj.dataZoomData)
+            );
+          }
+          if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.isRefresh || this.refreshKline
+            this.isRefresh ||
+            this.refreshKline
           ) {
             this.init(true);
             this.isRefresh = false;
@@ -191,7 +200,7 @@ export default {
   },
   methods: {
     init(clear) {
-      this.refreshKline = true
+      this.refreshKline = true;
       this.macd.initMACDECharts(this.$refs.macd, clear);
       this.resize();
     },

@@ -56,7 +56,7 @@ class KLineController {
     }
 
     getMobileKlineDataZoom() {
-        return this.setMobileKLineChart.getKlineDataZoom()
+        return this.setMobileKLineChart.getKlineDataZoom();
     }
 
     setMobileOption(size, data) {

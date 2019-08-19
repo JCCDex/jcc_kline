@@ -255,7 +255,7 @@ class KLineMobileSetChartController {
 
     getKlineDataZoom() {
         if (this.kline.getOption().dataZoom) {
-            return this.kline.getOption().dataZoom
+            return this.kline.getOption().dataZoom;
         }
     }
 

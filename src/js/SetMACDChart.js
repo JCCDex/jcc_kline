@@ -165,7 +165,11 @@ class MACDChart {
 
     getDataZoom(data) {
         let start = 0;
-        if (this.macdConfig.platform === 'mobile') {
+        let end = 100;
+        if (data.dataZoomData) {
+            start = data.dataZoomData[0].start;
+            end = data.dataZoomData[0].end;
+        } else if (this.macdConfig.platform === 'mobile') {
             if (data.macds.length > 60) {
                 start = 50;
             }
@@ -181,7 +185,7 @@ class MACDChart {
             if (data.macds.length > 400) {
                 start = 90;
             }
-        } else {
+        } else if (this.macdConfig.platform === 'pc') {
             if (data.macds.length > 80) {
                 start = 0;
             }
@@ -207,7 +211,7 @@ class MACDChart {
                 type: 'inside',
                 filterMode: 'filter',
                 start: start,
-                end: 100,
+                end: end,
                 minSpan: 5
             }
         ];
@@ -254,7 +258,7 @@ class MACDChart {
                 dataZoom[0].start = 0;
             } else if (dataZoom[0].end <= 95) {
                 dataZoom[0].end = dataZoom[0].end + 5;
-            }else if (dataZoom[0].end > 95) {
+            } else if (dataZoom[0].end > 95) {
                 dataZoom[0].end = 100;
             }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {
