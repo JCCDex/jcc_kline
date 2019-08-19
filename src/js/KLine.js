@@ -55,6 +55,10 @@ class KLineController {
         return this.setMobileKLineChart.getToolTipIndex();
     }
 
+    getMobileKlineDataZoom() {
+        return this.setMobileKLineChart.getKlineDataZoom()
+    }
+
     setMobileOption(size, data) {
         this.setMobileKLineChart.setOption(size, data);
     }

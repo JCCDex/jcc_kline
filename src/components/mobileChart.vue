@@ -80,7 +80,7 @@
     ></Volume>
     <MACD
       ref="macd"
-      v-show="showIndicatorChart === 'MACD' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'MACD' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -89,7 +89,7 @@
     ></MACD>
     <KDJ
       ref="kdj"
-      v-show="showIndicatorChart === 'KDJ' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'KDJ' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -98,7 +98,7 @@
     ></KDJ>
     <RSI
       ref="rsi"
-      v-show="showIndicatorChart === 'RSI' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'RSI' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -107,7 +107,7 @@
     ></RSI>
     <MTM
       ref="mtm"
-      v-show="showIndicatorChart === 'MTM' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'MTM' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -116,7 +116,7 @@
     ></MTM>
     <WR
       ref="wr"
-      v-show="showIndicatorChart === 'WR' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'WR' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -125,7 +125,7 @@
     ></WR>
     <VR
       ref="vr"
-      v-show="showIndicatorChart === 'VR' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'VR' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -134,7 +134,7 @@
     ></VR>
     <OBV
       ref="obv"
-      v-show="showIndicatorChart === 'OBV' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'OBV' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -143,7 +143,7 @@
     ></OBV>
     <TRIX
       ref="trix"
-      v-show="showIndicatorChart === 'TRIX' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'TRIX' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -152,7 +152,7 @@
     ></TRIX>
     <DMI
       ref="dmi"
-      v-show="showIndicatorChart === 'DMI' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'DMI' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -161,7 +161,7 @@
     ></DMI>
     <PSY
       ref="psy"
-      v-show="showIndicatorChart === 'PSY' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'PSY' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -170,7 +170,7 @@
     ></PSY>
     <ROC
       ref="roc"
-      v-show="showIndicatorChart === 'ROC' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'ROC' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -179,7 +179,7 @@
     ></ROC>
     <DMA
       ref="dma"
-      v-show="showIndicatorChart === 'DMA' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'DMA' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -188,7 +188,7 @@
     ></DMA>
     <BRAR
       ref="brar"
-      v-show="showIndicatorChart === 'BRAR' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'BRAR' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -197,7 +197,7 @@
     ></BRAR>
     <Boll
       ref="boll"
-      v-show="showIndicatorChart === 'Boll' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'Boll' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -206,7 +206,7 @@
     ></Boll>
     <SAR
       ref="sar"
-      v-show="showIndicatorChart === 'SAR' && cycle !== 'everyhour'"
+      v-if="showIndicatorChart === 'SAR' && cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
@@ -274,6 +274,7 @@ export default {
       message: null,
       cycle: "",
       chartDataObj: {},
+      dataZoom: [],
       toolTipIndex: null,
       toolTipData: null,
       timeSharingTipData: null,
@@ -341,20 +342,31 @@ export default {
         this.cycle,
         this.klineDataObj.pricePrecision
       );
+      this.changeChartDataObj(this.klineDataObj);
+    }
+  },
+  methods: {
+    changeCycle(cycle) {
+      this.toolTipData = null;
+      this.timeSharingTipData = null;
+      this.cycle = cycle;
+      this.toolTipIndex = null;
+      this.chartDataObj.candleData = null;
+      this.$emit("listenToChildEvent", cycle);
+    },
+    changeChartDataObj(klineDataObj) {
+      let chartData = JSON.parse(JSON.stringify(klineDataObj));
       let candleData;
       let depthData;
       let divisionData;
       let timeDivisionData;
       let MAData = [];
       let precision = {
-        price: this.klineDataObj.pricePrecision,
-        amount: this.klineDataObj.amountPrecision
+        price: chartData.pricePrecision,
+        amount: chartData.amountPrecision
       };
-      if (
-        this.klineDataObj.cycle !== "everyhour" &&
-        this.klineDataObj.klineData
-      ) {
-        candleData = splitData(this.klineDataObj.klineData);
+      if (chartData.cycle !== "everyhour" && chartData.klineData) {
+        candleData = splitData(chartData.klineData);
         for (var i = 0; i < this.klineConfig.MA.length; i++) {
           MAData[i] = {};
           MAData[i].name = this.klineConfig.MA[i].name;
@@ -369,14 +381,11 @@ export default {
           this.toolTipIndex = candleData.values.length - 1;
         }
       }
-      if (this.klineDataObj.depthData) {
-        depthData = getDepthData(this.klineDataObj.depthData, precision);
+      if (chartData.depthData) {
+        depthData = getDepthData(chartData.depthData, precision);
       }
-      if (
-        this.klineDataObj.cycle === "everyhour" &&
-        this.klineDataObj.timeDivisionData
-      ) {
-        timeDivisionData = this.klineDataObj.timeDivisionData;
+      if (chartData.cycle === "everyhour" && chartData.timeDivisionData) {
+        timeDivisionData = chartData.timeDivisionData;
         divisionData = handleDivisionData(timeDivisionData);
         this.divisionTime = divisionData.divisionTime;
         if (!this.toolTipIndex) {
@@ -386,26 +395,16 @@ export default {
       this.chartDataObj = {
         platform: "mobile",
         precision: precision,
-        klineData: this.klineDataObj.klineData,
+        klineData: chartData.klineData,
         indicators: this.showIndicatorChart,
-        cycle: this.klineDataObj.cycle,
-        coinType: this.klineDataObj.coinType,
+        cycle: chartData.cycle,
+        coinType: chartData.coinType,
         index: this.toolTipIndex,
         candleData: candleData,
         depthData: depthData,
         timeDivisionData: timeDivisionData,
         divisionData: divisionData
       };
-    }
-  },
-  methods: {
-    changeCycle(cycle) {
-      this.toolTipData = null;
-      this.timeSharingTipData = null;
-      this.cycle = cycle;
-      this.toolTipIndex = null;
-      this.chartDataObj.candleData = null;
-      this.$emit("listenToChildEvent", cycle);
     },
     getMATipData(name) {
       for (let tipData of this.toolTipData.MAData) {
@@ -414,7 +413,9 @@ export default {
         }
       }
     },
-    getIndicatorOpenClose(indicator) {
+    getIndicatorOpenClose(indicatorData) {
+      let indicator = indicatorData.indicator;
+      this.dataZoom = indicatorData.dataZoom;
       if (this.showIndicatorChart === indicator) {
         this.showIndicatorChart = null;
       } else {
@@ -505,21 +506,51 @@ export default {
       if (this.cycle !== "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);
-        this.$refs.macd.changeDataZoom(type);
-        this.$refs.kdj.changeDataZoom(type);
-        this.$refs.rsi.changeDataZoom(type);
-        this.$refs.mtm.changeDataZoom(type);
-        this.$refs.wr.changeDataZoom(type);
-        this.$refs.obv.changeDataZoom(type);
-        this.$refs.trix.changeDataZoom(type);
-        this.$refs.dmi.changeDataZoom(type);
-        this.$refs.psy.changeDataZoom(type);
-        this.$refs.roc.changeDataZoom(type);
-        this.$refs.brar.changeDataZoom(type);
-        this.$refs.vr.changeDataZoom(type);
-        this.$refs.dma.changeDataZoom(type);
-        this.$refs.boll.changeDataZoom(type);
-        this.$refs.sar.changeDataZoom(type);
+        if (this.showIndicatorChart === "MACD") {
+          this.$refs.macd.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "KDJ") {
+          this.$refs.kdj.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "RSI") {
+          this.$refs.rsi.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "MTM") {
+          this.$refs.mtm.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "WR") {
+          this.$refs.wr.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "OBV") {
+          this.$refs.obv.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "TRIX") {
+          this.$refs.trix.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "DMI") {
+          this.$refs.dmi.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "PSY") {
+          this.$refs.psy.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "ROC") {
+          this.$refs.roc.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "BRAR") {
+          this.$refs.brar.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "VR") {
+          this.$refs.vr.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "DMA") {
+          this.$refs.dma.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "Boll") {
+          this.$refs.boll.changeDataZoom(type);
+        }
+        if (this.showIndicatorChart === "SAR") {
+          this.$refs.sar.changeDataZoom(type);
+        }
       } else if (this.cycle === "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);

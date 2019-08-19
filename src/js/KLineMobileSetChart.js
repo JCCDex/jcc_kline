@@ -191,7 +191,7 @@ class KLineMobileSetChartController {
         let barWidth;
         if (data.values.length > 40) {
             barWidth = '70%';
-        } else  if(data.values.length  <= 40 && data.values.length > 0) {
+        } else if (data.values.length <= 40 && data.values.length > 0) {
             barWidth = 18;
         }
         var s = [
@@ -253,6 +253,12 @@ class KLineMobileSetChartController {
         return toolTipIndex;
     }
 
+    getKlineDataZoom() {
+        if (this.kline.getOption().dataZoom) {
+            return this.kline.getOption().dataZoom
+        }
+    }
+
     disposeMobileEChart() {
         this.kline.dispose();
     }
@@ -304,13 +310,13 @@ class KLineMobileSetChartController {
         if (data.values.length > 120) {
             start = 75;
         }
-        if(data.values.length > 200) {
+        if (data.values.length > 200) {
             start = 80;
         }
-        if(data.values.length > 300) {
+        if (data.values.length > 300) {
             start = 85;
         }
-        if(data.values.length > 400) {
+        if (data.values.length > 400) {
             start = 90;
         }
         var dataZoom = [
@@ -345,7 +351,7 @@ class KLineMobileSetChartController {
                 dataZoom[0].start = 0;
             } else if (dataZoom[0].end <= 95) {
                 dataZoom[0].end = dataZoom[0].end + 5;
-            }else if (dataZoom[0].end > 95) {
+            } else if (dataZoom[0].end > 95) {
                 dataZoom[0].end = 100;
             }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {

@@ -408,7 +408,12 @@ export default {
       this.showIndicatorDiv = !this.showIndicatorDiv;
     },
     showIndicatorChart(indicator) {
-      this.$emit("listenIndicatorChartOpenClose", indicator);
+      let dataZoom = this.kline.getMobileKlineDataZoom();
+      let indicatorData = {
+        dataZoom: dataZoom,
+        indicator: indicator
+      }
+      this.$emit("listenIndicatorChartOpenClose", indicatorData);
       if (this.showIndicator === indicator) {
         this.showIndicator = "";
       } else {
