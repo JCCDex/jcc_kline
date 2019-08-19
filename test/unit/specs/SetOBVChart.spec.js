@@ -3,6 +3,7 @@ import { getOBVData } from 'js/CalculateIndicator'
 import { StochasticOption } from 'js/IndicatorsLineOption'
 import testData from '../../testData/testData.json'
 
+StochasticOption.platform = 'pc'
 let OBVData = getOBVData(testData.klineData)
 let indicatorData = {
     categoryData: testData.candleData.categoryData,

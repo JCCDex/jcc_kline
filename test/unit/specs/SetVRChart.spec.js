@@ -3,6 +3,7 @@ import { getVRData } from 'js/CalculateIndicator'
 import { StochasticOption } from 'js/IndicatorsLineOption'
 import testData from '../../testData/data.json'
 
+StochasticOption.platform = 'pc'
 let VRData = getVRData(testData.klineData)
 let indicatorData = {
     categoryData: testData.candleData.categoryData,
