@@ -95,6 +95,14 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.WRData;
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.indicatorsData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
       } else if (
         JSON.stringify(this.coinType) !==
         JSON.stringify(this.chartDataObj.coinType)
@@ -239,7 +247,7 @@ export default {
             HIGH2 = data[k][4] > HIGH2 ? data[k][4] : HIGH2;
             LOW2 = data[k][3] > LOW2 ? LOW2 : data[k][3];
           }
-          if ( [HIGH2 - data[i][2]] == 0 || [HIGH2 - LOW2] == 0) {
+          if ([HIGH2 - data[i][2]] == 0 || [HIGH2 - LOW2] == 0) {
             WR2[i] = 0;
           } else {
             WR2[i] = (100 * [HIGH2 - data[i][2]]) / [HIGH2 - LOW2];

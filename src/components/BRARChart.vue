@@ -31,7 +31,7 @@ export default {
       indicatorsData: null,
       BRARData: null,
       coinType: "",
-      platform: '',
+      platform: "",
       currentCycle: "",
       isRefresh: true,
       toolTipData: null,
@@ -99,17 +99,28 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.cycle === "everyhour") {
-        return
+        return;
       }
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
-          indicator: 'BRAR',
+          indicator: "BRAR",
           categoryData: this.chartDataObj.candleData.categoryData
         };
-        this.BRARData = this.getBRARData(this.chartDataObj.candleData.values, 24);
+        this.BRARData = this.getBRARData(
+          this.chartDataObj.candleData.values,
+          24
+        );
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.BRARData;
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.indicatorsData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (
@@ -122,10 +133,7 @@ export default {
           this.isRefresh = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
-          this.BRAR.updateBRAROption(
-            this.indicatorsData,
-            this.currentCycle
-          );
+          this.BRAR.updateBRAROption(this.indicatorsData, this.currentCycle);
         }
       }
     },
@@ -150,7 +158,7 @@ export default {
   },
   created() {
     if (this.klineConfig.platform === "pc") {
-      this.platform = 'pc'
+      this.platform = "pc";
       if (!this.klineConfig.defaultSize) {
         this.BRARSize.height = this.klineConfig.size.height * 0.25 + "px";
         this.BRARSize.width = this.klineConfig.size.width + "px";
@@ -161,7 +169,7 @@ export default {
         };
       }
     } else {
-      this.platform = 'mobile'
+      this.platform = "mobile";
       this.BRARSize.height = this.klineConfig.size.height * 0.3 + "px";
       this.BRARSize.width = this.klineConfig.size.width + "px";
     }
@@ -203,60 +211,62 @@ export default {
     },
     fixed(value, num) {
       if (isNaN(value)) {
-        return '--'
-      }else {
-        return value.toFixed(num)
+        return "--";
+      } else {
+        return value.toFixed(num);
       }
     },
-    getBRARData (data, periodic) {
-    if (!data) { return; }
-    var BR = [];
-    var AR = [];
-    var HighMinusOpen = []; // 当日最高价 - 当日开盘价
-    var OpenMinusLow = []; // 当日开盘价 - 当日最低价
-    var HighMinusCY = []; // 当日最高价 - 前一日收盘价
-    var CYMinusLow = []; // 前一日收盘价 - 当日最低价
-    for (let i = 0; i < data.length; i++) {
+    getBRARData(data, periodic) {
+      if (!data) {
+        return;
+      }
+      var BR = [];
+      var AR = [];
+      var HighMinusOpen = []; // 当日最高价 - 当日开盘价
+      var OpenMinusLow = []; // 当日开盘价 - 当日最低价
+      var HighMinusCY = []; // 当日最高价 - 前一日收盘价
+      var CYMinusLow = []; // 前一日收盘价 - 当日最低价
+      for (let i = 0; i < data.length; i++) {
         HighMinusOpen.push(parseFloat(data[i][3]) - parseFloat(data[i][0]));
         OpenMinusLow.push(parseFloat(data[i][0]) - parseFloat(data[i][2]));
         if (i === 0) {
-            HighMinusCY.push(0);
-            CYMinusLow.push(0);
+          HighMinusCY.push(0);
+          CYMinusLow.push(0);
         } else {
-            HighMinusCY.push(parseFloat(data[i][3]) - parseFloat(data[i - 1][1]));
-            CYMinusLow.push(parseFloat(data[i - 1][1]) - parseFloat(data[i][2]));
+          HighMinusCY.push(parseFloat(data[i][3]) - parseFloat(data[i - 1][1]));
+          CYMinusLow.push(parseFloat(data[i - 1][1]) - parseFloat(data[i][2]));
         }
         if (i < periodic) {
-            BR.push('-');
-            AR.push('-');
+          BR.push("-");
+          AR.push("-");
         } else {
-            let HighMinusOpenSum = 0;
-            let OpenMinusLowSum = 0;
-            let HighMinusCYSum = 0;
-            let CYMinusLowSum = 0;
-            for (let j = i - periodic; j < i; j++) {
-                HighMinusOpenSum = HighMinusOpenSum + parseFloat(HighMinusOpen[j]);
-                OpenMinusLowSum = OpenMinusLowSum + parseFloat(OpenMinusLow[j]);
-                HighMinusCYSum = HighMinusCYSum + parseFloat(HighMinusCY[j]);
-                CYMinusLowSum = CYMinusLowSum + parseFloat(CYMinusLow[j]);
-            }
-            if (OpenMinusLowSum === 0) {
-                AR.push(0);
-            } else {
-                AR.push(HighMinusOpenSum / OpenMinusLowSum * 100);
-            }
-            if (CYMinusLowSum === 0) {
-                BR.push(0);
-            } else {
-                BR.push(HighMinusCYSum / CYMinusLowSum * 100);
-            }
+          let HighMinusOpenSum = 0;
+          let OpenMinusLowSum = 0;
+          let HighMinusCYSum = 0;
+          let CYMinusLowSum = 0;
+          for (let j = i - periodic; j < i; j++) {
+            HighMinusOpenSum = HighMinusOpenSum + parseFloat(HighMinusOpen[j]);
+            OpenMinusLowSum = OpenMinusLowSum + parseFloat(OpenMinusLow[j]);
+            HighMinusCYSum = HighMinusCYSum + parseFloat(HighMinusCY[j]);
+            CYMinusLowSum = CYMinusLowSum + parseFloat(CYMinusLow[j]);
+          }
+          if (OpenMinusLowSum === 0) {
+            AR.push(0);
+          } else {
+            AR.push((HighMinusOpenSum / OpenMinusLowSum) * 100);
+          }
+          if (CYMinusLowSum === 0) {
+            BR.push(0);
+          } else {
+            BR.push((HighMinusCYSum / CYMinusLowSum) * 100);
+          }
         }
-    }
-    return {
+      }
+      return {
         AR: AR,
         BR: BR
-    };
-}
+      };
+    }
   }
 };
 </script>

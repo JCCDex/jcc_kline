@@ -95,6 +95,14 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.MTMData;
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.indicatorsData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
       } else if (
         JSON.stringify(this.coinType) !==
         JSON.stringify(this.chartDataObj.coinType)
@@ -146,7 +154,7 @@ export default {
           this.MTMData = this.getMTMData(this.chartDataObj.klineData);
         }
         if (this.MTMData) {
-          let precision = parseInt(this.chartDataObj.precision.price) + 1
+          let precision = parseInt(this.chartDataObj.precision.price) + 1;
           this.toolTipData = {
             MTM: formatDecimal(this.MTMData.MTM[index], precision, true),
             MAMTM: formatDecimal(this.MTMData.MAMTM[index], precision, true)

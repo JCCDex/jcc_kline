@@ -85,7 +85,7 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.cycle === "everyhour") {
-        return
+        return;
       }
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
@@ -103,7 +103,15 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.RSIData;
-      } else  if (
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.indicatorsData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
+      } else if (
         JSON.stringify(this.coinType) !==
         JSON.stringify(this.chartDataObj.coinType)
       ) {
@@ -116,7 +124,8 @@ export default {
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.isRefresh || this.refreshKline
+          this.isRefresh ||
+          this.refreshKline
         ) {
           this.init(true);
           this.RSI.setRSIOption(this.indicatorsData, this.currentCycle);

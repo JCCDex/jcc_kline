@@ -109,6 +109,14 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.SARData;
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.indicatorsData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (

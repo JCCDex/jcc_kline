@@ -83,7 +83,7 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.cycle === "everyhour") {
-        return
+        return;
       }
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
@@ -94,6 +94,14 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.TRIXData;
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.indicatorsData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
       }
       if (this.indicatorsData) {
         if (

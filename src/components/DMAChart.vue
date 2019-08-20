@@ -86,7 +86,7 @@ export default {
           this.DMAData = this.getDMAData(data);
         }
         if (this.DMAData) {
-          let precision = parseInt(this.chartDataObj.precision.price) + 1
+          let precision = parseInt(this.chartDataObj.precision.price) + 1;
           this.toolTipData = {
             DMA: formatDecimal(this.DMAData.DMA[index], precision, true),
             AMA: formatDecimal(this.DMAData.AMA[index], precision, true)
@@ -99,7 +99,7 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.cycle === "everyhour") {
-        return
+        return;
       }
       if (this.chartDataObj.candleData) {
         this.indicatorsData = {
@@ -110,6 +110,14 @@ export default {
         let index = this.chartDataObj.index;
         this.$emit("listenToTipIndex", index);
         this.indicatorsData.indicatorData = this.DMAData;
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.indicatorsData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
       }
       if (this.indicatorsData && this.indicatorsData.indicatorData) {
         if (
@@ -216,7 +224,7 @@ export default {
       return {
         DMA: DMAData,
         AMA: AMAData
-      }
+      };
     },
     calculateMA(dayCount, data) {
       var result = [];

@@ -36,7 +36,7 @@ export default {
       refreshKline: true,
       chartType: "stochastic",
       toolTipData: null,
-      platform: '',
+      platform: "",
       stochasticSize: {
         height: "",
         width: ""
@@ -102,7 +102,7 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.cycle === "everyhour") {
-        return
+        return;
       }
       if (this.chartDataObj.candleData) {
         let data = JSON.parse(
@@ -115,6 +115,14 @@ export default {
         this.KDJData.categoryData = JSON.parse(
           JSON.stringify(this.chartDataObj.candleData.categoryData)
         );
+        if (
+          this.chartDataObj.dataZoomData != undefined &&
+          this.chartDataObj.dataZoomData
+        ) {
+          this.KDJData.dataZoomData = JSON.parse(
+            JSON.stringify(this.chartDataObj.dataZoomData)
+          );
+        }
         if (this.KDJData) {
           if (
             JSON.stringify(this.coinType) !==
