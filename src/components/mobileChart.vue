@@ -349,6 +349,7 @@ export default {
     changeCycle(cycle) {
       this.toolTipData = null;
       this.timeSharingTipData = null;
+      this.dataZoom = null;
       this.cycle = cycle;
       this.toolTipIndex = null;
       this.chartDataObj.candleData = null;
