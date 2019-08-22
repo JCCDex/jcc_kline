@@ -78,141 +78,16 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></Volume>
-    <MACD
-      ref="macd"
-      v-if="showIndicatorChart === 'MACD' && cycle !== 'everyhour'"
+    <Indicator
+      ref="indicator"
+      v-show="showIndicatorChart != null &&cycle !== 'everyhour'"
       :toolTipIndex="toolTipIndex"
       @listenToTipIndex="getTipDataIndex"
       :kline-config="klineConfig"
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
-    ></MACD>
-    <KDJ
-      ref="kdj"
-      v-if="showIndicatorChart === 'KDJ' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></KDJ>
-    <RSI
-      ref="rsi"
-      v-if="showIndicatorChart === 'RSI' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></RSI>
-    <MTM
-      ref="mtm"
-      v-if="showIndicatorChart === 'MTM' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></MTM>
-    <WR
-      ref="wr"
-      v-if="showIndicatorChart === 'WR' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></WR>
-    <VR
-      ref="vr"
-      v-if="showIndicatorChart === 'VR' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></VR>
-    <OBV
-      ref="obv"
-      v-if="showIndicatorChart === 'OBV' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></OBV>
-    <TRIX
-      ref="trix"
-      v-if="showIndicatorChart === 'TRIX' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></TRIX>
-    <DMI
-      ref="dmi"
-      v-if="showIndicatorChart === 'DMI' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></DMI>
-    <PSY
-      ref="psy"
-      v-if="showIndicatorChart === 'PSY' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></PSY>
-    <ROC
-      ref="roc"
-      v-if="showIndicatorChart === 'ROC' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></ROC>
-    <DMA
-      ref="dma"
-      v-if="showIndicatorChart === 'DMA' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></DMA>
-    <BRAR
-      ref="brar"
-      v-if="showIndicatorChart === 'BRAR' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></BRAR>
-    <Boll
-      ref="boll"
-      v-if="showIndicatorChart === 'Boll' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></Boll>
-    <SAR
-      ref="sar"
-      v-if="showIndicatorChart === 'SAR' && cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-    ></SAR>
+      :indicatorType="showIndicatorChart"
+    ></Indicator>
     <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
@@ -221,21 +96,7 @@ import KLine from "./mobileKline.vue";
 import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
 import TimeSharing from "./timeSharing.vue";
-import MACD from "./MACDChart.vue";
-import KDJ from "./KDJChart.vue";
-import RSI from "./RSIChart.vue";
-import MTM from "./MTMChart.vue";
-import WR from "./WRChart.vue";
-import OBV from "./OBVChart.vue";
-import TRIX from "./TRIXChart.vue";
-import DMI from "./DMIChart.vue";
-import PSY from "./PSYChart.vue";
-import ROC from "./ROCChart.vue";
-import BRAR from "./BRARChart.vue";
-import VR from "./VRChart.vue";
-import DMA from "./DMAChart.vue";
-import Boll from "./BollChart.vue";
-import SAR from "./SARChart.vue";
+import Indicator from "./IndicatorChart.vue";
 import {
   supplementKlineData,
   splitData,
@@ -251,21 +112,7 @@ export default {
     Depth,
     Volume,
     TimeSharing,
-    MACD,
-    KDJ,
-    RSI,
-    MTM,
-    WR,
-    OBV,
-    TRIX,
-    DMI,
-    PSY,
-    ROC,
-    BRAR,
-    VR,
-    DMA,
-    Boll,
-    SAR
+    Indicator
   },
   data() {
     return {
@@ -513,51 +360,7 @@ export default {
       if (this.cycle !== "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);
-        if (this.showIndicatorChart === "MACD") {
-          this.$refs.macd.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "KDJ") {
-          this.$refs.kdj.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "RSI") {
-          this.$refs.rsi.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "MTM") {
-          this.$refs.mtm.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "WR") {
-          this.$refs.wr.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "OBV") {
-          this.$refs.obv.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "TRIX") {
-          this.$refs.trix.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "DMI") {
-          this.$refs.dmi.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "PSY") {
-          this.$refs.psy.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "ROC") {
-          this.$refs.roc.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "BRAR") {
-          this.$refs.brar.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "VR") {
-          this.$refs.vr.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "DMA") {
-          this.$refs.dma.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "Boll") {
-          this.$refs.boll.changeDataZoom(type);
-        }
-        if (this.showIndicatorChart === "SAR") {
-          this.$refs.sar.changeDataZoom(type);
-        }
+        this.$refs.indicator.changeDataZoom(type);
       } else if (this.cycle === "everyhour") {
         this.$refs.candle.changeDataZoom(type);
         this.$refs.volume.changeDataZoom(type);

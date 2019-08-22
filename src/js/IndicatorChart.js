@@ -13,6 +13,7 @@ import BRARChart from './SetBRARChart';
 import DMAChart from './SetDMAChart';
 import BollChart from './SetBollChart';
 import SARChart from './SetSARChart';
+import IndicatorChart from './SetIndicatorChart';
 
 class IndicatorChartController {
     constructor(chartsConfig) {
@@ -126,11 +127,41 @@ class IndicatorChartController {
                 merge(StochasticOption, chartsConfig);
                 this.setSARChart = new SARChart(StochasticOption);
             } else {
-                merge(mobileIndicatorsLine, chartsConfig);
                 this.setSARChart = new SARChart(mobileIndicatorsLine);
             }
         }
+        merge(mobileIndicatorsLine, chartsConfig);
+        this.setIndicatorChart = new IndicatorChart(mobileIndicatorsLine);
+    }
 
+
+    /* 绘制指标线 */
+    initIndicatorChart(DOM, clear) {
+        this.setIndicatorChart.initIndicatorECharts(DOM, clear);
+    }
+
+    resizeIndicatorChart(DOM, isFullScreen, size) {
+        this.setIndicatorChart.resizeIndicatorECharts(DOM, isFullScreen, size);
+    }
+
+    getIndicatorTipData() {
+        return this.setIndicatorChart.getToolTipData();
+    }
+
+    changeIndicatorDataZoom(type) {
+        this.setIndicatorChart.changeDataZoom(type);
+    }
+
+    setIndicatorOption(data, cycle) {
+        this.setIndicatorChart.setIndicatorOption(data, cycle);
+    }
+
+    updateIndicatorOption(data, cycle) {
+        this.setIndicatorChart.updateIndicatorOption(data, cycle);
+    }
+
+    disposeIndicatorEChart() {
+        this.setIndicatorChart.disposeIndicatorEChart();
     }
 
     /* 绘制随机指标（KDJ） */
