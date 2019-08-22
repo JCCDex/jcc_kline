@@ -146,6 +146,9 @@ export default {
       let type = this.indicatorType;
       let data = JSON.parse(JSON.stringify(this.chartDataObj));
       this.calculateIndicatorData(type, data);
+      let index = this.toolTipIndex;
+      let precision = parseInt(this.chartDataObj.precision.price) + 1;
+      this.changeChartTipData(index, type, precision);
     },
     resizeSize() {
       this.resize();
@@ -179,6 +182,106 @@ export default {
       let index = this.toolTipIndex;
       let type = this.indicatorType;
       let precision = parseInt(this.chartDataObj.precision.price) + 1;
+      this.changeChartTipData(index, type, precision);
+    }
+  },
+  created() {
+    if (this.klineConfig.platform === "pc") {
+      this.platform = "pc";
+      if (!this.klineConfig.defaultSize) {
+        this.IndicatorSize.height = this.klineConfig.size.height * 0.25 + "px";
+        this.IndicatorSize.width = this.klineConfig.size.width + "px";
+      } else {
+        this.IndicatorSize = {
+          height: "132px",
+          width: "100%"
+        };
+      }
+    } else {
+      this.platform = "mobile";
+      this.IndicatorSize.height = this.klineConfig.size.height * 0.3 + "px";
+      this.IndicatorSize.width = this.klineConfig.size.width + "px";
+    }
+    this.Indicator = new IndicatorChart(this.klineConfig);
+  },
+  mounted() {
+    this.init();
+  },
+  beforeDestroy() {
+    this.dispose();
+  },
+  methods: {
+    calculateIndicatorData(type, data) {
+      if (data.cycle === "everyhour" || !data.candleData) {
+        return;
+      }
+      if (data.klineData) {
+        this.indicatorsData = {
+          indicator: type,
+          categoryData: data.candleData.categoryData,
+          candlestickData: data.candleData.values,
+          volumes: data.candleData.volumes
+        };
+      }
+      if (type === "Boll") {
+        this.IndicatorData = this.getBollData(data.candleData, 20);
+      } else if (type === "BRAR") {
+        this.IndicatorData = this.getBRARData(data.candleData.values, 24);
+      } else if (type === "DMA") {
+        this.IndicatorData = this.getDMAData(data.candleData);
+      } else if (type === "DMI") {
+        this.IndicatorData = this.getDMIData(data.candleData.values);
+      } else if (type === "KDJ") {
+        this.IndicatorData = this.getKDJData(9, data.candleData.values);
+      } else if (type === "MACD") {
+        this.IndicatorData = this.getMACDData(data.candleData.MACDData);
+      } else if (type === "MTM") {
+        this.IndicatorData = this.getMTMData(data.klineData);
+      } else if (type === "OBV") {
+        this.IndicatorData = this.getOBVData(data.klineData);
+      } else if (type === "PSY") {
+        this.IndicatorData = this.getPSYData(data.klineData);
+      } else if (type === "ROC") {
+        this.IndicatorData = this.getROCData(data.klineData);
+      } else if (type === "RSI") {
+        let RSI6 = this.getRSIData(data.candleData.values, 6);
+        let RSI12 = this.getRSIData(data.candleData.values, 12);
+        let RSI24 = this.getRSIData(data.candleData.values, 24);
+        this.IndicatorData = {
+          RSI6: RSI6,
+          RSI12: RSI12,
+          RSI24: RSI24
+        };
+      } else if (type === "SAR") {
+        this.IndicatorData = this.getSARData(data.candleData);
+      } else if (type === "TRIX") {
+        this.IndicatorData = this.getTRIXData(data.candleData.values);
+      } else if (type === "VR") {
+        this.IndicatorData = this.getVRData(data.klineData);
+      } else {
+        this.IndicatorData = this.getWRData(data.klineData);
+      }
+      this.indicatorsData.indicatorData = this.IndicatorData;
+      if (this.indicatorsData && this.indicatorsData.indicatorData) {
+        if (
+          JSON.stringify(this.coinType) !== JSON.stringify(data.coinType) ||
+          this.isRefresh
+        ) {
+          this.Indicator.setIndicatorOption(
+            this.indicatorsData,
+            this.currentCycle
+          );
+          this.isRefresh = false;
+          this.coinType = data.coinType;
+        } else {
+          this.Indicator.updateIndicatorOption(
+            this.indicatorsData,
+            this.currentCycle
+          );
+        }
+      }
+    },
+    changeChartTipData(index, type, precision) {
       if (index) {
         if (this.IndicatorData) {
           if (type === "Boll") {
@@ -271,103 +374,6 @@ export default {
               WR2: formatDecimal(this.IndicatorData.WR2[index], 7, true)
             };
           }
-        }
-      }
-    }
-  },
-  created() {
-    if (this.klineConfig.platform === "pc") {
-      this.platform = "pc";
-      if (!this.klineConfig.defaultSize) {
-        this.IndicatorSize.height = this.klineConfig.size.height * 0.25 + "px";
-        this.IndicatorSize.width = this.klineConfig.size.width + "px";
-      } else {
-        this.IndicatorSize = {
-          height: "132px",
-          width: "100%"
-        };
-      }
-    } else {
-      this.platform = "mobile";
-      this.IndicatorSize.height = this.klineConfig.size.height * 0.3 + "px";
-      this.IndicatorSize.width = this.klineConfig.size.width + "px";
-    }
-    this.Indicator = new IndicatorChart(this.klineConfig);
-  },
-  mounted() {
-    this.init();
-  },
-  beforeDestroy() {
-    this.dispose();
-  },
-  methods: {
-    calculateIndicatorData(type, data) {
-      if (data.cycle === "everyhour") {
-        return;
-      }
-      if (data.klineData) {
-        this.indicatorsData = {
-          indicator: type,
-          categoryData: data.candleData.categoryData,
-          candlestickData: data.candleData.values,
-          volumes: data.candleData.volumes
-        };
-      }
-      if (type === "Boll") {
-        this.IndicatorData = this.getBollData(data.candleData, 20);
-      } else if (type === "BRAR") {
-        this.IndicatorData = this.getBRARData(data.candleData.values, 24);
-      } else if (type === "DMA") {
-        this.IndicatorData = this.getDMAData(data.candleData);
-      } else if (type === "DMI") {
-        this.IndicatorData = this.getDMIData(data.candleData.values);
-      } else if (type === "KDJ") {
-        this.IndicatorData = this.getKDJData(9, data.candleData.values);
-      } else if (type === "MACD") {
-        this.IndicatorData = this.getMACDData(data.candleData.MACDData);
-      } else if (type === "MTM") {
-        this.IndicatorData = this.getMTMData(data.klineData);
-      } else if (type === "OBV") {
-        this.IndicatorData = this.getOBVData(data.klineData);
-      } else if (type === "PSY") {
-        this.IndicatorData = this.getPSYData(data.klineData);
-      } else if (type === "ROC") {
-        this.IndicatorData = this.getROCData(data.klineData);
-      } else if (type === "RSI") {
-        let RSI6 = this.getRSIData(data.candleData.values, 6);
-        let RSI12 = this.getRSIData(data.candleData.values, 12);
-        let RSI24 = this.getRSIData(data.candleData.values, 24);
-        this.IndicatorData = {
-          RSI6: RSI6,
-          RSI12: RSI12,
-          RSI24: RSI24
-        };
-      } else if (type === "SAR") {
-        this.IndicatorData = this.getSARData(data.candleData);
-      } else if (type === "TRIX") {
-        this.IndicatorData = this.getTRIXData(data.candleData.values);
-      } else if (type === "VR") {
-        this.IndicatorData = this.getVRData(data.klineData);
-      } else {
-        this.IndicatorData = this.getWRData(data.klineData);
-      }
-      this.indicatorsData.indicatorData = this.IndicatorData;
-      if (this.indicatorsData && this.indicatorsData.indicatorData) {
-        if (
-          JSON.stringify(this.coinType) !== JSON.stringify(data.coinType) ||
-          this.isRefresh
-        ) {
-          this.Indicator.setIndicatorOption(
-            this.indicatorsData,
-            this.currentCycle
-          );
-          this.isRefresh = false;
-          this.coinType = data.coinType;
-        } else {
-          this.Indicator.updateIndicatorOption(
-            this.indicatorsData,
-            this.currentCycle
-          );
         }
       }
     },
