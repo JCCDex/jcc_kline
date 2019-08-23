@@ -341,7 +341,7 @@
         ></Volume>
         <Indicator
           ref="indicator"
-          v-show="showIndicator != '' &&cycle !== 'everyhour'"
+          v-show="showIndicator != '' &&cycle !== 'everyhour' &&showChart !== 'depth'"
           v-on:listenMacdChartClose="getMacdClose"
           :toolTipIndex="toolTipIndex"
           @listenToTipIndex="getTipDataIndex"
