@@ -1,137 +1,16 @@
-import { StochasticOption, mobileIndicatorsLine } from './IndicatorsLineOption';
-import StochasticChartController from './SetStochasticChart';
-import RSIChart from './SetRSIChart';
-import MTMChart from './SetMTMChart';
-import WRChart from './SetWRChart';
-import VRChart from './SetVRChart';
-import OBVChart from './SetOBVChart';
-import TRIXChart from './SetTRIXChart';
-import DMIChart from './SetDMIChart';
-import PSYChart from './SetPSYChart';
-import ROCChart from './SetROCChart';
-import BRARChart from './SetBRARChart';
-import DMAChart from './SetDMAChart';
-import BollChart from './SetBollChart';
-import SARChart from './SetSARChart';
+import { indicatorOption, mobileIndicatorsOption } from './IndicatorOption';
 import IndicatorChart from './SetIndicatorChart';
 
 class IndicatorChartController {
     constructor(chartsConfig) {
         var merge = require('lodash.merge');
-        if (chartsConfig.chartType === 'stochastic') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setStochasticChart = new StochasticChartController(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setStochasticChart = new StochasticChartController(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'rsi') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setRSIChart = new RSIChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setRSIChart = new RSIChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'mtm') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setMTMChart = new MTMChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setMTMChart = new MTMChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'wr') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setWRChart = new WRChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setWRChart = new WRChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'vr') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setVRChart = new VRChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setVRChart = new VRChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'obv') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setOBVChart = new OBVChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setOBVChart = new OBVChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'trix') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setTRIXChart = new TRIXChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setTRIXChart = new TRIXChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'dmi') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setDMIChart = new DMIChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setDMIChart = new DMIChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'psy') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setPSYChart = new PSYChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setPSYChart = new PSYChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'roc') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setROCChart = new ROCChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setROCChart = new ROCChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'brar') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setBRARChart = new BRARChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setBRARChart = new BRARChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'dma') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setDMAChart = new DMAChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setDMAChart = new DMAChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'Boll') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setBollChart = new BollChart(StochasticOption);
-            } else {
-                merge(mobileIndicatorsLine, chartsConfig);
-                this.setBollChart = new BollChart(mobileIndicatorsLine);
-            }
-        } else if (chartsConfig.chartType === 'sar') {
-            if (chartsConfig.platform === 'pc') {
-                merge(StochasticOption, chartsConfig);
-                this.setSARChart = new SARChart(StochasticOption);
-            } else {
-                this.setSARChart = new SARChart(mobileIndicatorsLine);
-            }
+        if (chartsConfig.platform === 'pc') {
+            merge(indicatorOption, chartsConfig);
+            this.setIndicatorChart = new IndicatorChart(indicatorOption);
+        } else {
+            merge(mobileIndicatorsOption, chartsConfig);
+            this.setIndicatorChart = new IndicatorChart(mobileIndicatorsOption);
         }
-        merge(mobileIndicatorsLine, chartsConfig);
-        this.setIndicatorChart = new IndicatorChart(mobileIndicatorsLine);
     }
 
 
