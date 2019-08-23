@@ -1,11 +1,9 @@
 import DepthChart from './SetDepthChart';
 import { depthOption, mobileDepthOption } from './DepthOption';
-import { timeSharingOption, mobileTimeSharingOption} from './TimeSharingOption';
+import { timeSharingOption, mobileTimeSharingOption } from './TimeSharingOption';
 import { volumeOption, volumeMoobileOption } from './VolumeChartOption';
 import TimeSharingChart from './SetTimeSharingChart';
 import VolumeChart from './SetVolumeChart.js';
-import { macdOption, macdMobileOption } from './MACDOption';
-import MACDChart from './SetMACDChart.js';
 
 class ChartController {
     constructor(chartsConfig) {
@@ -33,14 +31,6 @@ class ChartController {
             } else {
                 merge(volumeMoobileOption, chartsConfig);
                 this.setVolumeChart = new VolumeChart(volumeMoobileOption);
-            }
-        } else if (chartsConfig.chartType === 'MACD') {
-            if (chartsConfig.platform === 'mobile') {
-                merge(macdMobileOption, chartsConfig);
-                this.setMACDChart = new MACDChart(macdMobileOption);
-            } else {
-                merge(macdOption, chartsConfig);
-                this.setMACDChart = new MACDChart(macdOption);
             }
         }
     }
@@ -84,7 +74,7 @@ class ChartController {
     }
 
     changeTimeSharingDataZoom(type) {
-        this.setTimeSharing.changeDataZoom(type);        
+        this.setTimeSharing.changeDataZoom(type);
     }
 
     updateTimeSharingOption(divisionData) {
@@ -127,35 +117,6 @@ class ChartController {
 
     changeDataZoom(type) {
         this.setVolumeChart.changeDataZoom(type);
-    }
-
-    /* 绘制MACD指标 */
-    initMACDECharts(DOM, clear) {
-        this.setMACDChart.initMACD(DOM, clear);
-    }
-
-    resizeMACDChart(DOM, isFullScreen, size) {
-        this.setMACDChart.resizeECharts(DOM, isFullScreen, size);
-    }
-
-    setMACDOption(data) {
-        this.setMACDChart.setMACDOption(data);
-    }
-
-    updateMACDOption(data) {
-        this.setMACDChart.updateMACDOption(data);
-    }
-
-    disposeMACDEChart() {
-        this.setMACDChart.disposeMACDEChart();
-    }
-
-    getMacdTipData() {
-        return this.setMACDChart.getToolTipData();
-    }
-
-    changeMacdDataZoom(type) {
-        this.setMACDChart.changeDataZoom(type);
     }
 
 }

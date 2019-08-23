@@ -2,7 +2,6 @@ import ChartController from 'js/Charts.js'
 import { splitData, getDepthData } from 'js/processData'
 import testData from '../../testData/data.json'
 import timeSharingData from '../../testData/timeSharingData.json'
-import macdData from '../../testData/macdData.json'
 
 describe('test Chart', () => {
 
@@ -294,95 +293,4 @@ describe('test Chart', () => {
     expect(volume.setVolumeChart.volume.getOption().dataZoom[0].end).toBe(100);
   })
 
-
-  // MACD指标测试
-  let macdConfig = {
-    platform: 'pc',
-    chartType: 'MACD',
-    defaultSize: true
-  }
-
-  it('test ChartController if platform is pc and chartType is MACD', () => {
-    let macd = new ChartController(macdConfig)
-    expect(macd).toBeInstanceOf(ChartController)
-  })
-
-  it('test initMACDECharts', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    expect(macd.setMACDChart.macd).not.toBeNull()
-  })
-
-  it('test initMACDECharts if platform not pc', () => {
-    macdConfig.platform = 'mobile'
-    let macd = new ChartController(macdConfig)
-    expect(macd).toBeInstanceOf(ChartController)
-  })
-
-  it('test resizeMACDChart if not fullScreen', () => {
-    macdConfig.platform = 'pc'
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.resizeMACDChart(element, false)
-    expect(macd.setMACDChart.macd).not.toBeNull()
-  })
-
-  it('test setMACDOption', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element);
-    macd.setMACDOption(macdData);
-    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
-  })
-
-  it('test getMacdTipData', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element);
-    macd.setMACDOption(macdData);
-    let tipsData = macd.getMacdTipData()
-    expect(tipsData).not.toBeNull()
-  })
-
-  it('test updateMACDOption', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.setMACDOption(macdData)
-    macd.updateMACDOption(data)
-    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
-  })
-
-  it('test disposeMACDEChart', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.setMACDOption(macdData)
-    macd.disposeMACDEChart()
-    expect(macd.setMACDChart.macd.getOption()).not.toBeNull()
-  })
-
-  it('test changeMacdDataZoom if platform is pc', () => {
-    let macd = new ChartController(macdConfig)
-    const element = document.createElement('div');
-    macd.initMACDECharts(element)
-    macd.setMACDOption(macdData)
-    macd.changeMacdDataZoom('leftShift')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(43);
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(98);
-    macd.changeMacdDataZoom('rightShift')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(45);
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
-    macd.changeMacdDataZoom('enlarge')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(50);
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
-    macd.changeMacdDataZoom('refresh')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(45);
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
-    macd.changeMacdDataZoom('narrow')
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].start).toBe(40);
-    expect(macd.setMACDChart.macd.getOption().dataZoom[0].end).toBe(100);
-  })
 })

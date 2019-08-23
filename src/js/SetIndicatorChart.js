@@ -2,6 +2,7 @@ import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/chart/candlestick';
 import 'echarts/lib/chart/custom';
+import 'echarts/lib/chart/scatter';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/component/dataZoom';
 import merge from 'lodash.merge';

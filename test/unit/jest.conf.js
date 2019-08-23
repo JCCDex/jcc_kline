@@ -10,7 +10,7 @@ module.exports = {
   ],
   silent: true,
   verbose: true,
-  testURL:'http://locallhost/',
+  testURL: 'http://locallhost/',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
     '^js/(.*)$': '<rootDir>/src/js/$1',
@@ -39,7 +39,7 @@ module.exports = {
     '!src/js/TimeSharingOption.js',
     '!src/js/DepthOption.js',
     '!src/js/VolumeChartOption.js',
-    '!src/js/IndicatorsLineOption.js',
+    '!src/js/IndicatorOption.js',
     '!src/main.js',
     '!**/node_modules/**'
   ]
