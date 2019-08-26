@@ -1,5 +1,5 @@
 import { splitData, getDepthData, calculateMA } from 'js/processData'
-import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData, getPSYData, getROCData, getWRData, getVRData, getDMAData } from 'js/CalculateIndicator'
+import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData, getPSYData, getROCData, getWRData, getVRData, getDMAData, getSARData } from 'js/CalculateIndicator'
 import testData from '../../testData/data.json'
 import data from '../../testData/testData.json'
 
@@ -149,9 +149,25 @@ describe('test CalculateIndicator', () => {
     expect(VRData).toBe(undefined)
   })
 
+  it('test getDMAData', () => {
+    let DMAData = getDMAData(data.candleData)
+    expect(DMAData).not.toBeNull()
+  })
+
+
   it('test getDMAData if data is null', () => {
     let DMAData = getDMAData(null)
     expect(DMAData).toBe(undefined)
+  })
+
+  it('test getSARData', () => {
+    let SARData = getSARData(data.candleData)
+    expect(SARData).not.toBeNull()
+  })
+
+  it('test getSARData  if data is null', () => {
+    let SARData = getSARData(null)
+    expect(SARData).toBe(undefined)
   })
 
 })
