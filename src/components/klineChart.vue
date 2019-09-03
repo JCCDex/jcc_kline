@@ -342,9 +342,9 @@
         <Indicator
           ref="indicator"
           v-show="showIndicator != '' &&cycle !== 'everyhour' &&showChart !== 'depth'"
-          v-on:listenMacdChartClose="getMacdClose"
           :toolTipIndex="toolTipIndex"
           @listenToTipIndex="getTipDataIndex"
+          @listenIndicatorChartClose="closeIndicatorChart"
           :kline-config="klineConfig"
           :chart-data-obj="chartDataObj"
           :resize-size="resizeSize"
@@ -640,7 +640,7 @@ export default {
     },
     showIndicatorChart(indicator) {
       if (indicator === this.showIndicator) {
-        this.showIndicator = null;
+        this.showIndicator = '';
         this.isClose = true;
       } else {
         this.showIndicator = indicator;
@@ -792,13 +792,8 @@ export default {
     leave() {
       this.isShow = false;
     },
-    getMacdClose(isClose) {
-      this.showIndicator = null;
-      this.isClose = isClose;
-      this.resize();
-    },
     closeIndicatorChart(isClose) {
-      this.showIndicator = null;
+      this.showIndicator = '';
       this.isClose = isClose;
       this.resize();
     },
