@@ -26,7 +26,7 @@ module.exports = {
     '<rootDir>/test/e2e'
   ],
   snapshotSerializers: ['<rootDir>/node_modules/jest-serializer-vue'],
-  setupFiles: ["jest-localstorage-mock", "<rootDir>/test/unit/setup.js", "jest-canvas-mock"],
+  setupFiles: ["jest-localstorage-mock", "jest-canvas-mock"],
   coverageDirectory: '<rootDir>/test/unit/coverage',
   transformIgnorePatterns: ["[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$"],
   moduleDirectories: ["node_modules"],
