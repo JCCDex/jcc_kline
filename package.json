@@ -15,6 +15,7 @@
     "dist": "dist"
   },
   "dependencies": {
+    "@babel/runtime": "^7.5.5",
     "echarts": "^4.2.0-rc.2",
     "lodash.merge": "^4.6.2",
     "vue": "^2.5.17",
