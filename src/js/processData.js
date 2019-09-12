@@ -162,6 +162,8 @@ export const getDepthData = (data, precision) => {
             buyPrice.push(formatDecimal(bid.price, pricePrecision, false));
             buyTotal.push(bid.total);
         }
+    }
+    if (Array.isArray(asks) && asks.length > 0) {
         for (let ask of asks) {
             sellData.push([formatDecimal(ask.price, pricePrecision, false), ask.total]);
             sellPrice.push(formatDecimal(ask.price, pricePrecision, false));
