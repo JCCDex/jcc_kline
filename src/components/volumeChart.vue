@@ -61,6 +61,14 @@ export default {
       this.resize();
     },
     chartDataObj() {
+      if (
+        JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType) ||
+        this.isRefresh ||
+        this.refreshKline
+      ) {
+        this.init(true);
+      }
       if (this.chartDataObj.candleData && this.currentCycle !== "everyhour") {
         let data = this.chartDataObj.candleData;
         data.precision = this.chartDataObj.precision;
@@ -68,7 +76,8 @@ export default {
           if (
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType) ||
-            this.isRefresh || this.refreshKline
+            this.isRefresh ||
+            this.refreshKline
           ) {
             this.init(true);
             this.volume.setVolumeOption(data, this.currentCycle);
@@ -101,12 +110,13 @@ export default {
             divisionData.times !== null &&
             divisionData.averages !== null &&
             divisionData.prices !== null &&
-            divisionData.volumes !== null) || this.refreshKline
+            divisionData.volumes !== null) ||
+          this.refreshKline
         ) {
           this.init(true);
           this.volume.setVolumeOption(divisionData, this.currentCycle);
           this.isRefresh = false;
-          this.refreshKline = false
+          this.refreshKline = false;
           this.coinType = this.chartDataObj.coinType;
         } else {
           this.volume.updateVolumeOption(divisionData, this.currentCycle);
