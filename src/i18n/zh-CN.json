@@ -58,5 +58,6 @@
   "fifteenMin": "15分",
   "thirtyMin": "30分",
   "oneHour": "1小时",
-  "fourHour": "4小时"
+  "fourHour": "4小时",
+  "noData": "暂无数据"
 }

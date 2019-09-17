@@ -58,5 +58,6 @@
   "fifteenMin": "15m",
   "thirtyMin": "30m",
   "oneHour": "1H",
-  "fourHour": "4H"
+  "fourHour": "4H",
+  "noData": "no data!"
 }

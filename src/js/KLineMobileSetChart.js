@@ -15,6 +15,7 @@ var timeDivisionconfig;
 var toolTipIndex;
 var tipsLastLength = true;
 var isTimeDivisionsDataZoom = false;
+var loadingTimes = 0;
 
 
 class KLineMobileSetChartController {
@@ -33,14 +34,26 @@ class KLineMobileSetChartController {
     }
 
     showLoading() {
+        loadingTimes = loadingTimes + 1
         let message = getLanguage();
-        this.kline.showLoading({
-            text: message.loading,
-            color: '#fff',
-            textColor: '#fff',
-            maskColor: 'rgba(22, 27, 33, 0.5)',
-            zlevel: 1
-        });
+        if (loadingTimes < 6) {
+            this.kline.showLoading({
+                text: message.loading,
+                color: '#fff',
+                textColor: '#fff',
+                maskColor: 'rgba(22, 27, 33, 0.5)',
+                zlevel: 1
+            });
+        } else {
+            this.kline.showLoading({
+                text: message.noData,
+                color: '#161b21',
+                textColor: '#fff',
+                maskColor: 'rgba(22, 27, 33, 0.5)',
+                zlevel: 1
+            })
+        }
+
     }
 
     hideLoading() {
@@ -58,7 +71,25 @@ class KLineMobileSetChartController {
         cycle = 'normal';
         this.kline.hideLoading();
         this.kline.setOption(config, true);
+        loadingTimes = 0;
         saveCandle(this.kline);
+    }
+
+    updateOption(data, cycle) {
+        let length = data.values.length - 1;
+        if (!toolTipIndex) {
+            toolTipIndex = length;
+        }
+        let updateOption = {
+            xAxis: this.getXAxis(data, cycle),
+            tooltip: this.getToolTip(),
+            series: this.getSeries(data)
+        };
+        merge(config, updateOption);
+        config.dataZoom = this.kline.getOption().dataZoom;
+        this.kline.setOption(config);
+        loadingTimes = 0;
+        return toolTipIndex;
     }
 
     setTimeDivisionsOption(size) {
@@ -101,22 +132,6 @@ class KLineMobileSetChartController {
         cycle = 'everyhour';
         this.kline.setOption(timeDivisionconfig, true);
         saveCandle(this.kline);
-    }
-
-    updateOption(data, cycle) {
-        let length = data.values.length - 1;
-        if (!toolTipIndex) {
-            toolTipIndex = length;
-        }
-        let updateOption = {
-            xAxis: this.getXAxis(data, cycle),
-            tooltip: this.getToolTip(),
-            series: this.getSeries(data)
-        };
-        merge(config, updateOption);
-        config.dataZoom = this.kline.getOption().dataZoom;
-        this.kline.setOption(config);
-        return toolTipIndex;
     }
 
     updateTimeDivisionOption(data) {
