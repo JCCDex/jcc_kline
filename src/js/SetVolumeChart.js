@@ -10,6 +10,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var volumeOption;
 var oldVolumeData;
 var toolTipIndex;
+var loadingTimes = 0;
 
 class VolumeChart {
     constructor(configs) {
@@ -64,16 +65,29 @@ class VolumeChart {
     }
 
     showLoading() {
+        loadingTimes = loadingTimes + 1
         let message = getLanguage();
-        this.volume.showLoading(
-            {
-                text: message.loading,
-                color: '#fff',
-                textColor: '#fff',
-                maskColor: 'rgba(22, 27, 33, 0.5)',
-                zlevel: 1
-            }
-        );
+        if (loadingTimes < 6) {
+            this.volume.showLoading(
+                {
+                    text: message.loading,
+                    color: '#fff',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            )
+        } else {
+            this.volume.showLoading(
+                {
+                    text: message.noData,
+                    color: '#161b21',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            )
+        }
     }
 
     /* 绘制VolumeChart开始 */
@@ -94,6 +108,7 @@ class VolumeChart {
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
+            loadingTimes = 0;
             saveVolume(this.volume);
         }
     }
@@ -113,6 +128,7 @@ class VolumeChart {
             merge(volumeOption, volumeConfig);
             volumeOption.dataZoom = this.volume.getOption().dataZoom;
             this.volume.setOption(volumeOption);
+            loadingTimes = 0;
             saveVolume(this.volume);
         }
     }
@@ -191,7 +207,7 @@ class VolumeChart {
         var barWidth;
         if (data.volumes.length > 40) {
             barWidth = '74%';
-        } else if(data.volumes.length  <= 40 && data.volumes.length > 0) {
+        } else if (data.volumes.length <= 40 && data.volumes.length > 0) {
             barWidth = 18;
         }
         var s = [

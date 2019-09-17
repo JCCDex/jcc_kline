@@ -11,6 +11,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var timeSharingOption;
 var oldTimeSharingData;
 var toolTipIndex;
+var loadingTimes = 0;
 
 class TimeSharingChart {
     constructor(configs) {
@@ -66,16 +67,29 @@ class TimeSharingChart {
     }
 
     showLoading() {
+        loadingTimes = loadingTimes + 1
         let message = getLanguage();
-        this.timeSharing.showLoading(
-            {
-                text: message.loading,
-                color: '#fff',
-                textColor: '#fff',
-                maskColor: 'rgba(22, 27, 33, 0.5)',
-                zlevel: 1
-            }
-        );
+        if (loadingTimes < 6) {
+            this.timeSharing.showLoading(
+                {
+                    text: message.loading,
+                    color: '#fff',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            )
+        } else {
+            this.timeSharing.showLoading(
+                {
+                    text: message.noData,
+                    color: '#161b21',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            )
+        }
     }
 
     disposeTimeSharingEChart() {
@@ -99,6 +113,7 @@ class TimeSharingChart {
         merge(timeSharingOption, option);
         this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption, true);
+        loadingTimes = 0;
         saveTimeSharing(this.timeSharing);
         return toolTipIndex;
     }
@@ -117,6 +132,7 @@ class TimeSharingChart {
         }
         this.timeSharing.hideLoading();
         this.timeSharing.setOption(timeSharingOption);
+        loadingTimes = 0;
         saveTimeSharing(this.timeSharing);
     }
 
@@ -225,7 +241,7 @@ class TimeSharingChart {
                 dataZoom[0].start = 0;
             } else if (dataZoom[0].end <= 95) {
                 dataZoom[0].end = dataZoom[0].end + 5;
-            }else if (dataZoom[0].end > 95) {
+            } else if (dataZoom[0].end > 95) {
                 dataZoom[0].end = 100;
             }
         } else if (type === 'rightShift' && dataZoom[0].end <= 98) {

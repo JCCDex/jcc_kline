@@ -11,6 +11,7 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var config;
 var toolTipIndex;
 var oldKlineData;
+var loadingTimes = 0;
 
 class KLineSetChartController {
     constructor(configs) {
@@ -66,16 +67,29 @@ class KLineSetChartController {
     }
 
     showLoading() {
+        loadingTimes = loadingTimes + 1
         let message = getLanguage();
-        this.kline.showLoading(
-            {
-                text: message.loading,
-                color: '#fff',
-                textColor: '#fff',
-                maskColor: 'rgba(22, 27, 33, 0.5)',
-                zlevel: 1
-            }
-        );
+        if (loadingTimes < 6) {
+            this.kline.showLoading(
+                {
+                    text: message.loading,
+                    color: '#fff',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            );
+        } else {
+            this.kline.showLoading(
+                {
+                    text: message.noData,
+                    color: '#161b21',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            );
+        }
     }
 
     disposeEChart() {
@@ -104,6 +118,7 @@ class KLineSetChartController {
             };
             merge(config, klineOption);
             this.kline.setOption(config, true);
+            loadingTimes = 0;
             saveCandle(this.kline);
             return toolTipIndex;
         }
@@ -124,6 +139,7 @@ class KLineSetChartController {
             config.dataZoom = this.kline.getOption().dataZoom;
             this.kline.hideLoading();
             this.kline.setOption(config);
+            loadingTimes = 0;
             saveCandle(this.kline);
         }
     }
@@ -175,7 +191,7 @@ class KLineSetChartController {
         let barWidth;
         if (data.values.length > 40) {
             barWidth = '70%';
-        } else if(data.values.length  <= 40 && data.values.length > 0) {
+        } else if (data.values.length <= 40 && data.values.length > 0) {
             barWidth = 18;
         }
         var s = [{

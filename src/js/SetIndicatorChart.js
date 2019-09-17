@@ -14,6 +14,7 @@ var oldIndicatorData;
 var indicatorOption;
 var indicatorType;
 var indicatorDataZoom;
+var loadingTimes = 0;
 
 class IndicatorChartController {
     constructor(configs) {
@@ -68,16 +69,29 @@ class IndicatorChartController {
     }
 
     showLoading() {
+        loadingTimes = loadingTimes + 1
         let message = getLanguage();
-        this.indicator.showLoading(
-            {
-                text: message.loading,
-                color: '#fff',
-                textColor: '#fff',
-                maskColor: 'rgba(22, 27, 33, 0.5)',
-                zlevel: 1
-            }
-        );
+        if (loadingTimes < 6) {
+            this.indicator.showLoading(
+                {
+                    text: message.loading,
+                    color: '#fff',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            );
+        } else {
+            this.indicator.showLoading(
+                {
+                    text: message.noData,
+                    color: '#161b21',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            );
+        }
     }
 
     /* 绘制IndicatorChart开始 */
