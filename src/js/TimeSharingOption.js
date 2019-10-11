@@ -103,7 +103,7 @@ var timeSharingOption = {
                 normal: {
                     color: '#fff', // 线的颜色
                     opacity: 1, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形
-                    width: 2 // 线宽
+                    width: 1 // 线宽
                 }
             }
         },
@@ -116,7 +116,7 @@ var timeSharingOption = {
                 normal: {
                     color: 'yellow',  // 线的颜色
                     opacity: 1, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形
-                    width: 2 // 线宽
+                    width: 1 // 线宽
                 }
             }
         }
@@ -241,7 +241,7 @@ var mobileTimeSharingOption = {
                 normal: {
                     color: '#fff', // 颜色
                     opacity: 1, // 图形透明度。支持从 0 到 1 的数字
-                    width: 2 // 线宽
+                    width: 1 // 线宽
                 }
             }
         },
@@ -254,7 +254,7 @@ var mobileTimeSharingOption = {
                 normal: {
                     color: 'yellow',// 颜色
                     opacity: 1, // 图形透明度。支持从 0 到 1 的数字
-                    width: 2  // 线宽
+                    width: 1  // 线宽
                 }
             }
         }
