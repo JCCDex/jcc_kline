@@ -55,6 +55,10 @@ class ChartController {
         return this.setDepthChart.getMobileTipsData();
     }
 
+    showDepthLoading(noData) {
+        this.setDepthChart.showLoading(noData)
+    }
+
     disposeDepthEChart() {
         this.setDepthChart.disposeDepthEChart();
     }

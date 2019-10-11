@@ -75,17 +75,29 @@ class DepthChart {
         }
     }
 
-    showLoading() {
+    showLoading(noData) {
         let message = getLanguage();
-        this.depth.showLoading(
-            {
-                text: message.loading,
-                color: '#fff',
-                textColor: '#fff',
-                maskColor: 'rgba(22, 27, 33, 0.5)',
-                zlevel: 1
-            }
-        );
+        if (noData) {
+            this.depth.showLoading(
+                {
+                    text: message.noData,
+                    color: '#161b21',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            )
+        } else {
+            this.depth.showLoading(
+                {
+                    text: message.loading,
+                    color: '#fff',
+                    textColor: '#fff',
+                    maskColor: 'rgba(22, 27, 33, 0.5)',
+                    zlevel: 1
+                }
+            );
+        }
     }
 
     disposeDepthEChart() {
@@ -219,7 +231,7 @@ class DepthChart {
             gridIndex: 1,
             axisLabel: {
                 formatter: function (value, index) {
-                    if (index == 0 && buyLength != 1&&sellLength!=1) {
+                    if (index == 0 && buyLength != 1 && sellLength != 1) {
                         return '';
                     }
                     return value;

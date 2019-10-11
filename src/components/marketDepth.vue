@@ -35,7 +35,9 @@ export default {
       depthSize: {
         height: "",
         width: ""
-      }
+      },
+      loadingTimes: 0,
+      noDataLoading: false
     };
   },
   props: {
@@ -63,6 +65,8 @@ export default {
       if (this.chartDataObj.depthData) {
         let data = this.chartDataObj.depthData;
         data.precision = this.chartDataObj.precision;
+        this.loadingTimes = 0;
+        this.noDataLoading = false;
         if (data) {
           if (
             JSON.stringify(this.coinType) !==
@@ -73,6 +77,21 @@ export default {
             this.coinType = this.chartDataObj.coinType;
           } else {
             this.depth.updateDepthOption(data);
+          }
+        }
+      } else {
+        if (
+          JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType)
+        ) {
+          this.init(true);
+          this.noDataLoading = true;
+          this.coinType = this.chartDataObj.coinType;
+        }
+        if (this.noDataLoading) {
+          this.loadingTimes = this.loadingTimes + 1;
+          if (this.loadingTimes > 6) {
+            this.depth.showDepthLoading(true);
           }
         }
       }
