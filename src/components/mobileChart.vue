@@ -246,7 +246,6 @@ export default {
           this.toolTipIndex = divisionData.prices.length - 1;
         }
       }
-      console.log('aaaaaaaa')
       this.chartDataObj = {
         platform: "mobile",
         precision: precision,

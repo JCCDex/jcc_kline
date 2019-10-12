@@ -253,7 +253,7 @@ export default {
             this.kline.showMobileLoading(true);
           }
         }
-        return
+        return;
       }
       if (this.isRefresh || this.refreshKline) {
         this.init(true);
@@ -264,6 +264,7 @@ export default {
           return;
         }
         if (this.currentCycle !== "everyhour") {
+          this.watchLoading = false;
           this.kline.setMobileOption(
             this.klineConfig.size,
             this.chartDataObj.candleData
@@ -277,6 +278,7 @@ export default {
         }
       }
       if (this.chartDataObj.candleData) {
+        this.watchLoading = false;
         let candleData = this.chartDataObj.candleData;
         if (
           this.currentCycle !== "everyhour" &&
@@ -299,6 +301,7 @@ export default {
       }
       if (this.currentCycle === "everyhour" && this.chartDataObj.divisionData) {
         let divisionData = this.chartDataObj.divisionData;
+        this.watchLoading = false;
         if (
           divisionData.times !== null &&
           divisionData.averages !== null &&
