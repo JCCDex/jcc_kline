@@ -26,7 +26,9 @@ export default {
       timeSharingData: null,
       currentCycle: "",
       isRefresh: true,
-      refreshKline: true
+      refreshKline: true,
+      watchLoading: false,
+      loadingTime: 0
     };
   },
   props: {
@@ -52,7 +54,12 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true);
+        if (this.watchLoading) {
+          this.timeSharing.showTimeSharingLoading(true);
+        } else {
+          this.watchLoading = true;
+          this.init(true);
+        }
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -61,12 +68,15 @@ export default {
       this.message = getLanguage();
       let precision = this.chartDataObj.precision;
       if (this.chartDataObj.divisionData) {
+        this.watchLoading = false;
+        this.loadingTime = 0;
         let divisionData = this.chartDataObj.divisionData;
         divisionData.precision = precision;
         if (
           JSON.stringify(this.coinType) !==
             JSON.stringify(this.chartDataObj.coinType) ||
-          this.isRefresh || this.refreshKline
+          this.isRefresh ||
+          this.refreshKline
         ) {
           this.init(true);
           let tipIndex = this.timeSharing.setTimeSharingOption(divisionData);
@@ -82,11 +92,20 @@ export default {
         } else {
           this.timeSharing.updateTimeSharingOption(divisionData);
         }
-      } else if (
-        JSON.stringify(this.coinType) !==
-        JSON.stringify(this.chartDataObj.coinType)
-      ) {
-        this.init(true);
+      } else {
+        this.loadingTime = this.loadingTime + 1;
+        if (
+          JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType)
+        ) {
+          this.watchLoading = true;
+          this.init(true);
+        }
+        if (this.watchLoading) {
+          if (this.loadingTime > 6) {
+            this.timeSharing.showTimeSharingLoading(true);
+          }
+        }
       }
     },
     klineConfig() {

@@ -85,6 +85,10 @@ class ChartController {
         this.setTimeSharing.updateTimeSharingOption(divisionData);
     }
 
+    showTimeSharingLoading(noData) {
+        this.setTimeSharing.showLoading(noData)
+    }
+
     getTimeSharingTipIndex() {
         return this.setTimeSharing.getTimeSharingTipIndex();
     }
