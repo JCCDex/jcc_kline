@@ -105,6 +105,7 @@ import {
   calculateMA
 } from "../js/processData";
 import { formatDecimal, getLanguage, formatTime } from "../js/utils";
+import { constants } from 'zlib';
 export default {
   name: "mobileChart",
   components: {
@@ -245,6 +246,7 @@ export default {
           this.toolTipIndex = divisionData.prices.length - 1;
         }
       }
+      console.log('aaaaaaaa')
       this.chartDataObj = {
         platform: "mobile",
         precision: precision,

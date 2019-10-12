@@ -35,7 +35,7 @@ class KLineController {
         this.setKLineChart.updateOption(data, cycle);
     }
 
-    // 绘制加载动画
+    // 绘制PC端加载动画
     showKlineLoading(noData) {
         this.setKLineChart.showLoading(noData)
     }
@@ -66,6 +66,10 @@ class KLineController {
 
     setMobileOption(size, data) {
         this.setMobileKLineChart.setOption(size, data);
+    }
+
+    showMobileLoading(noData) {
+        this.setMobileKLineChart.showLoading(noData)
     }
 
     setTimeDivisionsOption(size) {

@@ -15,7 +15,6 @@ var timeDivisionconfig;
 var toolTipIndex;
 var tipsLastLength = true;
 var isTimeDivisionsDataZoom = false;
-var loadingTimes = 0;
 
 
 class KLineMobileSetChartController {
@@ -33,18 +32,9 @@ class KLineMobileSetChartController {
         }
     }
 
-    showLoading() {
-        loadingTimes = loadingTimes + 1
+    showLoading(noData) {
         let message = getLanguage();
-        if (loadingTimes < 6) {
-            this.kline.showLoading({
-                text: message.loading,
-                color: '#fff',
-                textColor: '#fff',
-                maskColor: 'rgba(22, 27, 33, 0.5)',
-                zlevel: 1
-            });
-        } else {
+        if (noData) {
             this.kline.showLoading({
                 text: message.noData,
                 color: '#161b21',
@@ -52,8 +42,15 @@ class KLineMobileSetChartController {
                 maskColor: 'rgba(22, 27, 33, 0.5)',
                 zlevel: 1
             })
+        } else {
+            this.kline.showLoading({
+                text: message.loading,
+                color: '#fff',
+                textColor: '#fff',
+                maskColor: 'rgba(22, 27, 33, 0.5)',
+                zlevel: 1
+            });
         }
-
     }
 
     hideLoading() {
@@ -71,7 +68,6 @@ class KLineMobileSetChartController {
         cycle = 'normal';
         this.kline.hideLoading();
         this.kline.setOption(config, true);
-        loadingTimes = 0;
         saveCandle(this.kline);
     }
 
@@ -88,7 +84,6 @@ class KLineMobileSetChartController {
         merge(config, updateOption);
         config.dataZoom = this.kline.getOption().dataZoom;
         this.kline.setOption(config);
-        loadingTimes = 0;
         return toolTipIndex;
     }
 

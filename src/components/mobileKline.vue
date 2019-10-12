@@ -214,7 +214,9 @@ export default {
       selectHour: "",
       showIndicatorBtn: true,
       showIndicatorDiv: false,
-      showIndicator: ""
+      showIndicator: "",
+      watchLoading: true,
+      loadingTime: 0
     };
   },
   props: {
@@ -236,6 +238,22 @@ export default {
       this.changeCycleLanguage(this.currentCycle);
       if (!this.chartDataObj) {
         return;
+      }
+      if (
+        ((this.chartDataObj.candleData == undefined ||
+          this.chartDataObj.candleData == []) &&
+          this.chartDataObj.cycle != "everyhour") ||
+        ((this.chartDataObj.timeDivisionData == undefined ||
+          this.chartDataObj.timeDivisionData == []) &&
+          this.chartDataObj.cycle == "everyhour")
+      ) {
+        if (this.watchLoading) {
+          this.loadingTime = this.loadingTime + 1;
+          if (this.loadingTime > 4) {
+            this.kline.showMobileLoading(true);
+          }
+        }
+        return
       }
       if (this.isRefresh || this.refreshKline) {
         this.init(true);
@@ -383,6 +401,8 @@ export default {
       }
       this.changeCycleLanguage(selectCycle);
       this.init(true);
+      this.watchLoading = true;
+      this.loadingTime = 0;
       this.currentCycle = cycle;
       this.isRefresh = true;
       this.$emit("listenToChildEvent", selectCycle);
@@ -412,7 +432,7 @@ export default {
       let indicatorData = {
         dataZoom: dataZoom,
         indicator: indicator
-      }
+      };
       this.$emit("listenIndicatorChartOpenClose", indicatorData);
       if (this.showIndicator === indicator) {
         this.showIndicator = "";
