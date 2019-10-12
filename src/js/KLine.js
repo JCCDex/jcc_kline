@@ -35,6 +35,11 @@ class KLineController {
         this.setKLineChart.updateOption(data, cycle);
     }
 
+    // 绘制加载动画
+    showKlineLoading(noData) {
+        this.setKLineChart.showLoading(noData)
+    }
+
     getToolTipIndex() {
         return this.setKLineChart.getToolTipIndex();
     }

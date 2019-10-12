@@ -25,7 +25,9 @@ export default {
         height: 0
       },
       klineData: null,
-      coinType: ""
+      coinType: "",
+      watchLoading: false,
+      loadingTime: 0
     };
   },
   props: {
@@ -54,9 +56,19 @@ export default {
   },
   watch: {
     cycle() {
-      if (this.cycle !== this.currentCycle) {
+      if (this.cycle === "everyhour") {
         this.init(true);
         this.isRefresh = true;
+        return;
+      }
+      if (this.cycle !== this.currentCycle) {
+        if (this.watchLoading) {
+          this.kline.showKlineLoading(true);
+        } else {
+          this.init(true);
+          this.isRefresh = true;
+          this.watchLoading = true;
+        }
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
@@ -65,11 +77,13 @@ export default {
     },
     chartDataObj() {
       if (this.chartDataObj.candleData) {
+        this.watchLoading = false;
         let cycle = this.chartDataObj.cycle;
         let data = this.chartDataObj.candleData;
         data.precision = this.chartDataObj.precision;
         if (data.values && data.volumes && data.categoryData) {
-          if (this.refreshKline ||
+          if (
+            this.refreshKline ||
             this.isRefresh ||
             JSON.stringify(this.coinType) !==
               JSON.stringify(this.chartDataObj.coinType)
@@ -84,10 +98,21 @@ export default {
             this.kline.updateOption(data, this.currentCycle);
           }
         }
-      } else if (JSON.stringify(this.coinType) !==
-              JSON.stringify(this.chartDataObj.coinType)) {
-        this.init(true);
-        this.coinType = this.chartDataObj.coinType;
+      } else {
+        if (
+          JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType)
+        ) {
+          this.watchLoading = true;
+          this.init(true);
+          this.coinType = this.chartDataObj.coinType;
+        }
+        if (this.watchLoading) {
+          this.loadingTime = this.loadingTime + 1;
+          if (this.loadingTime > 6) {
+            this.kline.showKlineLoading(true);
+          }
+        }
       }
     },
     klineConfig() {
