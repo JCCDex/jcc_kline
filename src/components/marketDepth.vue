@@ -90,7 +90,7 @@ export default {
         }
         if (this.noDataLoading) {
           this.loadingTimes = this.loadingTimes + 1;
-          if (this.loadingTimes > 6) {
+          if (this.loadingTimes > 4) {
             this.depth.showDepthLoading(true);
           }
         }
