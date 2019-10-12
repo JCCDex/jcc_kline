@@ -138,14 +138,11 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        if (this.watchLoading) {
-          this.Indicator.showIndicatorLoading(true);
-        } else {
-          this.init(true);
-          this.toolTipData = null;
-          this.watchLoading = true;
-          this.isRefresh = true;
-        }
+        this.loadingTime = 0;
+        this.init(true);
+        this.toolTipData = null;
+        this.watchLoading = true;
+        this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
@@ -181,6 +178,7 @@ export default {
           JSON.stringify(this.coinType) !==
           JSON.stringify(this.chartDataObj.coinType)
         ) {
+          this.loadingTime = 0;
           this.watchLoading = true;
           this.toolTipData = null;
           this.init(true);
@@ -188,7 +186,7 @@ export default {
         }
         if (this.watchLoading) {
           this.loadingTime = this.loadingTime + 1;
-          if (this.loadingTime > 6) {
+          if (this.loadingTime > 4) {
             this.Indicator.showIndicatorLoading(true);
           }
         }

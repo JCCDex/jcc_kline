@@ -54,13 +54,10 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        if (this.watchLoading) {
-          this.volume.showVolumeLoading(true);
-        } else {
-          this.init(true);
-          this.isRefresh = true;
-          this.watchLoading = true;
-        }
+        this.loadingTime = 0;
+        this.init(true);
+        this.isRefresh = true;
+        this.watchLoading = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
@@ -107,13 +104,14 @@ export default {
           JSON.stringify(this.coinType) !==
           JSON.stringify(this.chartDataObj.coinType)
         ) {
+          this.loadingTime = 0;
           this.watchLoading = true;
           this.init(true);
           this.coinType = this.chartDataObj.coinType;
         }
         if (this.watchLoading) {
           this.loadingTime = this.loadingTime + 1;
-          if (this.loadingTime > 6) {
+          if (this.loadingTime > 4) {
             this.volume.showVolumeLoading(true);
           }
         }
@@ -153,13 +151,14 @@ export default {
           JSON.stringify(this.coinType) !==
           JSON.stringify(this.chartDataObj.coinType)
         ) {
+          this.loadingTime = 0;
           this.watchLoading = true;
           this.init(true);
           this.coinType = this.chartDataObj.coinType;
         }
         if (this.watchLoading) {
           this.loadingTime = this.loadingTime + 1;
-          if (this.loadingTime > 6) {
+          if (this.loadingTime > 4) {
             this.volume.showVolumeLoading(true);
           }
         }

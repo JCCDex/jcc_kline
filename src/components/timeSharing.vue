@@ -54,12 +54,9 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        if (this.watchLoading) {
-          this.timeSharing.showTimeSharingLoading(true);
-        } else {
-          this.watchLoading = true;
-          this.init(true);
-        }
+        this.loadingTime = 0;
+        this.watchLoading = true;
+        this.init(true);
         this.isRefresh = true;
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
@@ -93,16 +90,18 @@ export default {
           this.timeSharing.updateTimeSharingOption(divisionData);
         }
       } else {
-        this.loadingTime = this.loadingTime + 1;
         if (
           JSON.stringify(this.coinType) !==
           JSON.stringify(this.chartDataObj.coinType)
         ) {
+          this.loadingTime = 0;
           this.watchLoading = true;
           this.init(true);
+          this.coinType = this.chartDataObj.coinType;
         }
         if (this.watchLoading) {
-          if (this.loadingTime > 6) {
+          this.loadingTime = this.loadingTime + 1;
+          if (this.loadingTime > 4) {
             this.timeSharing.showTimeSharingLoading(true);
           }
         }
