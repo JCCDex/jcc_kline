@@ -10,7 +10,6 @@ import { getLanguage, getDefaultChartSize } from './utils';
 var volumeOption;
 var oldVolumeData;
 var toolTipIndex;
-var loadingTimes = 0;
 
 class VolumeChart {
     constructor(configs) {
@@ -64,14 +63,13 @@ class VolumeChart {
         }
     }
 
-    showLoading() {
-        loadingTimes = loadingTimes + 1
+    showLoading(noData) {
         let message = getLanguage();
-        if (loadingTimes < 6) {
+        if (noData) {
             this.volume.showLoading(
                 {
-                    text: message.loading,
-                    color: '#fff',
+                    text: message.noData,
+                    color: '#161b21',
                     textColor: '#fff',
                     maskColor: 'rgba(22, 27, 33, 0.5)',
                     zlevel: 1
@@ -80,8 +78,8 @@ class VolumeChart {
         } else {
             this.volume.showLoading(
                 {
-                    text: message.noData,
-                    color: '#161b21',
+                    text: message.loading,
+                    color: '#fff',
                     textColor: '#fff',
                     maskColor: 'rgba(22, 27, 33, 0.5)',
                     zlevel: 1
@@ -108,7 +106,6 @@ class VolumeChart {
             };
             merge(volumeOption, option);
             this.volume.setOption(volumeOption, true);
-            loadingTimes = 0;
             saveVolume(this.volume);
         }
     }
@@ -128,7 +125,6 @@ class VolumeChart {
             merge(volumeOption, volumeConfig);
             volumeOption.dataZoom = this.volume.getOption().dataZoom;
             this.volume.setOption(volumeOption);
-            loadingTimes = 0;
             saveVolume(this.volume);
         }
     }

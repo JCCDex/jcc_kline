@@ -31,6 +31,10 @@ class IndicatorChartController {
         this.setIndicatorChart.changeDataZoom(type);
     }
 
+    showIndicatorLoading(noData) {
+        this.setIndicatorChart.showLoading(noData)
+    }
+
     setIndicatorOption(data, cycle) {
         this.setIndicatorChart.setIndicatorOption(data, cycle);
     }

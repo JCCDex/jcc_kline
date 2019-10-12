@@ -14,7 +14,6 @@ var oldIndicatorData;
 var indicatorOption;
 var indicatorType;
 var indicatorDataZoom;
-var loadingTimes = 0;
 
 class IndicatorChartController {
     constructor(configs) {
@@ -68,14 +67,13 @@ class IndicatorChartController {
         }
     }
 
-    showLoading() {
-        loadingTimes = loadingTimes + 1
+    showLoading(noData) {
         let message = getLanguage();
-        if (loadingTimes < 6) {
+        if (noData) {
             this.indicator.showLoading(
                 {
-                    text: message.loading,
-                    color: '#fff',
+                    text: message.noData,
+                    color: '#161b21',
                     textColor: '#fff',
                     maskColor: 'rgba(22, 27, 33, 0.5)',
                     zlevel: 1
@@ -84,8 +82,8 @@ class IndicatorChartController {
         } else {
             this.indicator.showLoading(
                 {
-                    text: message.noData,
-                    color: '#161b21',
+                    text: message.loading,
+                    color: '#fff',
                     textColor: '#fff',
                     maskColor: 'rgba(22, 27, 33, 0.5)',
                     zlevel: 1

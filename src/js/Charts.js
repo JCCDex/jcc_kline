@@ -111,6 +111,10 @@ class ChartController {
         return this.setVolumeChart.getToolTipIndex();
     }
 
+    showVolumeLoading(noData) {
+        this.setVolumeChart.showLoading(noData)
+    }
+
     updateVolumeOption(data, cycle) {
         this.setVolumeChart.updateVolumeOption(data, cycle);
     }

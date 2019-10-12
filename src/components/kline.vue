@@ -78,6 +78,7 @@ export default {
     chartDataObj() {
       if (this.chartDataObj.candleData) {
         this.watchLoading = false;
+        this.loadingTime = 0;
         let cycle = this.chartDataObj.cycle;
         let data = this.chartDataObj.candleData;
         data.precision = this.chartDataObj.precision;

@@ -98,7 +98,9 @@ export default {
       IndicatorSize: {
         height: "",
         width: ""
-      }
+      },
+      watchLoading: false,
+      loadingTime: 0
     };
   },
   props: {
@@ -136,19 +138,31 @@ export default {
   watch: {
     cycle() {
       if (this.cycle !== this.currentCycle) {
-        this.init(true);
-        this.toolTipData = null;
-        this.isRefresh = true;
+        if (this.watchLoading) {
+          this.Indicator.showIndicatorLoading(true);
+        } else {
+          this.init(true);
+          this.toolTipData = null;
+          this.watchLoading = true;
+          this.isRefresh = true;
+        }
       }
       this.currentCycle = JSON.parse(JSON.stringify(this.cycle));
     },
     indicatorType() {
-      let type = this.indicatorType;
-      let data = JSON.parse(JSON.stringify(this.chartDataObj));
-      this.calculateIndicatorData(type, data);
-      let index = this.toolTipIndex;
-      let precision = parseInt(this.chartDataObj.precision.price) + 1;
-      this.changeChartTipData(index, type, precision);
+      if (this.chartDataObj.cycle === "everyhour") {
+        return;
+      }
+      if (this.chartDataObj.candleData && this.chartDataObj.klineData) {
+        this.watchLoading = false;
+        this.loadingTime = 0;
+        let type = this.indicatorType;
+        let data = JSON.parse(JSON.stringify(this.chartDataObj));
+        this.calculateIndicatorData(type, data);
+        let index = this.toolTipIndex;
+        let precision = parseInt(this.chartDataObj.precision.price) + 1;
+        this.changeChartTipData(index, type, precision);
+      }
     },
     resizeSize() {
       this.resize();
@@ -157,8 +171,28 @@ export default {
       if (this.chartDataObj.cycle === "everyhour") {
         return;
       }
-      let data = JSON.parse(JSON.stringify(this.chartDataObj));
-      this.calculateIndicatorData(this.indicatorType, data);
+      if (this.chartDataObj.candleData && this.chartDataObj.klineData) {
+        this.watchLoading = false;
+        this.loadingTime = 0;
+        let data = JSON.parse(JSON.stringify(this.chartDataObj));
+        this.calculateIndicatorData(this.indicatorType, data);
+      } else {
+        if (
+          JSON.stringify(this.coinType) !==
+          JSON.stringify(this.chartDataObj.coinType)
+        ) {
+          this.watchLoading = true;
+          this.toolTipData = null;
+          this.init(true);
+          this.coinType = this.chartDataObj.coinType;
+        }
+        if (this.watchLoading) {
+          this.loadingTime = this.loadingTime + 1;
+          if (this.loadingTime > 6) {
+            this.Indicator.showIndicatorLoading(true);
+          }
+        }
+      }
     },
     klineConfig() {
       if (this.klineConfig.platform === "pc") {
