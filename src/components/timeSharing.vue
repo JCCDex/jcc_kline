@@ -64,7 +64,10 @@ export default {
     chartDataObj() {
       this.message = getLanguage();
       let precision = this.chartDataObj.precision;
-      if (this.chartDataObj.divisionData) {
+      if (
+        this.chartDataObj.divisionData &&
+        this.chartDataObj.divisionData.length > 0
+      ) {
         this.watchLoading = false;
         this.loadingTime = 0;
         let divisionData = this.chartDataObj.divisionData;

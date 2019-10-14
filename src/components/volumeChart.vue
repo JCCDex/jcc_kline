@@ -118,7 +118,8 @@ export default {
       }
       if (
         this.currentCycle === "everyhour" &&
-        this.chartDataObj.timeDivisionData
+        this.chartDataObj.timeDivisionData &&
+        this.chartDataObj.timeDivisionData.length > 0
       ) {
         //周期是分时且有数据时
         this.watchLoading = false;
@@ -143,23 +144,22 @@ export default {
         } else {
           this.volume.updateVolumeOption(divisionData, this.currentCycle);
         }
-      } else if (
-        !this.chartDataObj.timeDivisionData &&
-        this.currentCycle === "everyhour"
-      ) {
-        if (
-          JSON.stringify(this.coinType) !==
-          JSON.stringify(this.chartDataObj.coinType)
-        ) {
-          this.loadingTime = 0;
-          this.watchLoading = true;
-          this.init(true);
-          this.coinType = this.chartDataObj.coinType;
-        }
-        if (this.watchLoading) {
-          this.loadingTime = this.loadingTime + 1;
-          if (this.loadingTime > 4) {
-            this.volume.showVolumeLoading(true);
+      } else {
+        if (this.currentCycle === "everyhour") {
+          if (
+            JSON.stringify(this.coinType) !==
+            JSON.stringify(this.chartDataObj.coinType)
+          ) {
+            this.loadingTime = 0;
+            this.watchLoading = true;
+            this.init(true);
+            this.coinType = this.chartDataObj.coinType;
+          }
+          if (this.watchLoading) {
+            this.loadingTime = this.loadingTime + 1;
+            if (this.loadingTime > 4) {
+              this.volume.showVolumeLoading(true);
+            }
           }
         }
       }

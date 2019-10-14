@@ -640,7 +640,7 @@ export default {
     },
     showIndicatorChart(indicator) {
       if (indicator === this.showIndicator) {
-        this.showIndicator = '';
+        this.showIndicator = "";
         this.isClose = true;
       } else {
         this.showIndicator = indicator;
@@ -652,7 +652,7 @@ export default {
     },
 
     getTipDataIndex(index) {
-      if (!isNaN(index)) {
+      if (!isNaN(index) && index >= 0) {
         if (this.chartDataObj.precision) {
           let pricePrecision = !isNaN(this.chartDataObj.precision.price)
             ? this.chartDataObj.precision.price
@@ -793,7 +793,7 @@ export default {
       this.isShow = false;
     },
     closeIndicatorChart(isClose) {
-      this.showIndicator = '';
+      this.showIndicator = "";
       this.isClose = isClose;
       this.resize();
     },
