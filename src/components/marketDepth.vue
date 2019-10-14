@@ -36,6 +36,7 @@ export default {
         height: "",
         width: ""
       },
+      isRefresh: true,
       loadingTimes: 0,
       noDataLoading: false
     };
@@ -62,19 +63,23 @@ export default {
   },
   watch: {
     chartDataObj() {
+      if (
+        JSON.stringify(this.coinType) !==
+        JSON.stringify(this.chartDataObj.coinType)
+      ) {
+        this.isRefresh = true;
+      }
       if (this.chartDataObj.depthData) {
         let data = this.chartDataObj.depthData;
         data.precision = this.chartDataObj.precision;
         this.loadingTimes = 0;
         this.noDataLoading = false;
         if (data) {
-          if (
-            JSON.stringify(this.coinType) !==
-            JSON.stringify(this.chartDataObj.coinType)
-          ) {
+          if (this.isRefresh) {
             this.init(true);
             this.depth.setDepthOption(data);
             this.coinType = this.chartDataObj.coinType;
+            this.isRefresh = false;
           } else {
             this.depth.updateDepthOption(data);
           }
@@ -86,6 +91,8 @@ export default {
         ) {
           this.init(true);
           this.noDataLoading = true;
+          this.loadingTimes = 0;
+          this.isRefresh = true;
           this.coinType = this.chartDataObj.coinType;
         }
         if (this.noDataLoading) {
