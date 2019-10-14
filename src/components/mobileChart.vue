@@ -105,7 +105,7 @@ import {
   calculateMA
 } from "../js/processData";
 import { formatDecimal, getLanguage, formatTime } from "../js/utils";
-import { constants } from 'zlib';
+import { constants } from "zlib";
 export default {
   name: "mobileChart",
   components: {
@@ -238,7 +238,11 @@ export default {
       if (chartData.depthData) {
         depthData = getDepthData(chartData.depthData, precision);
       }
-      if (chartData.cycle === "everyhour" && chartData.timeDivisionData) {
+      if (
+        chartData.cycle === "everyhour" &&
+        chartData.timeDivisionData &&
+        chartData.timeDivisionData.length > 0
+      ) {
         timeDivisionData = chartData.timeDivisionData;
         divisionData = handleDivisionData(timeDivisionData);
         this.divisionTime = divisionData.divisionTime;
