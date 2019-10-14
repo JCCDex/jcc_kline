@@ -66,7 +66,7 @@ export default {
       let precision = this.chartDataObj.precision;
       if (
         this.chartDataObj.divisionData &&
-        this.chartDataObj.divisionData.length > 0
+        this.chartDataObj.divisionData !== {}
       ) {
         this.watchLoading = false;
         this.loadingTime = 0;
