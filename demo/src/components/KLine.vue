@@ -1,28 +1,35 @@
 <template>
   <div :style="{ position: 'relative', width: klineConfig.size.width + 'px' }">
-    <jKline ref='vkline' v-on:listenToChildEvent='changeCycle' :kline-data-obj='klineDataObj' :kline-config='klineConfig'></jKline>
+    <jKline
+      ref="vkline"
+      v-on:listenToChildEvent="changeCycle"
+      :kline-data-obj="klineDataObj"
+      :kline-config="klineConfig"
+    ></jKline>
   </div>
 </template>
 
 <script>
-// import { Chart } from 'jcc_kline/src/index'
-import {JcInfo} from 'jcc_rpc'
-let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+import { JcInfo } from "jcc_rpc";
+let width =
+  window.innerWidth ||
+  document.documentElement.clientWidth ||
+  document.body.clientWidth;
+let height =
+  window.innerHeight ||
+  document.documentElement.clientHeight ||
+  document.body.clientHeight;
 export default {
-  name: 'KLine',
-  // components: {
-  //   jKline: Chart
-  // },
-  data () {
+  name: "KLine",
+  data() {
     return {
       id: null,
-      cycle: 'hour',
+      cycle: "hour",
       kline: null,
       klineDataObj: null,
       klineConfig: {
-        platform: 'pc',
-        backgroundColor: '#161b21',
+        platform: "pc",
+        backgroundColor: "#161b21",
         defaultSize: false,
         size: {
           width: width * 0.8,
@@ -31,55 +38,61 @@ export default {
         defaultMA: false,
         MA: [
           {
-            name: 'MA3',
-            color: '#67ff7c'
+            name: "MA3",
+            color: "#67ff7c"
           },
           {
-            name: 'MA10',
-            color: '#ff4d71'
+            name: "MA10",
+            color: "#ff4d71"
           },
           {
-            name: 'MA15',
-            color: '#f6d026'
+            name: "MA15",
+            color: "#f6d026"
           },
           {
-            name: 'MA20',
-            color: '#ff4d71'
+            name: "MA20",
+            color: "#ff4d71"
           },
           {
-            name: 'MA30',
-            color: '#000000'
+            name: "MA30",
+            color: "#000000"
           }
         ]
       }
-    }
+    };
   },
-  created () {
-    clearInterval(this.id)
-    this.getKline()
-    this.id = setInterval(this.update, 10000)
+  created() {
+    clearInterval(this.id);
+    this.getKline();
+    this.id = setInterval(this.update, 10000);
   },
-  beforeDestroy () {
-    window.removeEventListener('resize', this.resize)
-    clearInterval(this.id)
+  beforeDestroy() {
+    window.removeEventListener("resize", this.resize);
+    clearInterval(this.id);
   },
-  mounted () {
-    window.addEventListener('resize', this.resize)
+  mounted() {
+    window.addEventListener("resize", this.resize);
   },
   methods: {
-    changeCycle (cycle) {
-      this.cycle = cycle
-      this.getKline()
+    changeCycle(cycle) {
+      this.cycle = cycle;
+      this.getKline();
     },
-    update () {
-      this.getKline()
+    update() {
+      this.getKline();
     },
-    resize () {
-      let width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth
-      let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    resize() {
+      let width =
+        window.innerWidth ||
+        document.documentElement.clientWidth ||
+        document.body.clientWidth;
+      let height =
+        window.innerHeight ||
+        document.documentElement.clientHeight ||
+        document.body.clientHeight;
       this.klineConfig = {
-        platform: 'pc',
-        backgroundColor: '#161b21',
+        platform: "pc",
+        backgroundColor: "#161b21",
         defaultSize: false,
         size: {
           width: width * 0.8,
@@ -87,73 +100,87 @@ export default {
         },
         MA: [
           {
-            name: 'MA3',
-            color: '#67ff7c'
+            name: "MA3",
+            color: "#67ff7c"
           },
           {
-            name: 'MA10',
-            color: '#ff4d71'
+            name: "MA10",
+            color: "#ff4d71"
           },
           {
-            name: 'MA15',
-            color: '#f6d026'
+            name: "MA15",
+            color: "#f6d026"
           },
           {
-            name: 'MA20',
-            color: '#ff4d71'
+            name: "MA20",
+            color: "#ff4d71"
           },
           {
-            name: 'MA30',
-            color: '#000000'
+            name: "MA30",
+            color: "#000000"
           }
         ]
-      }
+      };
     },
-    async getKline () {
-      var hosts = process.env.infoHosts
-      // var hosts = ['iujhg293cabc.jccdex.cn']
-      var port = process.env.infoPort
-      var https = true
-      let inst = new JcInfo(hosts, port, https)
-      var base = 'SWT'
-      var counter = 'CNT'
-      let p1 = inst.getKline(base, counter, this.cycle)
-      let p2 = inst.getDepth(base, counter, 'more')
+    async getKline() {
+      var hosts = process.env.infoHosts;
+      var port = process.env.infoPort;
+      var https = true;
+      let inst = new JcInfo(hosts, port, https);
+      var base = "SWT";
+      var counter = "CNT";
       let coinType = {
-        baseTitle: 'swt',
-        counterTitle: 'cnt'
-      }
-      let [res1, res2] = await Promise.all([p1, p2])
-      this.klineDataObj = {
-        klineData: res1.data,
-        depthData: res2.data,
-        coinType: coinType,
-        cycle: this.cycle,
-        pricePrecision: 6,
-        amountPrecision: 0
+        baseTitle: "swt",
+        counterTitle: "cnt"
+      };
+      let res2 = await inst.getDepth(base, counter, "more");
+      if (this.cycle != "everyhour") {
+        let res1 = await inst.getKline(base, counter, this.cycle);
+        this.klineDataObj = {
+          klineData: res1.data,
+          depthData: res2.data,
+          coinType: coinType,
+          cycle: this.cycle,
+          pricePrecision: 6,
+          amountPrecision: 0
+        };
+      } else {
+        let res = await inst.getHistory(base, counter, "all", null);
+        this.klineDataObj = {
+          pricePrecision: this.pairConfig.bidLimitDecimal,
+          amountPrecision: this.pairConfig.amountDecimal,
+          coinType: coinType,
+          cycle: this.cycle
+        };
+        if (res.result) {
+          this.klineDataObj.timeDivisionData = res.data.reverse();
+        }
+        if (res2.result) {
+          thsi.klineDataObj.depthData = res2.data;
+        }
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
 h1,
 h2 {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 ul {
-    list-style-type: none;
-    padding: 0;
+  list-style-type: none;
+  padding: 0;
 }
 
 li {
-    display: inline-block;
-    margin: 0 10px;
+  display: inline-block;
+  margin: 0 10px;
 }
 
 a {
-    color: #42b983;
+  color: #42b983;
 }
 </style>
