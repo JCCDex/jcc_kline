@@ -1,11 +1,10 @@
 <template>
   <div class="h_box">
-    <canvas id="canvas" width="1200" height="600"></canvas>
     <div class="h_console">
       <div class="h_tool">工具台</div>
       <ul class="h_tool1">
         <li id="line" class="bg">
-          <span class="iconfont" title="绘制直线">&#xe653;</span>
+          <span class="iconfont" title="绘制直线" @click="drawLine">&#xe653;</span>
         </li>
         <li id="rect" class="bg">
           <span class="iconfont" title="绘制矩形">&#xe648;</span>
@@ -66,17 +65,33 @@
         </li>
       </ul>
     </div>
+    <canvas id="canvas" width="1200" height="600"></canvas>
   </div>
 </template>
 <script>
 import "../css/index.css";
-import "../js/Toolbar";
+import DrawToolbar from "../js/DrawToolbar";
 export default {
   name: "toolbar",
   data() {
-    return {};
+    return {
+      canvas: null,
+      ctx: null,
+      p: null
+    };
   },
   created() {},
-  mounted() {}
+  mounted() {
+    this.canvas = document.getElementById("canvas");
+    if (!this.canvas.getContext) return;
+    this.ctx = this.canvas.getContext("2d");
+    this.p = new DrawToolbar(this.canvas, this.ctx);
+  },
+  methods: {
+    drawLine() {
+      this.p.style = "drawLine";
+      this.p.drawing();
+    }
+  }
 };
 </script>
