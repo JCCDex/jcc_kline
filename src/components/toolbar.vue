@@ -1,61 +1,45 @@
 <template>
-  <div class="h_box">
-    <div class="h_console">
-      <div class="h_tool">工具台</div>
-      <ul class="h_tool1">
-        <li id="line" class="bg">
-          <span class="iconfont" title="绘制直线" @click="drawLine">&#xe653;</span>
-        </li>
-        <li id="rect" class="bg">
-          <span class="iconfont" title="绘制矩形" @click="drawRect">&#xe648;</span>
-        </li>
-        <li id="tablet" class="bg bgtb">
-          <span class="iconfont" title="铅笔" @click="drawTablet">&#xe6be;</span>
-        </li>
-        <li class="bg" id="eraser">
-          <span class="iconfont" title="橡皮擦" @click="eraser">&#xe6b8;</span>
-        </li>
-      </ul>
-      <ul class="h_tool1 h_tool2">
-        <li class="bg" id="way">
-          <span class="iconfont" title="转换填充样式">&#xe644;</span>
-        </li>
-        <li class="bg bgp">
-          <span class="iconfont" title="修改填充色">&#xe649;</span>
-          <div class="polygon1 poly1">
-            <input type="color" id="fillCo" />
-            <div class="trag"></div>
-          </div>
-        </li>
-        <li class="bg bgp">
-          <span class="iconfont" title="线条加粗">&#xe604;</span>
-          <div class="polygon2">
-            <input type="range" min="1" max="30" value="1" id="linew" />
-            <div class="trag trag1"></div>
-            <p id="numW">0</p>
-          </div>
-        </li>
-        <li class="bg" id="revo">
-          <span class="iconfont" title="撤销" @click="withdraw">&#xe699;</span>
-        </li>
-        <li class="bg" id="refresh">
-          <span class="iconfont" title="刷新画板" @click="refresh">&#xe747;</span>
-        </li>
-        <li class="bg" id="save">
-          <span class="iconfont" title="保存" @click="save">&#xe69d;</span>
-        </li>
-      </ul>
+  <div>
+    <div class="toolbar">
+      <span class="toolbar-iconfont toolbar-span" title="绘制直线" @click="drawLine">&#xe653;</span>
+      <span class="toolbar-iconfont toolbar-span" title="绘制矩形" @click="drawRect">&#xe648;</span>
+      <span class="toolbar-iconfont toolbar-span" title="铅笔" @click="drawTablet">&#xe6be;</span>
+      <span class="toolbar-iconfont toolbar-span" title="橡皮擦" @click="eraser">&#xe6b8;</span>
+      <span class="toolbar-iconfont toolbar-span">
+        <el-color-picker v-model="drawColor" @change="changeDrawColor"></el-color-picker>
+      </span>
+      <span
+        class="toolbar-iconfont toolbar-span"
+        title="线条加粗"
+        @mouseover="showChangeLineWidthSlider"
+        @mouseout="hiddenChangeLineWidthSlider"
+      >
+        &#xe604;
+        <div class="line-width-slider" v-show="showSlider">
+          <el-slider v-model="lineWidth" :min="1" :max="40" @change="changeLineWidth"></el-slider>
+        </div>
+      </span>
+      <span class="toolbar-iconfont toolbar-span" title="撤销" @click="withdraw">&#xe699;</span>
+      <span class="toolbar-iconfont toolbar-span" title="刷新画板" @click="refresh">&#xe747;</span>
+      <span class="toolbar-iconfont toolbar-span" title="保存" @click="save">&#xe69d;</span>
     </div>
-    <canvas id="canvas" width="1200" height="600"></canvas>
+    <canvas id="canvas"  width="1200" height="600"></canvas>
   </div>
 </template>
 <script>
 import "../css/index.css";
+import { ColorPicker, Slider } from "element-ui";
 import DrawToolbar from "../js/DrawToolbar";
 export default {
   name: "toolbar",
+  components: {
+    ColorPicker
+  },
   data() {
     return {
+      drawColor: "rgb(255, 0, 0)",
+      lineWidth: 1,
+      showSlider: false,
       canvas: null,
       ctx: null,
       p: null
@@ -69,29 +53,53 @@ export default {
     this.p = new DrawToolbar(this.canvas, this.ctx);
   },
   methods: {
+    // 绘制直线
     drawLine() {
       this.p.style = "drawLine";
       this.p.drawing();
     },
+    // 绘制矩形
     drawRect() {
       this.p.style = "drawRect";
       this.p.drawing();
     },
+    // 绘制写字板
     drawTablet() {
       this.p.style = "drawTablet";
       this.p.drawing();
     },
+    // 修改颜色
+    changeDrawColor() {
+      this.p.fillColor = this.drawColor;
+      this.p.strokeColor = this.drawColor;
+    },
+    // 修改线条宽度
+    changeLineWidth() {
+      this.ctx.lineWidth = this.lineWidth;
+    },
+    // 显示修改线宽的滑块
+    showChangeLineWidthSlider() {
+      this.showSlider = true;
+    },
+    // 隐藏修改线宽的滑块
+    hiddenChangeLineWidthSlider() {
+      this.showSlider = false;
+    },
+    // 橡皮擦
     eraser() {
       this.p.style = "eraser";
       this.p.drawing();
     },
+    // 撤销
     withdraw() {
       this.p.withdraw();
     },
+    // 刷新
     refresh() {
       this.p.history.length = 0;
       this.p.ctx.clearRect(0, 0, this.p.canvasW, this.p.canvasH);
     },
+    // 保存
     save() {
       this.p.save();
     }
