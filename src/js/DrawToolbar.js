@@ -48,7 +48,6 @@ class DrawToolbar {
         this.ctx[this.type]();
     }
 
-
     //	橡皮
     eraser(x1, y1, x2, y2) {
         this.ctx.clearRect(x2, y2, 10, 10);
@@ -58,13 +57,12 @@ class DrawToolbar {
         location.href = canvas.toDataURL().replace('image/png', 'image/stream');
     }
     //	撤回
-    revo(x1, y1, x2, y2) {
+    withdraw(x1, y1, x2, y2) {
         if (this.history.length == 0) {
             alert("无效操作");
             return;
         }
-        console.log(this.history.length);
-        ctx.clearRect(0, 0, this.canvasW, this.canvasH);
+        this.ctx.clearRect(0, 0, this.canvasW, this.canvasH);
         this.history.pop();
         if (this.history.length == 0) {
             return;
@@ -84,7 +82,7 @@ class DrawToolbar {
             //			获取鼠标到时间源的高度
             //			console.log(sy);
             that.init();	//初始化样式
-            if (that.style == "tablet") {
+            if (that.style == "drawTablet") {
                 that.ctx.beginPath();
                 //	    	    beginPath() 方法开始一条路径，或重置当前的路径
                 that.ctx.moveTo(sx, sy);
