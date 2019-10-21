@@ -7,12 +7,15 @@
 .toolbar {
     width: 40px;
     float: left;
+    position: absolute;
+    z-index: 1;
 }
 
 #toolbar-canvas {
     background: #355fcf;
     float: left;
 }
+
 .line-width-slider {
     margin-top: -10px;
 }
