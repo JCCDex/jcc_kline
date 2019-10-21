@@ -1,11 +1,14 @@
 <template>
-  <div :style="{ position: 'relative', width: klineConfig.size.width + 'px' }">
-    <jKline
-      ref="vkline"
-      v-on:listenToChildEvent="changeCycle"
-      :kline-data-obj="klineDataObj"
-      :kline-config="klineConfig"
-    ></jKline>
+  <div>
+    <toolbar></toolbar>
+    <div :style="{ position: 'relative', width: klineConfig.size.width + 'px' }">
+      <jKline
+        ref="vkline"
+        v-on:listenToChildEvent="changeCycle"
+        :kline-data-obj="klineDataObj"
+        :kline-config="klineConfig"
+      ></jKline>
+    </div>
   </div>
 </template>
 

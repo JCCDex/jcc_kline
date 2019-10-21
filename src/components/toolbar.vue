@@ -23,7 +23,7 @@
       <span class="toolbar-iconfont toolbar-span" title="刷新画板" @click="refresh">&#xe747;</span>
       <span class="toolbar-iconfont toolbar-span" title="保存" @click="save">&#xe69d;</span>
     </div>
-    <canvas id="canvas"  width="1200" height="600"></canvas>
+    <canvas id="toolbar-canvas"  width="1200" height="600"></canvas>
   </div>
 </template>
 <script>
@@ -47,7 +47,7 @@ export default {
   },
   created() {},
   mounted() {
-    this.canvas = document.getElementById("canvas");
+    this.canvas = document.getElementById("toolbar-canvas");
     if (!this.canvas.getContext) return;
     this.ctx = this.canvas.getContext("2d");
     this.p = new DrawToolbar(this.canvas, this.ctx);

@@ -6,8 +6,13 @@
 
 .toolbar {
     width: 40px;
+    float: left;
 }
 
+#toolbar-canvas {
+    background: #355fcf;
+    float: left;
+}
 .line-width-slider {
     margin-top: -10px;
 }
