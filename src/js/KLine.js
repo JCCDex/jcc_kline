@@ -37,7 +37,7 @@ class KLineController {
 
     // 绘制PC端加载动画
     showKlineLoading(noData) {
-        this.setKLineChart.showLoading(noData)
+        this.setKLineChart.showLoading(noData);
     }
 
     getToolTipIndex() {
@@ -69,7 +69,7 @@ class KLineController {
     }
 
     showMobileLoading(noData) {
-        this.setMobileKLineChart.showLoading(noData)
+        this.setMobileKLineChart.showLoading(noData);
     }
 
     setTimeDivisionsOption(size) {

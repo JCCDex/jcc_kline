@@ -56,7 +56,7 @@ class ChartController {
     }
 
     showDepthLoading(noData) {
-        this.setDepthChart.showLoading(noData)
+        this.setDepthChart.showLoading(noData);
     }
 
     disposeDepthEChart() {
@@ -86,7 +86,7 @@ class ChartController {
     }
 
     showTimeSharingLoading(noData) {
-        this.setTimeSharing.showLoading(noData)
+        this.setTimeSharing.showLoading(noData);
     }
 
     getTimeSharingTipIndex() {
@@ -116,7 +116,7 @@ class ChartController {
     }
 
     showVolumeLoading(noData) {
-        this.setVolumeChart.showLoading(noData)
+        this.setVolumeChart.showLoading(noData);
     }
 
     updateVolumeOption(data, cycle) {

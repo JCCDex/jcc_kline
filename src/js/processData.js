@@ -208,7 +208,7 @@ export const getDepthData = (data, precision) => {
 
 export const handleDivisionData = (datas) => {
     if (datas === undefined || datas.length <= 0) {
-        return []
+        return [];
     }
     let prices = [];
     let averages = [];
