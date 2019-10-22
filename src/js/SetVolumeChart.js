@@ -74,7 +74,7 @@ class VolumeChart {
                     maskColor: 'rgba(22, 27, 33, 0.5)',
                     zlevel: 1
                 }
-            )
+            );
         } else {
             this.volume.showLoading(
                 {
@@ -84,7 +84,7 @@ class VolumeChart {
                     maskColor: 'rgba(22, 27, 33, 0.5)',
                     zlevel: 1
                 }
-            )
+            );
         }
     }
 

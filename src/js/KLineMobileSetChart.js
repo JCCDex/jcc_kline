@@ -41,7 +41,7 @@ class KLineMobileSetChartController {
                 textColor: '#fff',
                 maskColor: 'rgba(22, 27, 33, 0.5)',
                 zlevel: 1
-            })
+            });
         } else {
             this.kline.showLoading({
                 text: message.loading,

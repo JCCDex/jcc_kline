@@ -32,7 +32,7 @@ class IndicatorChartController {
     }
 
     showIndicatorLoading(noData) {
-        this.setIndicatorChart.showLoading(noData)
+        this.setIndicatorChart.showLoading(noData);
     }
 
     setIndicatorOption(data, cycle) {
