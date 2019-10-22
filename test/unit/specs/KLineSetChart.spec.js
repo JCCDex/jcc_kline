@@ -1,6 +1,6 @@
 import klineSetChart from 'js/KLineSetChart'
 import option from 'js/KLineOption'
-import testData from '../../testData/testData.json'
+import testData from '../../testData/data.json'
 
 describe('test KLineSetChart', () => {
 

@@ -8,8 +8,8 @@ module.exports = {
     'vue',
     'node'
   ],
-  silent: true,
-  verbose: true,
+  silent: false,
+  verbose: false,
   testURL: 'http://locallhost/',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',

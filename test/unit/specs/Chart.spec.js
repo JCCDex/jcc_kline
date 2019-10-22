@@ -1,7 +1,6 @@
 import ChartController from 'js/Charts.js'
 import { splitData, getDepthData } from 'js/processData'
 import testData from '../../testData/data.json'
-import timeSharingData from '../../testData/timeSharingData.json'
 
 describe('test Chart', () => {
 
@@ -116,8 +115,8 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharingData.divisionData.precision = precision
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    testData.divisionData.precision = precision
+    timeSharing.setTimeSharingOption(testData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
@@ -125,8 +124,8 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
-    timeSharing.updateTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(testData.divisionData)
+    timeSharing.updateTimeSharingOption(testData.divisionData)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
 
@@ -134,7 +133,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(testData.divisionData)
     timeSharing.changeTimeSharingDataZoom('leftShift')
     expect(timeSharing.setTimeSharing.timeSharing.getOption().dataZoom).not.toBeNull()
   })
@@ -143,7 +142,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(testData.divisionData)
     let tipsData = timeSharing.getTimeSharingTipIndex()
     expect(tipsData).not.toBeNull()
   })
@@ -156,9 +155,9 @@ describe('test Chart', () => {
     }
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(testData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false, resizeSize)
-    timeSharing.updateTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.updateTimeSharingOption(testData.divisionData)
     timeSharing.resizeTimeSharingChart(element, true, resizeSize)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -171,7 +170,7 @@ describe('test Chart', () => {
     }
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(testData.divisionData)
     timeSharing.resizeTimeSharingChart(element, false, resizeSize)
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })
@@ -180,7 +179,7 @@ describe('test Chart', () => {
     let timeSharing = new ChartController(klineConfig)
     const element = document.createElement('div');
     timeSharing.initTimeSharingChart(element)
-    timeSharing.setTimeSharingOption(timeSharingData.divisionData)
+    timeSharing.setTimeSharingOption(testData.divisionData)
     timeSharing.disposeTimeSharingEChart()
     expect(timeSharing.setTimeSharing.timeSharing.getOption()).not.toBeNull()
   })

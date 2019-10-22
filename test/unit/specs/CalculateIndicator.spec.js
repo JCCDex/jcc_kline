@@ -1,7 +1,6 @@
 import { splitData, getDepthData, calculateMA } from 'js/processData'
 import { getOBVData, getKDJData, getDMIData, getRSIData, getTRIXData, getBollData, getMTMData, getBRARData, getPSYData, getROCData, getWRData, getVRData, getDMAData, getSARData } from 'js/CalculateIndicator'
 import testData from '../../testData/data.json'
-import data from '../../testData/testData.json'
 
 let precision = {
   price: 6,
@@ -49,7 +48,7 @@ describe('test CalculateIndicator', () => {
   })
 
   it('test getDMIData', () => {
-    let DMIData = getDMIData(data.candleData.values)
+    let DMIData = getDMIData(testData.candleData.values)
     expect(DMIData).not.toBeNull()
   })
 
@@ -59,7 +58,7 @@ describe('test CalculateIndicator', () => {
   })
 
   it('test getTRIXData', () => {
-    let TRIXData = getTRIXData(data.candleData.values)
+    let TRIXData = getTRIXData(testData.candleData.values)
     expect(TRIXData).not.toBeNull()
   })
 
@@ -69,7 +68,7 @@ describe('test CalculateIndicator', () => {
   })
 
   it('test getRSIData', () => {
-    let RSIData = getRSIData(data.candleData.values, 6)
+    let RSIData = getRSIData(testData.candleData.values, 6)
     expect(RSIData).not.toBeNull()
   })
 
@@ -79,7 +78,7 @@ describe('test CalculateIndicator', () => {
   })
 
   it('test getBollData', () => {
-    let bollData = getBollData(data.candleData, 20)
+    let bollData = getBollData(testData.candleData, 20)
     expect(bollData).not.toBeNull()
   })
 
@@ -99,7 +98,7 @@ describe('test CalculateIndicator', () => {
   })
 
   it('test getBRARData', () => {
-    let BRARData = getBRARData(data.candleData.values, 24)
+    let BRARData = getBRARData(testData.candleData.values, 24)
     expect(BRARData).not.toBeNull()
   })
 
@@ -150,7 +149,7 @@ describe('test CalculateIndicator', () => {
   })
 
   it('test getDMAData', () => {
-    let DMAData = getDMAData(data.candleData)
+    let DMAData = getDMAData(testData.candleData)
     expect(DMAData).not.toBeNull()
   })
 
@@ -161,7 +160,7 @@ describe('test CalculateIndicator', () => {
   })
 
   it('test getSARData', () => {
-    let SARData = getSARData(data.candleData)
+    let SARData = getSARData(testData.candleData)
     expect(SARData).not.toBeNull()
   })
 

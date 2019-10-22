@@ -1,6 +1,6 @@
 import SetVolumeChart from 'js/SetVolumeChart'
 import { volumeOption } from 'js/VolumeChartOption'
-import testData from '../../testData/testData.json'
+import testData from '../../testData/data.json'
 
 volumeOption.platform = 'pc'
 volumeOption.chartType = 'volume'

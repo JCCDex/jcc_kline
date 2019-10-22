@@ -1,7 +1,7 @@
 import ChartController from 'js/Charts.js'
 import klineController from 'js/KLine.js'
 import { linkageChart, bindAction } from 'js/linkageCharts'
-import testData from '../../testData/testData.json'
+import testData from '../../testData/data.json'
 
 let data = testData.candleData
 let volumeConfig = {

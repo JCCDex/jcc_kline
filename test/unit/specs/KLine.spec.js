@@ -1,7 +1,6 @@
 import klineController from 'js/KLine.js'
 import { splitData, handleDivisionData } from 'js/processData'
 import testData from '../../testData/data.json'
-import data from '../../testData/testData.json'
 
 describe('test KLine', () => {
 
@@ -11,7 +10,8 @@ describe('test KLine', () => {
   }
   let mobileData = splitData(testData.klineData)
   mobileData.precision = precision
-  let klineData = data.candleData;
+  mobileData.MAData = testData.MAData
+  let klineData = testData.candleData;
   let timeDivisionData = testData.timeDivisionData
   timeDivisionData.precision = precision
   let divisionData = handleDivisionData(testData.timeDivisionData)
@@ -45,7 +45,7 @@ describe('test KLine', () => {
       }
     ]
   }
-  let moboleSize = {klineSize:size}
+  let moboleSize = { klineSize: size }
   let cycle = 'hour'
 
   it('has a created hook', () => {

@@ -10,6 +10,7 @@ describe('test KLineMobileSetChart', () => {
     amount: 2
   }
   let data = splitData(testData.klineData)
+  data.MAData = testData.MAData
   data.precision = precision
   let timeDivisionData = testData.timeDivisionData
   timeDivisionData.precision = precision
@@ -18,7 +19,7 @@ describe('test KLineMobileSetChart', () => {
     height: 1000,
     width: 780
   }
-  let mobileData = {klineSize:size}
+  let mobileData = { klineSize: size }
   let cycle = 'hour'
   mobileOption.defaultMA = true
   mobileOption.MAIndex = 1
@@ -39,8 +40,8 @@ describe('test KLineMobileSetChart', () => {
       name: "MA30",
       color: "#f6d026"
     },
-    { 
-      name: "MA60", 
+    {
+      name: "MA60",
       color: "#e03bfa"
     }
   ];
