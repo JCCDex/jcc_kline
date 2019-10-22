@@ -7,7 +7,6 @@ import 'echarts/lib/component/dataZoom';
 import { saveCandle } from './linkageCharts';
 import merge from 'lodash.merge';
 import { getLanguage } from './utils';
-import { calculateMA } from './processData';
 
 var cycle;
 var config;
@@ -83,7 +82,10 @@ class KLineMobileSetChartController {
         };
         merge(config, updateOption);
         config.dataZoom = this.kline.getOption().dataZoom;
-        this.kline.setOption(config);
+        if (!data.showIndicatorMA) {
+            config.series = updateOption.series;
+        }
+        this.kline.setOption(config, true);
         return toolTipIndex;
     }
 
@@ -209,9 +211,33 @@ class KLineMobileSetChartController {
                 type: 'candlestick',
                 largeThreshold: 300,
                 barWidth: barWidth,
-                data: data.values
+                data: data.values,
+                itemStyle: {
+                    normal: {
+                        color: '#ee4b4b',
+                        color0: '#3ee99f',
+                        borderColor: null,
+                        borderColor0: null
+                    }
+                }
             }
         ];
+        for (var i = 0; i < data.MAData.length; i++) {
+            s[i + 1] = {
+                name: data.MAData[i].name,
+                data: data.MAData[i].data,
+                type: 'line',
+                smooth: true,
+                showSymbol: false,
+                lineStyle: {
+                    normal: {
+                        color: config.MA[i].color,
+                        opacity: 1,
+                        width: 1
+                    }
+                }
+            };
+        }
         return s;
     }
 

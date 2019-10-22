@@ -72,7 +72,8 @@
           @click="chooseCycle('everyhour')"
           :class="this.cycle === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'"
         >{{message.timeSharing}}</div>
-        <div @click="showMA" class="kline-cycle-btn">均线</div>
+        <!-- 均线显示隐藏按钮-->
+        <!-- <div @click="showMA" class="kline-cycle-btn">均线</div> -->
       </div>
       <!-- tooltip数据显示 -->
       <div
