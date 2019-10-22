@@ -182,7 +182,7 @@ export default {
           this.watchLoading = true;
           this.toolTipData = null;
           this.init(true);
-          this.isRefresh = true
+          this.isRefresh = true;
           this.coinType = this.chartDataObj.coinType;
         }
         if (this.watchLoading) {

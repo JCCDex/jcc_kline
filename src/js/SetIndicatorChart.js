@@ -115,6 +115,9 @@ class IndicatorChartController {
     }
 
     updateIndicatorOption(data, cycle) {
+        if (this.indicator.getOption() == undefined || this.indicator.getOption() == null) {
+            return
+        }
         indicatorDataZoom = this.indicator.getOption().dataZoom;
         this.indicator.clear();
         oldIndicatorData = {
