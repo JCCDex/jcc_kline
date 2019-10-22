@@ -16,7 +16,8 @@
         <font class="mobile-tooltip-name">{{message.volumeMobile}}</font>
         <font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
       </div>
-      <div style="font-size:0.16rem; margin-top: 0.1rem;">
+      <div @click="showMA" class="mobile-ma-btn">均线</div>
+      <div v-show="showIndicatorMA" style="font-size:0.16rem; margin-top: 0.1rem;">
         <font
           v-for="MAitem in this.klineConfig.MA"
           :key="MAitem.id"
@@ -131,7 +132,8 @@ export default {
       volume: null,
       macd: null,
       stochastic: null,
-      indicator: null
+      indicator: null,
+      showIndicatorMA: true
     };
   },
   props: {
@@ -156,23 +158,23 @@ export default {
       this.klineConfig.MA = [
         {
           name: "MA5",
-          color: "#ff4d71"
+          color: "#fd1d57"
         },
         {
           name: "MA10",
-          color: "#67ff7c"
+          color: "#4df561"
         },
         {
           name: "MA20",
-          color: "#16c5ff"
+          color: "#2bdaff"
         },
         {
           name: "MA30",
-          color: "#f6d026"
+          color: "#ffd801"
         },
         {
           name: "MA60",
-          color: "#e03bfa"
+          color: "#f721ff"
         }
       ];
     }
@@ -190,10 +192,14 @@ export default {
         this.cycle,
         this.klineDataObj.pricePrecision
       );
-      this.changeChartDataObj(this.klineDataObj);
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
     }
   },
   methods: {
+    showMA() {
+      this.showIndicatorMA = !this.showIndicatorMA;
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
+    },
     changeCycle(cycle) {
       this.toolTipData = null;
       this.timeSharingTipData = null;
@@ -203,7 +209,7 @@ export default {
       this.chartDataObj.candleData = null;
       this.$emit("listenToChildEvent", cycle);
     },
-    changeChartDataObj(klineDataObj) {
+    changeChartDataObj(klineDataObj, MA) {
       let chartData = JSON.parse(JSON.stringify(klineDataObj));
       let candleData;
       let depthData;
@@ -217,13 +223,15 @@ export default {
       };
       if (chartData.cycle !== "everyhour" && chartData.klineData) {
         candleData = splitData(chartData.klineData);
-        for (var i = 0; i < this.klineConfig.MA.length; i++) {
-          MAData[i] = {};
-          MAData[i].name = this.klineConfig.MA[i].name;
-          MAData[i].data = calculateMA(
-            this.klineConfig.MA[i].name.substring(2) * 1,
-            candleData
-          );
+        if (MA) {
+          for (var i = 0; i < this.klineConfig.MA.length; i++) {
+            MAData[i] = {};
+            MAData[i].name = this.klineConfig.MA[i].name;
+            MAData[i].data = calculateMA(
+              this.klineConfig.MA[i].name.substring(2) * 1,
+              candleData
+            );
+          }
         }
         candleData.MAData = MAData;
         candleData.precision = precision;

@@ -210,42 +210,9 @@ class KLineMobileSetChartController {
                 largeThreshold: 300,
                 barWidth: barWidth,
                 data: data.values
-            },
-            {
-                name: 'MA5',
-                data: calculateMA(5, data)
-            },
-            {
-                name: 'MA10',
-                data: calculateMA(10, data)
-            },
-            {
-                name: 'MA20',
-                data: calculateMA(20, data)
-            },
-            {
-                name: 'MA30',
-                data: calculateMA(30, data)
-            },
-            {
-                name: 'MA60',
-                data: calculateMA(60, data)
             }
         ];
-        if (this.klineConfig.defaultMA !== false) {
-            return s;
-        } else {
-            let MASeries = s[1];
-            let MAIndex = this.klineConfig.MAIndex;
-            s.splice(1, 5);
-            for (let MA of this.klineConfig.MA) {
-                s.splice(MAIndex, 0, JSON.parse(JSON.stringify(MASeries)));
-                s[MAIndex].name = MA.name;
-                s[MAIndex].data = calculateMA(MA.name.substring(2) * 1, data);
-                MAIndex++;
-            }
-            return s;
-        }
+        return s;
     }
 
     getToolTip() {
