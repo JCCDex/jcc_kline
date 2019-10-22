@@ -49,11 +49,6 @@ describe('test KLineSetChart', () => {
     expect(kline.getToolTip(klineData)).not.toBeNull()
   })
 
-  it('test getSeries', () => {
-    let kline = new klineSetChart(option);
-    expect(kline.getSeries(klineData)).not.toBeNull()
-  })
-
   it('test getDataZoom', () => {
     let kline = new klineSetChart(option);
     expect(kline.getDataZoom(klineData)).not.toBeNull()

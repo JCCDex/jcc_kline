@@ -43,21 +43,21 @@ class DrawToolbar {
     }
 
     //	绘制写字板
-    drawTablet(x1, y1, x2, y2) {
+    drawTablet(x2, y2) {
         this.ctx.lineTo(x2, y2);
         this.ctx[this.type]();
     }
 
     //	橡皮擦
-    eraser(x1, y1, x2, y2) {
+    eraser(x2, y2) {
         this.ctx.clearRect(x2, y2, 10, 10);
     }
     //	保存
-    save(x1, y1, x2, y2) {
-        location.href = canvas.toDataURL().replace('image/png', 'image/stream');
+    save() {
+        location.href = this.canvas.toDataURL().replace('image/png', 'image/stream');
     }
     //	撤回
-    withdraw(x1, y1, x2, y2) {
+    withdraw() {
         if (this.history.length == 0) {
             return;
         }
@@ -80,7 +80,7 @@ class DrawToolbar {
             var sy = e.offsetY;
             //初始化样式
             that.init();
-            if (that.style == "drawTablet") {
+            if (that.style == 'drawTablet') {
                 // beginPath() 方法开始一条路径，或重置当前的路径
                 that.ctx.beginPath();
                 // moveTo() 方法可把窗口的左上角移动到一个指定的坐标。
@@ -90,7 +90,7 @@ class DrawToolbar {
             this.onmousemove = function (e) {
                 var mx = e.offsetX;
                 var my = e.offsetY;
-                if (that.style != "eraser") {
+                if (that.style != 'eraser') {
                     that.ctx.clearRect(0, 0, that.canvasW, that.canvasH);
                     // 清除鼠标在画布移动的填充色
                     if (that.history.length > 0) {	// 注：只能是that.history数组的长度大于0，才可以putImageData()
@@ -99,7 +99,7 @@ class DrawToolbar {
                     }
                 }
                 that[that.style](sx, sy, mx, my);
-            }
+            };
             // 获取鼠标移走的坐标
             this.onmouseup = function () {
                 // getImageData() 方法返回 ImageData 对象，该对象拷贝了画布指定矩形的像素数据。
@@ -108,8 +108,8 @@ class DrawToolbar {
                 this.onmousemove = null;
                 // 清空鼠标移出事件
                 this.onmouseup = null;
-            }
-        }
+            };
+        };
     }
 }
 export default DrawToolbar;

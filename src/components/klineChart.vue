@@ -72,6 +72,7 @@
           @click="chooseCycle('everyhour')"
           :class="this.cycle === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'"
         >{{message.timeSharing}}</div>
+        <div @click="showMA" class="kline-cycle-btn">均线</div>
       </div>
       <!-- tooltip数据显示 -->
       <div
@@ -90,7 +91,7 @@
           <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font>
           <br />
         </div>
-        <div v-if="outspreadMA">
+        <div v-if="outspreadMA && this.showIndicatorMA">
           <font
             v-for="MAitem in this.klineConfig.MA"
             :key="MAitem.id"
@@ -411,7 +412,8 @@ export default {
       showMinCycle: false,
       showHourCycle: false,
       selectMin: "",
-      selectHour: ""
+      selectHour: "",
+      showIndicatorMA: true
     };
   },
   props: {
@@ -438,23 +440,23 @@ export default {
       this.klineConfig.MA = [
         {
           name: "MA5",
-          color: "#ff4d71"
+          color: "#fd1d57"
         },
         {
           name: "MA10",
-          color: "#67ff7c"
+          color: "#4df561"
         },
         {
           name: "MA20",
-          color: "#16c5ff"
+          color: "#2bdaff"
         },
         {
           name: "MA30",
-          color: "#f6d026"
+          color: "#ffd801"
         },
         {
           name: "MA60",
-          color: "#e03bfa"
+          color: "#f721ff"
         }
       ];
     }
@@ -499,7 +501,7 @@ export default {
         this.coinType = this.klineDataObj.coinType;
       }
       this.changeCycleLanguage(this.cycle);
-      this.changeChartDataObj(this.klineDataObj);
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
     },
     fullscreen() {
       if (this.fullscreen && getLanguage().language === "en") {
@@ -515,6 +517,10 @@ export default {
     }
   },
   methods: {
+    showMA() {
+      this.showIndicatorMA = !this.showIndicatorMA;
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
+    },
     clickMinCycle() {
       this.showMinCycle = !this.showMinCycle;
       if (this.showMinCycle) {
@@ -584,7 +590,7 @@ export default {
         }
       }
     },
-    changeChartDataObj(data) {
+    changeChartDataObj(data, MA) {
       let candleData;
       let depthData;
       let timeDivisionData;
@@ -598,14 +604,17 @@ export default {
       let cycle = data.cycle;
       if (data.klineData) {
         candleData = splitData(data.klineData);
-        for (var i = 0; i < this.klineConfig.MA.length; i++) {
-          MAData[i] = {};
-          MAData[i].name = this.klineConfig.MA[i].name;
-          MAData[i].data = calculateMA(
-            this.klineConfig.MA[i].name.substring(2) * 1,
-            candleData
-          );
+        if (MA) {
+          for (var i = 0; i < this.klineConfig.MA.length; i++) {
+            MAData[i] = {};
+            MAData[i].name = this.klineConfig.MA[i].name;
+            MAData[i].data = calculateMA(
+              this.klineConfig.MA[i].name.substring(2) * 1,
+              candleData
+            );
+          }
         }
+        candleData.showIndicatorMA = this.showIndicatorMA;
         candleData.MAData = MAData;
         candleData.precision = precision;
       }
@@ -648,7 +657,7 @@ export default {
       }
       this.showIndicatorOpt = false;
       this.resize();
-      this.changeChartDataObj(this.klineDataObj);
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
     },
 
     getTipDataIndex(index) {

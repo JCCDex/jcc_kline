@@ -134,8 +134,11 @@ class KLineSetChartController {
             };
             merge(config, klineOption);
             config.dataZoom = this.kline.getOption().dataZoom;
+            if (!data.showIndicatorMA) {
+                config.series = klineOption.series;
+            }
             this.kline.hideLoading();
-            this.kline.setOption(config);
+            this.kline.setOption(config, true);
             saveCandle(this.kline);
         }
     }
@@ -191,14 +194,34 @@ class KLineSetChartController {
             barWidth = 18;
         }
         var s = [{
+            name: 'candle',
             type: 'candlestick',
             barWidth: barWidth,
             data: data.values,
+            itemStyle: { // K 线图的图形样式
+                normal: { // 
+                    color: '#ee4b4b', // 阳线图像颜色
+                    color0: '#3ee99f', // 阴线图像颜色
+                    borderColor: null, // 阳线 图形的描边颜色
+                    borderColor0: null // 阴线 图形的描边颜色
+                }
+            }
         }];
         for (var i = 0; i < data.MAData.length; i++) {
             s[i + 1] = {
                 name: data.MAData[i].name,
-                data: data.MAData[i].data
+                data: data.MAData[i].data,
+                type: 'line',
+                symbol: 'none', // 
+                smooth: true, //  是否平滑显示 
+                showSymbol: false, // 是否显示 symbol, 如果 false 则只有在 tooltip hover 的时候显示。
+                lineStyle: { // 线的样式
+                    normal: {
+                        color: config.MA[i].color,  // 颜色
+                        opacity: 1, // 图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形
+                        width: 1 // 线宽
+                    }
+                }
             };
         }
         return s;
