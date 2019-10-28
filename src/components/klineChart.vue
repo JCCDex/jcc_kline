@@ -72,8 +72,6 @@
           @click="chooseCycle('everyhour')"
           :class="this.cycle === 'everyhour' ? 'kline-cycle-btn kline-btn-active' : 'kline-cycle-btn'"
         >{{message.timeSharing}}</div>
-        <!-- 均线显示隐藏按钮-->
-        <!-- <div @click="showMA" class="kline-cycle-btn">均线</div> -->
       </div>
       <!-- tooltip数据显示 -->
       <div
@@ -92,7 +90,7 @@
           <font class="tooltip-data-name">{{message.volume}}{{this.toolTipData.volume}}</font>
           <br />
         </div>
-        <div v-if="outspreadMA && this.showIndicatorMA">
+        <div v-if="outspreadMA && this.outspreadMA">
           <font
             v-for="MAitem in this.klineConfig.MA"
             :key="MAitem.id"
@@ -502,7 +500,7 @@ export default {
         this.coinType = this.klineDataObj.coinType;
       }
       this.changeCycleLanguage(this.cycle);
-      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
+      this.changeChartDataObj(this.klineDataObj, this.outspreadMA);
     },
     fullscreen() {
       if (this.fullscreen && getLanguage().language === "en") {
@@ -518,10 +516,7 @@ export default {
     }
   },
   methods: {
-    showMA() {
-      this.showIndicatorMA = !this.showIndicatorMA;
-      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
-    },
+    showMA() {},
     clickMinCycle() {
       this.showMinCycle = !this.showMinCycle;
       if (this.showMinCycle) {
@@ -615,7 +610,7 @@ export default {
             );
           }
         }
-        candleData.showIndicatorMA = this.showIndicatorMA;
+        candleData.showIndicatorMA = this.outspreadMA;
         candleData.MAData = MAData;
         candleData.precision = precision;
       }
@@ -642,11 +637,8 @@ export default {
       };
     },
     showMAData() {
-      if (!this.outspreadMA) {
-        this.outspreadMA = true;
-      } else {
-        this.outspreadMA = false;
-      }
+      this.outspreadMA = !this.outspreadMA;
+      this.changeChartDataObj(this.klineDataObj, this.outspreadMA);
     },
     showIndicatorChart(indicator) {
       if (indicator === this.showIndicator) {
@@ -658,7 +650,7 @@ export default {
       }
       this.showIndicatorOpt = false;
       this.resize();
-      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
+      this.changeChartDataObj(this.klineDataObj, this.outspreadMA);
     },
 
     getTipDataIndex(index) {
