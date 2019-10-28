@@ -16,8 +16,6 @@
         <font class="mobile-tooltip-name">{{message.volumeMobile}}</font>
         <font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
       </div>
-      <!-- 均线显示隐藏按钮-->
-      <!-- <div @click="showMA" class="mobile-ma-btn">均线</div> -->
       <div v-show="showIndicatorMA" style="font-size:0.16rem; margin-top: 0.1rem;">
         <font
           v-for="MAitem in this.klineConfig.MA"
@@ -69,6 +67,7 @@
       v-on:listenToChildEvent="changeCycle"
       v-on:listenTipIndex="getTipDataIndex"
       v-on:listenIndicatorChartOpenClose="getIndicatorOpenClose"
+      @listenShowMA="showMA"
       :kline-config="klineConfig"
       :chart-data-obj="chartDataObj"
     ></KLine>

@@ -87,6 +87,10 @@
           <font>{{message.indicator}}</font>
         </div>
         <div
+          @click="showMA"
+          :class="this.showIndicatorMA ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
+        >{{message.MA}}</div>
+        <div
           @click="showIndicatorChart('MACD')"
           :class="this.showIndicator ==='MACD' ? 'mobile-indicator-div-active' : 'mobile-indicator-div'"
         >
@@ -216,7 +220,8 @@ export default {
       showIndicatorDiv: false,
       showIndicator: "",
       watchLoading: true,
-      loadingTime: 0
+      loadingTime: 0,
+      showIndicatorMA: true //是否展示MA均线
     };
   },
   props: {
@@ -429,6 +434,12 @@ export default {
       this.showHourCycle = false;
       this.showMinCycle = false;
       this.showIndicatorDiv = !this.showIndicatorDiv;
+    },
+    // 点击显示、隐藏MA事件
+    showMA() {
+      this.showIndicatorMA = !this.showIndicatorMA;
+      this.$emit("listenShowMA", this.showIndicatorMA);
+      this.showIndicatorDiv = false;
     },
     showIndicatorChart(indicator) {
       let dataZoom = this.kline.getMobileKlineDataZoom();
