@@ -222,21 +222,23 @@ class KLineMobileSetChartController {
                 }
             }
         ];
-        for (var i = 0; i < data.MAData.length; i++) {
-            s[i + 1] = {
-                name: data.MAData[i].name,
-                data: data.MAData[i].data,
-                type: 'line',
-                smooth: true,
-                showSymbol: false,
-                lineStyle: {
-                    normal: {
-                        color: config.MA[i].color,
-                        opacity: 1,
-                        width: 1
+        if (data.showIndicatorMA) {
+            for (var i = 0; i < data.MAData.length; i++) {
+                s[i + 1] = {
+                    name: data.MAData[i].name,
+                    data: data.MAData[i].data,
+                    type: 'line',
+                    smooth: true,
+                    showSymbol: false,
+                    lineStyle: {
+                        normal: {
+                            color: config.MA[i].color,
+                            opacity: 1,
+                            width: 1
+                        }
                     }
-                }
-            };
+                };
+            }
         }
         return s;
     }

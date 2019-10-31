@@ -74,6 +74,7 @@
       class="close-icon"
     ></i>
     <div
+      id="Indicator"
       ref="Indicator"
       :style="{height: `${IndicatorSize.height}`, width: `${IndicatorSize.width}`}"
       @mousemove="getToolTipIndex()"

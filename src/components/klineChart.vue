@@ -600,15 +600,13 @@ export default {
       let cycle = data.cycle;
       if (data.klineData) {
         candleData = splitData(data.klineData);
-        if (MA) {
-          for (var i = 0; i < this.klineConfig.MA.length; i++) {
-            MAData[i] = {};
-            MAData[i].name = this.klineConfig.MA[i].name;
-            MAData[i].data = calculateMA(
-              this.klineConfig.MA[i].name.substring(2) * 1,
-              candleData
-            );
-          }
+        for (var i = 0; i < this.klineConfig.MA.length; i++) {
+          MAData[i] = {};
+          MAData[i].name = this.klineConfig.MA[i].name;
+          MAData[i].data = calculateMA(
+            this.klineConfig.MA[i].name.substring(2) * 1,
+            candleData
+          );
         }
         candleData.showIndicatorMA = this.outspreadMA;
         candleData.MAData = MAData;

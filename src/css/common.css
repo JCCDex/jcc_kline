@@ -1,3 +1,19 @@
+#kline>div>canvas:active {
+    cursor: pointer;
+}
+
+#Indicator>div>canvas:active {
+    cursor: pointer;
+}
+
+#timeSharing>div>canvas:active {
+    cursor: pointer;
+}
+
+#volume>div>canvas:active {
+    cursor: pointer;
+}
+
 .kline-cycle {
     position: absolute;
     left: 10px;

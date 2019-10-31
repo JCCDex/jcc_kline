@@ -1,5 +1,6 @@
 <template>
   <div
+    id="volume"
     ref="volume"
     :style="{height: `${volumeSize.height}`, width: `${volumeSize.width}`}"
     @mousemove="getToolTipIndex()"

@@ -223,15 +223,13 @@ export default {
       };
       if (chartData.cycle !== "everyhour" && chartData.klineData) {
         candleData = splitData(chartData.klineData);
-        if (MA) {
-          for (var i = 0; i < this.klineConfig.MA.length; i++) {
-            MAData[i] = {};
-            MAData[i].name = this.klineConfig.MA[i].name;
-            MAData[i].data = calculateMA(
-              this.klineConfig.MA[i].name.substring(2) * 1,
-              candleData
-            );
-          }
+        for (var i = 0; i < this.klineConfig.MA.length; i++) {
+          MAData[i] = {};
+          MAData[i].name = this.klineConfig.MA[i].name;
+          MAData[i].data = calculateMA(
+            this.klineConfig.MA[i].name.substring(2) * 1,
+            candleData
+          );
         }
         candleData.MAData = MAData;
         candleData.showIndicatorMA = this.showIndicatorMA;
