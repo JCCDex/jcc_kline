@@ -155,6 +155,12 @@
             ></div>
             <div style="height: 0.05rem; background-color:#2b3944; margin-top:3px"></div>
             <div
+              @click="showMA()"
+              :class="showIndicatorMA ? 'chart-indicator-div-active' : 'chart-indicator-div'"
+            >
+              <div class="indicator-line">{{message.MA}}</div>
+            </div>
+            <div
               @click="showIndicatorChart('MACD')"
               :class="this.showIndicator ==='MACD' ? 'chart-indicator-div-active' : 'chart-indicator-div'"
             >
@@ -500,7 +506,7 @@ export default {
         this.coinType = this.klineDataObj.coinType;
       }
       this.changeCycleLanguage(this.cycle);
-      this.changeChartDataObj(this.klineDataObj, this.outspreadMA);
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
     },
     fullscreen() {
       if (this.fullscreen && getLanguage().language === "en") {
@@ -516,7 +522,11 @@ export default {
     }
   },
   methods: {
-    showMA() {},
+    showMA() {
+      this.showIndicatorMA = !this.showIndicatorMA;
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
+      this.showIndicatorOpt = false;
+    },
     clickMinCycle() {
       this.showMinCycle = !this.showMinCycle;
       if (this.showMinCycle) {
@@ -608,7 +618,7 @@ export default {
             candleData
           );
         }
-        candleData.showIndicatorMA = this.outspreadMA;
+        candleData.showIndicatorMA = this.showIndicatorMA;
         candleData.MAData = MAData;
         candleData.precision = precision;
       }
@@ -636,7 +646,6 @@ export default {
     },
     showMAData() {
       this.outspreadMA = !this.outspreadMA;
-      this.changeChartDataObj(this.klineDataObj, this.outspreadMA);
     },
     showIndicatorChart(indicator) {
       if (indicator === this.showIndicator) {
@@ -648,7 +657,7 @@ export default {
       }
       this.showIndicatorOpt = false;
       this.resize();
-      this.changeChartDataObj(this.klineDataObj, this.outspreadMA);
+      this.changeChartDataObj(this.klineDataObj, this.showIndicatorMA);
     },
 
     getTipDataIndex(index) {
