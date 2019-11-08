@@ -6,6 +6,7 @@ volumeOption.platform = 'pc'
 volumeOption.chartType = 'volume'
 volumeOption.defaultSize = true
 let data = testData.candleData
+const element = document.createElement('div');
 
 describe('test SetVolumeChart', () => {
 
@@ -25,7 +26,6 @@ describe('test SetVolumeChart', () => {
     })
 
     it('test initVolumeECharts', () => {
-        const element = document.createElement('div');
         let volume = new SetVolumeChart(volumeOption);
         volume.initVolumeECharts(element)
         volume.initVolumeECharts(element, true)
@@ -33,7 +33,6 @@ describe('test SetVolumeChart', () => {
     })
 
     it('test showLoading', () => {
-        const element = document.createElement('div');
         let volume = new SetVolumeChart(volumeOption);
         volume.initVolumeECharts(element)
         volume.showLoading()
@@ -41,15 +40,14 @@ describe('test SetVolumeChart', () => {
     })
 
     it('test setVolumeOption', () => {
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data, 'hour')
+        data.volume = data.volumes.slice(0, 90)
+        volumeChart.setVolumeOption(data, 'minute')
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 
     it('test setVolumeOption if data is null', () => {
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(null, 'hour')
@@ -57,16 +55,16 @@ describe('test SetVolumeChart', () => {
     })
 
     it('test updateVolumeOption', () => {
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
+        data.volume = data.volumes.slice(0, 50)
         volumeChart.setVolumeOption(data, 'day')
         volumeChart.updateVolumeOption(data, 'day')
         expect(volumeChart.volume.getOption()).not.toBeNull();
     })
 
     it('test resizeECharts', () => {
-        const element = document.createElement('div');
+        volumeOption.platform = 'mobile'
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data, 'week')
@@ -80,7 +78,6 @@ describe('test SetVolumeChart', () => {
             width: 600,
             height: 560
         }
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data, 'month')
@@ -90,7 +87,6 @@ describe('test SetVolumeChart', () => {
 
     it('test resizeECharts if not DOM', () => {
         volumeOption.defaultSize = true
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data, '')
@@ -99,7 +95,6 @@ describe('test SetVolumeChart', () => {
     })
 
     it('test disposeVolumeEChart', () => {
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data, 'hour')
@@ -108,17 +103,15 @@ describe('test SetVolumeChart', () => {
     })
 
     it('test disposeVolumeEChart if volume is null', () => {
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
-        volumeChart.setVolumeOption(data, 'hour')
+        volumeChart.setVolumeOption(data, 'week')
         volumeChart.volume = null;
         volumeChart.disposeVolumeEChart()
         expect(volumeChart.volume).toBeNull();
     })
 
     it('test updateVolumeOption if volume getOption is null', () => {
-        const element = document.createElement('div');
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.updateVolumeOption(data, 'day')
@@ -126,7 +119,7 @@ describe('test SetVolumeChart', () => {
     })
 
     it('test changeDataZoom', () => {
-        const element = document.createElement('div');
+        volumeOption.platform = 'pc'
         let volumeChart = new SetVolumeChart(volumeOption);
         volumeChart.initVolumeECharts(element)
         volumeChart.setVolumeOption(data, 'hour')
@@ -147,6 +140,5 @@ describe('test SetVolumeChart', () => {
         expect(volumeChart.volume.getOption().dataZoom[0].end).toBe(100)
         volumeChart.changeDataZoom('test')
         expect(volumeChart.volume.getOption().dataZoom[0].start).toBe(40)
-      })
-
+    })
 })
