@@ -1,5 +1,6 @@
 import echarts from 'echarts/lib/echarts';
 import 'echarts/lib/component/tooltip';
+import 'echarts/lib/component/markLine';
 import 'echarts/lib/chart/candlestick';
 import 'echarts/lib/chart/line';
 import 'echarts/lib/chart/bar';
@@ -106,7 +107,7 @@ class KLineMobileSetChartController {
                         normal: {
                             color: '#fff',
                             opacity: 1,
-                            width: 2
+                            width: 1
                         }
                     }
                 },
@@ -119,7 +120,7 @@ class KLineMobileSetChartController {
                         normal: {
                             color: 'yellow',
                             opacity: 1,
-                            width: 2
+                            width: 1
                         }
                     }
                 }
@@ -201,11 +202,15 @@ class KLineMobileSetChartController {
 
     getSeries(data) {
         let barWidth;
-        if (data.values.length > 40) {
+        let len = data.values.length;
+        if (len > 40) {
             barWidth = '70%';
-        } else if (data.values.length <= 40 && data.values.length > 0) {
+        } else if (len <= 40 && len > 0) {
             barWidth = 18;
         }
+        let precision = data.precision.price
+        let currentPrice = parseFloat(data.values[len - 1][1]).toFixed(precision)
+        let color = data.volumes[len - 1][2] == 1 ? '#3ee99f' : '#ee4b4b'
         var s = [
             {
                 type: 'candlestick',
@@ -219,6 +224,22 @@ class KLineMobileSetChartController {
                         borderColor: null,
                         borderColor0: null
                     }
+                },
+                markLine: {
+                    silent: true,
+                    symbol: 'none',
+                    data: [
+                        {
+                            name: 'max line on close',
+                            yAxis: currentPrice,
+                            lineStyle: {
+                                color: color,
+                                width: 2,
+                                type: 'dashed',
+                                opacity: 1
+                            }
+                        }
+                    ]
                 }
             }
         ];
