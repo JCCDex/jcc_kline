@@ -89,7 +89,7 @@
       :cycle="cycle"
       :indicatorType="showIndicatorChart"
     ></Indicator>
-    <!-- <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth> -->
+    <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth>
   </div>
 </template>
 <script>
