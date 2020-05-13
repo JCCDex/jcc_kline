@@ -89,12 +89,10 @@
       :cycle="cycle"
       :indicatorType="showIndicatorChart"
     ></Indicator>
-    <!-- <Depth ref="depth" :chart-data-obj="chartDataObj" :kline-config="klineConfig"></Depth> -->
   </div>
 </template>
 <script>
 import KLine from "./mobileKline.vue";
-import Depth from "./marketDepth.vue";
 import Volume from "./volumeChart.vue";
 import TimeSharing from "./timeSharing.vue";
 import Indicator from "./IndicatorChart.vue";
@@ -108,10 +106,9 @@ import {
 import { formatDecimal, getLanguage, formatTime } from "../js/utils";
 import { constants } from "zlib";
 export default {
-  name: "mobileChart",
+  name: "FSMobileChart",
   components: {
     KLine,
-    Depth,
     Volume,
     TimeSharing,
     Indicator

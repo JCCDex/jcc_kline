@@ -1,9 +1,9 @@
-import { Chart, FSMobileKLine, MobileChart } from './src/index'
+import { Chart, FSMobileChart, MobileChart } from './src/index'
 
 const kline = {
   install: function (Vue) {
     Vue.component('jKline', Chart);
-    Vue.component('fsmKline', FSMobileKLine);
+    Vue.component('fsmKline', FSMobileChart);
     Vue.component('mKline', MobileChart);
   }
 };

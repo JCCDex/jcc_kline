@@ -1,12 +1,9 @@
-import MobileKline from './components/mobileKline.vue';
-import FSMobileKLine from './components/fullScreenMobileKline.vue';
 import Chart from './components/klineChart.vue';
 import MobileChart from './components/mobileChart.vue';
-
+import FSMobileChart from './components/FSMobileChart.vue';
 
 export {
-    MobileKline,
-    FSMobileKLine,
+    FSMobileChart,
     Chart,
     MobileChart
 };
