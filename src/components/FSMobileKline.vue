@@ -14,7 +14,7 @@
               :class="!this.showMinCycle ? 'drop-down-icon mobile-drop-down' : 'drop-down-select mobile-drop-down'"
             ></i>
           </div>
-          <div v-show="showMinCycle" class="mobile-kline-cycle-float">
+          <div v-show="showMinCycle" class="mobile-kline-cycle-float-fs">
             <div
               @click="chooseCycle('minute')"
               :class="this.currentCycle === 'minute' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
@@ -44,7 +44,7 @@
               :class="!this.showHourCycle ? 'drop-down-icon mobile-drop-down' : 'drop-down-select mobile-drop-down'"
             ></i>
           </div>
-          <div v-show="showHourCycle" class="mobile-kline-cycle-float kline-hour-cycle">
+          <div v-show="showHourCycle" class="mobile-kline-cycle-float-fs kline-hour-cycle">
             <div
               @click="chooseCycle('hour')"
               :class="this.currentCycle === 'hour' ? 'mobile-kline-cycle-detail kline-select-color' : 'mobile-kline-cycle-detail kline-uncheck-color'"
@@ -73,15 +73,15 @@
         :class="this.currentCycle === 'everyhour' ? 'mobile-cycle-btn mobile-btn-active' : 'mobile-cycle-btn'"
       >{{message.timeSharing}}</div>
       <!-- 指标线图标 -->
-      <div @click="openCloseIndicator" class="indicator-select-div">
+      <!-- <div @click="openCloseIndicator" class="indicator-select-div">
         <i
           v-show="showIndicatorBtn"
           :class="this.showIndicatorDiv ? 'icon iconfont icon-indicator-selected' : 'icon iconfont icon-indicator-unselected'"
         ></i>
-      </div>
+      </div> -->
     </div>
     <!-- 指标线按钮 -->
-    <div v-show="showIndicatorDiv && currentCycle !== 'everyhour'" class="indicatorConfigure">
+    <!-- <div v-show="showIndicatorDiv && currentCycle !== 'everyhour'" class="indicatorConfigure">
       <div class="mobile-indicator">
         <div class="indicator-font">
           <font>{{message.indicator}}</font>
@@ -185,7 +185,7 @@
         @click="openCloseEyes"
         :class="this.showIndicator === '' ? 'close-eye-icon' : 'open-eye-icon'"
       ></div>
-    </div>
+    </div> -->
     <!-- mobile kline -->
     <div
       id="kline"

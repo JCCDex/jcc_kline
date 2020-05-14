@@ -974,6 +974,19 @@
     font-size: 0.24rem;
 }
 
+.mobile-kline-cycle-float-fs {
+    width: 1.2rem;
+    z-index: 1000;
+    position: absolute;
+    top: 1.4rem;
+    background-color: #232732;
+    border: 0.02rem #37495c;
+    border-radius: 0.08rem;
+    -moz-border-radius: 0.08rem;
+    text-align: center;
+    font-size: 0.24rem;
+}
+
 .mobile-kline-cycle-detail {
     padding-top: 0.16rem;
     padding-bottom: 0.16rem;

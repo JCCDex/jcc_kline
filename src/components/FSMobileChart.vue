@@ -14,10 +14,9 @@
         <font class="mobile-tooltip-name">{{message.minMobile}}</font>
         <font class="mobile-tooltip-data">{{this.toolTipData.min}}</font>
         <font class="mobile-tooltip-name">{{message.volumeMobile}}</font>
-        <font class="mobile-tooltip-data">{{this.toolTipData.volume}}</font>
-      </div>
-      <div v-show="showIndicatorMA" style="font-size:0.16rem; margin-top: 0.1rem;">
+        <font class="mobile-tooltip-data" style="margin-right:0.14rem">{{this.toolTipData.volume}}</font>
         <font
+          v-show="showIndicatorMA"
           v-for="MAitem in this.klineConfig.MA"
           :key="MAitem.id"
           :style="{ color: MAitem.color, marginRight: '0.14rem'}"
@@ -25,7 +24,6 @@
           {{MAitem.name}}
           <font>:&nbsp;{{ getMATipData(MAitem.name) }}</font>
         </font>
-        <br />
       </div>
     </div>
     <!-- timeDivision tootip 数据显示 -->
@@ -79,23 +77,12 @@
       :chart-data-obj="chartDataObj"
       :cycle="cycle"
     ></Volume>
-    <Indicator
-      ref="indicator"
-      v-show="showIndicatorChart != null &&cycle !== 'everyhour'"
-      :toolTipIndex="toolTipIndex"
-      @listenToTipIndex="getTipDataIndex"
-      :kline-config="klineConfig"
-      :chart-data-obj="chartDataObj"
-      :cycle="cycle"
-      :indicatorType="showIndicatorChart"
-    ></Indicator>
   </div>
 </template>
 <script>
-import KLine from "./mobileKline.vue";
+import KLine from "./FSMobileKline.vue";
 import Volume from "./volumeChart.vue";
 import TimeSharing from "./timeSharing.vue";
-import Indicator from "./IndicatorChart.vue";
 import {
   supplementKlineData,
   splitData,
@@ -110,8 +97,7 @@ export default {
   components: {
     KLine,
     Volume,
-    TimeSharing,
-    Indicator
+    TimeSharing
   },
   data() {
     return {
